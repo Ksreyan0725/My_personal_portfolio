@@ -25,6 +25,7 @@ body.darkmode {
 body.darkmode .navbar {
   background: rgba(18, 18, 18, 0.95);
   border-bottom: 1px solid #333;
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
 }
 
 body.darkmode .nav-link {
@@ -39,45 +40,12 @@ body.darkmode .section-title {
   color: #66b3ff;
 }
 
-body.darkmode .about,
-body.darkmode .skills,
-body.darkmode .social {
-  background: #121212;
-}
-
-body.darkmode .detail-item,
 body.darkmode .achievement-card,
 body.darkmode .timeline-content,
-body.darkmode .social-link,
 body.darkmode .contact-form {
   background: #1e1e1e;
-  color: #e0e0e0;
+  border: 1px solid #333;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-}
-
-body.darkmode .about-description {
-  background: #1e1e1e;
-  color: #e0e0e0;
-}
-
-body.darkmode .skill-bar {
-  background: #333;
-}
-
-body.darkmode .detail-item strong {
-  color: #66b3ff;
-}
-
-body.darkmode .timeline::before {
-  background: linear-gradient(to bottom, #66b3ff, #4d94ff);
-}
-
-body.darkmode .timeline-content::before {
-  background: #66b3ff;
-}
-
-body.darkmode .timeline-date {
-  color: #66b3ff;
 }
 
 body.darkmode input,
@@ -92,18 +60,13 @@ body.darkmode textarea:focus {
   border-color: #66b3ff;
 }
 
-body.darkmode .submit-button {
+body.darkmode .cta-button {
   background: #66b3ff;
   color: #121212;
 }
 
-body.darkmode .submit-button:hover {
+body.darkmode .cta-button:hover {
   background: #4d94ff;
-}
-
-body.darkmode .footer {
-  background: #1e1e1e;
-  color: #e0e0e0;
 }
 
 body.darkmode .hamburger .bar {
@@ -731,23 +694,67 @@ body.darkmode textarea {
 }
 
 /* Dark Mode Toggle Button */
+.mode-toggle {
+    margin-left: 20px;
+}
+
 #darkModeToggle {
     background: none;
     border: none;
-    color: inherit;
-    font-size: 1rem;
+    padding: 0;
     cursor: pointer;
-    padding: 5px 10px;
-    border-radius: 4px;
+    width: 64px;
+    height: 32px;
+    position: relative;
+}
+
+.toggle-track {
+    background: #2196F3;
+    border-radius: 16px;
+    width: 100%;
+    height: 100%;
+    display: block;
+    position: relative;
     transition: background-color 0.3s;
 }
 
-#darkModeToggle:hover {
-    background-color: rgba(0, 0, 0, 0.1);
+.toggle-indicator {
+    width: 28px;
+    height: 28px;
+    background: white;
+    border-radius: 50%;
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    transform: translateX(0);
+    transition: transform 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.darkmode #darkModeToggle:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+.toggle-text {
+    font-size: 12px;
+    color: #2196F3;
+    font-weight: 500;
+}
+
+/* Dark mode active states */
+.darkmode #darkModeToggle .toggle-track {
+    background: #121212;
+}
+
+.darkmode #darkModeToggle .toggle-indicator {
+    transform: translateX(32px);
+}
+
+.darkmode #darkModeToggle .toggle-text {
+    color: #66b3ff;
+}
+
+/* Hover effects */
+#darkModeToggle:hover .toggle-track {
+    opacity: 0.85;
 }
 
 /* Responsive Design */
