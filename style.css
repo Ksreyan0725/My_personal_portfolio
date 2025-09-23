@@ -16,11 +16,14 @@ body {
   background-color: #ffffff;
 }
 
+<<<<<<< HEAD
 body.darkmode {
   background: #181a1b;
   color: #f1f1f1;
 }
 
+=======
+>>>>>>> 8e69c87d926912e9b154aa1dff43467a64ee9e25
 .container {
   max-width: 1200px;
   margin: 0 auto;
@@ -55,10 +58,13 @@ body.darkmode {
   text-decoration: none;
 }
 
+<<<<<<< HEAD
 .nav-logo {
   color: #f1f1f1;
 }
 
+=======
+>>>>>>> 8e69c87d926912e9b154aa1dff43467a64ee9e25
 .nav-menu {
   display: flex;
   list-style: none;
@@ -136,10 +142,13 @@ section {
   border-radius: 2px;
 }
 
+<<<<<<< HEAD
 .section-title {
   color: #ffd700;
 }
 
+=======
+>>>>>>> 8e69c87d926912e9b154aa1dff43467a64ee9e25
 /* Home Section */
 .home {
   height: 100vh;
@@ -218,12 +227,15 @@ section {
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
+<<<<<<< HEAD
 body.darkmode .cta-button,
 body.darkmode .submit-button {
   background: #ffd700;
   color: #181a1b;
 }
 
+=======
+>>>>>>> 8e69c87d926912e9b154aa1dff43467a64ee9e25
 /* About Section */
 .about {
   background: #f8f9fa;
@@ -393,6 +405,7 @@ body.darkmode .submit-button {
   line-height: 1.6;
 }
 
+<<<<<<< HEAD
 body.darkmode .achievement-card,
 body.darkmode .skills-category,
 body.darkmode .contact-info,
@@ -401,6 +414,8 @@ body.darkmode .contact-form {
   color: #f1f1f1;
 }
 
+=======
+>>>>>>> 8e69c87d926912e9b154aa1dff43467a64ee9e25
 /* Skills Section */
 .skills {
   background: white;
@@ -576,6 +591,7 @@ body.darkmode .contact-form {
   border-color: #3498db;
 }
 
+<<<<<<< HEAD
 body.darkmode input,
 body.darkmode textarea {
   background: #181a1b;
@@ -583,6 +599,8 @@ body.darkmode textarea {
   border: 1px solid #444;
 }
 
+=======
+>>>>>>> 8e69c87d926912e9b154aa1dff43467a64ee9e25
 .submit-button {
   width: 100%;
   padding: 12px;
@@ -614,6 +632,7 @@ body.darkmode textarea {
   opacity: 0.8;
 }
 
+<<<<<<< HEAD
 /* Dark Mode Styles */
 body.darkmode .navbar,
 body.darkmode .container,
@@ -627,6 +646,8 @@ body.darkmode .nav-logo {
   color: #f1f1f1;
 }
 
+=======
+>>>>>>> 8e69c87d926912e9b154aa1dff43467a64ee9e25
 /* Responsive Design */
 @media (max-width: 768px) {
   .hamburger {
