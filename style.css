@@ -734,9 +734,10 @@ body.darkmode textarea {
 }
 
 .toggle-text {
-    font-size: 12px;
+    font-size: 14px;
+    font-weight: bold;
     color: #2196F3;
-    font-weight: 500;
+    transition: color 0.3s;
 }
 
 /* Dark mode active states */
@@ -755,6 +756,36 @@ body.darkmode textarea {
 /* Hover effects */
 #darkModeToggle:hover .toggle-track {
     opacity: 0.85;
+}
+
+/* Navigation Dark Mode Styles */
+.darkmode .navbar {
+    background-color: #1a1a1a;
+    border-bottom: 1px solid #333;
+}
+
+.darkmode .nav-logo,
+.darkmode .nav-link {
+    color: #ffffff;
+}
+
+.darkmode .nav-link:hover {
+    color: #4db5ff;
+}
+
+.darkmode .hamburger .bar {
+    background-color: #ffffff;
+}
+
+/* Make sure mobile menu is visible in dark mode */
+.darkmode .nav-menu.active {
+    background-color: #1a1a1a;
+    border: 1px solid #333;
+}
+
+/* Style the active nav link in dark mode */
+.darkmode .nav-link.active {
+    color: #4db5ff;
 }
 
 /* Responsive Design */
