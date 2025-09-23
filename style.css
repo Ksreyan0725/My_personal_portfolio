@@ -18,45 +18,112 @@ body {
 
 /* --- FIXED DARK MODE STYLES --- */
 body.darkmode {
-  background: #181a1b;
-  color: #f1f1f1;
+  background: #121212;
+  color: #e0e0e0;
 }
 
-body.darkmode .navbar,
-body.darkmode .container,
-body.darkmode .footer {
-  background: #222426 !important;
-  color: #f1f1f1 !important;
+body.darkmode .navbar {
+  background: rgba(18, 18, 18, 0.95);
+  border-bottom: 1px solid #333;
 }
 
-body.darkmode .nav-link,
-body.darkmode .nav-logo {
-  color: #f1f1f1 !important;
+body.darkmode .nav-link {
+  color: #e0e0e0;
+}
+
+body.darkmode .nav-link:hover {
+  color: #66b3ff;
 }
 
 body.darkmode .section-title {
-  color: #ffd700 !important;
+  color: #66b3ff;
 }
 
+body.darkmode .about,
+body.darkmode .skills,
+body.darkmode .social {
+  background: #121212;
+}
+
+body.darkmode .detail-item,
 body.darkmode .achievement-card,
-body.darkmode .skills-category,
-body.darkmode .contact-info,
+body.darkmode .timeline-content,
+body.darkmode .social-link,
 body.darkmode .contact-form {
-  background: #23272a !important;
-  color: #f1f1f1 !important;
+  background: #1e1e1e;
+  color: #e0e0e0;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+body.darkmode .about-description {
+  background: #1e1e1e;
+  color: #e0e0e0;
+}
+
+body.darkmode .skill-bar {
+  background: #333;
+}
+
+body.darkmode .detail-item strong {
+  color: #66b3ff;
+}
+
+body.darkmode .timeline::before {
+  background: linear-gradient(to bottom, #66b3ff, #4d94ff);
+}
+
+body.darkmode .timeline-content::before {
+  background: #66b3ff;
+}
+
+body.darkmode .timeline-date {
+  color: #66b3ff;
 }
 
 body.darkmode input,
 body.darkmode textarea {
-  background: #181a1b !important;
-  color: #f1f1f1 !important;
-  border: 1px solid #444 !important;
+  background: #1e1e1e;
+  color: #e0e0e0;
+  border: 1px solid #333;
 }
 
-body.darkmode .cta-button,
+body.darkmode input:focus,
+body.darkmode textarea:focus {
+  border-color: #66b3ff;
+}
+
 body.darkmode .submit-button {
-  background: #ffd700 !important;
-  color: #181a1b !important;
+  background: #66b3ff;
+  color: #121212;
+}
+
+body.darkmode .submit-button:hover {
+  background: #4d94ff;
+}
+
+body.darkmode .footer {
+  background: #1e1e1e;
+  color: #e0e0e0;
+}
+
+body.darkmode .hamburger .bar {
+  background: #e0e0e0;
+}
+
+body.darkmode .nav-menu {
+  background: #121212;
+}
+
+/* Dark mode specific hover effects */
+body.darkmode .detail-item:hover,
+body.darkmode .achievement-card:hover,
+body.darkmode .social-link:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+body.darkmode .social-link:hover {
+  color: #66b3ff;
 }
 
 /* --- END DARK MODE FIXES --- */
@@ -76,7 +143,15 @@ body.darkmode .submit-button {
   backdrop-filter: blur(10px);
   border-bottom: 1px solid #e0e0e0;
   z-index: 1000;
-  transition: all 0.3s ease;
+  transition: transform 0.3s ease;
+}
+
+.navbar.hide {
+  transform: translateY(-100%);
+}
+
+.navbar.show {
+  transform: translateY(0);
 }
 
 .nav-container {
@@ -89,14 +164,15 @@ body.darkmode .submit-button {
 }
 
 .nav-logo {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #2c3e50;
-  text-decoration: none;
+    color: #0066cc; /* This is a nice shade of blue */
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.5rem;
 }
 
-.nav-logo {
-  color: #f1f1f1;
+/* Ensure the logo stays visible in dark mode */
+.darkmode .nav-logo {
+    color: #66b3ff; /* A lighter shade of blue for dark mode */
 }
 
 .nav-menu {
@@ -618,9 +694,9 @@ body.darkmode .contact-form {
 
 body.darkmode input,
 body.darkmode textarea {
-  background: #181a1b;
-  color: #f1f1f1;
-  border: 1px solid #444;
+  background: #1e1e1e;
+  color: #e0e0e0;
+  border: 1px solid #333;
 }
 
 .submit-button {
@@ -652,6 +728,26 @@ body.darkmode textarea {
 .footer p {
   margin: 0;
   opacity: 0.8;
+}
+
+/* Dark Mode Toggle Button */
+#darkModeToggle {
+    background: none;
+    border: none;
+    color: inherit;
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+#darkModeToggle:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.darkmode #darkModeToggle:hover {
+    background-color: rgba(255, 255, 255, 0.1);
 }
 
 /* Responsive Design */

@@ -34,7 +34,7 @@
         <span class="bar"></span>
       </div>
       <!-- Dark Mode Toggle Button -->
-      <button id="darkModeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
+      <button id="darkModeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">mode</button>
     </div>
   </nav>
 
@@ -256,35 +256,32 @@
 
   <script type="module" src="script.js"></script>
   <script>
-    // Dark mode toggle logic
     const toggleBtn = document.getElementById('darkModeToggle');
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     const savedTheme = localStorage.getItem('theme');
 
     function setTheme(theme) {
-      if (theme === 'dark') {
-        document.body.classList.add('darkmode');
-        toggleBtn.textContent = '☀️';
-      } else {
-        document.body.classList.remove('darkmode');
-        toggleBtn.textContent = '🌙';
-      }
-      localStorage.setItem('theme', theme);
+        if (theme === 'dark') {
+            document.body.classList.add('darkmode');
+        } else {
+            document.body.classList.remove('darkmode');
+        }
+        localStorage.setItem('theme', theme);
     }
 
     // Initial theme
     if (savedTheme) {
-      setTheme(savedTheme);
+        setTheme(savedTheme);
     } else if (prefersDark) {
-      setTheme('dark');
+        setTheme('dark');
     }
 
     toggleBtn.addEventListener('click', () => {
-      const isDark = document.body.classList.toggle('darkmode');
-      setTheme(isDark ? 'dark' : 'light');
+        const isDark = document.body.classList.toggle('darkmode');
+        setTheme(isDark ? 'dark' : 'light');
     });
   </script>
-
+  <script src="script.js"></script>
 </body>
 
 </html>
