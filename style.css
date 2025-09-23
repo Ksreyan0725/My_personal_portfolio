@@ -131,15 +131,22 @@ body.darkmode .social-link:hover {
 }
 
 .nav-logo {
-    color: #0066cc; /* This is a nice shade of blue */
+    color: #0066cc; /* Bright blue for light mode */
     text-decoration: none;
     font-weight: bold;
     font-size: 1.5rem;
+    transition: color 0.3s ease;
 }
 
-/* Ensure the logo stays visible in dark mode */
-.darkmode .nav-logo {
-    color: #66b3ff; /* A lighter shade of blue for dark mode */
+/* Dark mode - keep the same blue color */
+body.darkmode .nav-logo {
+    color: #0066cc !important; /* Using !important to override any other styles */
+}
+
+/* Hover effect (optional) */
+.nav-logo:hover,
+body.darkmode .nav-logo:hover {
+    color: #0052a3 !important; /* Slightly darker blue on hover */
 }
 
 .nav-menu {
