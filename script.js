@@ -310,24 +310,28 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Scroll-based Navbar Hide/Show
-    let lastScroll = 0;
-    const scrollThreshold = 100; // Adjust this value to change when the navbar starts hiding
-    
+    let lastScrollTop = 0;
+    const navbar = document.querySelector('.navbar');
+    const navbarHeight = navbar.getBoundingClientRect().height;
+
+    // Add a class to style the fixed navbar
+    navbar.style.position = 'fixed';
+    navbar.style.width = '100%';
+    navbar.style.top = '0';
+    navbar.style.transition = 'transform 0.3s ease-in-out';
+
     window.addEventListener('scroll', () => {
-        const currentScroll = window.pageYOffset;
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
         
-        // If we're scrolling down and we're scrolled past the threshold
-        if (currentScroll > lastScroll && currentScroll > scrollThreshold) {
-            navbar.classList.add('hide');
-            navbar.classList.remove('show');
-        } 
-        // If we're scrolling up or we're above the threshold
-        else {
-            navbar.classList.remove('hide');
-            navbar.classList.add('show');
+        if (scrollTop > lastScrollTop && scrollTop > navbarHeight) {
+            // Scrolling down - hide navbar
+            navbar.style.transform = 'translateY(-100%)';
+        } else {
+            // Scrolling up - show navbar
+            navbar.style.transform = 'translateY(0)';
         }
         
-        lastScroll = currentScroll;
+        lastScrollTop = scrollTop;
     });
     
     // Event Listeners

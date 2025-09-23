@@ -14,6 +14,7 @@ body {
   line-height: 1.6;
   color: #333;
   background-color: #ffffff;
+  padding-top: 60px; /* Adjust this value based on your navbar height */
 }
 
 /* --- FIXED DARK MODE STYLES --- */
@@ -101,12 +102,15 @@ body.darkmode .social-link:hover {
 .navbar {
   position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   width: 100%;
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid #e0e0e0;
   z-index: 1000;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease-in-out;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .navbar.hide {
@@ -236,29 +240,17 @@ section {
 }
 
 .profile-photo {
-  width: 200px;
-  height: 200px;
-  margin: 0 auto 2rem;
-  border-radius: 50%;
-  overflow: hidden;
-  border: 5px solid rgba(255, 255, 255, 0.3);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-  background: linear-gradient(45deg, #f0f0f0, #e0e0e0);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 3rem;
-}
-
-.profile-photo::before {
-  content: '📷';
+    width: 200px;  /* adjust size as needed */
+    height: 200px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 auto 2rem;
 }
 
 .profile-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: none;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .name {
