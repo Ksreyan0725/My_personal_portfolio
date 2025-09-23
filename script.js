@@ -285,6 +285,27 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 1000);
     }
     
+    // Scroll-based Navbar Hide/Show
+    let lastScroll = 0;
+    const scrollThreshold = 100; // Adjust this value to change when the navbar starts hiding
+    
+    window.addEventListener('scroll', () => {
+        const currentScroll = window.pageYOffset;
+        
+        // If we're scrolling down and we're scrolled past the threshold
+        if (currentScroll > lastScroll && currentScroll > scrollThreshold) {
+            navbar.classList.add('hide');
+            navbar.classList.remove('show');
+        } 
+        // If we're scrolling up or we're above the threshold
+        else {
+            navbar.classList.remove('hide');
+            navbar.classList.add('show');
+        }
+        
+        lastScroll = currentScroll;
+    });
+    
     // Event Listeners
     window.addEventListener('scroll', () => {
         highlightActiveNav();
