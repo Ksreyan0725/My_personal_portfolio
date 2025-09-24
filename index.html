@@ -28,21 +28,9 @@
         <li class="nav-item"><a href="#social" class="nav-link">Social</a></li>
         <li class="nav-item"><a href="#contact" class="nav-link">Contact</a></li>
       </ul>
-      <div class="hamburger">
-        <span class="bar"></span>
-        <span class="bar"></span>
-        <span class="bar"></span>
-      </div>
-      <!-- Dark Mode Toggle Button -->
-      <div class="mode-toggle">
-        <button id="darkModeToggle" aria-label="Toggle dark mode">
-          <span class="toggle-track">
-            <span class="toggle-indicator">
-              <span class="toggle-text" id="modeText">OFF</span>
-            </span>
-          </span>
-        </button>
-      </div>
+      <button id="darkModeToggle" class="dark-mode-toggle" aria-label="Toggle dark mode">
+        <span class="toggle-icon">🌙</span>
+      </button>
     </div>
   </nav>
 
@@ -266,32 +254,32 @@
 
   <script type="module" src="script.js"></script>
   <script>
-    const toggleBtn = document.getElementById('darkModeToggle');
-    const modeText = document.getElementById('modeText');
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const savedTheme = localStorage.getItem('theme');
-
-    function setTheme(theme) {
-        if (theme === 'dark') {
+    document.addEventListener('DOMContentLoaded', function() {
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const toggleIcon = darkModeToggle.querySelector('.toggle-icon');
+        
+        // Check for saved preference
+        const darkMode = localStorage.getItem('darkMode');
+        
+        // Set initial state
+        if (darkMode === 'enabled') {
             document.body.classList.add('darkmode');
-            modeText.textContent = 'ON';
-        } else {
-            document.body.classList.remove('darkmode');
-            modeText.textContent = 'OFF';
+            toggleIcon.textContent = '☀️';
         }
-        localStorage.setItem('theme', theme);
-    }
-
-    // Initial theme
-    if (savedTheme) {
-        setTheme(savedTheme);
-    } else if (prefersDark) {
-        setTheme('dark');
-    }
-
-    toggleBtn.addEventListener('click', () => {
-        const isDark = document.body.classList.toggle('darkmode');
-        setTheme(isDark ? 'dark' : 'light');
+        
+        // Toggle dark mode
+        darkModeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('darkmode');
+            
+            // Update icon
+            if (document.body.classList.contains('darkmode')) {
+                toggleIcon.textContent = '☀️';
+                localStorage.setItem('darkMode', 'enabled');
+            } else {
+                toggleIcon.textContent = '🌙';
+                localStorage.setItem('darkMode', null);
+            }
+        });
     });
   </script>
 </body>

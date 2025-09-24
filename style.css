@@ -695,69 +695,33 @@ body.darkmode textarea {
 }
 
 /* Dark Mode Toggle Button */
-.mode-toggle {
-    margin-left: 20px;
-}
-
-#darkModeToggle {
+.dark-mode-toggle {
     background: none;
     border: none;
-    padding: 0;
+    padding: 8px;
     cursor: pointer;
-    width: 64px;
-    height: 32px;
-    position: relative;
-}
-
-.toggle-track {
-    background: #2196F3;
-    border-radius: 16px;
-    width: 100%;
-    height: 100%;
-    display: block;
-    position: relative;
-    transition: background-color 0.3s;
-}
-
-.toggle-indicator {
-    width: 28px;
-    height: 28px;
-    background: white;
+    font-size: 1.5rem;
     border-radius: 50%;
-    position: absolute;
-    top: 2px;
-    left: 2px;
-    transform: translateX(0);
-    transition: transform 0.3s;
+    transition: background-color 0.3s;
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-left: 1rem;
 }
 
-.toggle-text {
-    font-size: 14px;
-    font-weight: bold;
-    color: #2196F3;
-    transition: color 0.3s;
+.dark-mode-toggle:hover {
+    background-color: rgba(0, 0, 0, 0.1);
 }
 
-/* Dark mode active states */
-.darkmode #darkModeToggle .toggle-track {
-    background: #121212;
+body.darkmode .dark-mode-toggle:hover {
+    background-color: rgba(255, 255, 255, 0.1);
 }
 
-.darkmode #darkModeToggle .toggle-indicator {
-    transform: translateX(32px);
+.toggle-icon {
+    line-height: 1;
 }
 
-.darkmode #darkModeToggle .toggle-text {
-    color: #66b3ff;
-}
-
-/* Hover effects */
-#darkModeToggle:hover .toggle-track {
-    opacity: 0.85;
-}
+/* Remove the old .mode-toggle, #darkModeToggle, .toggle-track, .toggle-indicator styles */
 
 /* Navigation Dark Mode Styles */
 .darkmode .navbar {
