@@ -246,7 +246,7 @@ body.darkmode .section-title {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #667eea 0%, #310e54 100%);
   color: white;
   text-align: center;
 }
@@ -285,7 +285,7 @@ body.darkmode .home {
 
 /* Make sure text is visible in both modes */
 .name, .tagline, .intro {
-  color: rgb(170, 141, 200); /* This will work for both light and dark modes since the background is dark */
+  color: rgba(240, 170, 7, 0.782); /* This will work for both light and dark modes since the background is dark */
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.871); /* Optional: adds a slight shadow for better readability */
 }
 
