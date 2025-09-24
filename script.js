@@ -1,31 +1,35 @@
 // Portfolio Website JavaScript
 
-// Dark Mode Initialization
-function initializeDarkMode() {
-    const toggleBtn = document.getElementById('darkModeToggle');
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const savedTheme = localStorage.getItem('theme');
-
-    function setTheme(isDark) {
-        document.body.classList.toggle('darkmode', isDark);
-        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+// Dark Mode Toggle Function
+function initDarkMode() {
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    const toggleIcon = darkModeToggle.querySelector('.toggle-icon');
+    
+    // Check for saved preference
+    if (localStorage.getItem('darkMode') === 'enabled') {
+        document.body.classList.add('darkmode');
+        toggleIcon.textContent = '☀️';
     }
 
-    // Set initial theme
-    if (savedTheme === 'dark' || (savedTheme === null && prefersDark)) {
-        setTheme(true);
-    }
-
-    toggleBtn.addEventListener('click', () => {
-        const isDark = !document.body.classList.contains('darkmode');
-        setTheme(isDark);
+    // Toggle dark mode
+    darkModeToggle.addEventListener('click', () => {
+        document.body.classList.toggle('darkmode');
+        
+        // Update icon and save preference
+        if (document.body.classList.contains('darkmode')) {
+            toggleIcon.textContent = '☀️';
+            localStorage.setItem('darkMode', 'enabled');
+        } else {
+            toggleIcon.textContent = '🌙';
+            localStorage.setItem('darkMode', null);
+        }
     });
 }
 
 // Wait for DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize Dark Mode
-    initializeDarkMode();
+    initDarkMode();
     
     // Mobile Navigation Toggle
     const hamburger = document.querySelector('.hamburger');

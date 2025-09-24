@@ -230,7 +230,8 @@ section {
   border-radius: 2px;
 }
 
-.section-title {
+/* Update the dark mode section title style */
+body.darkmode .section-title {
   color: #ffd700;
 }
 
@@ -243,6 +244,11 @@ section {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
   text-align: center;
+}
+
+/* Add specific dark mode style for home section if needed */
+body.darkmode .home {
+  background: linear-gradient(135deg, #434343 0%, #000000 100%);
 }
 
 .home-content {
@@ -270,6 +276,11 @@ section {
   font-size: 3rem;
   margin-bottom: 1rem;
   font-weight: 700;
+}
+
+/* Make sure text is visible in both modes */
+.name, .tagline, .intro {
+  color: white; /* This will work for both light and dark modes since the background is dark */
 }
 
 .tagline {
