@@ -127,6 +127,7 @@ body.darkmode .social-link:hover {
   background-image: linear-gradient(to right, rgb(151, 232, 162), rgb(159, 115, 248));
 }
 
+
 .nav-right {
   display: flex;
   align-items: center;
@@ -139,6 +140,7 @@ body.darkmode .social-link:hover {
     font-weight: bold;
     font-size: 1.5rem;
     transition: color 0.3s ease;
+    font-family: "Roboto", sans-serif;
 }
 
 
