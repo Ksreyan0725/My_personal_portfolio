@@ -563,7 +563,7 @@ body.darkmode .achievement-card {
 
 .soft-skill {
   background: linear-gradient(45deg, #3498db, #2ecc71);
-  color: white;
+  color: rgb(116, 135, 166);
   padding: 0.5rem 1rem;
   border-radius: 20px;
   font-size: 0.9rem;
@@ -572,8 +572,7 @@ body.darkmode .achievement-card {
 
 body.darkmode .skills-category {
     background: #2d2d2d;
-    color: #ffffff;
-}
+    color: rgb(116, 135, 166);
 
 /* Social Section */
 .social {
@@ -593,7 +592,7 @@ body.darkmode .skills-category {
   flex-direction: column;
   align-items: center;
   padding: 2rem;
-  background: rgb(255, 255, 255);
+  background: rgb(116, 135, 166);
   border-radius: 15px;
   text-decoration: none;
   color: #2c3e50;
@@ -619,7 +618,7 @@ body.darkmode .skills-category {
 
 /* Contact Section */
 .contact {
-  background: white;
+  background: rgb(116, 135, 166);
 }
 
 .contact-content {
@@ -673,7 +672,7 @@ body.darkmode .skills-category {
 .form-group textarea {
   width: 100%;
   padding: 12px;
-  border: 2px solid #e0e0e0;
+  border: 2px solid #01242c;
   border-radius: 8px;
   font-size: 1rem;
   transition: border-color 0.3s ease;
