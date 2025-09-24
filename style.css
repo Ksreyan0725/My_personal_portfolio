@@ -623,9 +623,16 @@ body.darkmode .skills-category {
   margin-bottom: 1rem;
 }
 
+.social-icon img {
+  width: 60px;
+  height: 60px;
+   
+}
+
 .social-name {
   font-weight: 600;
   font-size: 1.1rem;
+  text-align: center;
 }
 
 /* Contact Section */
