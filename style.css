@@ -87,7 +87,7 @@ body.darkmode .social-link:hover {
 }
 
 body.darkmode .social-link:hover {
-  color: #66b3ff;
+  color: #0c151d;
 }
 
 /* --- END DARK MODE FIXES --- */
@@ -124,7 +124,7 @@ body.darkmode .social-link:hover {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-image: linear-gradient(to right, rgb(151, 232, 162), rgb(159, 115, 248));
+  background-image: linear-gradient(to right, rgb(38, 19, 66), rgb(222, 223, 225));
 }
 
 
@@ -326,6 +326,7 @@ body.darkmode .submit-button {
 /* About Section */
 .about {
   background: #f8f9fa;
+background-image: linear-gradient(to right, rgb(151, 232, 162), rgb(159, 115, 248));
 }
 
 .about-content {
@@ -374,7 +375,8 @@ body.darkmode .submit-button {
 
 /* Education Section */
 .education {
-  background: white;
+  /* background: white; */
+  background-image: linear-gradient(to right, rgb(151, 232, 162), rgb(159, 115, 248));
 }
 
 .timeline {
@@ -452,6 +454,7 @@ body.darkmode .submit-button {
 /* Achievements Section */
 .achievements {
   background: #f8f9fa;
+    background-image: linear-gradient(to right, rgb(151, 232, 162), rgb(159, 115, 248));
 }
 
 .achievements-grid {
@@ -486,6 +489,7 @@ body.darkmode .submit-button {
   color: #2c3e50;
   margin-bottom: 1rem;
   font-size: 1.3rem;
+  
 }
 
 .achievement-card p {
@@ -502,6 +506,7 @@ body.darkmode .achievement-card {
 /* Skills Section - Light Mode */
 .skills {
   background: white;
+    background-image: linear-gradient(to right, rgb(151, 232, 162), rgb(159, 115, 248));
 }
 
 .skills-content {
@@ -551,13 +556,13 @@ body.darkmode .achievement-card {
   overflow: hidden;
 }
 
-.skill-progress {
+/* .skill-progress {
   height: 100%;
   background: #0066cc;
   border-radius: 5px;
-  transition: width 2s ease;
-  width: 0%;
-}
+  transition: width 2s ease-in
+  width: auto;
+} */
 
 .soft-skills {
   display: flex;
@@ -581,6 +586,7 @@ body.darkmode .skills-category {
 /* Social Section */
 .social {
   background: #c766b7;
+  background-image: linear-gradient(to right, rgb(151, 232, 162), rgb(159, 115, 248));
 }
 
 .social-links {
@@ -623,7 +629,8 @@ body.darkmode .skills-category {
 
 /* Contact Section */
 .contact {
-  background: rgb(55, 102, 177);
+  /* background: rgb(55, 102, 177); */
+  background-image: linear-gradient(to right, rgb(151, 232, 162), rgb(159, 115, 248));
 }
 
 .contact-content {
@@ -646,7 +653,7 @@ body.darkmode .skills-category {
 }
 
 .contact-item a {
-  color: #3498db;
+  color: #0881d1;
   text-decoration: none;
 }
 
@@ -656,7 +663,7 @@ body.darkmode .skills-category {
 
 /* Contact Form - Light Mode */
 .contact-form {
-    background: #ffffff34;
+     background-color: antiquewhite;
     padding: 2rem;
     border-radius: 10px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.166);
@@ -699,8 +706,8 @@ body.darkmode textarea {
 .submit-button {
   width: 100%;
   padding: 12px;
-  background: linear-gradient(45deg, #3498db, #2ecc71);
-  color: white;
+ background-color: #09907c;
+  color: rgba(82, 56, 56, 0.677);
   border: none;
   border-radius: 8px;
   font-size: 1.1rem;
@@ -857,3 +864,4 @@ body.darkmode .dark-mode-toggle:hover {
     padding: 0 1rem;
   }
 }
+
