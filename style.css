@@ -17,6 +17,7 @@ body {
   padding-top: 50px/* Adjust this value based on your navbar height */
 }
 
+
 /* --- FIXED DARK MODE STYLES --- */
 body.darkmode {
   background: #121212;
