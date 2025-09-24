@@ -125,7 +125,7 @@ body.darkmode .social-link:hover {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-image: linear-gradient(to right, rgb(38, 19, 66), rgb(222, 223, 225));
+  background-image: linear-gradient(to right, rgb(38, 19, 66), rgba(222, 223, 225, 0.123));
 }
 
 
@@ -165,7 +165,7 @@ body.darkmode .nav-logo:hover {
 }
 
 .nav-link {
-  color: #333;
+  color: #050c4a;
   text-decoration: none;
   font-weight: 500;
   transition: color 0.3s ease;
@@ -173,7 +173,7 @@ body.darkmode .nav-logo:hover {
 }
 
 .nav-link:hover {
-  color: #0066cc;
+  color: #044c94;
 }
 
 .nav-link::after {
@@ -184,7 +184,7 @@ body.darkmode .nav-logo:hover {
   bottom: -5px;
   left: 0;
   background-color: #3498db;
-  transition: width 0.3s ease;
+  transition: width 0.20s ease;
 }
 
 .nav-link:hover::after,
@@ -285,7 +285,8 @@ body.darkmode .home {
 
 /* Make sure text is visible in both modes */
 .name, .tagline, .intro {
-  color: white; /* This will work for both light and dark modes since the background is dark */
+  color: rgb(170, 141, 200); /* This will work for both light and dark modes since the background is dark */
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.871); /* Optional: adds a slight shadow for better readability */
 }
 
 .tagline {
@@ -326,7 +327,7 @@ body.darkmode .submit-button {
 
 /* About Section */
 .about {
-  background: #f8f9fa;
+  background: #eff1eb;
 background-image: linear-gradient(to right, rgb(151, 232, 162), rgb(159, 115, 248));
 }
 
@@ -349,7 +350,7 @@ background-image: linear-gradient(to right, rgb(151, 232, 162), rgb(159, 115, 24
 }
 
 .detail-item {
-  background: white;
+  background: rgb(174, 194, 191);
   padding: 1.5rem;
   border-radius: 10px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
@@ -367,8 +368,8 @@ background-image: linear-gradient(to right, rgb(151, 232, 162), rgb(159, 115, 24
 .about-description {
   font-size: 1.1rem;
   line-height: 1.8;
-  color: #666;
-  background: white;
+  color: #480101;
+  background: rgb(193, 218, 165);
   padding: 2rem;
   border-radius: 10px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
@@ -411,7 +412,7 @@ background-image: linear-gradient(to right, rgb(151, 232, 162), rgb(159, 115, 24
   flex: 1;
   text-align: center;
   font-weight: bold;
-  color: #3498db;
+  color: #45db34;
   padding: 1rem;
   display: flex;
   align-items: center;
@@ -420,7 +421,7 @@ background-image: linear-gradient(to right, rgb(151, 232, 162), rgb(159, 115, 24
 
 .timeline-content {
   flex: 1;
-  background: white;
+  background: rgb(157, 210, 234);
   padding: 2rem;
   border-radius: 10px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
@@ -434,7 +435,7 @@ background-image: linear-gradient(to right, rgb(151, 232, 162), rgb(159, 115, 24
   top: 50%;
   width: 15px;
   height: 15px;
-  background: #3498db;
+  background: #45db34;
   border-radius: 50%;
   transform: translateY(-50%);
 }
@@ -468,7 +469,7 @@ background-image: linear-gradient(to right, rgb(151, 232, 162), rgb(159, 115, 24
 
 /* Achievement Cards - Light Mode */
 .achievement-card {
-    background: #ffffff;
+    background: #62c1c6;
     color: #333333;
     padding: 2rem;
     border-radius: 10px;
@@ -519,7 +520,7 @@ body.darkmode .achievement-card {
 }
 
 .skills-category {
-    background: #ffffff;
+    background: #84a3aa;
     padding: 2rem;
     border-radius: 10px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
