@@ -6,7 +6,7 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: smooth; 
 }
 
 body {
@@ -14,7 +14,7 @@ body {
   line-height: 1.6;
   color: #333;
   background-color: #ffffff;
-  padding-top: 60px; /* Adjust this value based on your navbar height */
+  padding-top: 50px/* Adjust this value based on your navbar height */
 }
 
 /* --- FIXED DARK MODE STYLES --- */
@@ -24,7 +24,6 @@ body.darkmode {
 }
 
 body.darkmode .navbar {
-  background-image: linear-gradient(to right, rgb(151, 232, 162), rgb(159, 115, 248));
   background: rgba(18, 18, 18, 0.95);
   border-bottom: 1px solid #333;
   box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
@@ -68,7 +67,7 @@ body.darkmode .cta-button {
 }
 
 body.darkmode .cta-button:hover {
-  background: #4d94ff;
+  background: #3700ce;
 }
 
 body.darkmode .hamburger .bar {
@@ -105,7 +104,7 @@ body.darkmode .social-link:hover {
   top: 0;
   left: 0;
   width: 100%;
-  background: #ffffff;
+  background-image: linear-gradient(to right, rgb(151, 232, 162), rgb(159, 115, 248));
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   z-index: 1000;
 }
@@ -119,12 +118,13 @@ body.darkmode .social-link:hover {
 }
 
 .nav-container {
-  max-width: 1200px;
+  max-width: 1400x;
   margin: 0 auto;
   padding: 1rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background-image: linear-gradient(to right, rgb(151, 232, 162), rgb(159, 115, 248));
 }
 
 .nav-right {
@@ -134,12 +134,13 @@ body.darkmode .social-link:hover {
 }
 
 .nav-logo {
-    color: #0066cc; /* Bright blue for light mode */
+    color: #19a5a3; /* Bright blue for light mode */
     text-decoration: none;
     font-weight: bold;
     font-size: 1.5rem;
     transition: color 0.3s ease;
 }
+
 
 /* Dark mode - keep the same blue color */
 body.darkmode .nav-logo {
