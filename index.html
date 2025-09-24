@@ -239,8 +239,15 @@
             <label for="message">Message</label>
             <textarea id="message" name="message" rows="5" required></textarea>
           </div>
-          <button type="submit" class="submit-button">Send Message</button>
-        </form>
+         <form>
+        <button type="button" class="submit-button" onclick="redirectTo404()">Send Message</button>
+    </form>
+
+    <script>
+        function redirectTo404() {
+            window.location.href = "404.html"; // Redirects to 404.html
+        }
+    </script>
       </div>
     </div>
   </section>
