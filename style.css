@@ -24,6 +24,7 @@ body.darkmode {
 }
 
 body.darkmode .navbar {
+  background-image: linear-gradient(to right, rgb(151, 232, 162), rgb(159, 115, 248));
   background: rgba(18, 18, 18, 0.95);
   border-bottom: 1px solid #333;
   box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
