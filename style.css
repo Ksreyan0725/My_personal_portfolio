@@ -458,13 +458,14 @@ body.darkmode .submit-button {
   margin: 0 auto;
 }
 
+/* Achievement Cards - Light Mode */
 .achievement-card {
-  background: white;
-  padding: 2rem;
-  border-radius: 15px;
-  text-align: center;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background: #ffffff;
+    color: #333333;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
 }
 
 .achievement-card:hover {
@@ -488,15 +489,13 @@ body.darkmode .submit-button {
   line-height: 1.6;
 }
 
-body.darkmode .achievement-card,
-body.darkmode .skills-category,
-body.darkmode .contact-info,
-body.darkmode .contact-form {
-  background: #23272a;
-  color: #f1f1f1;
+body.darkmode .achievement-card {
+    background: #2d2d2d;
+    color: #ffffff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
 
-/* Skills Section */
+/* Skills Section - Light Mode */
 .skills {
   background: white;
 }
@@ -507,6 +506,14 @@ body.darkmode .contact-form {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 3rem;
+}
+
+.skills-category {
+    background: #ffffff;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
 }
 
 .skills-category h3 {
@@ -542,7 +549,7 @@ body.darkmode .contact-form {
 
 .skill-progress {
   height: 100%;
-  background: linear-gradient(45deg, #3498db, #2ecc71);
+  background: #0066cc;
   border-radius: 5px;
   transition: width 2s ease;
   width: 0%;
@@ -561,6 +568,11 @@ body.darkmode .contact-form {
   border-radius: 20px;
   font-size: 0.9rem;
   font-weight: 500;
+}
+
+body.darkmode .skills-category {
+    background: #2d2d2d;
+    color: #ffffff;
 }
 
 /* Social Section */
@@ -638,10 +650,12 @@ body.darkmode .contact-form {
   text-decoration: underline;
 }
 
+/* Contact Form - Light Mode */
 .contact-form {
-  background: #f8f9fa;
-  padding: 2rem;
-  border-radius: 15px;
+    background: #ffffff;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .form-group {
@@ -673,9 +687,9 @@ body.darkmode .contact-form {
 
 body.darkmode input,
 body.darkmode textarea {
-  background: #1e1e1e;
-  color: #e0e0e0;
-  border: 1px solid #333;
+  background: #1a1a1a;
+  color: #ffffff;
+  border-color: #444;
 }
 
 .submit-button {
