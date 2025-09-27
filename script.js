@@ -225,11 +225,12 @@ document.querySelectorAll('.skills, .achievement-card, .detail-item, .timeline-i
 
     function handleNavbarScroll() {
         if (!navbar) return;
+        const isDark = document.body.classList.contains('darkmode');
         if (window.scrollY > 50) {
-            navbar.style.background = 'rgba(245, 241, 241, 0.98)';
-            navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
+            navbar.style.background = isDark ? 'rgba(18, 20, 24, 0.98)' : 'rgba(245, 241, 241, 0.98)';
+            navbar.style.boxShadow = isDark ? '0 2px 20px rgba(0, 0, 0, 0.35)' : '0 2px 20px rgba(0, 0, 0, 0.1)';
         } else {
-            navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+            navbar.style.background = isDark ? 'rgba(18, 20, 24, 0.95)' : 'rgba(255, 255, 255, 0.95)';
             navbar.style.boxShadow = 'none';
         }
     }
@@ -247,6 +248,23 @@ document.querySelectorAll('.skills, .achievement-card, .detail-item, .timeline-i
     if (taglineElement) {
         const originalText = taglineElement.textContent;
         setTimeout(() => typeWriter(taglineElement, originalText, 80), 1000);
+    }
+
+    /* ==================== 'Don't click' Button ==================== */
+    const dontClickBtn = document.getElementById('dont-click');
+    if (dontClickBtn) {
+        dontClickBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            // playful shake and a warning notification
+            dontClickBtn.classList.add('shake');
+            try {
+                showNotification("You were told not to click 😄", 'error');
+            } catch (_) {
+                // fallback alert if notification isn't available for some reason
+                alert("You were told not to click 😄");
+            }
+            setTimeout(() => dontClickBtn.classList.remove('shake'), 600);
+        });
     }
 
     /* ==================== Inject CSS ==================== */

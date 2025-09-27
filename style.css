@@ -17,11 +17,10 @@ body {
   padding-top: 50px/* Adjust this value based on your navbar height */
 }
 
-
 /* --- FIXED DARK MODE STYLES --- */
 body.darkmode {
   background: #121212;
-  color: #e0e0e0;
+  color: #f6f3f3;
 }
 
 body.darkmode .navbar {
@@ -31,7 +30,7 @@ body.darkmode .navbar {
 }
 
 body.darkmode .nav-link {
-  color: #e0e0e0;
+  color: #3e3eb3;
 }
 
 body.darkmode .nav-link:hover {
@@ -219,7 +218,7 @@ section {
   font-size: 2.5rem;
   text-align: center;
   margin-bottom: 3rem;
-  color: #2c3e50;
+  color: #FFD700; /* golden for headings in light mode */
   position: relative;
 }
 
@@ -853,7 +852,7 @@ body.darkmode .dark-mode-toggle:hover {
 }
 
 .darkmode .hamburger .bar {
-    background-color: #ffffff;
+    background-color: #3e3e88;
 }
 
 /* Make sure mobile menu is visible in dark mode */
@@ -936,6 +935,409 @@ body.darkmode .dark-mode-toggle:hover {
 
   .container {
     padding: 0 1rem;
+}
+}
+
+/* Refined Dark Mode Palette Overrides */
+body.darkmode {
+  background: #0d0f12;
+  color: #e6e6e6;
+}
+
+body.darkmode .navbar {
+  background: #121418 !important;
+  border-bottom: 1px solid #232a31 !important;
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.35) !important;
+}
+
+body.darkmode .nav-logo {
+  color: #64b5f6 !important;
+}
+
+body.darkmode .nav-link {
+  color: #cfd8dc !important;
+}
+
+body.darkmode .nav-link:hover {
+  color: #64b5f6 !important;
+}
+
+body.darkmode .nav-link.active {
+  color: #64b5f6 !important;
+}
+
+body.darkmode .section-title {
+  color: #FFD700 !important; /* golden for headings in dark mode */
+}
+
+body.darkmode .achievement-card,
+body.darkmode .timeline-content,
+body.darkmode .contact-form {
+  background: #12171d !important;
+  border: 1px solid #263238 !important;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4) !important;
+}
+
+body.darkmode input,
+body.darkmode textarea {
+  background: #0f1317 !important;
+  color: #e6e6e6 !important;
+  border: 1px solid #37474f !important;
+}
+
+body.darkmode input:focus,
+body.darkmode textarea:focus {
+  border-color: #64b5f6 !important;
+}
+
+body.darkmode .cta-button {
+  background: #64b5f6 !important;
+  color: #0d0f12 !important;
+  border-color: #64b5f6 !important;
+}
+
+/* Override to ensure readability and transparent style in dark mode */
+body.darkmode .cta-button {
+  background: transparent !important;
+  color: #ffffff !important;
+  border-color: rgba(100, 181, 246, 0.7) !important;
+  text-shadow: 0 1px 1px rgba(0,0,0,0.4) !important;
+}
+
+body.darkmode .cta-button:hover {
+  background: #42a5f5 !important;
+}
+
+body.darkmode .hamburger .bar {
+  background: #e6e6e6 !important;
+}
+
+body.darkmode .nav-menu,
+body.darkmode .nav-menu.active {
+  background-color: #0f1114 !important;
+  border: 1px solid #232a31 !important;
+}
+
+body.darkmode .social-link {
+  background: #12171d !important;
+  color: #cfd8dc !important;
+}
+
+body.darkmode .social-link:hover {
+  color: #64b5f6 !important;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.35) !important;
+}
+
+body.darkmode .footer {
+  background: #0f1114 !important;
+  color: #cfd8dc !important;
+}
+
+/* Dark Mode Section Background Overrides (remove colorful gradients) */
+body.darkmode .navbar,
+body.darkmode .nav-container {
+  background-image: none !important;
+}
+
+body.darkmode .nav-container {
+  background: #121418 !important;
+}
+
+body.darkmode .home,
+body.darkmode .about,
+body.darkmode .education,
+body.darkmode .skills,
+body.darkmode .social,
+body.darkmode .contact {
+  background: #12171d !important;
+  background-image: none !important;
+}
+
+/* Ensure mobile menu panel matches dark palette */
+@media (max-width: 768px) {
+  body.darkmode .nav-menu {
+    background-color: #121418 !important;
+    border-color: #232a31 !important;
   }
 }
+
+/* Responsive Enhancements */
+@media (max-width: 1200px) {
+  .container { max-width: 1000px; }
+  .skills-content { grid-template-columns: 1fr 1fr; gap: 2rem; }
+}
+
+@media (max-width: 992px) {
+  section { padding: 4rem 0; }
+  .nav-container { padding: 0.75rem; }
+  /* Switch to hamburger and overlay menu on tablets */
+  .hamburger { display: flex; }
+  .nav-menu {
+    position: fixed;
+    left: -100%;
+    top: 70px;
+    flex-direction: column;
+    background-color: white;
+    width: 100%;
+    text-align: center;
+    transition: 0.3s;
+    box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
+    padding: 2rem 0;
+    gap: 1rem;
+  }
+  .nav-menu.active { left: 0; }
+  .home-content { max-width: 560px; }
+  .section-title { font-size: 2.2rem; }
+  .name { font-size: 2.6rem; }
+  .skills-content { grid-template-columns: 1fr; gap: 2rem; }
+  .about-content, .skills-content, .contact-content { padding: 0 1rem; }
+}
+
+@media (max-width: 768px) {
+  .nav-container { padding: 0.5rem; }
+  .home { min-height: 80vh; }
+  .home-content { padding: 1rem; }
+  .profile-photo { width: 160px; height: 160px; }
+  .name { font-size: 2.2rem; }
+  .tagline { font-size: 1.1rem; }
+  .intro { font-size: 1rem; }
+  .cta-button { padding: 10px 24px; font-size: 0.95rem; }
+  .skills-content { grid-template-columns: 1fr; }
+  .social-links { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+}
+
+@media (max-width: 480px) {
+  .container { padding: 0 0.75rem; }
+  section { padding: 3rem 0; }
+  .profile-photo { width: 140px; height: 140px; }
+  .name { font-size: 2rem; }
+  .tagline { font-size: 1rem; }
+  .intro { font-size: 0.95rem; }
+  .cta-button { padding: 10px 22px; font-size: 0.9rem; }
+  .social-links { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); }
+  .social-link { padding: 1.25rem; }
+  .progress-bar { height: 20px; }
+}
+
+/* Center the "View Course" buttons inside achievement cards */
+.achievement-card .course-link {
+  display: block !important;
+  width: fit-content;
+  margin: 0.75rem auto 0 !important; /* true horizontal centering */
+  padding: 10px 20px;
+  background: transparent;
+  color: #3498db;
+  text-decoration: none;
+  border-radius: 8px;
+  border: 2px solid rgba(52, 152, 219, 0.7);
+  font-weight: 600;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.achievement-card .course-link:hover {
+  transform: translateY(-2px);
+  background-color: rgba(52, 152, 219, 0.1);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+/* Dark mode variant for course buttons */
+body.darkmode .achievement-card .course-link {
+  background: transparent !important;
+  color: #64b5f6 !important;
+  border: 2px solid rgba(100, 181, 246, 0.7) !important;
+}
+body.darkmode .achievement-card .course-link:hover {
+  background-color: rgba(100, 181, 246, 0.15) !important;
+}
+
+/* Dark Mode Tonal Backgrounds (softer, not pure black) */
+body.darkmode {
+  background: #0f141a !important; /* deep slate */
+  color: #e4e7eb !important;
+}
+
+body.darkmode .navbar,
+body.darkmode .nav-container {
+  background: rgba(18, 20, 24, 0.96) !important; /* charcoal */
+  background-image: none !important;
+}
+
+/* Subtle color‑tinted dark gradients per section */
+body.darkmode .home {
+  background: linear-gradient(135deg, #0f1a24 0%, #13202c 100%) !important; /* dark blue */
+}
+
+body.darkmode .about {
+  background: linear-gradient(135deg, #14181e 0%, #1a2028 100%) !important; /* graphite */
+}
+
+body.darkmode .education {
+  background: linear-gradient(135deg, #111a17 0%, #15211d 100%) !important; /* deep green */
+}
+
+body.darkmode .skills {
+  background: linear-gradient(135deg, #161522 0%, #1b1a2d 100%) !important; /* indigo tint */
+}
+
+body.darkmode .social {
+  background: linear-gradient(135deg, #1a1620 0%, #221c2b 100%) !important; /* plum tint */
+}
+
+body.darkmode .contact {
+  background: linear-gradient(135deg, #121a22 0%, #172129 100%) !important; /* teal tint */
+}
+
+/* Surfaces slightly lighter than section backgrounds for depth */
+body.darkmode .achievement-card,
+body.darkmode .timeline-content,
+body.darkmode .contact-form,
+body.darkmode .social-link {
+  background: #141a20 !important; /* surface */
+  border: 1px solid #1f2730 !important;
+}
+
+/* Dark Mode Navbar/Menu Border Cleanup */
+.darkmode .navbar,
+body.darkmode .navbar {
+  border-bottom: none !important;
+}
+
+.darkmode .nav-menu,
+.darkmode .nav-menu.active,
+body.darkmode .nav-menu,
+body.darkmode .nav-menu.active {
+  border: none !important;
+}
+
+/* === About: Dark mode surfaces for personal details & paragraph === */
+body.darkmode .detail-item {
+  background: #141a20 !important;
+  color: #e4e7eb !important;
+  border: 1px solid #1f2730 !important;
+}
+
+body.darkmode .detail-item strong {
+  color: #64b5f6 !important;
+}
+
+body.darkmode .about-description {
+  background: #141a20 !important;
+  color: #cfd8dc !important;
+  border: 1px solid #1f2730 !important;
+}
+
+/* === Achievements: Dark mode section background (avoid pure black) === */
+body.darkmode .achievements {
+  background: linear-gradient(135deg, #151a22 0%, #1b2028 100%) !important;
+  background-image: none !important;
+}
+
+/* === Skills: Light mode base color and multicolor progress bars === */
+.skills { background-color: #f5f7fa; }
+
+.skills-category .skill:nth-child(1) .progress { background: linear-gradient(90deg, #4facfe, #00f2fe); }
+.skills-category .skill:nth-child(2) .progress { background: linear-gradient(90deg, #43e97b, #38f9d7); }
+.skills-category .skill:nth-child(3) .progress { background: linear-gradient(90deg, #fa709a, #fee140); }
+.skills-category .skill:nth-child(4) .progress { background: linear-gradient(90deg, #a18cd1, #fbc2eb); }
+.skills-category .skill:nth-child(5) .progress { background: linear-gradient(90deg, #f6d365, #fda085); }
+.skills-category .skill:nth-child(6) .progress { background: linear-gradient(90deg, #84fab0, #8fd3f4); }
+
+/* Dark mode track styling for progress bars */
+body.darkmode .progress-bar {
+  background: #19222b !important;
+  box-shadow: inset 0 2px 6px rgba(0,0,0,0.25) !important;
+}
+
+/* === Dark mode text visibility improvements === */
+body.darkmode .about-text h3 { color: #e4e7eb !important; }
+body.darkmode .skill-name { color: #cfd8dc !important; }
+body.darkmode .skills-category h3 { color: #e4e7eb !important; }
+body.darkmode .timeline-date { color: #cfd8dc !important; }
+body.darkmode .timeline-content h3 { color: #e4e7eb !important; }
+body.darkmode .timeline-content p { color: #cfd8dc !important; }
+body.darkmode .achievement-card p { color: #cfd8dc !important; }
+body.darkmode .contact-item a { color: #64b5f6 !important; }
+
+/* === 'Don't click' button styling (both modes) === */
+#dont-click {
+  padding: 10px 20px;
+  border-radius: 8px;
+  background: transparent !important;
+  color: #ff0000 !important; /* red text */
+  border: 2px solid rgba(255, 0, 0, 0.8) !important; /* red border */
+  cursor: pointer;
+  font-weight: 600;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+  margin-top: 1rem;
+}
+
+#dont-click:hover { transform: translateY(-2px); background-color: rgba(255, 0, 0, 0.12); box-shadow: 0 8px 20px rgba(0,0,0,0.16); }
+body.darkmode #dont-click { background: transparent !important; color: #ff4d4d !important; border: 2px solid rgba(255, 77, 77, 0.9) !important; }
+body.darkmode #dont-click:hover { background-color: rgba(255, 77, 77, 0.15) !important; }
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-4px); }
+  40% { transform: translateX(4px); }
+  60% { transform: translateX(-3px); }
+  80% { transform: translateX(3px); }
+}
+#dont-click.shake { animation: shake 0.4s linear; }
+
+/* === Dark mode buttons: add border (exclude toggle) === */
+body.darkmode button,
+body.darkmode .cta-button,
+body.darkmode .submit-button {
+  background: transparent !important;
+  color: #eaf2f8 !important;
+  border: 2px solid rgba(100, 181, 246, 0.7) !important;
+  border-radius: 8px;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+body.darkmode .dark-mode-toggle {
+  background: transparent !important;
+  color: #eaf2f8 !important;
+  border: none !important;
+  border-radius: 50%;
+}
+
+body.darkmode button:hover,
+body.darkmode .cta-button:hover,
+body.darkmode .submit-button:hover {
+  background-color: rgba(100, 181, 246, 0.15) !important;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+}
+
+/* === Light mode accent buttons (compliment green/purple gradients) === */
+/* === Light mode transparent buttons with shadows (exclude toggle & don't-click) === */
+body:not(.darkmode) .cta-button,
+body:not(.darkmode) .submit-button,
+body:not(.darkmode) .achievement-card .course-link {
+  background: transparent !important;
+  color: #2f89c7 !important; /* azure text */
+  border: 2px solid #2f89c7 !important; /* azure border */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12) !important; /* subtle shadow */
+}
+
+body:not(.darkmode) .cta-button:hover,
+body:not(.darkmode) .submit-button:hover,
+body:not(.darkmode) .achievement-card .course-link:hover {
+  background-color: rgba(47, 137, 199, 0.08) !important; /* transparent tint */
+  box-shadow: 0 8px 20px rgba(0,0,0,0.16) !important;
+  transform: translateY(-2px);
+}
+
+/* === Light mode specific styling for Send Message button === */
+body:not(.darkmode) .submit-button {
+  background: #f5f5f5 !important; /* light grey background */
+  color: #050c4a !important;      /* dark blue text */
+  border: 2px solid #d0d0d0 !important; /* subtle grey border */
+}
+body:not(.darkmode) .submit-button:hover {
+  background: #eaeaea !important; /* slightly darker on hover */
+  box-shadow: 0 8px 20px rgba(0,0,0,0.16) !important;
+}
+
+/* (reverted) Use default footer colors in dark mode */
 
