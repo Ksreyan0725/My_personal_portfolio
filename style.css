@@ -1104,6 +1104,13 @@ body.darkmode .contact {
   .cta-button { padding: 10px 24px; font-size: 0.95rem; }
   .skills-content { grid-template-columns: 1fr; }
   .social-links { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+
+  /* Timeline mobile fix: prevent center line overlapping year labels */
+  .timeline { padding-left: 24px; }
+  .timeline::before { left: 6px !important; width: 2px !important; z-index: 0; }
+  .timeline-item, .timeline-date, .timeline-content { position: relative; z-index: 1; }
+  .timeline-date { text-align: left; padding-left: 8px; }
+  .timeline-content { margin-left: 1rem; }
 }
 
 @media (max-width: 480px) {
