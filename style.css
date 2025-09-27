@@ -754,6 +754,21 @@ body.darkmode textarea {
   box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
 }
 
+
+.dont-click {
+   width: 100%;
+  padding: 12px;
+ background-color: #09907c;
+  color: rgba(82, 56, 56, 0.677);
+  border: rebeccapurple;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+}
+
 /* Footer */
 .footer {
   background: #354d66;
