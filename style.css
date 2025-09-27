@@ -106,7 +106,7 @@ body.darkmode .social-link:hover {
   left: 0;
   width: 100%;
   background-image: linear-gradient(to right, rgb(151, 232, 162), rgb(159, 115, 248));
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px rgba(95, 88, 88, 0.1);
   z-index: 1000;
 }
 
@@ -125,7 +125,7 @@ body.darkmode .social-link:hover {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-image: linear-gradient(to right, rgb(38, 19, 66), rgba(222, 223, 225, 0.123));
+  background-image: linear-gradient(to right, rgb(73, 41, 122), rgba(109, 5, 246, 0.59));
 }
 
 
