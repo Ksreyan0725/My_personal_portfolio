@@ -16,38 +16,32 @@
       font-family: Arial, sans-serif;
     }
 
-    /* Fullscreen video background */
-    .video-bg {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      z-index: -1;
+    /* Background image */
+    body {
+      background: url('404-error.png') no-repeat center center fixed;
+      background-size: cover;
     }
 
     /* Button container */
     .button-container {
       position: absolute;
       left: 50%;
-      top: 70%;   /* adjust vertical position */
+      top: 70%;
       transform: translate(-50%, -50%);
-      text-align: center;
+      display: flex;
+      gap: 20px; /* space between buttons */
     }
 
-    /* Transparent cyber button */
+    /* Button style */
     .button {
-      display: inline-block;
-      padding: 15px 50px;
-      font-size: 1.3rem;
+      padding: 15px 40px;
+      font-size: 1.2rem;
       font-weight: bold;
       color: #fff;
       background: rgba(0, 0, 0, 0.4);
       border: 2px solid #ff0000;
       border-radius: 8px;
       text-transform: uppercase;
-      letter-spacing: 1px;
       cursor: pointer;
       transition: all 0.3s ease-in-out;
       box-shadow: 0 0 15px rgba(255, 0, 0, 0.6);
@@ -65,47 +59,34 @@
     }
 
     @keyframes shrinkAway {
-      0% {
-        opacity: 1;
-        transform: scale(1) translateZ(0);
-      }
-      50% {
-        opacity: 0.7;
-        transform: scale(0.5) translateZ(-200px);
-      }
-      100% {
-        opacity: 0;
-        transform: scale(0) translateZ(-500px);
-      }
+      0% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.7; transform: scale(0.5); }
+      100% { opacity: 0; transform: scale(0); }
     }
   </style>
 </head>
 <body>
 
-  <!-- Background video -->
-  <!-- <video autoplay muted loop class="video-bg">
-    <source src="404.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-  </video> -->
-  <style>
-    body {
-      background: url('404.jpg') no-repeat center center fixed;
-      background-size: cover;
-    }
-  </style>
-
-  <!-- Button -->
+  <!-- Buttons -->
   <div class="button-container">
-    <button class="button" onclick="goHome(this)">Go Back to Home</button>
+    <button class="button" onclick="goHome(this)">Go Back</button>
+    <button class="button" onclick="goContact(this)">Contact Us</button>
   </div>
 
   <!-- Script -->
   <script>
     function goHome(btn) {
-      btn.classList.add("disappear"); // start animation
+      btn.classList.add("disappear");
       setTimeout(() => {
-        window.location.href = "index.html"; // redirect after animation
-      }, 700); // match animation duration
+        window.location.href = "index.html"; 
+      }, 700);
+    }
+
+    function goContact(btn) {
+      btn.classList.add("disappear");
+      setTimeout(() => {
+        window.location.href = "contact.html"; 
+      }, 700);
     }
   </script>
 

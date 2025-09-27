@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact - Kumar Sreyan Pattanayak</title>
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="https://img.icons8.com/arcade/64/s-key.png" sizes="64x64"/>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">Ku. Sreyan's Portfolio</a>
+      <ul class="nav-menu">
+        <li class="nav-item"><a href="index.html#home" class="nav-link">Home</a></li>
+        <li class="nav-item"><a href="index.html#about" class="nav-link">About</a></li>
+        <li class="nav-item"><a href="index.html#education" class="nav-link">Education</a></li>
+        <li class="nav-item"><a href="index.html#achievements" class="nav-link">Achievements</a></li>
+        <li class="nav-item"><a href="index.html#skills" class="nav-link">Skills</a></li>
+        <li class="nav-item"><a href="index.html#social" class="nav-link">Social</a></li>
+        <li class="nav-item"><a href="contact.html" class="nav-link active">Contact</a></li>
+      </ul>
+      <button id="darkModeToggle" class="dark-mode-toggle" aria-label="Toggle dark mode">
+        <span class="toggle-icon">🌙</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Contact Section -->
+  <section id="contact" class="contact">
+    <div class="container">
+      <h2 class="section-title">Get In Touch</h2>
+      <div class="contact-content">
+        <div class="contact-info">
+          <h3>Contact Information</h3>
+          <div class="contact-item">
+            <strong>Email:</strong> 
+            <a href="mailto:sreyanpattanayak246@gmail.com">sreyanpattanayak246@gmail.com</a>
+          </div>
+          <p>Feel free to reach out or just to say hello!</p>
+        </div>
+
+        <form class="contact-form" id="contactForm">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+          </div>
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="5" required></textarea>
+          </div>
+          <button type="button" class="submit-button" onclick="redirectTo404()">Send Message</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>Copyright &copy; 2025 | All rights reserved</p>
+    </div>
+  </footer>
+
+  <script>
+    function redirectTo404() {
+      window.location.href = "404.html";
+    }
+  </script>
+</body>
+</html>

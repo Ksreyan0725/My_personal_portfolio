@@ -314,9 +314,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Scroll-based Navbar Hide/Show
-    let lastScrollTop = 0;
-    const navbar = document.querySelector('.navbar');
-    const navbarHeight = navbar.getBoundingClientRect().height;
+    // let lastScrollTop = 0;
+    // const navbar = document.querySelector('.navbar');
+    // const navbarHeight = navbar.getBoundingClientRect().height;
 
     // Add a class to style the fixed navbar
     navbar.style.position = 'fixed';
