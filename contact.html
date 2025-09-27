@@ -22,6 +22,11 @@
         <li class="nav-item"><a href="index.html#social" class="nav-link">Social</a></li>
         <li class="nav-item"><a href="contact.html" class="nav-link active">Contact</a></li>
       </ul>
+      <div class="hamburger" aria-label="Toggle navigation" role="button" tabindex="0">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </div>
       <button id="darkModeToggle" class="dark-mode-toggle" aria-label="Toggle dark mode">
         <span class="toggle-icon">🌙</span>
       </button>
@@ -55,7 +60,7 @@
             <label for="message">Message</label>
             <textarea id="message" name="message" rows="5" required></textarea>
           </div>
-          <button type="button" class="submit-button" onclick="redirectTo404()">Send Message</button>
+          <button type="submit" class="submit-button">Send Message</button>
         </form>
       </div>
     </div>
@@ -68,10 +73,6 @@
     </div>
   </footer>
 
-  <script>
-    function redirectTo404() {
-      window.location.href = "404.html";
-    }
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>

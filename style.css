@@ -531,9 +531,65 @@ body.darkmode .achievement-card {
 
 /* Skills Section - Light Mode */
 .skills {
+  padding: 50px 0;
   background: rgb(6, 0, 0);
-    background-image: linear-gradient(to right, rgb(151, 232, 162), rgb(159, 115, 248));
+  background-image: linear-gradient(to right, rgb(151, 232, 162), rgb(159, 115, 248));
 }
+
+.skills-category {
+  margin-bottom: 30px;
+  background: #84a3aa;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+}
+
+.skill {
+  margin: 15px 0;
+}
+
+.skill-name {
+  font-weight: 600;
+  margin-bottom: 5px;
+  display: block;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.progress-bar {
+  width: 100%;
+  background: #f0f0f0;
+  border-radius: 50px;
+  overflow: hidden;
+  height: 25px;
+  box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.progress {
+  width: 0;
+  height: 100%;
+  line-height: 25px;
+  text-align: right;
+  padding-right: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  border-radius: 50px;
+  transition: width 1s ease-in-out;
+}
+
+/* Colors */
+.fill-blue { background: linear-gradient(90deg, #36D1DC, #5B86E5); }
+.fill-green { background: linear-gradient(90deg, #56ab2f, #a8e063); }
+.fill-orange { background: linear-gradient(90deg, #ff8008, #ffc837); }
+.fill-purple { background: linear-gradient(90deg, #8e2de2, #4a00e0); }
+.fill-teal { background: linear-gradient(90deg, #11998e, #38ef7d); }
+.fill-pink { background: linear-gradient(90deg, #f953c6, #b91d73); }
+.progress:nth-child(1) { background: linear-gradient(90deg, #4facfe, #00f2fe); }
+.progress:nth-child(2) { background: linear-gradient(90deg, #43e97b, #38f9d7); }
+/* etc. */
+
 
 .skills-content {
   max-width: 900px;
@@ -543,13 +599,6 @@ body.darkmode .achievement-card {
   gap: 3rem;
 }
 
-.skills-category {
-    background: #84a3aa;
-    padding: 2rem;
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    margin-bottom: 2rem;
-}
 
 .skills-category h3 {
   font-size: 1.8rem;
@@ -570,26 +619,12 @@ body.darkmode .achievement-card {
   gap: 0.5rem;
 }
 
-.skill-name {
-  font-weight: 600;
-  color: #2c3e50;
-}
-
 .skill-bar {
   height: 10px;
   background: #e0e0e0;
   border-radius: 5px;
   overflow: hidden;
 }
-
-/* .skill-progress {
-  height: 100%;
-  background: #0066cc;
-  border-radius: 5px;
-  transition: width 2s ease-in
-  width: auto;
-} */
-
 .soft-skills {
   display: flex;
   flex-wrap: wrap;
@@ -603,12 +638,14 @@ body.darkmode .achievement-card {
   border-radius: 20px;
   font-size: 0.9rem;
   font-weight: 500;
-}
+} 
 
 body.darkmode .skills-category {
     background: #2d2d2d;
     color: rgb(55, 102, 177);
 }
+
+
 /* Social Section */
 .social {
   background: #c766b7;
@@ -756,18 +793,9 @@ body.darkmode textarea {
 
 
 .dont-click {
-   width: 100%;
-  padding: 12px;
- background-color: #09907c;
-  color: rgba(82, 56, 56, 0.677);
-  border: rebeccapurple;
-  border-radius: 8px;
-  font-size: 1.1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+  border: none;
 }
+
 
 /* Footer */
 .footer {
@@ -816,8 +844,6 @@ body.darkmode .dark-mode-toggle:hover {
     background-color: #1a1a1a;
     border-bottom: 1px solid #333;
 }
-
-.darkmode .nav-logo,
 .darkmode .nav-link {
     color: #ffffff;
 }
