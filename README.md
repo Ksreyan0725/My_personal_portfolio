@@ -3,7 +3,7 @@ Kumar Sreyan Pattanayak | Portfolio
 
 Welcome to my portfolio repository.  
 This website highlights my skills, projects, and achievements as a developer.  
-Live at: https://ksreyanportfolio.github.io
+Live at: https://ksreyan0725.github.io/My_personal_portfolio/
 
 ------------------------------------------------------------
 
@@ -32,9 +32,7 @@ Featured Projects
 Portfolio Website  
 Description: My personal portfolio showcasing my projects and skills.  
 Tech Used: HTML, CSS, JavaScript  
-Live Demo: https://ksreyanportfolio.github.io  
-Source Code: https://github.com/ksreyanportfolio/ksreyanportfolio.github.io  
-
+Source Code: https://github.com/Ksreyan0725/My_personal_portfolio
 
 
 Career Goals
