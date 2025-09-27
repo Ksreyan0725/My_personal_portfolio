@@ -71,7 +71,7 @@ body.darkmode .cta-button:hover {
 }
 
 body.darkmode .hamburger .bar {
-  background: #e0e0e0;
+  background: #c8b1b1;
 }
 
 body.darkmode .nav-menu {
@@ -161,6 +161,7 @@ body.darkmode .nav-logo:hover {
   margin: 0;
   padding: 0;
   list-style: none;
+
 }
 
 .nav-link {
@@ -199,6 +200,7 @@ body.darkmode .nav-logo:hover {
   display: none;
   flex-direction: column;
   cursor: pointer;
+ 
 }
 
 .bar {
@@ -857,7 +859,7 @@ body.darkmode .dark-mode-toggle:hover {
 
 /* Make sure mobile menu is visible in dark mode */
 .darkmode .nav-menu.active {
-    background-color: #1a1a1a;
+    background-color: rgba(18, 20, 24, 0.92);
     border: 1px solid #333;
 }
 
@@ -877,7 +879,9 @@ body.darkmode .dark-mode-toggle:hover {
     left: -100%;
     top: 70px;
     flex-direction: column;
-    background-color: white;
+    background-color: rgba(52, 152, 219, 0.35) !important; /* light transparent blue */
+    -webkit-backdrop-filter: saturate(180%) blur(8px);
+    backdrop-filter: saturate(180%) blur(8px);
     width: 100%;
     text-align: center;
     transition: 0.3s;
@@ -888,6 +892,10 @@ body.darkmode .dark-mode-toggle:hover {
 
   .nav-menu.active {
     left: 0;
+    background-color: rgba(52, 152, 219, 0.35) !important; /* light transparent blue */
+    -webkit-backdrop-filter: saturate(180%) blur(8px);
+    backdrop-filter: saturate(180%) blur(8px);
+    border: 1px solid rgba(0, 0, 0, 0.06);
   }
 
   .home-content {
@@ -1014,7 +1022,7 @@ body.darkmode .hamburger .bar {
 
 body.darkmode .nav-menu,
 body.darkmode .nav-menu.active {
-  background-color: #0f1114 !important;
+  background-color: rgba(18, 20, 24, 0.92) !important;
   border: 1px solid #232a31 !important;
 }
 
@@ -1040,7 +1048,7 @@ body.darkmode .nav-container {
 }
 
 body.darkmode .nav-container {
-  background: #121418 !important;
+  background: transparent !important;
 }
 
 body.darkmode .home,
@@ -1077,7 +1085,9 @@ body.darkmode .contact {
     left: -100%;
     top: 70px;
     flex-direction: column;
-    background-color: white;
+    background-color: rgba(52, 152, 219, 0.35); /* light transparent blue */
+    -webkit-backdrop-filter: saturate(180%) blur(8px);
+    backdrop-filter: saturate(180%) blur(8px);
     width: 100%;
     text-align: center;
     transition: 0.3s;
@@ -1085,7 +1095,13 @@ body.darkmode .contact {
     padding: 2rem 0;
     gap: 1rem;
   }
-  .nav-menu.active { left: 0; }
+  .nav-menu.active {
+    left: 0;
+    background-color: rgba(52, 152, 219, 0.35); /* light transparent blue */
+    -webkit-backdrop-filter: saturate(180%) blur(8px);
+    backdrop-filter: saturate(180%) blur(8px);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+  }
   .home-content { max-width: 560px; }
   .section-title { font-size: 2.2rem; }
   .name { font-size: 2.6rem; }

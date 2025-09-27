@@ -221,6 +221,8 @@ document.querySelectorAll('.skills, .achievement-card, .detail-item, .timeline-i
 
             lastScrollTop = scrollTop;
         });
+
+        // Initial background will update on first scroll as before
     }
 
     function handleNavbarScroll() {
