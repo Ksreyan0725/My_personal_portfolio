@@ -531,7 +531,7 @@ body.darkmode .achievement-card {
 
 /* Skills Section - Light Mode */
 .skills {
-  background: white;
+  background: rgb(6, 0, 0);
     background-image: linear-gradient(to right, rgb(151, 232, 162), rgb(159, 115, 248));
 }
 
