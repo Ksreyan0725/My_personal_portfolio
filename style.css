@@ -518,8 +518,9 @@ body.darkmode .achievement-card {
 
 .course-link:hover {
   background: rgba(255, 255, 255, 0.1);
-  transform: translateY(-2px);
+  transform: translateY(-1px);
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  padding: 15px;
 }
 
 .course-link:hover .darkmode{
