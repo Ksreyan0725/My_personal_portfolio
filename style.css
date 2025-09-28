@@ -647,6 +647,48 @@ body.darkmode .skills-category {
 }
 
 
+  .resume-section {
+    text-align: center;
+    margin: 40px 0;
+      margin-bottom: 30px;
+  background: #84a3aa;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+  }
+
+  .resume-heading {
+    font-size: 20px;
+    margin-bottom: 15px;
+    color: #333;
+  }
+
+  .resume-btn {
+    display: inline-block;
+    padding: 12px 24px;
+    border: 2px solid #03a199;
+    color: #03a199;
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 50px;   /* pill shape */
+    background: transparent;
+    transition: all 0.3s ease;
+  }
+
+  .resume-btn:hover {
+    background: #03a199;
+    color: #fff;
+    transform: scale(1.05);
+  }
+
+  .resume-btn:active {
+    transform: scale(0.98);
+  }
+
+
+
 /* Social Section */
 .social {
   background: #c766b7;
