@@ -260,7 +260,7 @@ document.querySelectorAll('.skills, .achievement-card, .detail-item, .timeline-i
             // playful shake and a warning notification
             dontClickBtn.classList.add('shake');
             try {
-                showNotification("You were told not to click 😄", 'error');
+                showNotification("I told you not to click. 😄", 'error');
             } catch (_) {
                 // fallback alert if notification isn't available for some reason
                 alert("I have told you not to click 😄");
