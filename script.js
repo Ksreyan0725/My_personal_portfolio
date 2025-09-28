@@ -263,7 +263,7 @@ document.querySelectorAll('.skills, .achievement-card, .detail-item, .timeline-i
                 showNotification("You were told not to click 😄", 'error');
             } catch (_) {
                 // fallback alert if notification isn't available for some reason
-                alert("You were told not to click 😄");
+                alert("I have told you not to click 😄");
             }
             setTimeout(() => dontClickBtn.classList.remove('shake'), 600);
         });
