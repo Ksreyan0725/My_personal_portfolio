@@ -647,22 +647,29 @@ body.darkmode .skills-category {
 }
 
 
-  .resume-section {
-    text-align: center;
-    margin: 40px 0;
-      margin-bottom: 30px;
+
+.resume-section {
+  text-align: center;
+  margin: 40px auto 2rem;   /* keeps it centered */
   background: #84a3aa;
   padding: 2rem;
   border-radius: 10px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  margin-bottom: 2rem;
-  }
 
-  .resume-heading {
-    font-size: 20px;
-    margin-bottom: 15px;
-    color: #333;
-  }
+  width: 650px;   /* ← breadth */
+  height: 170px;  /* ← length */
+}
+/* width = horizontal size (breadth).
+
+height = vertical size (length). */
+
+
+.resume-heading {
+  font-size: 20px;
+  margin-bottom: 15px;
+  color: #333;
+}
+
 
   .resume-btn {
     display: inline-block;
