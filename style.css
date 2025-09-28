@@ -165,7 +165,7 @@ body.darkmode .nav-logo:hover {
 }
 
 .nav-link {
-  color: #050c4a;
+  color: #4b5189;
   text-decoration: none;
   font-weight: 500;
   transition: color 0.3s ease;
@@ -173,7 +173,7 @@ body.darkmode .nav-logo:hover {
 }
 
 .nav-link:hover {
-  color: #044c94;
+  color: #0c3156;
 }
 
 .nav-link::after {
@@ -183,7 +183,7 @@ body.darkmode .nav-logo:hover {
   height: 2px;
   bottom: -5px;
   left: 0;
-  background-color: #3498db;
+  background-color: #325088;
   transition: width 0.20s ease;
 }
 
