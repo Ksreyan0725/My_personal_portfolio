@@ -284,6 +284,27 @@ document.querySelectorAll('.skills, .achievement-card, .detail-item, .timeline-i
 
     console.log('Portfolio website JavaScript loaded successfully!');
 });
+ 
+// ==================== Contact Button with Existence Check ====================
 
+  document.getElementById("contactBtn").addEventListener("click", function (event) {
+    event.preventDefault(); // stop default redirect
+    const fileUrl = this.getAttribute("href");
+
+    fetch(fileUrl, { method: "HEAD" })
+      .then(response => {
+        if (response.ok) {
+          // ✅ Page exists → go there
+          window.location.href = fileUrl;
+        } else {
+          // ❌ Missing → go to 404 page
+          window.location.href = "404.html";
+        }
+      })
+      .catch(() => {
+        // ❌ Any error → go to 404 page
+        window.location.href = "404.html";
+      });
+  });
 
 // End of script.js

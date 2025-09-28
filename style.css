@@ -34,7 +34,7 @@ body.darkmode .nav-link {
 }
 
 body.darkmode .nav-link:hover {
-  color: #66b3ff;
+  color: #abb0b5;
 }
 
 body.darkmode .section-title {
@@ -43,7 +43,7 @@ body.darkmode .section-title {
 
 body.darkmode .achievement-card,
 body.darkmode .timeline-content,
-body.darkmode .contact-form {
+body.darkmode .resume-btn .contact-form {
   background: #1e1e1e;
   border: 1px solid #333;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
