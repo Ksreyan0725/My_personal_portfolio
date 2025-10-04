@@ -1,3 +1,64 @@
+/* ==================== CSS Variables for Modern Theming ==================== */
+:root {
+  /* Light Theme Colors */
+  --color-bg: #f8f9fc;
+  --color-fg: #1a202c;
+  --color-text: #2d3748;
+  --color-text-secondary: #4a5568;
+  
+  --navbar-bg: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --navbar-text: #ffffff;
+  --navbar-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  
+  --accent-primary: #667eea;
+  --accent-secondary: #764ba2;
+  --accent-hover: #5568d3;
+  
+  --card-bg: #ffffff;
+  --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  --card-shadow-hover: 0 15px 40px rgba(0, 0, 0, 0.12);
+  
+  --border-color: #e2e8f0;
+  --input-bg: #ffffff;
+  --input-border: #cbd5e0;
+  --input-focus: #667eea;
+  
+  /* Ripple Animation */
+  --ripple-duration: 600ms;
+  --ripple-color: rgba(255, 255, 255, 0.4);
+  --page-ripple-duration: 800ms;
+  
+  /* Transitions */
+  --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[data-theme="dark"] {
+  /* Dark Theme Colors */
+  --color-bg: #0f141a;
+  --color-fg: #e4e7eb;
+  --color-text: #cbd5e0;
+  --color-text-secondary: #a0aec0;
+  
+  --navbar-bg: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
+  --navbar-text: #e4e7eb;
+  --navbar-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  
+  --accent-primary: #7c3aed;
+  --accent-secondary: #a78bfa;
+  --accent-hover: #8b5cf6;
+  
+  --card-bg: #1a202c;
+  --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  --card-shadow-hover: 0 15px 40px rgba(0, 0, 0, 0.4);
+  
+  --border-color: #2d3748;
+  --input-bg: #1a202c;
+  --input-border: #4a5568;
+  --input-focus: #a78bfa;
+  
+  --ripple-color: rgba(167, 139, 250, 0.3);
+}
+
 /* Reset and Base Styles */
 * {
   margin: 0;
@@ -6,21 +67,26 @@
 }
 
 html {
-  scroll-behavior: smooth; 
+  scroll-behavior: smooth;
+  width: 100%;
+  overflow-x: hidden;
 } 
 
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   line-height: 1.6;
-  color: #333;
-  background-color: #ffffff;
-  padding-top: 50px/* Adjust this value based on your navbar height */
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  padding-top: 70px;
+  width: 100%;
+  overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* --- FIXED DARK MODE STYLES --- */
+/* Legacy dark mode class (kept for backwards compatibility) */
 body.darkmode {
-  background: #121212;
-  color: #f6f3f3;
+  background: var(--color-bg);
+  color: var(--color-fg);
 }
 
 body.darkmode .navbar {
@@ -98,15 +164,64 @@ body.darkmode .social-link:hover {
   padding: 0 2rem;
 }
 
+/* ==================== Ripple Animation Styles ==================== */
+.dark-mode-toggle {
+  position: relative;
+  overflow: hidden;
+}
+
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--ripple-color);
+  transform: scale(0);
+  animation: ripple-animation var(--ripple-duration) ease-out;
+  pointer-events: none;
+}
+
+@keyframes ripple-animation {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+.page-ripple {
+  position: fixed;
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  background: var(--ripple-color);
+  transform: translate(-50%, -50%) scale(0);
+  animation: page-ripple-animation var(--page-ripple-duration) ease-out;
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: screen;
+}
+
+@keyframes page-ripple-animation {
+  to {
+    transform: translate(-50%, -50%) scale(30);
+    opacity: 0;
+  }
+}
+
 /* Navigation */
 .navbar {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  background-image: linear-gradient(to right, rgb(151, 232, 162), rgb(151, 108, 238));
-  box-shadow: 0 2px 4px rgba(95, 88, 88, 0.1);
+  right: 0;
+  width: 100vw;
+  background: var(--navbar-bg) !important;
+  box-shadow: var(--navbar-shadow);
   z-index: 1000;
+  transition: var(--transition-smooth);
+}
+
+/* Ensure background is never overridden by JavaScript */
+.navbar[style*="background"] {
+  background: var(--navbar-bg) !important;
 }
 
 .navbar.hide {
@@ -120,11 +235,10 @@ body.darkmode .social-link:hover {
 .nav-container {
   max-width: 1400px;
   margin: 0 auto;
-  padding: 1rem;
+  padding: 1rem 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-image: linear-gradient(to right, rgb(73, 41, 122), rgba(103, 16, 217, 0.59));
   flex-wrap: wrap;
   gap: 0.5rem;
 }
@@ -137,24 +251,18 @@ body.darkmode .social-link:hover {
 }
 
 .nav-logo {
-    color: #19a5a3; /* Bright blue for light mode */
+    color: var(--navbar-text);
     text-decoration: none;
-    font-weight: bold;
+    font-weight: 700;
     font-size: 1.5rem;
-    transition: color 0.3s ease;
+    transition: var(--transition-smooth);
     font-family: "Roboto", sans-serif;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-
-/* Dark mode - keep the same blue color */
-body.darkmode .nav-logo {
-    color: #0066cc !important; /* Using !important to override any other styles */
-}
-
-/* Hover effect (optional) */
-.nav-logo:hover,
-body.darkmode .nav-logo:hover {
-    color: #325170 !important; /* Slightly darker blue on hover */
+.nav-logo:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.1);
 }
 
 .nav-menu {
@@ -167,15 +275,17 @@ body.darkmode .nav-logo:hover {
 }
 
 .nav-link {
-  color: #2d357e;
+  color: var(--navbar-text);
   text-decoration: none;
   font-weight: 500;
-  transition: color 0.3s ease;
+  transition: var(--transition-smooth);
   position: relative;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .nav-link:hover {
-  color: #0c3156;
+  color: rgba(255, 255, 255, 0.8);
+  transform: translateY(-2px);
 }
 
 .nav-link::after {
@@ -185,8 +295,9 @@ body.darkmode .nav-logo:hover {
   height: 2px;
   bottom: -5px;
   left: 0;
-  background-color: #325088;
-  transition: width 0.20s ease;
+  background-color: rgba(255, 255, 255, 0.9);
+  transition: width 0.3s ease;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
 }
 
 .nav-link:hover::after,
@@ -195,7 +306,8 @@ body.darkmode .nav-logo:hover {
 }
 
 .nav-link.active {
-  color: #3498db;
+  color: rgba(255, 255, 255, 1);
+  font-weight: 600;
 }
 
 .hamburger {
@@ -222,8 +334,10 @@ section {
   font-size: 2.5rem;
   text-align: center;
   margin-bottom: 3rem;
-  color: #FFD700; /* golden for headings in light mode */
+  color: var(--accent-primary);
   position: relative;
+  font-weight: 700;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .section-title::after {
@@ -232,10 +346,11 @@ section {
   bottom: -10px;
   left: 50%;
   transform: translateX(-50%);
-  width: 60px;
-  height: 3px;
-  background: linear-gradient(45deg, #3498db, #2ecc71);
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
   border-radius: 2px;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.4);
 }
 
 /* Update the dark mode section title style */
@@ -249,14 +364,26 @@ body.darkmode .section-title {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #667eea 0%, #310e54 100%);
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
   text-align: center;
+  position: relative;
+  overflow: hidden;
 }
 
-/* Add specific dark mode style for home section if needed */
-body.darkmode .home {
-  background: linear-gradient(135deg, #434343 0%, #000000 100%);
+.home::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 30% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+[data-theme="dark"] .home {
+  background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
 }
 
 .home-content {
@@ -330,8 +457,11 @@ body.darkmode .submit-button {
 
 /* About Section */
 .about {
-  background: #eff1eb;
-background-image: linear-gradient(to right, rgb(151, 232, 162), rgb(159, 115, 248));
+  background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 100%);
+}
+
+[data-theme="dark"] .about {
+  background: linear-gradient(135deg, #14181e 0%, #1a2028 100%);
 }
 
 .about-content {
@@ -342,7 +472,8 @@ background-image: linear-gradient(to right, rgb(151, 232, 162), rgb(159, 115, 24
 .about-text h3 {
   font-size: 1.8rem;
   margin-bottom: 2rem;
-  color: #2c3e50;
+  color: var(--accent-primary);
+  font-weight: 600;
 }
 
 .details-grid {
@@ -353,35 +484,42 @@ background-image: linear-gradient(to right, rgb(151, 232, 162), rgb(159, 115, 24
 }
 
 .detail-item {
-  background: rgb(174, 194, 191);
+  background: var(--card-bg);
   padding: 1.5rem;
-  border-radius: 10px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;
+  border-radius: 12px;
+  box-shadow: var(--card-shadow);
+  transition: var(--transition-smooth);
+  border: 1px solid var(--border-color);
 }
 
 .detail-item:hover {
-  transform: translateY(-3px);
+  transform: translateY(-5px) translateZ(0);
+  box-shadow: var(--card-shadow-hover);
 }
 
 .detail-item strong {
-  color: #3498db;
+  color: var(--accent-primary);
+  font-weight: 600;
 }
 
 .about-description {
   font-size: 1.1rem;
   line-height: 1.8;
-  color: #480101;
-  background: rgb(193, 218, 165);
+  color: var(--color-text);
+  background: var(--card-bg);
   padding: 2rem;
-  border-radius: 10px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  box-shadow: var(--card-shadow);
+  border: 1px solid var(--border-color);
 }
 
 /* Education Section */
 .education {
-  /* background: white; */
-  background-image: linear-gradient(to right, rgb(151, 232, 162), rgb(159, 115, 248));
+  background: linear-gradient(135deg, #fafbfc 0%, #f0f2f5 100%);
+}
+
+[data-theme="dark"] .education {
+  background: linear-gradient(135deg, #111a17 0%, #15211d 100%);
 }
 
 .timeline {
@@ -424,12 +562,19 @@ background-image: linear-gradient(to right, rgb(151, 232, 162), rgb(159, 115, 24
 
 .timeline-content {
   flex: 1;
-  background: rgb(157, 210, 234);
+  background: var(--card-bg);
   padding: 2rem;
-  border-radius: 10px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  box-shadow: var(--card-shadow);
   margin: 0 1rem;
   position: relative;
+  border: 1px solid var(--border-color);
+  transition: var(--transition-smooth);
+}
+
+.timeline-content:hover {
+  transform: translateX(5px);
+  box-shadow: var(--card-shadow-hover);
 }
 
 .timeline-content::before {
@@ -452,14 +597,18 @@ background-image: linear-gradient(to right, rgb(151, 232, 162), rgb(159, 115, 24
 }
 
 .timeline-content h3 {
-  color: #2c3e50;
+  color: var(--accent-primary);
   margin-bottom: 0.5rem;
+  font-weight: 600;
 }
 
 /* Achievements Section */
 .achievements {
-  background: #f8f9fa;
-    background-image: linear-gradient(to right, rgb(151, 232, 162), rgb(159, 115, 248));
+  background: linear-gradient(135deg, #f8f9fc 0%, #eef0f5 100%);
+}
+
+[data-theme="dark"] .achievements {
+  background: linear-gradient(135deg, #151a22 0%, #1b2028 100%);
 }
 
 .achievements-grid {
@@ -470,19 +619,32 @@ background-image: linear-gradient(to right, rgb(151, 232, 162), rgb(159, 115, 24
   margin: 0 auto;
 }
 
-/* Achievement Cards - Light Mode */
+/* Achievement Cards - Modern Style */
 .achievement-card {
-    background: #62c1c6;
-    color: #333333;
+    background: var(--card-bg);
+    color: var(--color-text);
     padding: 2rem;
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
+    border-radius: 16px;
+    box-shadow: var(--card-shadow);
+    transition: var(--transition-smooth);
+    border: 1px solid var(--border-color);
+    position: relative;
+    overflow: hidden;
+}
+
+.achievement-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
 }
 
 .achievement-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  transform: translateY(-8px) translateZ(0);
+  box-shadow: var(--card-shadow-hover);
 }
 
 .achievement-icon {
@@ -491,14 +653,14 @@ background-image: linear-gradient(to right, rgb(151, 232, 162), rgb(159, 115, 24
 }
 
 .achievement-card h3 {
-  color: #2c3e50;
+  color: var(--accent-primary);
   margin-bottom: 1rem;
   font-size: 1.3rem;
-  
+  font-weight: 600;
 }
 
 .achievement-card p {
-  color: #666;
+  color: var(--color-text-secondary);
   line-height: 1.6;
 }
 
@@ -532,20 +694,29 @@ body.darkmode .achievement-card {
 }
 
 
-/* Skills Section - Light Mode */
+/* Skills Section */
 .skills {
   padding: 50px 0;
-  background: rgb(6, 0, 0);
-  background-image: linear-gradient(to right, rgb(151, 232, 162), rgb(159, 115, 248));
+  background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 100%);
+}
+
+[data-theme="dark"] .skills {
+  background: linear-gradient(135deg, #161522 0%, #1b1a2d 100%);
 }
 
 .skills-category {
   margin-bottom: 30px;
-  background: #84a3aa;
+  background: var(--card-bg);
   padding: 2rem;
-  border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  box-shadow: var(--card-shadow);
   margin-bottom: 2rem;
+  border: 1px solid var(--border-color);
+  transition: var(--transition-smooth);
+}
+
+.skills-category:hover {
+  box-shadow: var(--card-shadow-hover);
 }
 
 .skill {
@@ -606,8 +777,9 @@ body.darkmode .achievement-card {
 .skills-category h3 {
   font-size: 1.8rem;
   margin-bottom: 2rem;
-  color: #2c3e50;
+  color: var(--accent-primary);
   text-align: center;
+  font-weight: 600;
 }
 
 .skills-grid {
@@ -653,56 +825,67 @@ body.darkmode .skills-category {
 .resume-section {
   text-align: center;
   margin: 40px auto 2rem;
-  background: #84a3aa;
+  background: var(--card-bg);
   padding: 2rem;
-  border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  box-shadow: var(--card-shadow);
   max-width: 650px;
   width: 100%;
   min-height: auto;
+  border: 1px solid var(--border-color);
+  transition: var(--transition-smooth);
+}
+
+.resume-section:hover {
+  box-shadow: var(--card-shadow-hover);
 }
 
 
 .resume-heading {
   font-size: 20px;
   margin-bottom: 15px;
-  color: #333;
+  color: var(--color-text);
   word-wrap: break-word;
+  font-weight: 600;
 }
 
 
   .resume-btn {
     display: inline-block;
-    padding: 12px 24px;
-    border: 2px solid #03a199;
-    color: #03a199;
+    padding: 12px 30px;
+    border: 2px solid var(--accent-primary);
+    color: var(--accent-primary);
     font-size: 16px;
     font-weight: 600;
     text-decoration: none;
     border-radius: 50px;
     background: transparent;
-    transition: all 0.3s ease;
+    transition: var(--transition-smooth);
     white-space: normal;
     word-wrap: break-word;
     max-width: 100%;
   }
 
   .resume-btn:hover {
-    background: #03a199;
-    color: #fff;
-    transform: scale(1.05);
+    background: var(--accent-primary);
+    color: #ffffff;
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
   }
 
   .resume-btn:active {
-    transform: scale(0.98);
+    transform: translateY(0) scale(0.98);
   }
 
 
 
 /* Social Section */
 .social {
-  background: #c766b7;
-  background-image: linear-gradient(to right, rgb(151, 232, 162), rgb(159, 115, 248));
+  background: linear-gradient(135deg, #fafbfc 0%, #f0f2f5 100%);
+}
+
+[data-theme="dark"] .social {
+  background: linear-gradient(135deg, #1a1620 0%, #221c2b 100%);
 }
 
 .social-links {
@@ -718,19 +901,20 @@ body.darkmode .skills-category {
   flex-direction: column;
   align-items: center;
   padding: 2rem;
-  background: rgb(55, 102, 177);
-
-  border-radius: 15px;
+  background: var(--card-bg);
+  border-radius: 16px;
   text-decoration: none;
-  color: #2c3e50;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
+  color: var(--color-text);
+  box-shadow: var(--card-shadow);
+  transition: var(--transition-smooth);
+  border: 1px solid var(--border-color);
 }
 
 .social-link:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
-  color: #3498db;
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: var(--card-shadow-hover);
+  color: var(--accent-primary);
+  border-color: var(--accent-primary);
 }
 
 .social-icon {
@@ -752,8 +936,11 @@ body.darkmode .skills-category {
 
 /* Contact Section */
 .contact {
-  /* background: rgb(55, 102, 177); */
-  background-image: linear-gradient(to right, rgb(151, 232, 162), rgb(159, 115, 248));
+  background: linear-gradient(135deg, #f8f9fc 0%, #eef0f5 100%);
+}
+
+[data-theme="dark"] .contact {
+  background: linear-gradient(135deg, #121a22 0%, #172129 100%);
 }
 
 .contact-content {
@@ -767,7 +954,8 @@ body.darkmode .skills-category {
 .contact-info h3 {
   font-size: 1.8rem;
   margin-bottom: 2rem;
-  color: #2c3e50;
+  color: var(--accent-primary);
+  font-weight: 600;
 }
 
 .contact-item {
@@ -776,20 +964,24 @@ body.darkmode .skills-category {
 }
 
 .contact-item a {
-  color: #0881d1;
+  color: var(--accent-primary);
   text-decoration: none;
+  font-weight: 500;
+  transition: var(--transition-smooth);
 }
 
 .contact-item a:hover {
   text-decoration: underline;
+  color: var(--accent-hover);
 }
 
-/* Contact Form - Light Mode */
+/* Contact Form - Modern Style */
 .contact-form {
-     background-color: antiquewhite;
+    background: var(--card-bg);
     padding: 2rem;
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.166);
+    border-radius: 12px;
+    box-shadow: var(--card-shadow);
+    border: 1px solid var(--border-color);
 }
 
 .form-group {
@@ -800,23 +992,26 @@ body.darkmode .skills-category {
   display: block;
   margin-bottom: 0.5rem;
   font-weight: 600;
-  color: #2c3e50;
+  color: var(--color-text);
 }
 
 .form-group input,
 .form-group textarea {
   width: 100%;
   padding: 12px;
-  border: 2px solid #01242c;
+  border: 2px solid var(--input-border);
   border-radius: 8px;
   font-size: 1rem;
-  transition: border-color 0.3s ease;
+  transition: var(--transition-smooth);
+  background: var(--input-bg);
+  color: var(--color-text);
 }
 
 .form-group input:focus,
 .form-group textarea:focus {
   outline: none;
-  border-color: #3498db;
+  border-color: var(--input-focus);
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
 }
 
 body.darkmode input,
@@ -828,20 +1023,26 @@ body.darkmode textarea {
 
 .submit-button {
   width: 100%;
-  padding: 12px;
- background-color: #09907c;
-  color: rgba(82, 56, 56, 0.677);
+  padding: 14px;
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+  color: #ffffff;
   border: none;
   border-radius: 8px;
   font-size: 1.1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: var(--transition-smooth);
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
 }
 
 .submit-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+  filter: brightness(1.1);
+}
+
+.submit-button:active {
+  transform: translateY(-1px);
 }
 
 
@@ -865,26 +1066,31 @@ body.darkmode textarea {
 
 /* Dark Mode Toggle Button */
 .dark-mode-toggle {
-    background: none;
-    border: none;
-    padding: 8px;
+    background: rgba(255, 255, 255, 0.15);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    padding: 10px;
     cursor: pointer;
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     border-radius: 50%;
-    transition: background-color 0.3s;
+    transition: var(--transition-smooth);
     display: flex;
     align-items: center;
     justify-content: center;
     margin-left: 1rem;
     order: 3;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transform: translateZ(0);
 }
 
 .dark-mode-toggle:hover {
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: rgba(255, 255, 255, 0.25);
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
 }
 
-body.darkmode .dark-mode-toggle:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+.dark-mode-toggle:active {
+    transform: translateY(-1px) scale(0.98);
 }
 
 .toggle-icon {

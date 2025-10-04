@@ -1,25 +1,76 @@
 // Portfolio Website JavaScript
 
 document.addEventListener('DOMContentLoaded', () => {
-    /* ==================== Dark Mode Toggle ==================== */
+    /* ==================== Enhanced Dark Mode Toggle with Ripple ==================== */
     const darkModeToggle = document.getElementById('darkModeToggle');
+    const htmlElement = document.documentElement;
+    
+    // Ripple animation function
+    function createRipple(event) {
+        const button = event.currentTarget;
+        const ripple = document.createElement('span');
+        const rect = button.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height);
+        const x = event.clientX - rect.left - size / 2;
+        const y = event.clientY - rect.top - size / 2;
+        
+        ripple.className = 'ripple';
+        ripple.style.width = ripple.style.height = size + 'px';
+        ripple.style.left = x + 'px';
+        ripple.style.top = y + 'px';
+        
+        button.appendChild(ripple);
+        
+        // Remove ripple after animation
+        setTimeout(() => ripple.remove(), 600);
+    }
+    
+    // Full-page theme transition ripple
+    function createPageRipple(event) {
+        const ripple = document.createElement('div');
+        const rect = event.currentTarget.getBoundingClientRect();
+        const x = rect.left + rect.width / 2;
+        const y = rect.top + rect.height / 2;
+        
+        ripple.className = 'page-ripple';
+        ripple.style.left = x + 'px';
+        ripple.style.top = y + 'px';
+        
+        document.body.appendChild(ripple);
+        
+        // Remove after animation
+        setTimeout(() => ripple.remove(), 800);
+    }
+    
     if (darkModeToggle) {
         const toggleIcon = darkModeToggle.querySelector('.toggle-icon');
 
-        // Load saved preference
-        if (localStorage.getItem('darkMode') === 'enabled') {
-            document.body.classList.add('darkmode');
-            toggleIcon.textContent = '☀️';
-        }
+        // Load saved theme preference
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        htmlElement.setAttribute('data-theme', savedTheme);
+        document.body.classList.toggle('darkmode', savedTheme === 'dark');
+        toggleIcon.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
 
-        darkModeToggle.addEventListener('click', () => {
+        darkModeToggle.addEventListener('click', (event) => {
+            // Create button ripple
+            createRipple(event);
+            
+            // Create page transition ripple
+            createPageRipple(event);
+            
+            // Toggle theme
+            const currentTheme = htmlElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            htmlElement.setAttribute('data-theme', newTheme);
             document.body.classList.toggle('darkmode');
-            if (document.body.classList.contains('darkmode')) {
+            
+            if (newTheme === 'dark') {
                 toggleIcon.textContent = '☀️';
-                localStorage.setItem('darkMode', 'enabled');
+                localStorage.setItem('theme', 'dark');
             } else {
                 toggleIcon.textContent = '🌙';
-                localStorage.setItem('darkMode', null);
+                localStorage.setItem('theme', 'light');
             }
         });
     }
@@ -204,38 +255,47 @@ document.querySelectorAll('.skills, .achievement-card, .detail-item, .timeline-i
     /* ==================== Navbar Scroll Effects & Hide/Show ==================== */
     let lastScrollTop = 0;
     if (navbar) {
-        navbar.style.position = 'fixed';
-        navbar.style.width = '100%';
-        navbar.style.top = '0';
-        navbar.style.transition = 'transform 0.3s ease-in-out';
+        // Position, width, and top are already set in CSS - don't override
+        // Only set transform transition for hide/show effect
+        navbar.style.transition = 'transform 0.3s ease-in-out, box-shadow 0.3s ease';
 
         window.addEventListener('scroll', () => {
             const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
             // Hide/Show Navbar
-            if (scrollTop > lastScrollTop && scrollTop > navbarHeight) navbar.style.transform = 'translateY(-100%)';
-            else navbar.style.transform = 'translateY(0)';
+            if (scrollTop > lastScrollTop && scrollTop > navbarHeight) {
+                navbar.style.transform = 'translateY(-100%)';
+            } else {
+                navbar.style.transform = 'translateY(0)';
+            }
 
-            // Background & Active Nav
+            // Enhanced shadow & Active Nav highlighting
             handleNavbarScroll();
             highlightActiveNav();
 
             lastScrollTop = scrollTop;
         });
-
-        // Initial background will update on first scroll as before
     }
 
     function handleNavbarScroll() {
         if (!navbar) return;
-        const isDark = document.body.classList.contains('darkmode');
+        const theme = htmlElement.getAttribute('data-theme') || 'light';
+        
         if (window.scrollY > 50) {
-            navbar.style.background = isDark ? 'rgba(18, 20, 24, 0.98)' : 'rgba(245, 241, 241, 0.98)';
-            navbar.style.boxShadow = isDark ? '0 2px 20px rgba(0, 0, 0, 0.35)' : '0 2px 20px rgba(0, 0, 0, 0.1)';
+            // Enhanced shadow on scroll, but keep the gradient background from CSS
+            if (theme === 'dark') {
+                navbar.style.boxShadow = '0 4px 25px rgba(0, 0, 0, 0.5)';
+            } else {
+                navbar.style.boxShadow = '0 4px 25px rgba(0, 0, 0, 0.15)';
+            }
+            // Add backdrop blur for glass effect
+            navbar.style.backdropFilter = 'blur(10px)';
         } else {
-            navbar.style.background = isDark ? 'rgba(18, 20, 24, 0.95)' : 'rgba(255, 255, 255, 0.95)';
-            navbar.style.boxShadow = 'none';
+            // Default shadow from CSS
+            navbar.style.boxShadow = '';
+            navbar.style.backdropFilter = '';
         }
+        // Never override the background - let CSS handle it
     }
 
     /* ==================== Typing Animation ==================== */
