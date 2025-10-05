@@ -15,9 +15,10 @@
     .wrap {
       min-height:100%;
       display:flex;
-      align-items:center;
+      align-items:flex-start;           /* Align from top so we can push content lower */
       justify-content:center;
       padding:2rem;
+      padding-top: calc(55vh + 1rem);  /* Push content further down to clear logo */
       box-sizing:border-box;
     }
     .card {
@@ -50,6 +51,39 @@
     .btn:hover { transform:translateY(-3px); border-color:rgba(255,255,255,0.4); }
     @media (max-width:600px) {
       h1 { font-size:1.4rem; }
+      .wrap { padding-top: calc(40vh + 1rem); } /* Push lower on small screens too */
+    }
+
+    /* Full-screen background image with cover */
+    .wrap {
+      background-image: url('Assets/Picture/maintainance.jpg');
+      background-size: cover;            /* Make image cover full screen */
+      background-position: center;       /* Keep subject centered */
+      background-repeat: no-repeat;      /* No tiling */
+      background-attachment: fixed;      /* Subtle parallax on scroll */
+      position: relative;                /* For overlay */
+    }
+
+    /* Dark overlay for text readability */
+    .wrap::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+    }
+
+    /* Elevate text content above overlay and add readability styles */
+    .card {
+      position: relative;
+      z-index: 1;
+      background: rgba(0, 0, 0, 0.35);
+      padding: 1.5rem;
+      border-radius: 10px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    h1, h2, p {
+      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
     }
 
   </style>
@@ -58,12 +92,7 @@
   <div class="wrap">
     <div class="card">
       <!-- Use the maintenance image in the same folder as these HTML files -->
-      <background-image herf="Assets/Picture/maintainance.jpg" alt="Maintenance-image" class="hero-img"/>
-       <h1>This Site Is Under maintenance</h1> 
-        <h2> - We're working on improvements — Major UI changes are going on...</h2>
-       <h2>We'll be back soon!</h2>
-     
-      <p>Thank you for your patience and understanding.</p>
+
       <!-- optional button to go back to home or to contact -->
       <a class="btn" href="contact.html">Contact Admin</a>
     </div>
