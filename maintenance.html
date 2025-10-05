@@ -38,8 +38,10 @@
     h1 { font-size:2.2rem; margin:1rem 0 0.25rem; letter-spacing:1px; }
     p { margin:0.25rem 0 1rem; opacity:0.9; }
     .btn {
-      display:inline-block;
-      margin-top:0.5rem;
+      display:inline-flex;             /* Align nicely even if multi-line */
+      align-items:center;
+      justify-content:center;
+      margin-top:1rem;                 /* More space above the button */
       padding:0.6rem 1rem;
       background:transparent;
       color:#fff;
@@ -58,7 +60,7 @@
     .wrap {
       background-image: url('Assets/Picture/maintainance.jpg');
       background-size: cover;            /* Make image cover full screen */
-      background-position: center;       /* Keep subject centered */
+      background-position: center 35%;   /* Raise focal area so card sits below big text */
       background-repeat: no-repeat;      /* No tiling */
       background-attachment: fixed;      /* Subtle parallax on scroll */
       position: relative;                /* For overlay */
@@ -76,10 +78,16 @@
     .card {
       position: relative;
       z-index: 1;
-      background: rgba(0, 0, 0, 0.35);
+      background: rgba(0, 0, 0, 0.6);   /* Stronger backdrop to prevent overlap visibility */
+      backdrop-filter: blur(2px);        /* Subtle blur behind text */
+      -webkit-backdrop-filter: blur(2px);
       padding: 1.5rem;
       border-radius: 10px;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      display: flex;                   /* Stack children vertically */
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;                    /* A bit more space between items */
     }
 
     h1, h2, p {
@@ -93,6 +101,7 @@
     <div class="card">
       <!-- Use the maintenance image in the same folder as these HTML files -->
 
+      <p>Sorry for the inconvenience but we're performing some major UI changes at the moment. If you need to you can always contact us, otherwise we'll be back shortly!</p>
       <!-- optional button to go back to home or to contact -->
       <a class="btn" href="contact.html">Contact Admin</a>
     </div>
