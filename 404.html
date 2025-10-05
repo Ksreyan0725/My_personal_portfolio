@@ -17,10 +17,13 @@
     }
     
     /* Background image */
-    body {
-      background: url('404-error.png') no-repeat center center fixed;
-      background-size: cover;
-    }
+  body {
+    background: url('Assets/ERROR.Image/404-error.png') no-repeat center center fixed; /* Sets the image at the center and fixes it */
+    background-size: cover; /* Makes the image cover the entire viewport */
+    margin: 0; /* Removes default body margin to avoid scrollbars */
+    height: 100vh; /* Ensures the body takes full viewport height */
+}
+
 
     /* Button container */
     .button-container {
@@ -69,6 +72,7 @@
       50% { opacity: 0.7; transform: scale(0.5); }
       100% { opacity: 0; transform: scale(0); }
     }
+
   </style>
 </head>
 <body>

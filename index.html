@@ -7,16 +7,24 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kumar Sreyan Pattanayak - Portfolio</title>
-   <!-- DEfault page section that opens while under  maintenance -->
-  <!-- <meta http-equiv="refresh" content="0; url=maintenance.html">
-  <script>window.location.replace('maintenance.html');</script> -->
+  <meta name="description" content="Personal portfolio of Kumar Sreyan Pattanayak - BCA Student & Technology Enthusiast">
+
+
+  <!-- this below lines are added for maintenance mode redirection -->
+  <meta http-equiv="refresh" content="0; url=maintenance.html">
+  <script>window.location.replace('maintenance.html');</script>
+
   
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="https://img.icons8.com/arcade/64/s-key.png" sizes="64x64"/>
-
-  <link href="style.css" rel="stylesheet" type="text/css" />
+  
+  <!-- Google Fonts - Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Styles -->
+  <link href="style.css" rel="stylesheet" type="text/css" />
   
 </head>
 <body>
@@ -44,24 +52,23 @@
     </div>
   </nav>
 
-  <!-- Home Section -->
+  <!-- Hero Section -->
   <section id="home" class="home">
-    <div class="home-content">
-      <div class="profile-photo">
-        <img src="Assets\Profile.picture/My_Photo.png" alt="Profile Photo" class="profile-img" />
+    <div class="container">
+      <div class="home-content">
+        <div class="profile-photo">
+          <img src="Assets\Picture/My_Photo.png" alt="Kumar Sreyan Pattanayak" class="profile-img" />
+        </div>
+        <h1 class="name">Kumar Sreyan Pattanayak</h1>
+        <p class="tagline">BCA Student & Technology Enthusiast</p>
+        <p class="intro">Passionate about technology, management, and policy analysis. Currently pursuing BCA while preparing for CAT 2026 to pursue MBA in Business Analytics.</p>
+        <a href="contact.html" class="cta-button">Get In Touch</a>
       </div>
-      <h1 class="name">Kumar Sreyan Pattanayak</h1>
-      <!-- Fix for the duplicated text -->
-      <p class="tagline">BCA Student & Technology Enthusiast</p>
-      <p class="intro">Passionate about technology, management, and policy analysis. Currently pursuing BCA while preparing for CAT 2026 to pursue MBA in Business Analytics.</p>
-      <!-- Get In Touch Button -->
-      <a href="contact.html" class="cta-button" id="contactBtn">Get In Touch</a>
-
     </div>
   </section>
 
   <!-- About Me Section -->
-  <section id="about" class="about">
+  <section id="about" class="about section">
     <div class="container">
       <h2 class="section-title">About Me</h2>
       <div class="about-content">
@@ -90,7 +97,7 @@
   </section>
 
   <!-- Education Section -->
-  <section id="education" class="education">
+  <section id="education" class="education section">
     <div class="container">
       <h2 class="section-title">Education</h2>
       <div class="timeline">
@@ -123,7 +130,7 @@
   </section>
 
 <!-- Achievements Section -->
-<section id="achievements" class="achievements">
+<section id="achievements" class="achievements section">
   <div class="container">
     <h2 class="section-title">Achievements</h2>
     <div class="achievements-grid">
@@ -165,7 +172,7 @@
 </section>
 
 <!-- Skills Section -->
-<section id="skills" class="skills">
+<section id="skills" class="skills section">
   <div class="container">
     <h2 class="section-title">Skills</h2>
     <div class="skills-content">
@@ -246,7 +253,7 @@
 </section>
 
   <!-- Social Media Section -->
-  <section id="social" class="social">
+  <section id="social" class="social section">
     <div class="container">
       <h2 class="section-title">Connect With Me</h2>
       <div class="social-links">
@@ -286,7 +293,7 @@
   </section>
 
   <!-- Contact Section -->
-<section id="contact" class="contact">
+<section id="contact" class="contact section">
   <div class="container">
     <h2 class="section-title">Get In Touch</h2>
     <div class="contact-content">
@@ -323,7 +330,10 @@
   <!-- Footer -->
   <footer class="footer">
     <div class="container">
-      <p>Copyright &copy; 2025 | All rights reserved </p>
+      <p>
+        <strong>© 2025 Kumar Sreyan Pattanayak</strong><br>
+        All Rights Reserved | Made with ❤️
+      </p>
     </div>
   </footer>
   <script src="script.js"></script>
