@@ -1458,3 +1458,37 @@ body.darkmode .navbar-search input::placeholder {
   .navbar-search { order: 3; margin-left: auto; }
   #darkModeToggle { order: 4; margin-left: var(--space-md); }
 }
+
+/* Mobile: collapse search into icon placed before dark-mode toggle; toggle stays at far right */
+@media (max-width: 768px) {
+  .nav-logo { order: 1; }
+  .hamburger { order: 2; }
+  .navbar-search { order: 3; width: auto; margin: 0 var(--space-xs); padding: 0; display: inline-flex; align-items: center; }
+  /* Hide the input on small screens */
+  .navbar-search input { display: none !important; }
+  /* Show a circular search icon using a pseudo-element */
+  .navbar-search::before {
+    content: '🔍';
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    background: #fbfdff;
+    color: #333;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  }
+  /* Dark mode icon styling */
+  [data-theme="dark"] .navbar-search::before,
+  body.darkmode .navbar-search::before {
+    border-color: #333;
+    background: #111111;
+    color: #ffffff;
+    box-shadow: none;
+  }
+  /* Keep dark mode toggle at far right */
+  #darkModeToggle { order: 4; margin-left: auto; }
+}
