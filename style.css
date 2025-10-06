@@ -233,6 +233,7 @@ img {
   margin: 0;
   padding: 0;
   align-items: center;
+  flex-wrap: nowrap;
 }
 
 .nav-item {
@@ -604,13 +605,10 @@ img {
 
 
 .achievement-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, var(--color-accent), var(--color-accent-hover));
+  display: none !important;
+  content: none !important;
+  background: none !important;
+  border: none !important;
 }
 
 .achievement-card:hover {
@@ -727,7 +725,7 @@ img {
 .progress::after {
   content: attr(data-value) '%';
   position: absolute;
-  right: -50px;
+  right: 8px; /* keep inside the bar to prevent overflow */
   top: 50%;
   transform: translateY(-50%);
   font-size: var(--font-size-base);
@@ -816,7 +814,7 @@ img {
 
 .progress-bar {
   position: relative;
-  overflow: visible;
+  overflow: hidden; /* prevent shine/percentage from bleeding outside */
 }
 
 /* Animated shine effect on progress bars */
@@ -1202,6 +1200,42 @@ main {
 
 .fade-in {
   animation: fadeIn 0.6s ease-out;
+  will-change: opacity, transform;
+}
+
+/* Animation polish and smooth transitions */
+.nav-logo,
+.nav-link,
+.cta-button,
+.course-link,
+.social-link,
+.section-title,
+.achievement-icon,
+.achievement-card,
+.detail-item,
+.timeline-content,
+.submit-button,
+.dark-mode-toggle,
+.hamburger .bar {
+  transition: all 0.3s ease-in-out;
+}
+
+/* Improve rendering of animated cards */
+.achievement-card,
+.detail-item,
+.timeline-item {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 /* Utility class for dark mode body */
@@ -1211,3 +1245,216 @@ body.darkmode {
 }
 
 
+/* ==================== Accessibility & Comfort Overrides ==================== */
+/* Place at end to override earlier rules without changing layout */
+
+/* 1) Form fields - Light mode */
+[data-theme="light"] .contact-form input,
+[data-theme="light"] .contact-form textarea,
+[data-theme="light"] .contact-form select,
+body:not(.darkmode) .contact-form input,
+body:not(.darkmode) .contact-form textarea,
+body:not(.darkmode) .contact-form select,
+[data-theme="light"] .form-group input,
+[data-theme="light"] .form-group textarea,
+body:not(.darkmode) .form-group input,
+body:not(.darkmode) .form-group textarea {
+  border: 1px solid #ccc !important;
+  background-color: #fbfdff !important; /* avoid pure white in light mode */
+  color: #333 !important;
+}
+
+[data-theme="light"] .contact-form input:focus,
+[data-theme="light"] .contact-form textarea:focus,
+[data-theme="light"] .contact-form select:focus,
+body:not(.darkmode) .contact-form input:focus,
+body:not(.darkmode) .contact-form textarea:focus,
+body:not(.darkmode) .contact-form select:focus,
+[data-theme="light"] .form-group input:focus,
+[data-theme="light"] .form-group textarea:focus,
+body:not(.darkmode) .form-group input:focus,
+body:not(.darkmode) .form-group textarea:focus {
+  outline: none !important;
+  border-color: #007bff !important;
+  box-shadow: 0 0 0 3px #007bff33 !important;
+}
+
+/* 1) Form fields - Dark mode */
+[data-theme="dark"] .contact-form input,
+[data-theme="dark"] .contact-form textarea,
+[data-theme="dark"] .contact-form select,
+body.darkmode .contact-form input,
+body.darkmode .contact-form textarea,
+body.darkmode .contact-form select,
+[data-theme="dark"] .form-group input,
+[data-theme="dark"] .form-group textarea,
+body.darkmode .form-group input,
+body.darkmode .form-group textarea {
+  border: 1px solid #fff !important;
+  background-color: transparent !important;
+  color: #fff !important;
+}
+
+[data-theme="dark"] .contact-form input:focus,
+[data-theme="dark"] .contact-form textarea:focus,
+[data-theme="dark"] .contact-form select:focus,
+body.darkmode .contact-form input:focus,
+body.darkmode .contact-form textarea:focus,
+body.darkmode .contact-form select:focus,
+[data-theme="dark"] .form-group input:focus,
+[data-theme="dark"] .form-group textarea:focus,
+body.darkmode .form-group input:focus,
+body.darkmode .form-group textarea:focus {
+  outline: none !important;
+  border-color: #fff !important;
+  box-shadow: 0 0 5px #ffffffaa !important;
+}
+
+/* 2) Achievement cards - remove decorative lines in all modes */
+.achievement-card::before,
+.achievement-card::after {
+  display: none !important;
+  content: none !important;
+  background: none !important;
+  border: none !important;
+}
+
+/* Light-mode section background: subtle white–blue gradient (softer for eye comfort) */
+[data-theme="light"] section {
+  background: linear-gradient(180deg, #fbfdff 0%, #eef6ff 100%) !important;
+}
+
+/* Prevent overflow glow artifacts in sections with shadows */
+.achievements,
+.skills {
+  overflow: hidden;
+  position: relative;
+}
+
+/* Light-mode surface tweaks for eye comfort (cards/forms) */
+[data-theme="light"] .achievement-card,
+[data-theme="light"] .timeline-content,
+[data-theme="light"] .detail-item,
+[data-theme="light"] .contact-form {
+  background-color: #fbfdff !important;
+  border: 1px solid rgba(17, 24, 39, 0.06) !important; /* ~gray-900 at 6% */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06) !important;
+}
+
+[data-theme="light"] .achievement-card:hover,
+[data-theme="light"] .timeline-content:hover,
+[data-theme="light"] .detail-item:hover,
+[data-theme="light"] .contact-form:hover {
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Light-mode body base to reduce glare on bright displays */
+[data-theme="light"] body {
+  background-color: #f7faff !important; /* very soft blue-tinted white */
+}
+
+/* Light-mode variable tuning to avoid pure white on surfaces */
+[data-theme="light"] {
+  --bg-primary: #f7faff; /* off-white */
+  --bg-secondary: #f2f6ff; /* soft surface */
+  --color-white: #fbfdff; /* remap white to off-white across site */
+}
+
+/* Light-mode: flatter search bar shadow */
+[data-theme="light"] .navbar-search input {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
+}
+
+/* Light-mode: tone down bright surfaces (cards/sections) */
+[data-theme="light"] .achievement-card,
+[data-theme="light"] .timeline-content,
+[data-theme="light"] .detail-item,
+[data-theme="light"] .contact-form,
+[data-theme="light"] .about-description,
+[data-theme="light"] .resume-section,
+[data-theme="light"] .social-link {
+  background-color: var(--bg-secondary) !important;
+  border: 1px solid rgba(17, 24, 39, 0.08) !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* ==================== Navbar Search (CSS-only) ==================== */
+.navbar-search {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-left: var(--space-xl);
+}
+
+.navbar-search input {
+  padding: 8px 12px;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  font-size: 0.9rem;
+  outline: none;
+  transition: all 0.3s ease-in-out;
+  background-color: #fbfdff; /* avoid pure white in light mode */
+  color: #333;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  width: 220px;
+  max-width: 320px;
+}
+
+.navbar-search input::placeholder {
+  color: #777;
+}
+
+/* Dark Mode Adjustments for search */
+[data-theme="dark"] .navbar-search input,
+body.darkmode .navbar-search input {
+  background-color: #111111; /* light black field in dark mode */
+  border: 1px solid #333;
+  color: #ffffff;
+  box-shadow: none;
+}
+
+[data-theme="dark"] .navbar-search input::placeholder,
+body.darkmode .navbar-search input::placeholder {
+  color: #aaaaaa;
+}
+
+.navbar-search input:focus {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px var(--color-accent-light);
+  width: 260px;
+}
+
+/* Tablet adjustments for search width */
+@media (max-width: 1024px) {
+  .navbar-search input { width: 180px; }
+  .navbar-search input:focus { width: 210px; }
+}
+
+/* Responsive Layout for search and navbar ordering */
+@media (max-width: 768px) {
+  .nav-container { flex-wrap: wrap; align-items: center; gap: var(--space-sm); }
+  .nav-logo { order: 1; flex: 0 0 auto; }
+  .hamburger { order: 2; margin-left: auto; }
+  #darkModeToggle { order: 3; margin-left: var(--space-xs); }
+  .navbar-search {
+    order: 4;
+    width: 100%;
+    margin-left: 0;
+    margin-top: 10px;
+    padding: 0 var(--space-md);
+  }
+  .navbar-search input { width: 100%; min-width: 0; font-size: 0.85rem; }
+}
+
+@media (max-width: 600px) {
+  .navbar-search input { width: 100%; font-size: 0.8rem; padding: 6px 10px; }
+}
+
+/* Desktop navbar alignment refinement */
+@media (min-width: 769px) {
+  .nav-container { align-items: center; gap: var(--space-md); }
+  .nav-logo { order: 1; flex: 0 0 auto; }
+  .nav-menu { order: 2; flex: 1 1 auto; display: flex; justify-content: center; }
+  .navbar-search { order: 3; margin-left: auto; }
+  #darkModeToggle { order: 4; margin-left: var(--space-md); }
+}
