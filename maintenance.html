@@ -11,7 +11,7 @@
   
   <style>
     /* Full-screen centered maintenance card */
-    html,body { height:100%; margin:0; font-family: Arial, Helvetica, sans-serif; background:#000; color:#fff; }
+    html,body { height:100%; margin:0; font-family: Arial, Helvetica, sans-serif; background:#000; color:#4d3934; }
     .wrap {
       min-height:100%;
       display:flex;
@@ -44,8 +44,8 @@
       margin-top:1rem;                 /* More space above the button */
       padding:0.6rem 1rem;
       background:transparent;
-      color:#fff;
-      border:2px solid rgba(255,255,255,0.2);
+      color:#d19cb2;
+      border:2px solid rgb(142, 54, 54);
       border-radius:6px;
       text-decoration:none;
       transition:all .18s ease;
@@ -58,7 +58,7 @@
 
     /* Full-screen background image with cover */
     .wrap {
-      background-image: url('Assets/Picture/maintainance.jpg');
+      background-image: url('Assets/Picture/maintainance.jpg'); /* Replace with your maintenance image path */
       background-size: cover;            /* Make image cover full screen */
       background-position: center 35%;   /* Raise focal area so card sits below big text */
       background-repeat: no-repeat;      /* No tiling */
@@ -71,14 +71,14 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: rgba(0, 0, 0, 0.45);
+      background: rgba(0, 0, 0, 0);
     }
 
     /* Elevate text content above overlay and add readability styles */
     .card {
       position: relative;
       z-index: 1;
-      background: rgba(0, 0, 0, 0.6);   /* Stronger backdrop to prevent overlap visibility */
+      background: rgba(0, 0, 0, 0.144);   /* Stronger backdrop to prevent overlap visibility */
       backdrop-filter: blur(2px);        /* Subtle blur behind text */
       -webkit-backdrop-filter: blur(2px);
       padding: 1.5rem;
@@ -90,8 +90,13 @@
       gap: 0.75rem;                    /* A bit more space between items */
     }
 
-    h1, h2, p {
-      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+    h1, h2 {
+      color:rgb(193, 70, 36);
+    }
+    
+    
+    p {
+       color: darkolivegreen;
     }
 
   </style>
@@ -100,12 +105,11 @@
   <div class="wrap">
     <div class="card">
       <!-- Use the maintenance image in the same folder as these HTML files -->
-      <h1>  This Site Is Under Maintenance</h1>
+      <h1>  <strong>This Site Is Under Maintenance</strong></h1>
       <p>Sorry for the inconvenience but we're performing some major UI changes at the moment. If you need you can always contact us, otherwise we'll be back shortly!</p>
       <!-- optional button to go back to home or to contact -->
       <a class="btn" href="contact.html">Contact Admin</a>
     </div>
   </div>
-
 </body>
 </html>
