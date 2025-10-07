@@ -135,7 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     // Animate percentage number from 0 to final value
                     let currentPercent = 0;
                     const targetPercent = parseInt(value);
-                    const increment = targetPercent / 30; // 30 steps
+                    const increment = Math.max(targetPercent / 30, 1); // avoid 0-step
                     
                     const percentInterval = setInterval(() => {
                         currentPercent += increment;
@@ -143,7 +143,12 @@ document.addEventListener('DOMContentLoaded', () => {
                             currentPercent = targetPercent;
                             clearInterval(percentInterval);
                         }
-                        bar.setAttribute('data-value', Math.round(currentPercent));
+                        const display = Math.round(currentPercent);
+                        // Update both the fill and its container so CSS can read it from the container
+                        bar.setAttribute('data-value', display);
+                        if (bar.parentElement) {
+                            bar.parentElement.setAttribute('data-value', display);
+                        }
                     }, 50);
                 }, index * 100); // 100ms delay between each bar
             }
