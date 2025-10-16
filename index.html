@@ -2,7 +2,7 @@
   This project will auto-refresh as you edit the HTML, CSS and JS. See README.md for more info.
 -->
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -29,7 +29,7 @@
 </head>
 <body>
   <!-- Navigation -->
-  <nav class="navbar">
+  <nav class="navbar glass-header">
     <div class="nav-container">
       <a href="#home" class="nav-logo">KSP</a>
       <ul class="nav-menu">
@@ -56,44 +56,61 @@
   </nav>
 
   <!-- Hero Section -->
-  <section id="home" class="home">
-    <div class="container">
-      <div class="home-content">
-        <div class="profile-photo">
-          <img src="Assets/Picture/My_Photo.png" alt="Kumar Sreyan Pattanayak" class="profile-img" />
+ <section id="home" class="home section">
+  <div class="container">
+    <div class="glass-panel card-glass fade-in">
+      <div class="home-content" style="display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 3rem; text-align: left;">
+
+        <!-- Left Side: Profile Photo -->
+        <div class="profile-photo" style="flex: 0 0 220px; display: flex; justify-content: center;">
+          <img src="Assets/Picture/My_Photo.png" 
+               alt="Kumar Sreyan Pattanayak" 
+               class="profile-img" 
+               style="width: 200px; height: 200px; border-radius: 50%; object-fit: cover; box-shadow: 0 0 20px rgba(0,0,0,0.15);" />
         </div>
-        <h1 class="name">Kumar Sreyan Pattanayak</h1>
-        <p class="tagline">BCA Student & Technology Enthusiast</p>
-        <p class="intro">Passionate about technology, management, and policy analysis. Currently pursuing BCA while preparing for CAT 2026 to pursue MBA in Business Analytics.</p>
-        <a href="contact.html" class="cta-button">Get In Touch</a>
+
+        <!-- Right Side: Text -->
+        <div class="text-content" style="max-width: 450px;">
+          <h1 class="name" style="font-size: 2rem; margin-bottom: 0.5rem;">Kumar Sreyan Pattanayak</h1>
+          <p class="intro" style="font-size: 1.2rem; color: #70311f; margin-bottom: 1rem;">BCA Student & Technology Enthusiast</p>
+          <p class="intro" style="line-height: 1.6; margin-bottom: 1.5rem;">
+            Passionate about technology, management, and policy analysis. Currently pursuing BCA while preparing for CAT 2026 to pursue MBA in Business Analytics.
+          </p>
+          <a href="contact.html" class="cta-button button-glass">Get In Touch</a>
+        </div>
+
       </div>
     </div>
-  </section>
+  </div>
+</section>
+
 
   <!-- About Me Section -->
   <section id="about" class="about section">
     <div class="container">
-      <h2 class="section-title">About Me</h2>
-      <div class="about-content">
+      <div class="glass-panel card-glass fade-in">
+        <h2 class="section-title">About Me</h2>
+        <div class="about-content">
         <div class="about-text">
           <h3>Personal Details</h3>
           <div class="details-grid">
-            <div class="detail-item">
+            <div class="detail-item card-glass">
               <strong>Education:</strong> <span>BCA Student at RIT Berhampur</span>
             </div>
-            <div class="detail-item">
+            <div class="detail-item card-glass">
               <strong>Location:</strong> <span>Berhampur, Odisha</span>
             </div>
-            <div class="detail-item">
+            <div class="detail-item card-glass">
               <strong>Interests:</strong> <span>Technology, Coding, Legal Systems, Economics</span>
             </div>
-            <div class="detail-item">
+            <div class="detail-item card-glass">
               <strong>Future Goals:</strong> <span>MBA & IES Preparation</span>
             </div>
           </div>
-          <p class="about-description">
+          <p class="about-description card-glass">
             I'm a BCA student at Roland Institute of Technology, Berhampur, with strong interests in technology, management, economics, and law. I'm skilled in Python, Object-Oriented Programming, and Computer Networking, with research experience in governance and systemic issues. Currently preparing for CAT 2026 to pursue an MBA in Business Analytics/Finance, and later planning to qualify for IES, blending tech, law, and economics for impactful policy solutions.
           </p>
+        </div>
         </div>
       </div>
     </div>
@@ -102,11 +119,12 @@
   <!-- Education Section -->
   <section id="education" class="education section">
     <div class="container">
-      <h2 class="section-title">Education</h2>
-      <div class="timeline">
+      <div class="glass-panel card-glass fade-in">
+        <h2 class="section-title">Education</h2>
+        <div class="timeline">
         <div class="timeline-item">
           <div class="timeline-date">2023 - 2026</div>
-          <div class="timeline-content">
+          <div class="timeline-content card-glass">
             <h3>Bachelor of Computer Applications (BCA)</h3>
             <p>Roland Institute of Technology (RIT), Berhampur</p>
             <p>Currently pursuing BCA with focus on programming, computer networking, and technology applications.</p>
@@ -114,7 +132,7 @@
         </div>
         <div class="timeline-item">
           <div class="timeline-date">2022 - 2023</div>
-          <div class="timeline-content">
+          <div class="timeline-content card-glass">
             <h3>Class 12 - Grade B</h3>
             <p>Board of Secondary Education, Odisha (BSE Odisha)</p>
             <p>Completed higher secondary education with Grade B, building foundation for computer applications.</p>
@@ -122,54 +140,57 @@
         </div>
         <div class="timeline-item">
           <div class="timeline-date">2021 - 2022</div>
-          <div class="timeline-content">
+          <div class="timeline-content card-glass">
             <h3>Class 10 - Grade A</h3>
             <p>Central Board of Secondary Education (CBSE)</p>
             <p>Achieved Grade A in secondary education, demonstrating strong academic foundation.</p>
           </div>
+        </div>
         </div>
       </div>
     </div>
   </section>
 
 <!-- Achievements Section -->
-<section id="achievements" class="achievements section">
+  <section id="achievements" class="achievements section">
   <div class="container">
-    <h2 class="section-title">Achievements</h2>
-    <div class="achievements-grid">
+    <div class="glass-panel card-glass fade-in">
+      <h2 class="section-title">Achievements</h2>
+      <div class="achievements-grid">
 
-      <div class="achievement-card">
+      <div class="achievement-card card-glass">
         <div class="achievement-icon">📚</div>
         <h3>Indian Constitution & Legal Basics</h3>
         <p>Self-study certification covering Indian Constitution, legal systems, and governance (April 2022).</p>
       </div>
 
-      <div class="achievement-card">
+      <div class="achievement-card card-glass">
         <div class="achievement-icon">🔬</div>
         <h3>Systemic Failures Research</h3>
         <p>Authored comprehensive research paper analyzing corruption, education, and judicial inefficiency in India using AI tools and government data (June 2023 - Present).</p>
       </div>
 
-      <div class="achievement-card">
+      <div class="achievement-card card-glass">
         <div class="achievement-icon">⚖️</div>
         <h3>Legal System Understanding</h3>
         <p>Self-learning project covering Indian Constitution, IPC, civil vs criminal law, and legal reasoning, building strong legal awareness (April 2021 - June 2023).</p>
       </div>
 
-      <div class="achievement-card">
+      <div class="achievement-card card-glass">
         <div class="achievement-icon">🐍</div>
         <h3>Python Programming Mastery --Udemy--</h3>
         <p>Currently pursuing advanced Python programming course on Udemy to build real-world projects and become job-ready.</p>
         <a href="https://www.udemy.com/course/codewithharry-python/?couponCode=SEPHARRY" target="_blank" class="course-link">View Course</a>
       </div>
 
-      <div class="achievement-card">
+      <div class="achievement-card card-glass">
         <div class="achievement-icon">🌐</div>
         <h3>Ultimate Web Development Course 2025 --Udemy--</h3>
         <p>(Ongoing) a modern web development course focused on building responsive websites, real-world projects, and leveraging AI tools to accelerate development.</p>
         <a href="https://www.udemy.com/course/codewithharry-web-development-course/?srsltid=AfmBOooGTxHcQCxjApypCQ6TwDaAhgT06quf1ot2j5j8M-99_qPJXDPO&couponCode=LETSLEARNNOW" target="_blank" class="course-link">View Course</a>
       </div>
 
+      </div>
     </div>
   </div>
 </section>
@@ -177,11 +198,12 @@
 <!-- Skills Section -->
 <section id="skills" class="skills section">
   <div class="container">
-    <h2 class="section-title">Skills</h2>
-    <div class="skills-content">
+    <div class="glass-panel card-glass fade-in">
+      <h2 class="section-title">Skills</h2>
+      <div class="skills-content">
 
       <!-- Technical Skills -->
-      <div class="skills-category">
+      <div class="skills-category card-glass">
         <h3>Technical Skills</h3>
 
         <div class="skill">
@@ -211,7 +233,7 @@
       </div>
 
       <!-- Soft Skills -->
-      <div class="skills-category">
+      <div class="skills-category card-glass">
         <h3>Soft Skills</h3>
 
         <div class="skill">
@@ -244,53 +266,55 @@
           <div class="progress-bar"><div class="progress" data-value="20"></div></div>
         </div> 
       </div>
-    </div>
+      </div>
 
-    <!-- Resume Download Button -->
-    <div class="resume-section">
+      <!-- Resume Download Button -->
+      <div class="resume-section card-glass">
       <h2 class="resume-heading">Click the button to download my resume:- </h2>
-      <a href="Assets/Resume.pdf/Kumar_Sreyan_Pattanayak_Resume.pdf" download class="resume-btn">📄 Download Resume (PDF)</a>
+      <a href="Assets/Resume.pdf/Kumar_Sreyan_Pattanayak_Resume.pdf" download class="resume-btn button-glass">📄 Download Resume (PDF)</a>
+      </div>
     </div>
-    
   </div>
 </section>
 
   <!-- Social Media Section -->
   <section id="social" class="social section">
     <div class="container">
-      <h2 class="section-title">Connect With Me</h2>
-      <div class="social-links">
-        <a href="https://github.com/Ksreyan0725" class="social-link" target="_blank" rel="noopener">
+      <div class="glass-panel card-glass fade-in">
+        <h2 class="section-title">Connect With Me</h2>
+        <div class="social-links">
+        <a href="https://github.com/Ksreyan0725" class="social-link card-glass" target="_blank" rel="noopener">
           <img src="Assets/Images.icons/github.png" alt="GitHub" class="social-icon" style="width:24px; height:24px;">
           
           <span class="social-name">GitHub
           </span>
         </a>
-          <a href="https://www.facebook.com/share/1Cj1miKofw/" class="social-link" target="_blank" rel="noopener">
+          <a href="https://www.facebook.com/share/1Cj1miKofw/" class="social-link card-glass" target="_blank" rel="noopener">
           <img src="Assets/Images.icons/facebook.png" alt="Instagram" class="social-icon" style="width:24px; height:24px;">
           <span class="social-name">Facebook</span>
         </a>
-        <a href="https://www.linkedin.com/in/kumar-sreyan-pattanayak-81a495230" class="social-link" target="_blank" rel="noopener">
+        <a href="https://www.linkedin.com/in/kumar-sreyan-pattanayak-81a495230" class="social-link card-glass" target="_blank" rel="noopener">
          <img src="Assets/Images.icons/linkedin.png" alt="Instagram" class="social-icon" style="width:24px; height:24px;">
           <span class="social-name">LinkedIn</span>
         </a>
-        <a href="https://x.com/SreyanPattanay5?t=oXoHwnGs9M9e37zh_Vsd5A&s=09" class="social-link" target="_blank" rel="noopener">
+        <a href="https://x.com/SreyanPattanay5?t=oXoHwnGs9M9e37zh_Vsd5A&s=09" class="social-link card-glass" target="_blank" rel="noopener">
           <img src="Assets/Images.icons/X.png" alt="X" class="social-icon" style="width:24px; height:24px;">
           <span class="social-name">X</span>
         </a>
-         <a href="https://www.instagram.com/p_a_p_u_n01_?igsh=aWwyZnhicTRuaTI3" class="social-link" target="_blank" rel="noopener">
+         <a href="https://www.instagram.com/p_a_p_u_n01_?igsh=aWwyZnhicTRuaTI3" class="social-link card-glass" target="_blank" rel="noopener">
          <img src="Assets/Images.icons/instagram.png" alt="Instagram" class="social-icon" style="width:24px; height:24px;">
          <span class="social-name">Instagram</span>
 </a>
 
-         <a href="https://t.me/SreyanPattanayak" class="social-link" target="_blank" rel="noopener">
+         <a href="https://t.me/SreyanPattanayak" class="social-link card-glass" target="_blank" rel="noopener">
           <img src="Assets/Images.icons/telegram.png" alt="Instagram" class="social-icon" style="width:24px; height:24px;">
           <span class="social-name">Telegram</span>
         </a>
-         <a href="https://teams.microsoft.com/l/chat/0/0?users=opener" class="social-link" target="_blank" rel="noopener"> 
+         <a href="https://teams.microsoft.com/l/chat/0/0?users=opener" class="social-link card-glass" target="_blank" rel="noopener"> 
           <img src="Assets/Images.icons/teams.png" alt="Teams" class="social-icon" style="width:24px; height:24px;">
           <span class="social-name">Microsoft Teams</span>
         </a>
+        </div>
       </div>
     </div>
   </section>
@@ -298,9 +322,10 @@
   <!-- Contact Section -->
 <section id="contact" class="contact section">
   <div class="container">
-    <h2 class="section-title">Get In Touch</h2>
-    <div class="contact-content">
-      <div class="contact-info" id="contact-content">
+    <div class="glass-panel card-glass fade-in">
+      <h2 class="section-title">Get In Touch</h2>
+      <div class="contact-content">
+        <div class="contact-info" id="contact-content">
         <h3>Contact Information</h3>
         <div class="contact-item">
           <strong>Email:</strong> <a href="mailto:sreyanpattanayak246@gmail.com">sreyanpattanayak246@gmail.com</a>
@@ -309,7 +334,7 @@
       </div>
 
       <!-- Contact Form -->
-      <form class="contact-form" id="contactForm">
+        <form class="contact-form card-glass" id="contactForm">
         <div class="form-group">
           <label for="name">Name</label>
           <input type="text" id="name" name="name" required>
@@ -326,9 +351,12 @@
       </form>
     <!-- <button id="dont-click" class="dont-click">Don't click</button> -->
 
+      </div>
     </div>
   </div>
 </section>
+
+  </main>
 
   <!-- Footer -->
   <footer class="footer">
