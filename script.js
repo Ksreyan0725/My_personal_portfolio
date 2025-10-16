@@ -4,11 +4,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const htmlElement = document.documentElement;
     const body = document.body;
 
-    /* ==================== Dark Mode Toggle with Ripple Effect ==================== */
-    // Restore dark/light mode toggle
-    const darkModeToggle = document.getElementById('darkModeToggle');
-    
-    // Ripple animation function
+    /* ==================== Ripple Animation Functions ==================== */
+    // Ripple animation function for buttons
     function createRipple(event) {
         const button = event.currentTarget;
         const ripple = document.createElement('span');
@@ -45,35 +42,159 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => ripple.remove(), 800);
     }
     
-    if (darkModeToggle) {
-        const toggleIcon = darkModeToggle.querySelector('.toggle-icon');
+    // Theme transition wave from settings gear
+    function createThemeTransitionWave(targetTheme) {
+        const settingsGear = document.getElementById('settingsGear');
+        if (!settingsGear) return;
+        
+        const ripple = document.createElement('div');
+        const rect = settingsGear.getBoundingClientRect();
+        const x = rect.left + rect.width / 2;
+        const y = rect.top + rect.height / 2;
+        
+        ripple.className = 'page-ripple';
+        ripple.style.left = x + 'px';
+        ripple.style.top = y + 'px';
+        
+        // Determine actual theme (handle 'system' preference)
+        let actualTheme = targetTheme;
+        if (targetTheme === 'system') {
+            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            actualTheme = systemPrefersDark ? 'dark' : 'light';
+        }
+        
+        // Set data attribute to style the ripple based on target theme
+        ripple.setAttribute('data-target-theme', actualTheme);
+        
+        document.body.appendChild(ripple);
+        
+        // Remove after animation
+        setTimeout(() => ripple.remove(), 800);
+    }
 
-        // Load saved theme preference or system preference
-        const savedTheme = localStorage.getItem('theme');
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        const initialTheme = savedTheme || (prefersDark ? 'dark' : 'light');
-        htmlElement.setAttribute('data-theme', initialTheme);
-        document.body.classList.toggle('darkmode', initialTheme === 'dark');
-        toggleIcon.textContent = initialTheme === 'dark' ? '☀️' : '🌙';
-
-        darkModeToggle.addEventListener('click', (event) => {
-            // Ripple for button and page transition
-            createRipple(event);
-            createPageRipple(event);
-
-            setTimeout(() => {
-                // Temporarily mark theme switching to lengthen CSS transitions
-                htmlElement.classList.add('theme-switching');
-                const currentTheme = htmlElement.getAttribute('data-theme');
-                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-
-                htmlElement.setAttribute('data-theme', newTheme);
-                document.body.classList.toggle('darkmode', newTheme === 'dark');
-                toggleIcon.textContent = newTheme === 'dark' ? '☀️' : '🌙';
-                localStorage.setItem('theme', newTheme);
-                // Remove the marker after transitions complete
-                setTimeout(() => htmlElement.classList.remove('theme-switching'), 900);
-            }, 120); // slight delay for smoother feel
+    /* ==================== Settings Gear Theme Selector ==================== */
+    const settingsGear = document.getElementById('settingsGear');
+    const themeDropdown = document.getElementById('themeDropdown');
+    const themeOptions = document.querySelectorAll('.theme-option');
+    
+    if (settingsGear && themeDropdown && themeOptions.length > 0) {
+        // Load saved theme preference - supports GitHub Pages with fallback
+        let savedThemePreference = 'system';
+        try {
+            savedThemePreference = localStorage.getItem('themePreference') || 'system';
+        } catch (e) {
+            console.warn('localStorage not available, using default theme');
+        }
+        
+        // Apply theme based on preference
+        function applyTheme(preference, animate = false) {
+            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            let theme;
+            
+            if (preference === 'system') {
+                theme = systemPrefersDark ? 'dark' : 'light';
+            } else {
+                theme = preference;
+            }
+            
+            // Add transition class for smooth animation
+            if (animate) {
+                htmlElement.classList.add('theme-transitioning');
+            }
+            
+            // Apply theme
+            htmlElement.setAttribute('data-theme', theme);
+            document.body.classList.toggle('darkmode', theme === 'dark');
+            
+            // Update active theme option
+            themeOptions.forEach(option => {
+                option.classList.toggle('active', option.dataset.theme === preference);
+            });
+            
+            // Remove transition class after animation completes
+            if (animate) {
+                setTimeout(() => {
+                    htmlElement.classList.remove('theme-transitioning');
+                }, 600);
+            }
+        }
+        
+        // Initialize with saved preference
+        applyTheme(savedThemePreference);
+        
+        // Listen for system theme changes if system default is selected
+        const systemThemeMedia = window.matchMedia('(prefers-color-scheme: dark)');
+        systemThemeMedia.addEventListener('change', () => {
+            let currentPreference = 'system';
+            try {
+                currentPreference = localStorage.getItem('themePreference') || 'system';
+            } catch (e) {
+                currentPreference = 'system';
+            }
+            if (currentPreference === 'system') {
+                applyTheme('system', true);
+            }
+        });
+        
+        // Toggle dropdown - Optimized for performance
+        settingsGear.addEventListener('click', (e) => {
+            e.stopPropagation();
+            e.preventDefault();
+            const isOpen = themeDropdown.classList.contains('show');
+            
+            if (isOpen) {
+                themeDropdown.classList.remove('show');
+                settingsGear.classList.remove('active');
+            } else {
+                themeDropdown.classList.add('show');
+                settingsGear.classList.add('active');
+            }
+        }, { passive: false });
+        
+        // Handle theme selection
+        themeOptions.forEach(option => {
+            option.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const selectedTheme = option.dataset.theme;
+                
+                // Create wave transition effect from settings gear
+                createThemeTransitionWave(selectedTheme);
+                
+                // Save preference with error handling for GitHub Pages
+                try {
+                    localStorage.setItem('themePreference', selectedTheme);
+                } catch (e) {
+                    console.warn('Unable to save theme preference');
+                }
+                
+                // Apply theme with smooth animation after slight delay for ripple to start
+                setTimeout(() => {
+                    applyTheme(selectedTheme, true);
+                }, 50);
+                
+                // Close dropdown with slight delay
+                setTimeout(() => {
+                    themeDropdown.classList.remove('show');
+                    settingsGear.classList.remove('active');
+                }, 150);
+            });
+        });
+        
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!settingsGear.contains(e.target) && !themeDropdown.contains(e.target)) {
+                themeDropdown.classList.remove('show');
+                settingsGear.classList.remove('active');
+            }
+        });
+        
+        // Close dropdown with ESC key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && themeDropdown.classList.contains('show')) {
+                themeDropdown.classList.remove('show');
+                settingsGear.classList.remove('active');
+                settingsGear.focus();
+            }
         });
     }
 

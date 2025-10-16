@@ -11,12 +11,12 @@
 
 
   <!-- this below lines are added for maintenance mode redirection -->
-  <meta http-equiv="refresh" content="0; url=maintenance.html">
-  <script>window.location.replace('maintenance.html');</script>
+  <!-- <meta http-equiv="refresh" content="0; url=maintenance.html">
+  <script>window.location.replace('maintenance.html');</script> -->
 
-  
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="https://img.icons8.com/arcade/64/s-key.png" sizes="64x64"/>
+
+  <!-- Favicon --> 
+  <link rel="icon" type="image/png" href="https://img.icons8.com/arcade/64/s-key.png" sizes="64x64">
   
   <!-- Google Fonts - Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -40,18 +40,41 @@
         <li class="nav-item"><a href="#skills" class="nav-link">Skills</a></li>
         <li class="nav-item"><a href="#social" class="nav-link">Social</a></li>
         <li class="nav-item"><a href="#contact" class="nav-link">Contact</a></li>
+        <li class="nav-item"><a href=".gitignore/services.html" class="nav-link">Services</a></li>
       </ul>
       <form class="navbar-search" role="search" aria-label="Site search">
-        <input type="search" placeholder="Search..." aria-label="Search" />
+        <input type="search" placeholder="Search..." aria-label="Search">
       </form>
       <div class="hamburger" aria-label="Toggle navigation" role="button" tabindex="0">
         <span class="bar"></span>
         <span class="bar"></span>
         <span class="bar"></span>
       </div>
-      <button id="darkModeToggle" class="dark-mode-toggle" aria-label="Toggle dark mode">
-        <span class="toggle-icon">🌙</span>
-      </button>
+      
+      <!-- Settings Gear Button -->
+      <div class="settings-container">
+        <button id="settingsGear" class="settings-gear" aria-label="Theme settings">
+          <svg class="gear-icon" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.07-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.74,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.8,11.69,4.8,12s0.02,0.64,0.07,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.44-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.47-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z"/>
+          </svg>
+        </button>
+        
+        <!-- Theme Selection Dropdown -->
+        <div id="themeDropdown" class="theme-dropdown">
+          <div class="theme-option" data-theme="system">
+            <span class="theme-icon">🖥️</span>
+            <span class="theme-label">System Default</span>
+          </div>
+          <div class="theme-option" data-theme="light">
+            <span class="theme-icon">☀️</span>
+            <span class="theme-label">Light Mode</span>
+          </div>
+          <div class="theme-option" data-theme="dark">
+            <span class="theme-icon">🌙</span>
+            <span class="theme-label">Dark Mode</span>
+          </div>
+        </div>
+      </div>
     </div>
   </nav>
 
@@ -59,21 +82,20 @@
  <section id="home" class="home section">
   <div class="container">
     <div class="glass-panel card-glass fade-in">
-      <div class="home-content" style="display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 3rem; text-align: left;">
+      <div class="home-content">
 
         <!-- Left Side: Profile Photo -->
-        <div class="profile-photo" style="flex: 0 0 220px; display: flex; justify-content: center;">
+        <div class="profile-photo">
           <img src="Assets/Picture/My_Photo.png" 
                alt="Kumar Sreyan Pattanayak" 
-               class="profile-img" 
-               style="width: 200px; height: 200px; border-radius: 50%; object-fit: cover; box-shadow: 0 0 20px rgba(0,0,0,0.15);" />
+               class="profile-img">
         </div>
 
         <!-- Right Side: Text -->
-        <div class="text-content" style="max-width: 450px;">
-          <h1 class="name" style="font-size: 2rem; margin-bottom: 0.5rem;">Kumar Sreyan Pattanayak</h1>
-          <p class="intro" style="font-size: 1.2rem; color: #70311f; margin-bottom: 1rem;">BCA Student & Technology Enthusiast</p>
-          <p class="intro" style="line-height: 1.6; margin-bottom: 1.5rem;">
+        <div class="text-content">
+          <h1 class="name">Kumar Sreyan Pattanayak</h1>
+          <p class="intro tagline-text">BCA Student & Technology Enthusiast</p>
+          <p class="intro description-text">
             Passionate about technology, management, and policy analysis. Currently pursuing BCA while preparing for CAT 2026 to pursue MBA in Business Analytics.
           </p>
           <a href="contact.html" class="cta-button button-glass">Get In Touch</a>
@@ -180,14 +202,14 @@
         <div class="achievement-icon">🐍</div>
         <h3>Python Programming Mastery --Udemy--</h3>
         <p>Currently pursuing advanced Python programming course on Udemy to build real-world projects and become job-ready.</p>
-        <a href="https://www.udemy.com/course/codewithharry-python/?couponCode=SEPHARRY" target="_blank" class="course-link">View Course</a>
+        <a href="https://www.udemy.com/course/codewithharry-python/?couponCode=SEPHARRY" target="_blank" rel="noopener" class="course-link">View Course</a>
       </div>
 
       <div class="achievement-card card-glass">
         <div class="achievement-icon">🌐</div>
         <h3>Ultimate Web Development Course 2025 --Udemy--</h3>
         <p>(Ongoing) a modern web development course focused on building responsive websites, real-world projects, and leveraging AI tools to accelerate development.</p>
-        <a href="https://www.udemy.com/course/codewithharry-web-development-course/?srsltid=AfmBOooGTxHcQCxjApypCQ6TwDaAhgT06quf1ot2j5j8M-99_qPJXDPO&couponCode=LETSLEARNNOW" target="_blank" class="course-link">View Course</a>
+        <a href="https://www.udemy.com/course/codewithharry-web-development-course/?srsltid=AfmBOooGTxHcQCxjApypCQ6TwDaAhgT06quf1ot2j5j8M-99_qPJXDPO&couponCode=LETSLEARNNOW" target="_blank" rel="noopener" class="course-link">View Course</a>
       </div>
 
       </div>
@@ -284,34 +306,34 @@
         <h2 class="section-title">Connect With Me</h2>
         <div class="social-links">
         <a href="https://github.com/Ksreyan0725" class="social-link card-glass" target="_blank" rel="noopener">
-          <img src="Assets/Images.icons/github.png" alt="GitHub" class="social-icon" style="width:24px; height:24px;">
+          <img src="Assets/Images.icons/github.png" alt="GitHub" class="social-icon">
           
           <span class="social-name">GitHub
           </span>
         </a>
           <a href="https://www.facebook.com/share/1Cj1miKofw/" class="social-link card-glass" target="_blank" rel="noopener">
-          <img src="Assets/Images.icons/facebook.png" alt="Instagram" class="social-icon" style="width:24px; height:24px;">
+          <img src="Assets/Images.icons/facebook.png" alt="Instagram" class="social-icon">
           <span class="social-name">Facebook</span>
         </a>
         <a href="https://www.linkedin.com/in/kumar-sreyan-pattanayak-81a495230" class="social-link card-glass" target="_blank" rel="noopener">
-         <img src="Assets/Images.icons/linkedin.png" alt="Instagram" class="social-icon" style="width:24px; height:24px;">
+         <img src="Assets/Images.icons/linkedin.png" alt="Instagram" class="social-icon">
           <span class="social-name">LinkedIn</span>
         </a>
         <a href="https://x.com/SreyanPattanay5?t=oXoHwnGs9M9e37zh_Vsd5A&s=09" class="social-link card-glass" target="_blank" rel="noopener">
-          <img src="Assets/Images.icons/X.png" alt="X" class="social-icon" style="width:24px; height:24px;">
+          <img src="Assets/Images.icons/X.png" alt="X" class="social-icon">
           <span class="social-name">X</span>
         </a>
          <a href="https://www.instagram.com/p_a_p_u_n01_?igsh=aWwyZnhicTRuaTI3" class="social-link card-glass" target="_blank" rel="noopener">
-         <img src="Assets/Images.icons/instagram.png" alt="Instagram" class="social-icon" style="width:24px; height:24px;">
+         <img src="Assets/Images.icons/instagram.png" alt="Instagram" class="social-icon">
          <span class="social-name">Instagram</span>
 </a>
 
          <a href="https://t.me/SreyanPattanayak" class="social-link card-glass" target="_blank" rel="noopener">
-          <img src="Assets/Images.icons/telegram.png" alt="Instagram" class="social-icon" style="width:24px; height:24px;">
+          <img src="Assets/Images.icons/telegram.png" alt="Instagram" class="social-icon">
           <span class="social-name">Telegram</span>
         </a>
          <a href="https://teams.microsoft.com/l/chat/0/0?users=opener" class="social-link card-glass" target="_blank" rel="noopener"> 
-          <img src="Assets/Images.icons/teams.png" alt="Teams" class="social-icon" style="width:24px; height:24px;">
+          <img src="Assets/Images.icons/teams.png" alt="Teams" class="social-icon">
           <span class="social-name">Microsoft Teams</span>
         </a>
         </div>
@@ -347,7 +369,7 @@
           <label for="message">Message</label>
           <textarea id="message" name="message" rows="5" required></textarea>
         </div>
-        <button type="submit" class="submit-button">Send Message</button>
+        <button type="submit" class="submit-button">Submit</button>
       </form>
     <!-- <button id="dont-click" class="dont-click">Don't click</button> -->
 
@@ -355,8 +377,6 @@
     </div>
   </div>
 </section>
-
-  </main>
 
   <!-- Footer -->
   <footer class="footer">
