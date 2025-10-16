@@ -247,6 +247,136 @@ img {
 
 .section {
   padding: var(--space-3xl) 0;
+  position: relative;
+}
+
+/* Section border designs for visual differentiation */
+.section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  height: 2px;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(99, 179, 237, 0.5), 
+    transparent);
+  border-radius: 2px;
+}
+
+/* Home Section - Blue gradient top border */
+.home.section::before {
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(59, 130, 246, 0.7), 
+    rgba(99, 179, 237, 0.7), 
+    transparent);
+  height: 3px;
+  box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
+}
+
+/* About Section - Purple gradient border */
+.about.section::before {
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(147, 51, 234, 0.7), 
+    rgba(168, 85, 247, 0.7), 
+    transparent);
+  height: 2px;
+  box-shadow: 0 0 12px rgba(147, 51, 234, 0.3);
+}
+
+/* Education Section - Green gradient border */
+.education.section::before {
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(16, 185, 129, 0.7), 
+    rgba(52, 211, 153, 0.7), 
+    transparent);
+  height: 2px;
+  box-shadow: 0 0 12px rgba(16, 185, 129, 0.3);
+}
+
+/* Achievements Section - Orange gradient border */
+.achievements.section::before {
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(251, 146, 60, 0.7), 
+    rgba(253, 186, 116, 0.7), 
+    transparent);
+  height: 2px;
+  box-shadow: 0 0 12px rgba(251, 146, 60, 0.3);
+}
+
+/* Skills Section - Cyan gradient border */
+.skills.section::before {
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(6, 182, 212, 0.7), 
+    rgba(34, 211, 238, 0.7), 
+    transparent);
+  height: 2px;
+  box-shadow: 0 0 12px rgba(6, 182, 212, 0.3);
+}
+
+/* Social Section - Pink gradient border */
+.social.section::before {
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(236, 72, 153, 0.7), 
+    rgba(244, 114, 182, 0.7), 
+    transparent);
+  height: 2px;
+  box-shadow: 0 0 12px rgba(236, 72, 153, 0.3);
+}
+
+/* Contact Section - Red gradient border */
+.contact.section::before {
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(239, 68, 68, 0.7), 
+    rgba(248, 113, 113, 0.7), 
+    transparent);
+  height: 2px;
+  box-shadow: 0 0 12px rgba(239, 68, 68, 0.3);
+}
+
+/* Add bottom borders for each section glass-panel for extra differentiation */
+.home .glass-panel {
+  border-top: 2px solid rgba(59, 130, 246, 0.3);
+  border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.about .glass-panel {
+  border-top: 2px solid rgba(147, 51, 234, 0.3);
+  border-bottom: 1px solid rgba(147, 51, 234, 0.2);
+}
+
+.education .glass-panel {
+  border-top: 2px solid rgba(16, 185, 129, 0.3);
+  border-bottom: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.achievements .glass-panel {
+  border-top: 2px solid rgba(251, 146, 60, 0.3);
+  border-bottom: 1px solid rgba(251, 146, 60, 0.2);
+}
+
+.skills .glass-panel {
+  border-top: 2px solid rgba(6, 182, 212, 0.3);
+  border-bottom: 1px solid rgba(6, 182, 212, 0.2);
+}
+
+.social .glass-panel {
+  border-top: 2px solid rgba(236, 72, 153, 0.3);
+  border-bottom: 1px solid rgba(236, 72, 153, 0.2);
+}
+
+.contact .glass-panel {
+  border-top: 2px solid rgba(239, 68, 68, 0.3);
+  border-bottom: 1px solid rgba(239, 68, 68, 0.2);
 }
 
 .section-title {
@@ -298,23 +428,28 @@ img {
 }
 
 .nav-logo {
-  font-size: var(--font-size-xl);
-  font-weight: var(--font-weight-bold);
-  color: #e5e7eb;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #ffffff;
   text-decoration: none;
-  text-shadow: none;
+  text-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
   flex-shrink: 0;
   margin-left: 0;
+  padding: 0.5rem 1rem;
   padding-left: 0;
+  border-radius: 8px;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
+  letter-spacing: 0.5px;
+  font-family: 'Courier New', monospace;
 }
 
 .nav-logo:hover {
-  color: #ffffff;
-  transform: scale(1.08);
-  text-shadow: 0 0 20px rgba(99, 179, 237, 0.7),
-               0 0 40px rgba(59, 130, 246, 0.4);
+  color: #60a5fa;
+  transform: translateY(-2px);
+  text-shadow: 0 0 25px rgba(96, 165, 250, 0.8),
+               0 0 50px rgba(59, 130, 246, 0.5),
+               0 4px 12px rgba(59, 130, 246, 0.4);
 }
 
 .nav-menu {
@@ -1821,6 +1956,11 @@ main {
     padding: var(--space-2xl) 0;
   }
   
+  /* Mobile responsive section borders */
+  .section::before {
+    width: 85%;
+  }
+  
   .container {
     padding: 0 var(--space-md);
   }
@@ -1859,7 +1999,15 @@ main {
 @media (max-width: 480px) {
   /* Further mobile optimizations */
   .nav-logo {
-    font-size: var(--font-size-lg);
+    font-size: 1.1rem;
+    padding: 0.4rem 0.6rem;
+    padding-left: 0;
+  }
+  
+  /* Mobile section borders - narrower for small screens */
+  .section::before {
+    width: 80%;
+    height: 1.5px;
   }
   
   .social-links {
@@ -2346,7 +2494,7 @@ body:not(.darkmode) .navbar-search input:focus {
 [data-theme="light"] .nav-link,
 [data-theme="light"] .nav-logo {
   color: var(--text-primary) !important;
-  text-shadow: none !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
 }
 
 [data-theme="light"] .nav-link:hover {
@@ -2376,6 +2524,71 @@ body:not(.darkmode) .navbar-search input:focus {
     rgba(0, 102, 255, 0.6)
   ) !important;
   box-shadow: 0 0 8px rgba(0, 102, 255, 0.5) !important;
+}
+
+/* Light theme section borders - enhanced visibility */
+[data-theme="light"] .home.section::before {
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.6);
+}
+
+[data-theme="light"] .about.section::before {
+  box-shadow: 0 0 18px rgba(147, 51, 234, 0.5);
+}
+
+[data-theme="light"] .education.section::before {
+  box-shadow: 0 0 18px rgba(16, 185, 129, 0.5);
+}
+
+[data-theme="light"] .achievements.section::before {
+  box-shadow: 0 0 18px rgba(251, 146, 60, 0.5);
+}
+
+[data-theme="light"] .skills.section::before {
+  box-shadow: 0 0 18px rgba(6, 182, 212, 0.5);
+}
+
+[data-theme="light"] .social.section::before {
+  box-shadow: 0 0 18px rgba(236, 72, 153, 0.5);
+}
+
+[data-theme="light"] .contact.section::before {
+  box-shadow: 0 0 18px rgba(239, 68, 68, 0.5);
+}
+
+/* Light theme glass panel borders */
+[data-theme="light"] .home .glass-panel {
+  border-top: 2px solid rgba(59, 130, 246, 0.5);
+  border-bottom: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+[data-theme="light"] .about .glass-panel {
+  border-top: 2px solid rgba(147, 51, 234, 0.5);
+  border-bottom: 1px solid rgba(147, 51, 234, 0.3);
+}
+
+[data-theme="light"] .education .glass-panel {
+  border-top: 2px solid rgba(16, 185, 129, 0.5);
+  border-bottom: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+[data-theme="light"] .achievements .glass-panel {
+  border-top: 2px solid rgba(251, 146, 60, 0.5);
+  border-bottom: 1px solid rgba(251, 146, 60, 0.3);
+}
+
+[data-theme="light"] .skills .glass-panel {
+  border-top: 2px solid rgba(6, 182, 212, 0.5);
+  border-bottom: 1px solid rgba(6, 182, 212, 0.3);
+}
+
+[data-theme="light"] .social .glass-panel {
+  border-top: 2px solid rgba(236, 72, 153, 0.5);
+  border-bottom: 1px solid rgba(236, 72, 153, 0.3);
+}
+
+[data-theme="light"] .contact .glass-panel {
+  border-top: 2px solid rgba(239, 68, 68, 0.5);
+  border-bottom: 1px solid rgba(239, 68, 68, 0.3);
 }
 
 /* Mobile menu background in light theme */
