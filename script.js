@@ -2,10 +2,8 @@
 
 document.addEventListener('DOMContentLoaded', () => {
     const htmlElement = document.documentElement;
-    const body = document.body;
 
     /* ==================== Dark Mode Toggle with Ripple Effect ==================== */
-    // Restore dark/light mode toggle
     const darkModeToggle = document.getElementById('darkModeToggle');
     
     // Ripple animation function
@@ -48,65 +46,40 @@ document.addEventListener('DOMContentLoaded', () => {
     if (darkModeToggle) {
         const toggleIcon = darkModeToggle.querySelector('.toggle-icon');
 
-        // Load saved theme preference or system preference
-        const savedTheme = localStorage.getItem('theme');
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        const initialTheme = savedTheme || (prefersDark ? 'dark' : 'light');
-        htmlElement.setAttribute('data-theme', initialTheme);
-        document.body.classList.toggle('darkmode', initialTheme === 'dark');
-        toggleIcon.textContent = initialTheme === 'dark' ? '☀️' : '🌙';
+        // Load saved theme preference
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        htmlElement.setAttribute('data-theme', savedTheme);
+        document.body.classList.toggle('darkmode', savedTheme === 'dark');
+        toggleIcon.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
 
         darkModeToggle.addEventListener('click', (event) => {
-            // Ripple for button and page transition
+            // Create button ripple
             createRipple(event);
+            
+            // Create page transition ripple
             createPageRipple(event);
-
+            
+            // Toggle theme with a slight delay for smooth animation
             setTimeout(() => {
-                // Temporarily mark theme switching to lengthen CSS transitions
-                htmlElement.classList.add('theme-switching');
                 const currentTheme = htmlElement.getAttribute('data-theme');
                 const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-
+                
                 htmlElement.setAttribute('data-theme', newTheme);
-                document.body.classList.toggle('darkmode', newTheme === 'dark');
+                document.body.classList.toggle('darkmode');
                 toggleIcon.textContent = newTheme === 'dark' ? '☀️' : '🌙';
                 localStorage.setItem('theme', newTheme);
-                // Remove the marker after transitions complete
-                setTimeout(() => htmlElement.classList.remove('theme-switching'), 900);
-            }, 120); // slight delay for smoother feel
+            }, 200);
         });
     }
-
-    /* ==================== Backdrop-filter Fallback & Reduced Motion ==================== */
-    const supportsBackdrop = CSS && CSS.supports && (CSS.supports('backdrop-filter: blur(1px)') || CSS.supports('-webkit-backdrop-filter: blur(1px)'));
-    if (!supportsBackdrop) {
-        body.classList.add('no-backdrop');
-    }
-
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-    function applyMotionPreference() {
-        if (prefersReducedMotion.matches) {
-            // Minimize non-essential animations for accessibility
-            document.querySelectorAll('.card-glass, .button-glass').forEach(el => {
-                el.style.transitionDuration = '0.01ms';
-            });
-        }
-    }
-    applyMotionPreference();
-    prefersReducedMotion.addEventListener?.('change', applyMotionPreference);
 
     /* ==================== Mobile Navigation ==================== */
     const hamburger = document.querySelector('.hamburger');
     const navMenu = document.querySelector('.nav-menu');
 
     if (hamburger && navMenu) {
-        // Initialize ARIA state for accessibility
-        hamburger.setAttribute('aria-expanded', 'false');
         hamburger.addEventListener('click', () => {
             hamburger.classList.toggle('active');
             navMenu.classList.toggle('active');
-            const expanded = hamburger.getAttribute('aria-expanded') === 'true';
-            hamburger.setAttribute('aria-expanded', String(!expanded));
         });
 
         // Close menu when clicking nav links
@@ -114,7 +87,6 @@ document.addEventListener('DOMContentLoaded', () => {
             link.addEventListener('click', () => {
                 hamburger.classList.remove('active');
                 navMenu.classList.remove('active');
-                hamburger.setAttribute('aria-expanded', 'false');
             });
         });
     }
@@ -196,15 +168,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (entry.target.classList.contains('skills')) {
                     animateSkillBars();
                 }
-                // Add smooth reveal class
-                entry.target.classList.add('in-view');
+                
+                // Fade in animation for cards
+                entry.target.classList.add('fade-in');
             }
         });
     }, observerOptions);
 
-    // Apply base reveal class and observe
-    document.querySelectorAll('.skills, .achievement-card, .detail-item, .timeline-item, .glass-panel').forEach(el => {
-        el.classList.add('reveal');
+    // Observe sections for animations
+    document.querySelectorAll('.skills, .achievement-card, .detail-item, .timeline-item').forEach(el => {
         observer.observe(el);
     });
 
