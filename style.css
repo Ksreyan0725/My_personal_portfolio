@@ -1838,6 +1838,48 @@ body.darkmode .submit-button:hover {
   box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
 }
 
+/* ==================== Thank You Page ==================== */
+.thank-you-panel {
+  text-align: center;
+  padding: 60px 40px;
+}
+
+.thank-you-icon {
+  font-size: 80px;
+  margin-bottom: 20px;
+}
+
+.thank-you-content {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.thank-you-message {
+  font-size: 1.2rem;
+  margin: 20px 0;
+  line-height: 1.6;
+}
+
+.thank-you-submessage {
+  font-size: 1rem;
+  margin: 20px 0;
+  opacity: 0.9;
+}
+
+.thank-you-actions {
+  margin-top: 40px;
+}
+
+.thank-you-button {
+  display: inline-block;
+  text-decoration: none;
+  padding: 12px 30px;
+}
+
+.thank-you-button + .thank-you-button {
+  margin-left: 15px;
+}
+
 /* ==================== Footer ==================== */
 .footer {
   background: linear-gradient(to right, #1a1a1a, #2d2d2d);
