@@ -21,7 +21,7 @@ Skills & Technologies
 - Languages: C, C++, Java, Python, JavaScript  
 - Frontend: HTML5, CSS3, React.js, TailwindCSS  
 - Backend: Formspree
-- Databases: MySQL, MongoDB  
+- Databases: ........
 - Tools & Platforms: Git, GitHub, VS Code, GitHub Pages  
 
 ------------------------------------------------------------
