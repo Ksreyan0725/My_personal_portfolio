@@ -345,33 +345,237 @@ img {
 
 /* Add bottom borders for each section glass-panel for extra differentiation */
 .home .glass-panel {
-  border-top: 2px solid rgba(59, 130, 246, 0.3);
-  border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+  border-top: 2px solid rgba(99, 179, 237, 0.3);
+  border-bottom: 1px solid rgba(99, 179, 237, 0.2);
+  background: linear-gradient(135deg, 
+    rgba(230, 242, 255, 0.4) 0%, 
+    rgba(199, 226, 255, 0.3) 50%, 
+    rgba(230, 242, 255, 0.4) 100%
+  );
+  box-shadow: 0 8px 32px rgba(59, 130, 246, 0.15),
+              0 4px 16px rgba(0, 0, 0, 0.1),
+              inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
+  backdrop-filter: blur(16px) saturate(150%);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Add subtle gradient overlay for extra depth - home section */
+.home .glass-panel::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  background: linear-gradient(180deg, 
+    rgba(99, 179, 237, 0.05) 0%, 
+    transparent 50%,
+    rgba(59, 130, 246, 0.03) 100%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.home .glass-panel > * {
+  position: relative;
+  z-index: 1;
 }
 
 .about .glass-panel {
-  border-top: 2px solid rgba(147, 51, 234, 0.3);
-  border-bottom: 1px solid rgba(147, 51, 234, 0.2);
+  border-top: 2px solid rgba(99, 179, 237, 0.3);
+  border-bottom: 1px solid rgba(99, 179, 237, 0.2);
+  background: linear-gradient(135deg, 
+    rgba(230, 242, 255, 0.4) 0%, 
+    rgba(199, 226, 255, 0.3) 50%, 
+    rgba(230, 242, 255, 0.4) 100%
+  );
+  box-shadow: 0 8px 32px rgba(59, 130, 246, 0.15),
+              0 4px 16px rgba(0, 0, 0, 0.1),
+              inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
+  backdrop-filter: blur(16px) saturate(150%);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Add subtle gradient overlay for extra depth - about section */
+.about .glass-panel::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  background: linear-gradient(180deg, 
+    rgba(99, 179, 237, 0.05) 0%, 
+    transparent 50%,
+    rgba(59, 130, 246, 0.03) 100%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.about .glass-panel > * {
+  position: relative;
+  z-index: 1;
 }
 
 .education .glass-panel {
-  border-top: 2px solid rgba(16, 185, 129, 0.3);
-  border-bottom: 1px solid rgba(16, 185, 129, 0.2);
+  border-top: 2px solid rgba(99, 179, 237, 0.3);
+  border-bottom: 1px solid rgba(99, 179, 237, 0.2);
+  background: linear-gradient(135deg, 
+    rgba(230, 242, 255, 0.4) 0%, 
+    rgba(199, 226, 255, 0.3) 50%, 
+    rgba(230, 242, 255, 0.4) 100%
+  );
+  box-shadow: 0 8px 32px rgba(59, 130, 246, 0.15),
+              0 4px 16px rgba(0, 0, 0, 0.1),
+              inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
+  backdrop-filter: blur(16px) saturate(150%);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Add subtle gradient overlay for extra depth - education section */
+.education .glass-panel::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  background: linear-gradient(180deg, 
+    rgba(99, 179, 237, 0.05) 0%, 
+    transparent 50%,
+    rgba(59, 130, 246, 0.03) 100%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.education .glass-panel > * {
+  position: relative;
+  z-index: 1;
 }
 
 .achievements .glass-panel {
-  border-top: 2px solid rgba(251, 146, 60, 0.3);
-  border-bottom: 1px solid rgba(251, 146, 60, 0.2);
+  border-top: 2px solid rgba(99, 179, 237, 0.3);
+  border-bottom: 1px solid rgba(99, 179, 237, 0.2);
+  background: linear-gradient(135deg, 
+    rgba(230, 242, 255, 0.4) 0%, 
+    rgba(199, 226, 255, 0.3) 50%, 
+    rgba(230, 242, 255, 0.4) 100%
+  );
+  box-shadow: 0 8px 32px rgba(59, 130, 246, 0.15),
+              0 4px 16px rgba(0, 0, 0, 0.1),
+              inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
+  backdrop-filter: blur(16px) saturate(150%);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Add subtle gradient overlay for extra depth - achievements section */
+.achievements .glass-panel::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  background: linear-gradient(180deg, 
+    rgba(99, 179, 237, 0.05) 0%, 
+    transparent 50%,
+    rgba(59, 130, 246, 0.03) 100%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.achievements .glass-panel > * {
+  position: relative;
+  z-index: 1;
 }
 
 .skills .glass-panel {
-  border-top: 2px solid rgba(6, 182, 212, 0.3);
-  border-bottom: 1px solid rgba(6, 182, 212, 0.2);
+  border-top: 2px solid rgba(99, 179, 237, 0.3);
+  border-bottom: 1px solid rgba(99, 179, 237, 0.2);
+  background: linear-gradient(135deg, 
+    rgba(230, 242, 255, 0.4) 0%, 
+    rgba(199, 226, 255, 0.3) 50%, 
+    rgba(230, 242, 255, 0.4) 100%
+  );
+  box-shadow: 0 8px 32px rgba(59, 130, 246, 0.15),
+              0 4px 16px rgba(0, 0, 0, 0.1),
+              inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
+  backdrop-filter: blur(16px) saturate(150%);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Add subtle gradient overlay for extra depth - skills section */
+.skills .glass-panel::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  background: linear-gradient(180deg, 
+    rgba(99, 179, 237, 0.05) 0%, 
+    transparent 50%,
+    rgba(59, 130, 246, 0.03) 100%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.skills .glass-panel > * {
+  position: relative;
+  z-index: 1;
 }
 
 .social .glass-panel {
-  border-top: 2px solid rgba(236, 72, 153, 0.3);
-  border-bottom: 1px solid rgba(236, 72, 153, 0.2);
+  border-top: 2px solid rgba(99, 179, 237, 0.3);
+  border-bottom: 1px solid rgba(99, 179, 237, 0.2);
+  background: linear-gradient(135deg, 
+    rgba(230, 242, 255, 0.4) 0%, 
+    rgba(199, 226, 255, 0.3) 50%, 
+    rgba(230, 242, 255, 0.4) 100%
+  );
+  box-shadow: 0 8px 32px rgba(59, 130, 246, 0.15),
+              0 4px 16px rgba(0, 0, 0, 0.1),
+              inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
+  backdrop-filter: blur(16px) saturate(150%);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Add subtle gradient overlay for extra depth - social section */
+.social .glass-panel::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  background: linear-gradient(180deg, 
+    rgba(99, 179, 237, 0.05) 0%, 
+    transparent 50%,
+    rgba(59, 130, 246, 0.03) 100%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.social .glass-panel > * {
+  position: relative;
+  z-index: 1;
 }
 
 .contact .glass-panel {
@@ -567,6 +771,84 @@ img {
   50% {
     box-shadow: 0 0 16px rgba(59, 130, 246, 0.9);
   }
+}
+
+/* ==================== Notification Panel ==================== */
+.notification-panel {
+  position: fixed;
+  top: var(--navbar-height);
+  left: 0;
+  right: 0;
+  background: linear-gradient(135deg, 
+    rgba(59, 130, 246, 0.95) 0%, 
+    rgba(37, 99, 235, 0.95) 100%);
+  box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  z-index: 999;
+  overflow: hidden;
+  transform: translateX(100%);
+  opacity: 0;
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.notification-panel.show {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.notification-panel.hide {
+  transform: translateX(-100%);
+  opacity: 0;
+}
+
+.notification-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 16px 24px;
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 500;
+  text-align: center;
+}
+
+.notification-icon {
+  font-size: 1.5rem;
+  animation: bounce 2s ease-in-out infinite;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.notification-text {
+  letter-spacing: 0.3px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Dark mode notification panel */
+[data-theme="dark"] .notification-panel,
+body.darkmode .notification-panel {
+  background: linear-gradient(135deg, 
+    rgba(30, 58, 138, 0.95) 0%, 
+    rgba(29, 78, 216, 0.95) 100%);
+  box-shadow: 0 4px 20px rgba(29, 78, 216, 0.5);
+}
+
+/* Light mode notification panel */
+[data-theme="light"] .notification-panel {
+  background: linear-gradient(135deg, 
+    rgba(59, 130, 246, 0.96) 0%, 
+    rgba(37, 99, 235, 0.96) 100%);
+  box-shadow: 0 4px 20px rgba(59, 130, 246, 0.35);
 }
 
 /* Hamburger Menu */
@@ -983,7 +1265,7 @@ body.darkmode .theme-option.active {
   position: absolute;
   inset: 0;
   border-radius: var(--radius-lg);
-  padding: 2px;
+  padding: 3px;
   background: linear-gradient(45deg, 
     rgba(156, 163, 175, 0.3),
     rgba(203, 213, 225, 0.4),
@@ -1031,6 +1313,17 @@ body.darkmode .theme-option.active {
 
 .profile-photo:hover .profile-img {
   transform: scale(1.02);
+}
+
+/* Light mode profile photo border - more visible */
+[data-theme="light"] .profile-photo::before,
+body:not(.darkmode) .profile-photo::before {
+  background: linear-gradient(45deg, 
+    rgba(59, 130, 246, 0.7),
+    rgba(99, 179, 237, 0.8),
+    rgba(6, 182, 212, 0.7),
+    rgba(59, 130, 246, 0.7)
+  );
 }
 
 /* Dark mode profile photo styling */
@@ -1481,19 +1774,15 @@ body.darkmode .profile-photo:hover {
 }
 
 .skills-category {
-  background: linear-gradient(135deg, 
-    rgba(230, 242, 255, 0.4) 0%, 
-    rgba(199, 226, 255, 0.3) 50%, 
-    rgba(230, 242, 255, 0.4) 100%
-  );
+  background: rgba(255, 255, 255, 0.6);
   padding: var(--space-xl);
   border-radius: var(--radius-lg);
-  border: 2px solid rgba(99, 179, 237, 0.3);
-  box-shadow: 0 8px 32px rgba(59, 130, 246, 0.15),
-              0 4px 16px rgba(0, 0, 0, 0.1),
-              inset 0 1px 0 rgba(255, 255, 255, 0.6);
-  -webkit-backdrop-filter: blur(16px) saturate(150%);
-  backdrop-filter: blur(16px) saturate(150%);
+  border: 1px solid rgba(200, 200, 200, 0.3);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08),
+              0 2px 8px rgba(0, 0, 0, 0.04),
+              inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(20px) saturate(180%);
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
@@ -1508,9 +1797,9 @@ body.darkmode .profile-photo:hover {
   right: 0;
   height: 100%;
   background: linear-gradient(180deg, 
-    rgba(99, 179, 237, 0.05) 0%, 
+    rgba(255, 255, 255, 0.1) 0%, 
     transparent 50%,
-    rgba(59, 130, 246, 0.03) 100%
+    rgba(0, 0, 0, 0.02) 100%
   );
   pointer-events: none;
   z-index: 0;
@@ -1522,16 +1811,12 @@ body.darkmode .profile-photo:hover {
 }
 
 .skills-category:hover {
-  background: linear-gradient(135deg, 
-    rgba(230, 242, 255, 0.5) 0%, 
-    rgba(199, 226, 255, 0.4) 50%, 
-    rgba(230, 242, 255, 0.5) 100%
-  );
-  border-color: rgba(99, 179, 237, 0.5);
-  box-shadow: 0 12px 40px rgba(59, 130, 246, 0.25),
-              0 6px 20px rgba(0, 0, 0, 0.15),
-              inset 0 1px 0 rgba(255, 255, 255, 0.8);
-  transform: translateY(-4px);
+  background: rgba(255, 255, 255, 0.7);
+  border-color: rgba(200, 200, 200, 0.4);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1),
+              0 3px 10px rgba(0, 0, 0, 0.06),
+              inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  transform: translateY(-2px);
 }
 
 
@@ -1707,14 +1992,13 @@ body.darkmode .profile-photo:hover {
   color: white;
   border-radius: var(--radius-full);
   font-weight: var(--font-weight-semibold);
-  transition: all var(--transition-base);
+  transition: background-color 0.3s ease, opacity 0.3s ease;
   text-decoration: none;
 }
 
 .resume-btn:hover {
   background-color: var(--color-accent-hover);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
+  opacity: 0.9;
   color: white;
 }
 
@@ -2858,33 +3142,81 @@ body:not(.darkmode) .navbar-search input:focus {
 
 /* Light theme glass panel borders */
 [data-theme="light"] .home .glass-panel {
-  border-top: 2px solid rgba(59, 130, 246, 0.5);
-  border-bottom: 1px solid rgba(59, 130, 246, 0.3);
+  border-top: 2px solid rgba(99, 179, 237, 0.5);
+  border-bottom: 1px solid rgba(99, 179, 237, 0.3);
+  background: linear-gradient(135deg, 
+    rgba(230, 242, 255, 0.5) 0%, 
+    rgba(199, 226, 255, 0.4) 50%, 
+    rgba(230, 242, 255, 0.5) 100%
+  ) !important;
+  box-shadow: 0 12px 40px rgba(59, 130, 246, 0.25),
+              0 6px 20px rgba(0, 0, 0, 0.15),
+              inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
 }
 
 [data-theme="light"] .about .glass-panel {
-  border-top: 2px solid rgba(147, 51, 234, 0.5);
-  border-bottom: 1px solid rgba(147, 51, 234, 0.3);
+  border-top: 2px solid rgba(99, 179, 237, 0.5);
+  border-bottom: 1px solid rgba(99, 179, 237, 0.3);
+  background: linear-gradient(135deg, 
+    rgba(230, 242, 255, 0.5) 0%, 
+    rgba(199, 226, 255, 0.4) 50%, 
+    rgba(230, 242, 255, 0.5) 100%
+  ) !important;
+  box-shadow: 0 12px 40px rgba(59, 130, 246, 0.25),
+              0 6px 20px rgba(0, 0, 0, 0.15),
+              inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
 }
 
 [data-theme="light"] .education .glass-panel {
-  border-top: 2px solid rgba(16, 185, 129, 0.5);
-  border-bottom: 1px solid rgba(16, 185, 129, 0.3);
+  border-top: 2px solid rgba(99, 179, 237, 0.5);
+  border-bottom: 1px solid rgba(99, 179, 237, 0.3);
+  background: linear-gradient(135deg, 
+    rgba(230, 242, 255, 0.5) 0%, 
+    rgba(199, 226, 255, 0.4) 50%, 
+    rgba(230, 242, 255, 0.5) 100%
+  ) !important;
+  box-shadow: 0 12px 40px rgba(59, 130, 246, 0.25),
+              0 6px 20px rgba(0, 0, 0, 0.15),
+              inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
 }
 
 [data-theme="light"] .achievements .glass-panel {
-  border-top: 2px solid rgba(251, 146, 60, 0.5);
-  border-bottom: 1px solid rgba(251, 146, 60, 0.3);
+  border-top: 2px solid rgba(99, 179, 237, 0.5);
+  border-bottom: 1px solid rgba(99, 179, 237, 0.3);
+  background: linear-gradient(135deg, 
+    rgba(230, 242, 255, 0.5) 0%, 
+    rgba(199, 226, 255, 0.4) 50%, 
+    rgba(230, 242, 255, 0.5) 100%
+  ) !important;
+  box-shadow: 0 12px 40px rgba(59, 130, 246, 0.25),
+              0 6px 20px rgba(0, 0, 0, 0.15),
+              inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
 }
 
 [data-theme="light"] .skills .glass-panel {
-  border-top: 2px solid rgba(6, 182, 212, 0.5);
-  border-bottom: 1px solid rgba(6, 182, 212, 0.3);
+  border-top: 2px solid rgba(99, 179, 237, 0.5);
+  border-bottom: 1px solid rgba(99, 179, 237, 0.3);
+  background: linear-gradient(135deg, 
+    rgba(230, 242, 255, 0.5) 0%, 
+    rgba(199, 226, 255, 0.4) 50%, 
+    rgba(230, 242, 255, 0.5) 100%
+  ) !important;
+  box-shadow: 0 12px 40px rgba(59, 130, 246, 0.25),
+              0 6px 20px rgba(0, 0, 0, 0.15),
+              inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
 }
 
 [data-theme="light"] .social .glass-panel {
-  border-top: 2px solid rgba(236, 72, 153, 0.5);
-  border-bottom: 1px solid rgba(236, 72, 153, 0.3);
+  border-top: 2px solid rgba(99, 179, 237, 0.5);
+  border-bottom: 1px solid rgba(99, 179, 237, 0.3);
+  background: linear-gradient(135deg, 
+    rgba(230, 242, 255, 0.5) 0%, 
+    rgba(199, 226, 255, 0.4) 50%, 
+    rgba(230, 242, 255, 0.5) 100%
+  ) !important;
+  box-shadow: 0 12px 40px rgba(59, 130, 246, 0.25),
+              0 6px 20px rgba(0, 0, 0, 0.15),
+              inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
 }
 
 [data-theme="light"] .contact .glass-panel {
@@ -3132,15 +3464,85 @@ body.darkmode .navbar-search input::placeholder {
 /* Special dark mode glassy effect for skills cards */
 [data-theme="dark"] .skills-category,
 body.darkmode .skills-category {
-  background: linear-gradient(135deg, 
-    rgba(29, 78, 216, 0.15) 0%, 
-    rgba(59, 130, 246, 0.1) 50%, 
-    rgba(29, 78, 216, 0.15) 100%
-  ) !important;
-  border: 2px solid rgba(99, 179, 237, 0.3) !important;
-  box-shadow: 0 8px 32px rgba(59, 130, 246, 0.2),
-              0 4px 16px rgba(2, 6, 23, 0.6),
-              inset 0 1px 0 rgba(99, 179, 237, 0.1) !important;
+  background: rgba(30, 41, 59, 0.5) !important;
+  border: 1px solid rgba(100, 116, 139, 0.3) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4),
+              0 2px 8px rgba(0, 0, 0, 0.2),
+              inset 0 1px 0 rgba(148, 163, 184, 0.1) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(20px) saturate(180%);
+}
+
+/* Special dark mode glassy effect for home glass-panel */
+[data-theme="dark"] .home .glass-panel,
+body.darkmode .home .glass-panel {
+  background: rgba(30, 41, 59, 0.5) !important;
+  border: 1px solid rgba(100, 116, 139, 0.3) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4),
+              0 2px 8px rgba(0, 0, 0, 0.2),
+              inset 0 1px 0 rgba(148, 163, 184, 0.1) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(20px) saturate(180%);
+}
+
+/* Special dark mode glassy effect for about glass-panel */
+[data-theme="dark"] .about .glass-panel,
+body.darkmode .about .glass-panel {
+  background: rgba(30, 41, 59, 0.5) !important;
+  border: 1px solid rgba(100, 116, 139, 0.3) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4),
+              0 2px 8px rgba(0, 0, 0, 0.2),
+              inset 0 1px 0 rgba(148, 163, 184, 0.1) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(20px) saturate(180%);
+}
+
+/* Special dark mode glassy effect for education glass-panel */
+[data-theme="dark"] .education .glass-panel,
+body.darkmode .education .glass-panel {
+  background: rgba(30, 41, 59, 0.5) !important;
+  border: 1px solid rgba(100, 116, 139, 0.3) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4),
+              0 2px 8px rgba(0, 0, 0, 0.2),
+              inset 0 1px 0 rgba(148, 163, 184, 0.1) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(20px) saturate(180%);
+}
+
+/* Special dark mode glassy effect for achievements glass-panel */
+[data-theme="dark"] .achievements .glass-panel,
+body.darkmode .achievements .glass-panel {
+  background: rgba(30, 41, 59, 0.5) !important;
+  border: 1px solid rgba(100, 116, 139, 0.3) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4),
+              0 2px 8px rgba(0, 0, 0, 0.2),
+              inset 0 1px 0 rgba(148, 163, 184, 0.1) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(20px) saturate(180%);
+}
+
+/* Special dark mode glassy effect for skills glass-panel */
+[data-theme="dark"] .skills .glass-panel,
+body.darkmode .skills .glass-panel {
+  background: rgba(30, 41, 59, 0.5) !important;
+  border: 1px solid rgba(100, 116, 139, 0.3) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4),
+              0 2px 8px rgba(0, 0, 0, 0.2),
+              inset 0 1px 0 rgba(148, 163, 184, 0.1) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(20px) saturate(180%);
+}
+
+/* Special dark mode glassy effect for social glass-panel */
+[data-theme="dark"] .social .glass-panel,
+body.darkmode .social .glass-panel {
+  background: rgba(30, 41, 59, 0.5) !important;
+  border: 1px solid rgba(100, 116, 139, 0.3) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4),
+              0 2px 8px rgba(0, 0, 0, 0.2),
+              inset 0 1px 0 rgba(148, 163, 184, 0.1) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(20px) saturate(180%);
 }
 
 /* Special dark mode glassy effect for contact glass-panel and contact-form */
@@ -3212,15 +3614,71 @@ body.darkmode .social-name::after {
 /* Special hover effect for skills cards in dark mode */
 [data-theme="dark"] .skills-category:hover,
 body.darkmode .skills-category:hover {
-  background: linear-gradient(135deg, 
-    rgba(29, 78, 216, 0.25) 0%, 
-    rgba(59, 130, 246, 0.18) 50%, 
-    rgba(29, 78, 216, 0.25) 100%
-  ) !important;
-  border-color: rgba(99, 179, 237, 0.5) !important;
-  box-shadow: 0 12px 40px rgba(59, 130, 246, 0.35),
-              0 6px 20px rgba(2, 6, 23, 0.7),
-              inset 0 1px 0 rgba(99, 179, 237, 0.2) !important;
+  background: rgba(30, 41, 59, 0.65) !important;
+  border-color: rgba(100, 116, 139, 0.4) !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5),
+              0 3px 10px rgba(0, 0, 0, 0.3),
+              inset 0 1px 0 rgba(148, 163, 184, 0.15) !important;
+}
+
+/* Special hover effect for home glass-panel in dark mode */
+[data-theme="dark"] .home .glass-panel:hover,
+body.darkmode .home .glass-panel:hover {
+  background: rgba(30, 41, 59, 0.65) !important;
+  border-color: rgba(100, 116, 139, 0.4) !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5),
+              0 3px 10px rgba(0, 0, 0, 0.3),
+              inset 0 1px 0 rgba(148, 163, 184, 0.15) !important;
+}
+
+/* Special hover effect for about glass-panel in dark mode */
+[data-theme="dark"] .about .glass-panel:hover,
+body.darkmode .about .glass-panel:hover {
+  background: rgba(30, 41, 59, 0.65) !important;
+  border-color: rgba(100, 116, 139, 0.4) !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5),
+              0 3px 10px rgba(0, 0, 0, 0.3),
+              inset 0 1px 0 rgba(148, 163, 184, 0.15) !important;
+}
+
+/* Special hover effect for education glass-panel in dark mode */
+[data-theme="dark"] .education .glass-panel:hover,
+body.darkmode .education .glass-panel:hover {
+  background: rgba(30, 41, 59, 0.65) !important;
+  border-color: rgba(100, 116, 139, 0.4) !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5),
+              0 3px 10px rgba(0, 0, 0, 0.3),
+              inset 0 1px 0 rgba(148, 163, 184, 0.15) !important;
+}
+
+/* Special hover effect for achievements glass-panel in dark mode */
+[data-theme="dark"] .achievements .glass-panel:hover,
+body.darkmode .achievements .glass-panel:hover {
+  background: rgba(30, 41, 59, 0.65) !important;
+  border-color: rgba(100, 116, 139, 0.4) !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5),
+              0 3px 10px rgba(0, 0, 0, 0.3),
+              inset 0 1px 0 rgba(148, 163, 184, 0.15) !important;
+}
+
+/* Special hover effect for skills glass-panel in dark mode */
+[data-theme="dark"] .skills .glass-panel:hover,
+body.darkmode .skills .glass-panel:hover {
+  background: rgba(30, 41, 59, 0.65) !important;
+  border-color: rgba(100, 116, 139, 0.4) !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5),
+              0 3px 10px rgba(0, 0, 0, 0.3),
+              inset 0 1px 0 rgba(148, 163, 184, 0.15) !important;
+}
+
+/* Special hover effect for social glass-panel in dark mode */
+[data-theme="dark"] .social .glass-panel:hover,
+body.darkmode .social .glass-panel:hover {
+  background: rgba(30, 41, 59, 0.65) !important;
+  border-color: rgba(100, 116, 139, 0.4) !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5),
+              0 3px 10px rgba(0, 0, 0, 0.3),
+              inset 0 1px 0 rgba(148, 163, 184, 0.15) !important;
 }
 
 /* Special hover effect for contact glass-panel and contact-form in dark mode */
@@ -3534,8 +3992,7 @@ MOBILE-ONLY SAMSUNG ONE UI STYLES (max-width: 768px)
   .button-glass:hover,
   .submit-button:hover,
   .resume-btn:hover {
-    transform: scale(1.02);
-    box-shadow: 0 4px 12px rgba(0, 128, 255, 0.3);
+    opacity: 0.9;
   }
   
   ==================== Achievement Cards ====================

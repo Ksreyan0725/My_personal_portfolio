@@ -428,4 +428,20 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    /* ==================== Notification Panel Animation ==================== */
+    const notificationPanel = document.getElementById('notificationPanel');
+    
+    if (notificationPanel) {
+        // Show notification after page loads
+        setTimeout(() => {
+            notificationPanel.classList.add('show');
+            
+            // Hide notification after 5 seconds (slide out to left)
+            setTimeout(() => {
+                notificationPanel.classList.remove('show');
+                notificationPanel.classList.add('hide');
+            }, 5000);
+        }, 1000); // Wait 1 second after page load before showing
+    }
+
 });
