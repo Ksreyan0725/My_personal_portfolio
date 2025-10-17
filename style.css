@@ -774,6 +774,33 @@ img {
 }
 
 /* ==================== Notification Panel ==================== */
+/* .notice-container {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    background-color: #ffeb3b;
+    color: #000;
+    font-weight: bold;
+    white-space: nowrap;
+    box-sizing: border-box;
+    padding: 10px 0;
+}
+
+.notice-text {
+    display: inline-block;
+    padding-left: 100%; /* Start off screen to the right */
+    /* animation: scrollNotice 15s linear infinite; */
+/* }
+
+@keyframes scrollNotice {
+    0% {
+        transform: translateX(0%);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+} */ 
+
 .notification-panel {
   position: fixed;
   top: var(--navbar-height);
