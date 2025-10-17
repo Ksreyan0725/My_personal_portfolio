@@ -79,7 +79,7 @@
           <p>Feel free to reach out or just to say hello!</p>
         </div>
 
-        <form class="contact-form card-glass" id="contactForm">
+        <form class="contact-form card-glass" id="contactForm" action="https://formspree.io/f/mzzjopyn" method="POST">
           <div class="form-group">
             <label for="name">Name</label>
             <input type="text" id="name" name="name" required>
@@ -93,6 +93,7 @@
             <textarea id="message" name="message" rows="5" required></textarea>
           </div>
           <button type="submit" class="submit-button button-glass">Submit</button>
+          <p id="form-status"></p>
         </form>
       </div>
       </div>

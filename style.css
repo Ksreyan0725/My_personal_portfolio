@@ -711,29 +711,25 @@ body.darkmode .gear-icon {
   display: none;
   opacity: 0;
   visibility: hidden;
-  -webkit-transform: translateY(-15px) scale(0.9);
-  -ms-transform: translateY(-15px) scale(0.9);
-  transform: translateY(-15px) scale(0.9);
-  -webkit-transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-              -webkit-transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+  -webkit-transform: translateY(-10px);
+  -ms-transform: translateY(-10px);
+  transform: translateY(-10px);
+  -webkit-backdrop-filter: blur(10px) saturate(180%);
+  backdrop-filter: blur(10px) saturate(180%);
+  transition: opacity 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+              -webkit-transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+              -ms-transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+              transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
               visibility 0.4s;
-  -o-transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-              transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
-              visibility 0.4s;
-  transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-              transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
-              visibility 0.4s;
-  transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-              transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
-              visibility 0.4s,
-              -webkit-transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
   pointer-events: none;
-  will-change: opacity, transform, visibility;
 }
 
 .theme-dropdown.show {
   opacity: 1;
   visibility: visible;
+  -webkit-transform: translateY(0);
+  -ms-transform: translateY(0);
+  transform: translateY(0);
   -webkit-transform: translateY(0) scale(1);
   -ms-transform: translateY(0) scale(1);
   transform: translateY(0) scale(1);
@@ -1576,8 +1572,19 @@ body.darkmode .profile-photo:hover {
   pointer-events: none;
 }
 
-/* Hide 0% labels */
-.progress[data-value="0"]::after { display: none !important; }
+/* Keep 0% bars empty but show the label */
+.progress[data-value="0"] { 
+  min-width: 0 !important; 
+  width: 0 !important;
+}
+
+/* Position 0% label outside the empty bar */
+.progress[data-value="0"]::after {
+  right: auto;
+  left: 8px;
+  color: var(--text-secondary);
+  text-shadow: none;
+}
 
 /* Disable any container-based label */
 .progress-bar::after { display: none !important; }
@@ -1856,19 +1863,15 @@ body.darkmode .profile-photo:hover {
 }
 
 .contact-form {
-  background: linear-gradient(135deg, 
-    rgba(230, 242, 255, 0.4) 0%, 
-    rgba(199, 226, 255, 0.3) 50%, 
-    rgba(230, 242, 255, 0.4) 100%
-  );
+  background: rgba(255, 255, 255, 0.6);
   padding: var(--space-xl);
   border-radius: var(--radius-lg);
-  border: 2px solid rgba(99, 179, 237, 0.3);
-  box-shadow: 0 8px 32px rgba(59, 130, 246, 0.15),
-              0 4px 16px rgba(0, 0, 0, 0.1),
-              inset 0 1px 0 rgba(255, 255, 255, 0.6);
-  -webkit-backdrop-filter: blur(16px) saturate(150%);
-  backdrop-filter: blur(16px) saturate(150%);
+  border: 1px solid rgba(200, 200, 200, 0.3);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08),
+              0 2px 8px rgba(0, 0, 0, 0.04),
+              inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(20px) saturate(180%);
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
@@ -1883,9 +1886,9 @@ body.darkmode .profile-photo:hover {
   right: 0;
   height: 100%;
   background: linear-gradient(180deg, 
-    rgba(99, 179, 237, 0.05) 0%, 
+    rgba(255, 255, 255, 0.1) 0%, 
     transparent 50%,
-    rgba(59, 130, 246, 0.03) 100%
+    rgba(0, 0, 0, 0.02) 100%
   );
   pointer-events: none;
   z-index: 0;
@@ -1897,16 +1900,12 @@ body.darkmode .profile-photo:hover {
 }
 
 .contact-form:hover {
-  background: linear-gradient(135deg, 
-    rgba(230, 242, 255, 0.5) 0%, 
-    rgba(199, 226, 255, 0.4) 50%, 
-    rgba(230, 242, 255, 0.5) 100%
-  );
-  border-color: rgba(99, 179, 237, 0.5);
-  box-shadow: 0 12px 40px rgba(59, 130, 246, 0.25),
-              0 6px 20px rgba(0, 0, 0, 0.15),
-              inset 0 1px 0 rgba(255, 255, 255, 0.8);
-  transform: translateY(-4px);
+  background: rgba(255, 255, 255, 0.7);
+  border-color: rgba(200, 200, 200, 0.4);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1),
+              0 3px 10px rgba(0, 0, 0, 0.06),
+              inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  transform: translateY(-2px);
 }
 
 .form-group {
@@ -1979,6 +1978,16 @@ body.darkmode .profile-photo:hover {
   -ms-transform: translateY(0);
   transform: translateY(0);
   box-shadow: 0 4px 12px rgba(29, 78, 216, 0.2);
+}
+
+/* Form status message styling */
+#form-status {
+  margin-top: 1rem;
+  text-align: center;
+  font-weight: 500;
+  font-size: var(--font-size-base);
+  transition: all 0.3s ease;
+  min-height: 1.5rem;
 }
 
 /* Dark mode styling for submit button */
@@ -2194,15 +2203,24 @@ main {
     top: 10px;
   }
 
-  /* Mobile timeline item animation - slide from left only */
+  /* Mobile timeline item animation - simpler for performance */
   .timeline-item.reveal,
   .timeline-item:nth-child(even).reveal {
-    transform: translateX(-20px);
+    transform: translateY(10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
   }
 
   .timeline-item.reveal.in-view,
   .timeline-item:nth-child(even).reveal.in-view {
-    transform: translateX(0);
+    transform: translateY(0);
+  }
+  
+  /* Reduce stagger delays on mobile */
+  .timeline-item:nth-child(1),
+  .timeline-item:nth-child(2),
+  .timeline-item:nth-child(3),
+  .timeline-item:nth-child(4) {
+    transition-delay: 0s !important;
   }
   
   .timeline-date {
@@ -2213,6 +2231,17 @@ main {
   .timeline-content {
     margin: 0;
   }
+  
+  /* Simplify animations on mobile */
+  .reveal {
+    transition: opacity 0.3s ease, transform 0.3s ease !important;
+  }
+  
+  /* Reduce backdrop blur on mobile for better performance */
+  .card-glass, .contact-form, .glass-panel {
+    -webkit-backdrop-filter: blur(10px) !important;
+    backdrop-filter: blur(10px) !important;
+  }
 }
 
 @media (max-width: 480px) {
@@ -2221,6 +2250,32 @@ main {
     font-size: 1.1rem;
     padding: 0.4rem 0.6rem;
     padding-left: 0;
+  }
+  
+  /* Disable complex animations on very small screens for performance */
+  .timeline-item::before {
+    animation: none !important;
+  }
+  
+  .timeline::before {
+    transition: none !important;
+    transform: translateX(-50%) scaleY(1) !important;
+  }
+  
+  /* Instant skill bar animations on small screens */
+  .progress {
+    transition: width 0.5s ease-out !important;
+  }
+  
+  /* Simplify all animations */
+  * {
+    transition-duration: 0.2s !important;
+  }
+  
+  /* Further reduce blur effects */
+  .card-glass, .contact-form, .glass-panel {
+    -webkit-backdrop-filter: blur(5px) !important;
+    backdrop-filter: blur(5px) !important;
   }
   
   /* Mobile section borders - narrower for small screens */
@@ -2257,16 +2312,14 @@ main {
 
 .fade-in {
   animation: fadeIn 0.7s cubic-bezier(0.22, 1, 0.36, 1);
-  will-change: opacity, transform;
 }
 
 /* Smooth scroll-reveal; JS toggles .in-view */
 .reveal {
   opacity: 0;
   transform: translateY(16px);
-  transition: opacity 620ms cubic-bezier(0.22, 1, 0.36, 1),
-              transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
-  will-change: opacity, transform;
+  transition: opacity 500ms cubic-bezier(0.22, 1, 0.36, 1),
+              transform 500ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .reveal.in-view {
@@ -2291,11 +2344,16 @@ main {
   transition: all 0.3s ease-in-out;
 }
 
-/* Improve rendering of animated cards */
-.achievement-card,
-.detail-item,
-.timeline-item {
-  will-change: transform, opacity;
+/* Improve rendering of animated cards - use hardware acceleration only when needed */
+.achievement-card.reveal,
+.detail-item.reveal,
+.timeline-item.reveal {
+  transform: translateZ(0);
+}
+
+.achievement-card.in-view,
+.detail-item.in-view,
+.timeline-item.in-view {
   transform: translateZ(0);
 }
 
@@ -2625,18 +2683,18 @@ body.darkmode .achievements {
 [data-theme="light"] .timeline-content,
 [data-theme="light"] .detail-item,
 [data-theme="light"] .contact-form {
-  background: rgba(255, 255, 255, 0.45) !important;
-  border: 1px solid rgba(120, 160, 220, 0.25) !important; /* soft blue border */
-  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08), 0 1px 0 rgba(255,255,255,0.6) inset !important;
-  -webkit-backdrop-filter: saturate(140%) blur(16px);
-  backdrop-filter: saturate(140%) blur(16px);
+  background: rgba(255, 255, 255, 0.75) !important;
+  border: 1px solid rgba(220, 220, 220, 0.4) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06), 0 1px 0 rgba(255,255,255,0.9) inset !important;
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px);
 }
 
 [data-theme="light"] .achievement-card:hover,
 [data-theme="light"] .timeline-content:hover,
 [data-theme="light"] .detail-item:hover,
 [data-theme="light"] .contact-form:hover {
-  box-shadow: 0 10px 30px rgba(0, 102, 255, 0.18), 0 1px 0 rgba(255,255,255,0.7) inset !important; /* subtle blue glow */
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08), 0 1px 0 rgba(255,255,255,1) inset !important;
 }
 
 /* Light-mode body base to reduce glare on bright displays */
@@ -3066,15 +3124,13 @@ body.darkmode .skills-category {
 body.darkmode .contact .glass-panel,
 [data-theme="dark"] .contact-form,
 body.darkmode .contact-form {
-  background: linear-gradient(135deg, 
-    rgba(29, 78, 216, 0.15) 0%, 
-    rgba(59, 130, 246, 0.1) 50%, 
-    rgba(29, 78, 216, 0.15) 100%
-  ) !important;
-  border: 2px solid rgba(99, 179, 237, 0.3) !important;
-  box-shadow: 0 8px 32px rgba(59, 130, 246, 0.2),
-              0 4px 16px rgba(2, 6, 23, 0.6),
-              inset 0 1px 0 rgba(99, 179, 237, 0.1) !important;
+  background: rgba(30, 41, 59, 0.5) !important;
+  border: 1px solid rgba(100, 116, 139, 0.3) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4),
+              0 2px 8px rgba(0, 0, 0, 0.2),
+              inset 0 1px 0 rgba(148, 163, 184, 0.1) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(20px) saturate(180%);
 }
 
 [data-theme="dark"] .social-link,
@@ -3094,9 +3150,9 @@ body.darkmode .contact-form {
 [data-theme="dark"] .timeline-content:hover,
 [data-theme="dark"] .detail-item:hover,
 [data-theme="dark"] .contact-form:hover {
-  background: rgba(23, 32, 49, 0.55) !important;
-  box-shadow: 0 16px 40px rgba(59, 130, 246, 0.25), 0 8px 20px rgba(0,0,0,0.45) !important;
-  border-color: rgba(125, 196, 255, 0.35) !important;
+  background: rgba(30, 41, 59, 0.65) !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5), 0 3px 10px rgba(0, 0, 0, 0.3) !important;
+  border-color: rgba(100, 116, 139, 0.4) !important;
 }
 
 /* Special hover effect for social links in dark mode */
@@ -3148,15 +3204,11 @@ body.darkmode .skills-category:hover {
 body.darkmode .contact .glass-panel:hover,
 [data-theme="dark"] .contact-form:hover,
 body.darkmode .contact-form:hover {
-  background: linear-gradient(135deg, 
-    rgba(29, 78, 216, 0.25) 0%, 
-    rgba(59, 130, 246, 0.18) 50%, 
-    rgba(29, 78, 216, 0.25) 100%
-  ) !important;
-  border-color: rgba(99, 179, 237, 0.5) !important;
-  box-shadow: 0 12px 40px rgba(59, 130, 246, 0.35),
-              0 6px 20px rgba(2, 6, 23, 0.7),
-              inset 0 1px 0 rgba(99, 179, 237, 0.2) !important;
+  background: rgba(30, 41, 59, 0.65) !important;
+  border-color: rgba(100, 116, 139, 0.4) !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5),
+              0 3px 10px rgba(0, 0, 0, 0.3),
+              inset 0 1px 0 rgba(148, 163, 184, 0.15) !important;
 }
 
 /* Mobile menu surface in dark theme */

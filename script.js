@@ -274,17 +274,25 @@ document.addEventListener('DOMContentLoaded', () => {
         if (skillBarsAnimated) return; // Prevent re-animation
         skillBarsAnimated = true;
         
+        // Faster animation on mobile devices
+        const isMobileDevice = window.innerWidth <= 768;
+        const animationSpeed = isMobileDevice ? 25 : 50;
+        const staggerDelay = isMobileDevice ? 50 : 100;
+        
         document.querySelectorAll('.progress').forEach((bar, index) => {
             const value = bar.getAttribute('data-value');
-            if (value) {
+            const numericValue = parseInt(value);
+            
+            // Skip animation for 0% bars - keep them empty but show label
+            if (value && numericValue > 0) {
                 // Delay each bar animation slightly for a staggered effect
                 setTimeout(() => {
                     bar.style.width = value + '%';
                     
                     // Animate percentage number from 0 to final value
                     let currentPercent = 0;
-                    const targetPercent = parseInt(value);
-                    const increment = Math.max(targetPercent / 30, 1); // avoid 0-step
+                    const targetPercent = numericValue;
+                    const increment = isMobileDevice ? Math.max(targetPercent / 15, 2) : Math.max(targetPercent / 30, 1);
                     
                     const percentInterval = setInterval(() => {
                         currentPercent += increment;
@@ -298,16 +306,22 @@ document.addEventListener('DOMContentLoaded', () => {
                         if (bar.parentElement) {
                             bar.parentElement.setAttribute('data-value', display);
                         }
-                    }, 50);
-                }, index * 100); // 100ms delay between each bar
+                    }, animationSpeed);
+                }, index * staggerDelay);
+            } else if (numericValue === 0) {
+                // Ensure 0% bars stay at 0 width but keep data-value for label
+                bar.style.width = '0%';
+                bar.setAttribute('data-value', '0');
             }
         });
     }
 
     /* ==================== Intersection Observer for Animations ==================== */
+    // Use lower threshold for smaller screens for better performance
+    const isMobile = window.innerWidth <= 768;
     const observerOptions = {
-        threshold: 0.3,
-        rootMargin: '0px 0px -50px 0px'
+        threshold: isMobile ? 0.1 : 0.2,
+        rootMargin: isMobile ? '0px 0px -20px 0px' : '0px 0px -50px 0px'
     };
 
     const observer = new IntersectionObserver((entries) => {
@@ -319,6 +333,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
                 // Add smooth reveal class
                 entry.target.classList.add('in-view');
+                
+                // Unobserve after animation to improve performance
+                observer.unobserve(entry.target);
             }
         });
     }, observerOptions);
@@ -335,42 +352,60 @@ document.addEventListener('DOMContentLoaded', () => {
         observer.observe(timelineElement);
     }
 
-    /* ==================== Contact Form ==================== */
+    /* ==================== Contact Form with Formspree Backend ==================== */
     const contactForm = document.getElementById('contactForm');
     if (contactForm) {
-        contactForm.addEventListener('submit', (e) => {
+        contactForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             
-            const formData = new FormData(contactForm);
-            const name = formData.get('name').trim();
-            const email = formData.get('email').trim();
-            const message = formData.get('message').trim();
-
-            // Basic validation
-            if (!name || !email || !message) {
-                alert('Please fill in all fields.');
-                return;
-            }
-
-            // Email validation
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email)) {
-                alert('Please enter a valid email address.');
-                return;
-            }
-
-            // Simulate form submission
             const submitButton = contactForm.querySelector('.submit-button');
+            const formStatus = document.getElementById('form-status');
             const originalText = submitButton.textContent;
+            
+            // Update button state
             submitButton.textContent = 'Sending...';
             submitButton.disabled = true;
-
-            setTimeout(() => {
-                alert('Thank you for your message! I will get back to you soon.');
-                contactForm.reset();
+            formStatus.textContent = '';
+            formStatus.style.color = '';
+            
+            // Prepare form data
+            const formData = new FormData(contactForm);
+            
+            try {
+                // Submit to Formspree
+                const response = await fetch(contactForm.action, {
+                    method: contactForm.method,
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+                
+                if (response.ok) {
+                    // Success
+                    formStatus.textContent = '✓ Thank you for your message! I will get back to you soon.';
+                    formStatus.style.color = '#10b981'; // Green color
+                    contactForm.reset();
+                } else {
+                    // Error from Formspree
+                    const data = await response.json();
+                    if (data.errors) {
+                        formStatus.textContent = '✗ ' + data.errors.map(error => error.message).join(', ');
+                    } else {
+                        formStatus.textContent = '✗ Oops! There was a problem submitting your form.';
+                    }
+                    formStatus.style.color = '#ef4444'; // Red color
+                }
+            } catch (error) {
+                // Network or other error
+                formStatus.textContent = '✗ Oops! There was a problem submitting your form. Please try again.';
+                formStatus.style.color = '#ef4444'; // Red color
+                console.error('Form submission error:', error);
+            } finally {
+                // Reset button state
                 submitButton.textContent = originalText;
                 submitButton.disabled = false;
-            }, 2000);
+            }
         });
     }
 
