@@ -446,3 +446,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
+
+// Redirect to thank-you.html on form submission
+const form = document.getElementById('myForm');
+
+if (form) {
+    form.addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent form from actually submitting
+
+        // You can do any validation or processing here if needed
+
+        // Redirect to thank-you.html
+        window.location.href = 'thank-you.html';
+    });
+}
