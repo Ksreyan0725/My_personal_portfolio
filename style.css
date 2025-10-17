@@ -332,15 +332,15 @@ img {
   box-shadow: 0 0 12px rgba(236, 72, 153, 0.3);
 }
 
-/* Contact Section - Red gradient border */
+/* Contact Section - Blue gradient border */
 .contact.section::before {
   background: linear-gradient(90deg, 
     transparent, 
-    rgba(239, 68, 68, 0.7), 
-    rgba(248, 113, 113, 0.7), 
+    rgba(6, 182, 212, 0.7), 
+    rgba(34, 211, 238, 0.7), 
     transparent);
   height: 2px;
-  box-shadow: 0 0 12px rgba(239, 68, 68, 0.3);
+  box-shadow: 0 0 12px rgba(6, 182, 212, 0.3);
 }
 
 /* Add bottom borders for each section glass-panel for extra differentiation */
@@ -375,8 +375,42 @@ img {
 }
 
 .contact .glass-panel {
-  border-top: 2px solid rgba(239, 68, 68, 0.3);
-  border-bottom: 1px solid rgba(239, 68, 68, 0.2);
+  border-top: 2px solid rgba(99, 179, 237, 0.3);
+  border-bottom: 1px solid rgba(99, 179, 237, 0.2);
+  background: linear-gradient(135deg, 
+    rgba(230, 242, 255, 0.4) 0%, 
+    rgba(199, 226, 255, 0.3) 50%, 
+    rgba(230, 242, 255, 0.4) 100%
+  );
+  box-shadow: 0 8px 32px rgba(59, 130, 246, 0.15),
+              0 4px 16px rgba(0, 0, 0, 0.1),
+              inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
+  backdrop-filter: blur(16px) saturate(150%);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Add subtle gradient overlay for extra depth - contact section */
+.contact .glass-panel::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  background: linear-gradient(180deg, 
+    rgba(99, 179, 237, 0.05) 0%, 
+    transparent 50%,
+    rgba(59, 130, 246, 0.03) 100%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.contact .glass-panel > * {
+  position: relative;
+  z-index: 1;
 }
 
 .section-title {
@@ -1742,11 +1776,57 @@ body.darkmode .profile-photo:hover {
 }
 
 .contact-form {
-  background-color: var(--bg-secondary);
+  background: linear-gradient(135deg, 
+    rgba(230, 242, 255, 0.4) 0%, 
+    rgba(199, 226, 255, 0.3) 50%, 
+    rgba(230, 242, 255, 0.4) 100%
+  );
   padding: var(--space-xl);
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-sm);
-  border: 1px solid var(--border-color);
+  border: 2px solid rgba(99, 179, 237, 0.3);
+  box-shadow: 0 8px 32px rgba(59, 130, 246, 0.15),
+              0 4px 16px rgba(0, 0, 0, 0.1),
+              inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
+  backdrop-filter: blur(16px) saturate(150%);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Add subtle gradient overlay for extra depth - contact form */
+.contact-form::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  background: linear-gradient(180deg, 
+    rgba(99, 179, 237, 0.05) 0%, 
+    transparent 50%,
+    rgba(59, 130, 246, 0.03) 100%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.contact-form > * {
+  position: relative;
+  z-index: 1;
+}
+
+.contact-form:hover {
+  background: linear-gradient(135deg, 
+    rgba(230, 242, 255, 0.5) 0%, 
+    rgba(199, 226, 255, 0.4) 50%, 
+    rgba(230, 242, 255, 0.5) 100%
+  );
+  border-color: rgba(99, 179, 237, 0.5);
+  box-shadow: 0 12px 40px rgba(59, 130, 246, 0.25),
+              0 6px 20px rgba(0, 0, 0, 0.15),
+              inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  transform: translateY(-4px);
 }
 
 .form-group {
@@ -2594,7 +2674,7 @@ body:not(.darkmode) .navbar-search input:focus {
 }
 
 [data-theme="light"] .contact.section::before {
-  box-shadow: 0 0 18px rgba(239, 68, 68, 0.5);
+  box-shadow: 0 0 18px rgba(6, 182, 212, 0.5);
 }
 
 /* Light theme glass panel borders */
@@ -2629,8 +2709,16 @@ body:not(.darkmode) .navbar-search input:focus {
 }
 
 [data-theme="light"] .contact .glass-panel {
-  border-top: 2px solid rgba(239, 68, 68, 0.5);
-  border-bottom: 1px solid rgba(239, 68, 68, 0.3);
+  border-top: 2px solid rgba(99, 179, 237, 0.5);
+  border-bottom: 1px solid rgba(99, 179, 237, 0.3);
+  background: linear-gradient(135deg, 
+    rgba(230, 242, 255, 0.5) 0%, 
+    rgba(199, 226, 255, 0.4) 50%, 
+    rgba(230, 242, 255, 0.5) 100%
+  ) !important;
+  box-shadow: 0 12px 40px rgba(59, 130, 246, 0.25),
+              0 6px 20px rgba(0, 0, 0, 0.15),
+              inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
 }
 
 /* Mobile menu background in light theme */
@@ -2876,6 +2964,22 @@ body.darkmode .skills-category {
               inset 0 1px 0 rgba(99, 179, 237, 0.1) !important;
 }
 
+/* Special dark mode glassy effect for contact glass-panel and contact-form */
+[data-theme="dark"] .contact .glass-panel,
+body.darkmode .contact .glass-panel,
+[data-theme="dark"] .contact-form,
+body.darkmode .contact-form {
+  background: linear-gradient(135deg, 
+    rgba(29, 78, 216, 0.15) 0%, 
+    rgba(59, 130, 246, 0.1) 50%, 
+    rgba(29, 78, 216, 0.15) 100%
+  ) !important;
+  border: 2px solid rgba(99, 179, 237, 0.3) !important;
+  box-shadow: 0 8px 32px rgba(59, 130, 246, 0.2),
+              0 4px 16px rgba(2, 6, 23, 0.6),
+              inset 0 1px 0 rgba(99, 179, 237, 0.1) !important;
+}
+
 [data-theme="dark"] .social-link,
 [data-theme="dark"] .about-description,
 [data-theme="dark"] .resume-section,
@@ -2931,6 +3035,22 @@ body.darkmode .social-name::after {
 /* Special hover effect for skills cards in dark mode */
 [data-theme="dark"] .skills-category:hover,
 body.darkmode .skills-category:hover {
+  background: linear-gradient(135deg, 
+    rgba(29, 78, 216, 0.25) 0%, 
+    rgba(59, 130, 246, 0.18) 50%, 
+    rgba(29, 78, 216, 0.25) 100%
+  ) !important;
+  border-color: rgba(99, 179, 237, 0.5) !important;
+  box-shadow: 0 12px 40px rgba(59, 130, 246, 0.35),
+              0 6px 20px rgba(2, 6, 23, 0.7),
+              inset 0 1px 0 rgba(99, 179, 237, 0.2) !important;
+}
+
+/* Special hover effect for contact glass-panel and contact-form in dark mode */
+[data-theme="dark"] .contact .glass-panel:hover,
+body.darkmode .contact .glass-panel:hover,
+[data-theme="dark"] .contact-form:hover,
+body.darkmode .contact-form:hover {
   background: linear-gradient(135deg, 
     rgba(29, 78, 216, 0.25) 0%, 
     rgba(59, 130, 246, 0.18) 50%, 
