@@ -1215,15 +1215,56 @@ body.darkmode .profile-photo:hover {
   bottom: 0;
   width: 2px;
   background: linear-gradient(to bottom, var(--color-accent), transparent);
-  transform: translateX(-50%);
+  transform: translateX(-50%) scaleY(0);
+  transform-origin: top;
   z-index: 0;
   pointer-events: none;
+  transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Animate timeline line when section is in view */
+.timeline.in-view::before {
+  transform: translateX(-50%) scaleY(1);
 }
 
 .timeline-item {
   display: flex;
   margin-bottom: var(--space-xl);
   position: relative;
+}
+
+/* Timeline dot marker */
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 20px;
+  width: 16px;
+  height: 16px;
+  background: var(--color-accent);
+  border: 3px solid var(--bg-primary);
+  border-radius: 50%;
+  transform: translateX(-50%) scale(0);
+  z-index: 2;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4);
+  animation: none;
+}
+
+/* Animate dot when item is in view */
+.timeline-item.in-view::before {
+  transform: translateX(-50%) scale(1);
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+/* Pulse animation for timeline dots */
+@keyframes pulse-dot {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(59, 130, 246, 0);
+  }
 }
 
 .timeline-item:nth-child(even) {
@@ -1248,12 +1289,51 @@ body.darkmode .profile-photo:hover {
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-md);
   margin: 0 var(--space-md);
-  transition: all var(--transition-base);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   border: 1px solid var(--border-color);
   position: relative;
   z-index: 1;
 }
 
+/* Timeline content hover effect */
+.timeline-content:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15), 0 0 20px rgba(59, 130, 246, 0.2);
+}
+
+/* Timeline item staggered animation */
+.timeline-item.reveal {
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.timeline-item:nth-child(even).reveal {
+  transform: translateX(30px);
+}
+
+.timeline-item.reveal.in-view {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Stagger animation delays */
+.timeline-item:nth-child(1) {
+  transition-delay: 0.1s;
+}
+
+.timeline-item:nth-child(2) {
+  transition-delay: 0.2s;
+}
+
+.timeline-item:nth-child(3) {
+  transition-delay: 0.3s;
+}
+
+.timeline-item:nth-child(4) {
+  transition-delay: 0.4s;
+}
 
 .timeline-content h3 {
   color: var(--text-primary);
@@ -2106,6 +2186,23 @@ main {
   .timeline-item {
     flex-direction: column !important;
     padding-left: 40px;
+  }
+
+  /* Mobile timeline dots - position on the left */
+  .timeline-item::before {
+    left: 20px;
+    top: 10px;
+  }
+
+  /* Mobile timeline item animation - slide from left only */
+  .timeline-item.reveal,
+  .timeline-item:nth-child(even).reveal {
+    transform: translateX(-20px);
+  }
+
+  .timeline-item.reveal.in-view,
+  .timeline-item:nth-child(even).reveal.in-view {
+    transform: translateX(0);
   }
   
   .timeline-date {

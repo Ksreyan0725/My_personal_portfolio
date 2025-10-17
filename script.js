@@ -329,6 +329,12 @@ document.addEventListener('DOMContentLoaded', () => {
         observer.observe(el);
     });
 
+    // Also observe the timeline element itself for the vertical line animation
+    const timelineElement = document.querySelector('.timeline');
+    if (timelineElement) {
+        observer.observe(timelineElement);
+    }
+
     /* ==================== Contact Form ==================== */
     const contactForm = document.getElementById('contactForm');
     if (contactForm) {
