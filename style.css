@@ -1441,17 +1441,18 @@ body.darkmode .profile-photo:hover {
   color: #64b5f6;
 }
 
-/* Dark mode form inputs */
+/* Dark mode form inputs - base styling */
 [data-theme="dark"] .form-group input,
 [data-theme="dark"] .form-group textarea {
-  background-color: var(--color-gray-800);
-  border-color: var(--color-gray-700);
+  background-color: rgba(15, 23, 42, 0.7);
+  border-color: rgba(71, 85, 105, 0.5);
 }
 
 [data-theme="dark"] .form-group input:focus,
 [data-theme="dark"] .form-group textarea:focus {
-  border-color: var(--color-accent);
-  box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.2);
+  border-color: rgba(96, 165, 250, 0.6);
+  background-color: rgba(15, 23, 42, 0.85);
+  box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.15);
 }
 
 /* ==================== Skills Section ==================== */
@@ -1917,6 +1918,26 @@ body.darkmode .profile-photo:hover {
   margin-bottom: var(--space-xs);
   color: var(--text-primary);
   font-weight: var(--font-weight-medium);
+}
+
+/* Dark mode label styling */
+[data-theme="dark"] .form-group label,
+body.darkmode .form-group label {
+  color: #cbd5e1;
+  font-weight: 600;
+}
+
+/* Placeholder styling */
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: rgba(100, 116, 139, 0.6);
+}
+
+[data-theme="dark"] .form-group input::placeholder,
+[data-theme="dark"] .form-group textarea::placeholder,
+body.darkmode .form-group input::placeholder,
+body.darkmode .form-group textarea::placeholder {
+  color: rgba(148, 163, 184, 0.5);
 }
 
 .form-group input,
@@ -2413,7 +2434,7 @@ body:not(.darkmode) .form-group textarea:focus {
   box-shadow: 0 0 0 3px #007bff33 !important;
 }
 
-/* 1) Form fields - Dark mode */
+/* 1) Form fields - Dark mode with enhanced contrast */
 [data-theme="dark"] .contact-form input,
 [data-theme="dark"] .contact-form textarea,
 [data-theme="dark"] .contact-form select,
@@ -2424,9 +2445,10 @@ body.darkmode .contact-form select,
 [data-theme="dark"] .form-group textarea,
 body.darkmode .form-group input,
 body.darkmode .form-group textarea {
-  border: 1px solid #fff !important;
-  background-color: transparent !important;
-  color: #fff !important;
+  border: 1px solid rgba(71, 85, 105, 0.5) !important;
+  background-color: rgba(15, 23, 42, 0.7) !important;
+  color: #e2e8f0 !important;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3) !important;
 }
 
 [data-theme="dark"] .contact-form input:focus,
@@ -2440,8 +2462,10 @@ body.darkmode .contact-form select:focus,
 body.darkmode .form-group input:focus,
 body.darkmode .form-group textarea:focus {
   outline: none !important;
-  border-color: #fff !important;
-  box-shadow: 0 0 5px #ffffffaa !important;
+  border-color: rgba(96, 165, 250, 0.8) !important;
+  background-color: rgba(15, 23, 42, 0.9) !important;
+  box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.2), 
+              inset 0 1px 3px rgba(0, 0, 0, 0.3) !important;
 }
 
 /* 2) Achievement cards - remove decorative lines in all modes */
