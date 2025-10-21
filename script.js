@@ -413,20 +413,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const navbar = document.querySelector('.navbar');
     let lastScrollTop = 0;
 
-    if (navbar) {
-        window.addEventListener('scroll', () => {
-            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    // if (navbar) {
+    //     window.addEventListener('scroll', () => {
+    //         const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
             
-            // Hide navbar on scroll down, show on scroll up
-            if (scrollTop > lastScrollTop && scrollTop > 100) {
-                navbar.style.transform = 'translateY(-100%)';
-            } else {
-                navbar.style.transform = 'translateY(0)';
-            }
+    //         // Hide navbar on scroll down, show on scroll up
+    //         if (scrollTop > lastScrollTop && scrollTop > 100) {
+    //             navbar.style.transform = 'translateY(-100%)';
+    //         } else {
+    //             navbar.style.transform = 'translateY(0)';
+    //         }
             
-            lastScrollTop = scrollTop;
-        });
-    }
+    //         lastScrollTop = scrollTop;
+    //     });
+    // }
 
     /* ==================== Notification Panel Animation ==================== */
     const notificationPanel = document.getElementById('notificationPanel');
