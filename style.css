@@ -438,25 +438,26 @@ html {
 
         /* ==================== ALL OLD SCATTERED MEDIA QUERIES REMOVED - NOW CONSOLIDATED AT END OF FILE ==================== */
 
+        /* Theme Toggle - Default (Mobile): Circular button */
         .theme-toggle {
             background: var(--card-bg);
-            color: var(--text-primary);
             border: 2px solid var(--border);
-            padding: 6px 14px;
-            border-radius: 50px;
-            font-size: 13px;
+            width: 36px;
+            height: 36px;
+            min-width: 36px;
+            max-width: 36px;
+            padding: 0;
+            border-radius: 50%;
             cursor: pointer;
             backdrop-filter: blur(10px);
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
-            font-weight: 500;
             user-select: none;
-            height: 36px;
-            min-width: 36px;
-            white-space: nowrap; /* prevent text wrapping */
+            box-sizing: border-box;
+            flex-shrink: 0;
+            aspect-ratio: 1 / 1;
         }
 
         .theme-toggle:hover {
@@ -470,12 +471,17 @@ html {
         }
 
         .theme-icon {
-            font-size: 15px;
+            font-size: 18px;
+            line-height: 1;
             transition: transform 0.3s ease;
         }
 
         .theme-toggle:hover .theme-icon {
             transform: rotate(20deg);
+        }
+        
+        .theme-text {
+            display: none; /* Hidden on mobile by default */
         }
 
         /* Hide mobile elements on desktop */
@@ -722,9 +728,9 @@ html {
             right: 5px;
             top: 50%;
             transform: translateY(-50%);
-            background: var(--accent);
+            background: transparent;
             border: none;
-            color: #ffffff;
+            color: var(--text-primary);
             cursor: pointer;
             padding: 12px;
             border-radius: 50%;
@@ -740,16 +746,17 @@ html {
             width: 18px;
             height: 18px;
             object-fit: contain;
-            filter: brightness(2) invert(1);
+            filter: var(--icon-filter);
         }
 
         .search-modal-button:hover {
-            background: var(--accent-hover);
+            background: var(--card-bg);
             transform: translateY(-50%) scale(1.1);
         }
         
         .search-modal-button:hover .search-modal-icon-img {
-            filter: brightness(2.2) invert(1);
+            filter: var(--icon-filter);
+            opacity: 0.8;
         }
 
         .search-results {
@@ -2249,7 +2256,7 @@ nav {
 }
 
 .nav-logo {
-    display: block !important; /* Show on mobile */
+    display: none !important; /* Hide on mobile when hamburger menu is shown */
     font-size: 1.25rem;
     order: 2; /* After hamburger menu */
     flex-shrink: 0;
@@ -2338,16 +2345,20 @@ nav {
 .theme-toggle {
     background: var(--card-bg);
     border: 2px solid var(--border);
-    width: 36px;
-    height: 36px;
-    min-width: 36px;
-    padding: 0;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+    max-width: 36px !important;
+    padding: 0 !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
     backdrop-filter: blur(10px);
     transition: all 0.3s ease;
+    aspect-ratio: 1 / 1;
+    box-sizing: border-box !important;
+    flex-shrink: 0;
 }
 
 .theme-toggle:hover {
@@ -2356,11 +2367,12 @@ nav {
 }
 
 .theme-text {
-    display: none; /* Hidden on mobile */
+    display: none !important; /* Hidden on mobile */
 }
 
 .theme-icon {
     font-size: 18px;
+    line-height: 1;
 }
 
 /* Hero section - single column on mobile */
@@ -2430,16 +2442,28 @@ nav {
     .theme-toggle {
         background: var(--card-bg);
         border: 2px solid var(--border);
-        width: 36px;
-        height: 36px;
-        min-width: 36px;
-        padding: 0;
-        border-radius: 50%;
+        width: 36px !important;
+        height: 36px !important;
+        min-width: 36px !important;
+        max-width: 36px !important;
+        padding: 0 !important;
+        border-radius: 50% !important;
         backdrop-filter: blur(10px);
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        aspect-ratio: 1 / 1;
+        box-sizing: border-box !important;
+        flex-shrink: 0;
+    }
+    
+    .theme-text {
+        display: none !important;
     }
     
     .theme-icon {
         font-size: 15px;
+        line-height: 1;
     }
     
     /* Banner - smaller */
@@ -2723,16 +2747,28 @@ nav {
     .theme-toggle {
         background: var(--card-bg);
         border: 2px solid var(--border);
-        width: 36px;
-        height: 36px;
-        min-width: 36px;
-        padding: 0;
-        border-radius: 50%;
+        width: 36px !important;
+        height: 36px !important;
+        min-width: 36px !important;
+        max-width: 36px !important;
+        padding: 0 !important;
+        border-radius: 50% !important;
         backdrop-filter: blur(10px);
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        aspect-ratio: 1 / 1;
+        box-sizing: border-box !important;
+        flex-shrink: 0;
+    }
+    
+    .theme-text {
+        display: none !important;
     }
     
     .theme-icon {
         font-size: 15px;
+        line-height: 1;
     }
     
     /* Banner - optimized height */
@@ -2904,16 +2940,28 @@ nav {
     .theme-toggle {
         background: var(--card-bg);
         border: 2px solid var(--border);
-        width: 36px;
-        height: 36px;
-        min-width: 36px;
-        padding: 0;
-        border-radius: 50%;
+        width: 36px !important;
+        height: 36px !important;
+        min-width: 36px !important;
+        max-width: 36px !important;
+        padding: 0 !important;
+        border-radius: 50% !important;
         backdrop-filter: blur(10px);
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        aspect-ratio: 1 / 1;
+        box-sizing: border-box !important;
+        flex-shrink: 0;
+    }
+    
+    .theme-text {
+        display: none !important;
     }
     
     .theme-icon {
         font-size: 14px;
+        line-height: 1;
     }
     
     /* Banner - extra compact */
@@ -3241,22 +3289,33 @@ nav {
         display: none !important;
     }
     
-    /* Theme toggle with text */
+    /* Theme toggle with text - Desktop pill shape */
     .theme-selector {
         order: 4;
         margin-left: 10px;
     }
     
     .theme-toggle {
-        padding: 8px 16px;
-        height: 40px;
-        border-radius: 50px;
-        width: auto;
-        min-width: auto;
+        padding: 8px 16px !important;
+        height: 40px !important;
+        border-radius: 50px !important;
+        width: auto !important;
+        min-width: auto !important;
+        max-width: none !important;
+        aspect-ratio: auto !important;
+        gap: 6px;
+        font-weight: 500;
+        font-size: 13px;
+        color: var(--text-primary);
+        white-space: nowrap;
     }
     
     .theme-text {
-        display: inline;
+        display: inline !important;
+    }
+    
+    .theme-icon {
+        font-size: 15px !important;
     }
     
     /* Banner */
@@ -3359,15 +3418,26 @@ nav {
     }
     
     .theme-toggle {
-        padding: 8px 18px;
-        height: 40px;
-        border-radius: 50px;
-        width: auto;
-        min-width: auto;
+        padding: 8px 18px !important;
+        height: 40px !important;
+        border-radius: 50px !important;
+        width: auto !important;
+        min-width: auto !important;
+        max-width: none !important;
+        aspect-ratio: auto !important;
+        gap: 6px;
+        font-weight: 500;
+        font-size: 13px;
+        color: var(--text-primary);
+        white-space: nowrap;
     }
     
     .theme-text {
-        display: inline;
+        display: inline !important;
+    }
+    
+    .theme-icon {
+        font-size: 15px !important;
     }
     
     /* Hide mobile elements */
