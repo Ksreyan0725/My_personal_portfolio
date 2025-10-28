@@ -283,15 +283,19 @@ html {
 
         /* Menu icon (hamburger) button styling */
         .menu-icon {
-            background: transparent;
-            border: none;
+            background: var(--card-bg);
+            border: 2px solid var(--border);
             cursor: pointer;
-            padding: 8px;
+            padding: 0;
             display: flex;
             align-items: center;
             justify-content: center;
             color: var(--text-primary);
             transition: all 0.3s ease;
+            width: 36px;           /* match theme toggle size on mobile */
+            height: 36px;          /* match theme toggle size on mobile */
+            border-radius: 50%;
+            line-height: 1;
         }
         
         .menu-icon:hover {
@@ -505,6 +509,14 @@ html {
 
         .menu-icon {
             order: 1; /* Leftmost on mobile */
+        }
+
+        /* Ensure hamburger glyph is centered and sized nicely */
+        .menu-icon-text {
+            font-size: 18px;
+            line-height: 1;
+            display: inline-block;
+            transform: translateY(-1px); /* optical alignment */
         }
 
         /* ==================== Sidebar Menu (Mobile) ==================== */
@@ -2450,6 +2462,7 @@ nav {
     .contact-links {
         gap: 10px;
         margin-top: 12px;
+        margin-bottom: 10px; /* ensure spacing below icons to avoid overlap */
     }
     
     .contact-links a {
@@ -2705,9 +2718,12 @@ nav {
         grid-template-columns: 1fr;
     }
     
+    /* Prevent visual overlap caused by relative offset */
     #home .profile-section {
-        top: 75px;
-        position: relative;
+        position: static !important;
+        top: auto !important;
+        margin-top: 0 !important;
+        margin-bottom: 10px; /* add a little breathing room below socials */
     }
     
     /* Typography - optimized for 6.4" screen */
@@ -2905,6 +2921,7 @@ nav {
     .contact-links {
         gap: 8px;
         margin-top: 10px;
+        margin-bottom: 12px; /* spacing to separate from following content */
     }
     
     .contact-links a {

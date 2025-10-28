@@ -40,8 +40,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const themeText = themeToggle.querySelector('.theme-text');
             
             if (themeIcon && themeText) {
-                themeIcon.textContent = theme === 'system' ? '⚙️' : 
-                                      theme === 'dark' ? '🌙' : '☀️';
+                // Always show the effective theme icon (moon/sun) so the button looks clear on mobile
+                themeIcon.textContent = effectiveTheme === 'dark' ? '🌙' : '☀️';
+                // Keep the label as the selected mode (System/Light/Dark)
                 themeText.textContent = theme.charAt(0).toUpperCase() + theme.slice(1);
             }
         }
@@ -411,10 +412,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Event listeners for search modal
-    // Mobile search icon functionality disabled - using desktop search only
-    // if (mobileSearchIcon) {
-    //     mobileSearchIcon.addEventListener('click', openSearchModal);
-    // }
+    // Mobile search icon opens the search modal
+    if (mobileSearchIcon) {
+        mobileSearchIcon.addEventListener('click', openSearchModal);
+    }
 
     if (searchModalClose) {
         searchModalClose.addEventListener('click', closeSearchModal);
@@ -472,7 +473,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (searchModalButton) {
         searchModalButton.addEventListener('click', () => {
-            performSearch(searchModalInput.value);
+            doSearch(searchModalInput.value);
         });
     }
 
