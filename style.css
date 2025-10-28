@@ -2615,6 +2615,181 @@ nav {
 }
 
 /* ===========================================
+   SAMSUNG GALAXY M31s & SIMILAR: Below 412px
+   Optimized for Samsung Galaxy M31s (Android 12)
+   Also covers: Galaxy S20/S21, Pixel 5, OnePlus 8
+   Screen: 6.4", 1080x2400px, 412px viewport width
+   =========================================== */
+@media (max-width: 412px) {
+    /* Navigation - optimized for 412px viewport */
+    nav {
+        height: 44px;
+        padding: 4px 0;
+    }
+    
+    .nav-container {
+        gap: 8px;
+        padding: 0 14px;
+    }
+    
+    .menu-icon {
+        font-size: 1.35rem;
+        padding: 4px;
+    }
+    
+    /* Search bar optimized for Galaxy M31s */
+    .desktop-search {
+        max-width: 130px !important;
+        min-width: 85px !important;
+        margin-right: 6px !important;
+    }
+    
+    .search-input {
+        font-size: 0.8rem !important;
+        height: 30px !important;
+        padding: 5px 32px 5px 8px !important;
+    }
+    
+    .search-icon-img {
+        width: 13px !important;
+        height: 13px !important;
+    }
+    
+    .search-button {
+        right: 5px !important;
+        padding: 3px !important;
+    }
+    
+    .search-clear {
+        right: 26px !important;
+        font-size: 0.8rem !important;
+        padding: 2px 3px !important;
+    }
+    
+    .mobile-search-icon {
+        padding: 6px;
+        margin-right: 8px;
+    }
+    
+    .mobile-search-icon-img {
+        width: 18px;
+        height: 18px;
+    }
+    
+    .theme-toggle {
+        min-width: 34px;
+        height: 34px;
+        padding: 5px;
+    }
+    
+    .theme-icon {
+        font-size: 15px;
+    }
+    
+    /* Banner - optimized height */
+    .notice-banner {
+        top: 44px;
+        height: 28px;
+        padding: 0 14px;
+    }
+    
+    .ticker-text {
+        font-size: 0.8rem;
+        letter-spacing: 0.02em;
+    }
+    
+    /* Hero section - balanced spacing for 412px */
+    #home .home-grid {
+        gap: 28px;
+        padding: 75px 14px 35px;
+        grid-template-columns: 1fr;
+    }
+    
+    #home .profile-section {
+        top: 75px;
+        position: relative;
+    }
+    
+    /* Typography - optimized for 6.4" screen */
+    h1 {
+        font-size: 1.85rem;
+        line-height: 1.3;
+    }
+    
+    h2 {
+        font-size: 1.55rem;
+        line-height: 1.35;
+    }
+    
+    h3 {
+        font-size: 1.2rem;
+    }
+    
+    p, li {
+        font-size: 0.95rem;
+        line-height: 1.6;
+    }
+    
+    /* Cards - comfortable padding for Galaxy M31s */
+    .about-card,
+    .education-card,
+    .timeline-card,
+    .project-card,
+    .cert-card,
+    .skills-card {
+        padding: 22px;
+        border-radius: 16px;
+    }
+    
+    /* Buttons - touch-friendly for 20:9 aspect ratio */
+    .cta-button,
+    .project-link,
+    .cert-link,
+    button {
+        padding: 12px 24px;
+        font-size: 0.95rem;
+        min-height: 44px;
+    }
+    
+    /* Grid layouts - single column for narrow viewport */
+    .education-grid,
+    .projects-grid,
+    .certs-grid,
+    .skills-grid {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+    
+    /* Contact form - optimized for Galaxy M31s */
+    .contact-form input,
+    .contact-form textarea,
+    .contact-form select {
+        padding: 12px;
+        font-size: 0.95rem;
+        border-radius: 10px;
+    }
+    
+    /* Footer - compact but readable */
+    footer {
+        padding: 24px 14px;
+        font-size: 0.9rem;
+    }
+    
+    /* Modal - full viewport utilization */
+    .modal-content {
+        width: 95%;
+        max-width: 380px;
+        padding: 24px;
+        margin: 10px;
+    }
+    
+    /* Ensure proper spacing for long content */
+    section {
+        padding: 24px 14px;
+    }
+}
+
+/* ===========================================
    EXTRA SMALL MOBILE: Below 388px
    Ultra-compact for very small screens
    =========================================== */
