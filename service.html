@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Services - Kumar Sreyan Pattanayak</title>
+    <link rel="icon" type="image/png" href="Assets/Images.icons/favicon.png" sizes="64x64" />
+    
+    <!-- Google Fonts - Inter family for modern typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav id="navbar" role="navigation" aria-label="Main navigation">
+        <div class="nav-container">
+            <!-- Logo/Brand -->
+            <div class="nav-logo" onclick="location.href='index.html'" role="button" tabindex="0" aria-label="Go to home">
+                <strong><i>KSP</i></strong>
+            </div>
+
+            <!-- Desktop Navigation Links -->
+            <ul class="nav-links desktop-nav" role="menubar">
+                <li role="none"><a href="index.html#home" role="menuitem">Home</a></li>
+                <li role="none"><a href="index.html#education" role="menuitem">Education</a></li>
+                <li role="none"><a href="index.html#projects" role="menuitem">Projects</a></li>
+                <li role="none"><a href="index.html#certifications" role="menuitem">Certifications</a></li>
+                <li role="none"><a href="index.html#skills" role="menuitem">Skills</a></li>
+                <li role="none"><a href="contact.html" role="menuitem">Contact</a></li>
+                <li role="none"><a href="service.html" class="active" role="menuitem">Services</a></li>
+            </ul>
+
+            <!-- Search Bar - Desktop -->
+            <div class="search-container desktop-search">
+                <input type="search" class="search-input" placeholder="Search..." aria-label="Search">
+                <button class="search-clear" aria-label="Clear search" hidden>✕</button>
+                <button class="search-button" aria-label="Search">
+                    <img src="Assets/Images.icons/search.png" alt="Search" class="search-icon-img" />
+                </button>
+            </div>
+
+            <!-- Mobile Search Icon -->
+            <button class="mobile-search-icon" id="mobileSearchIcon" aria-label="Search">
+                <img src="Assets/Images.icons/search.png" alt="Search" class="mobile-search-icon-img" />
+            </button>
+
+            <!-- Theme Toggle Button -->
+            <div class="theme-selector">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <span class="theme-icon" aria-hidden="true">⚙️</span>
+                    <span class="theme-text">System</span>
+                </button>
+            </div>
+
+            <!-- Mobile Menu Icon (Hamburger) -->
+            <button class="menu-icon" id="menuIcon" aria-label="Toggle menu" aria-expanded="false">
+                <span class="menu-icon-text">☰</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Sidebar Menu (Mobile) -->
+    <aside class="sidebar-menu" id="sidebarMenu" role="navigation" aria-label="Mobile navigation">
+        <ul class="sidebar-links" role="menubar">
+            <li role="none"><a href="index.html#home" role="menuitem">Home</a></li>
+            <li role="none"><a href="index.html#education" role="menuitem">Education</a></li>
+            <li role="none"><a href="index.html#projects" role="menuitem">Projects</a></li>
+            <li role="none"><a href="index.html#certifications" role="menuitem">Certifications</a></li>
+            <li role="none"><a href="index.html#skills" role="menuitem">Skills</a></li>
+            <li role="none"><a href="contact.html" role="menuitem">Contact</a></li>
+            <li role="none"><a href="service.html" class="active" role="menuitem">Services</a></li>
+        </ul>
+    </aside>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Main Content -->
+    <main class="container" style="padding-top: 100px;">
+        <section class="section" id="services">
+            <h2 class="section-title">
+                Services
+                <span class="coming-soon-badge">Coming Soon</span>
+            </h2>
+            <p class="section-desc" style="text-align: center; max-width: 700px; margin: 0 auto 40px;">
+                Explore upcoming innovative solutions designed to empower developers and businesses with cutting-edge technology.
+            </p>
+            
+            <div class="services-grid">
+                <div class="service-card" style="grid-column: 1 / -1; max-width: 700px; margin: 0 auto;">
+                    <span class="coming-soon-overlay">Soon</span>
+                    <span class="service-icon">🤖💻</span>
+                    <h3 class="service-title">CodePilot AI IDE</h3>
+                    <p class="service-desc">A revolutionary web-based AI-powered Integrated Development Environment. Code smarter with intelligent suggestions, real-time collaboration, and seamless cloud integration.</p>
+                </div>
+            </div>
+
+            <!-- CTA Button -->
+            <div style="text-align: center; margin-top: 60px;">
+                <a href="index.html" class="cta-button">Back to Home</a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+     <footer role="contentinfo">
+        <p>
+            <strong>Copyright © 2025</strong> Kumar Sreyan Pattanayak
+            <br>
+            All Rights Reserved | Made with ❤️
+        </p>
+    </footer>
+</body>
+</html>

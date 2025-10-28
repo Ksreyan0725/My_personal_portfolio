@@ -1,98 +1,508 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Thank You - Kumar Sreyan Pattanayak</title>
-   
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="https://img.icons8.com/arcade/64/s-key.png" sizes="64x64">
-  <link href="style.css" rel="stylesheet" type="text/css" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You - Kumar Sreyan Pattanayak</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="Assets/Images.icons/favicon.png" sizes="64x64">
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            width: 100%;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            background-color: #FFFFFF !important;
+            color: #000000 !important;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body[data-theme="dark"] {
+            background-color: #000000 !important;
+            color: #FFFFFF !important;
+        }
+        
+        /* Scoped background cleanup: avoid global resets to prevent side effects */
+        html, body, main, .thank-you-content-wrapper, .thank-you-button, .theme-toggle, .theme-toggle-container, footer {
+            background: transparent;
+        }
+
+        a {
+            color: inherit;
+        }
+
+        .theme-toggle-container {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            z-index: 100;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: 2px solid;
+            border-color: rgba(0, 0, 0, 0.2);
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        body[data-theme="dark"] .theme-toggle {
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .theme-toggle:hover {
+            border-color: rgba(99, 102, 241, 0.5);
+        }
+
+        .theme-icon {
+            font-size: 16px;
+            opacity: 0.8;
+        }
+
+        .theme-text {
+            font-weight: 500;
+            border: 2px solid currentColor;
+            border-radius: 50%;
+            padding: 0;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .theme-toggle::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 2px solid currentColor;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+            opacity: 0;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 0.5;
+            }
+            100% {
+                transform: scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        .theme-toggle:hover::before {
+            animation: none;
+        }
+
+        .theme-text {
+            display: none;
+        }
+
+        .theme-icon {
+            position: relative;
+            z-index: 1;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1rem;
+        }
+
+        .thank-you-content-wrapper {
+            max-width: 600px;
+            width: 90%;
+            margin: 0 auto;
+            padding: 3rem 1rem;
+            text-align: center;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .thank-you-icon {
+            font-size: clamp(3rem, 8vw, 4.5rem);
+            margin-bottom: 2rem;
+            display: inline-block;
+            animation: scaleIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s both, 
+                     bounce 3s ease-in-out infinite;
+        }
+
+        .thank-you-content {
+            opacity: 0;
+            animation: fadeIn 0.8s ease-out 0.6s forwards;
+        }
+
+        .section-title {
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 0.8s ease-out 0.4s both;
+        }
+
+        .thank-you-message {
+            font-size: clamp(1.1rem, 3vw, 1.3rem);
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .thank-you-submessage {
+            opacity: 0.8;
+            margin-bottom: 2.5rem;
+            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+            line-height: 1.5;
+        }
+
+        .thank-you-actions {
+            display: flex;
+            gap: clamp(0.8rem, 3vw, 1.2rem);
+            justify-content: center;
+            flex-wrap: wrap;
+            padding: 0 1rem;
+        }
+
+        .thank-you-button {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.9s forwards;
+            padding: 0.8rem 1.5rem;
+            font-size: 1rem;
+            border: 2px solid currentColor;
+            border-radius: 8px;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            background: transparent;
+            font-weight: 500;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .thank-you-button:last-child {
+            animation-delay: 1.1s;
+        }
+
+        .thank-you-button:hover {
+            opacity: 0.8;
+        }
+
+        .thank-you-button:focus {
+            outline: none;
+            opacity: 0.9;
+        }
+
+        .thank-you-button span {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Connect With Us + Social layout (from thank-you-page 1.html) */
+        .divider {
+            width: 100%;
+            height: 1px;
+            background: #e0e0e0 !important;
+            margin: 32px 0;
+        }
+
+        body[data-theme="dark"] .divider {
+            background: #333 !important;
+        }
+
+        .social-text {
+            font-size: 14px;
+            opacity: 0.8;
+            margin-bottom: 16px;
+            text-transform: none;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .social-icons a {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: #ffffff !important; /* override global reset */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(0,0,0,0.06);
+        }
+
+        body[data-theme="dark"] .social-icons a {
+            background: #1e1e1e !important;
+            color: #a0a0a0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+            border-color: rgba(255,255,255,0.08);
+        }
+
+        /* Hover/focus animation */
+        .social-icons a:hover,
+        .social-icons a:focus-visible {
+            transform: translateY(-3px) scale(1.06);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+        }
+
+        body[data-theme="dark"] .social-icons a:hover,
+        body[data-theme="dark"] .social-icons a:focus-visible {
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.6);
+        }
+
+        .social-icons a:active {
+            transform: scale(0.96);
+        }
+
+        .social-icon {
+            width: 22px;
+            height: 22px;
+            object-fit: contain;
+            transition: transform 0.2s ease, filter 0.2s ease;
+        }
+
+        .social-icons a:hover .social-icon,
+        .social-icons a:focus-visible .social-icon {
+            transform: scale(1.1) rotate(3deg);
+            filter: brightness(1.08) contrast(1.05);
+        }
+
+        /* Remove focus outline color */
+        *:focus {
+            outline: none !important;
+        }
+
+        @keyframes scaleIn {
+            from { 
+                transform: scale(0); 
+                opacity: 0;
+            }
+            to { 
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(5deg); }
+        }
+
+        @keyframes floatPanel {
+            0%, 100% { 
+                transform: translateY(0);
+                box-shadow: 0 8px 32px 0 var(--glass-shadow);
+            }
+            50% { 
+                transform: translateY(-10px);
+                box-shadow: 0 12px 48px 0 var(--glass-shadow);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { 
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 480px) {
+            .thank-you-panel {
+                margin: 2rem auto;
+                padding: 2rem 1.5rem;
+            }
+
+            .thank-you-actions {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .thank-you-button {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
 </head>
 <body>
-  <!-- Navigation -->
-  <nav class="navbar glass-header">
-    <div class="nav-container">
-      <a href="index.html" class="nav-logo" onclick="location.reload(); return false;"> KSP</a>
-      <ul class="nav-menu">
-        <li class="nav-item"><a href="index.html#home" class="nav-link">Home</a></li>
-        <li class="nav-item"><a href="index.html#about" class="nav-link">About</a></li>
-        <li class="nav-item"><a href="index.html#education" class="nav-link">Education</a></li>
-        <li class="nav-item"><a href="index.html#achievements" class="nav-link">Achievements</a></li>
-        <li class="nav-item"><a href="index.html#skills" class="nav-link">Skills</a></li>
-        <li class="nav-item"><a href="index.html#social" class="nav-link">Social</a></li>
-        <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
-        <li class="nav-item"><a href="services.html" class="nav-link">Services</a></li>
-      </ul>
-      <form class="navbar-search" role="search" aria-label="Site search">
-        <input type="search" placeholder="Search..." aria-label="Search">
-      </form>
-      <div class="hamburger" aria-label="Toggle navigation" role="button" tabindex="0">
-        <span class="bar"></span>
-        <span class="bar"></span>
-        <span class="bar"></span>
-      </div>
-      
-      <!-- Settings Gear Button -->
-      <div class="settings-container">
-        <button id="settingsGear" class="settings-gear" aria-label="Theme settings">
-          <svg class="gear-icon" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.07-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.74,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.8,11.69,4.8,12s0.02,0.64,0.07,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.44-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.47-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z"/>
-          </svg>
+    <!-- Theme Toggle Button -->
+    <div class="theme-toggle-container">
+        <button class="theme-toggle" id="themeToggle">
+            <span class="theme-icon">⚙️</span>
         </button>
-        
-        <!-- Theme Selection Dropdown -->
-        <div id="themeDropdown" class="theme-dropdown">
-          <div class="theme-option" data-theme="system">
-            <span class="theme-icon">🖥️</span>
-            <span class="theme-label">System Default</span>
-          </div>
-          <div class="theme-option" data-theme="light">
-            <span class="theme-icon">☀️</span>
-            <span class="theme-label">Light Mode</span>
-          </div>
-          <div class="theme-option" data-theme="dark">
-            <span class="theme-icon">🌙</span>
-            <span class="theme-label">Dark Mode</span>
-          </div>
+    </div>
+
+    <!-- Main Content -->
+    <main>
+        <div class="thank-you-content-wrapper">
+            <div class="thank-you-icon">✨</div>
+            <h2 class="section-title">Thank You!</h2>
+            <div class="thank-you-content">
+                <p class="thank-you-message">
+                    Your message has been successfully sent!
+                    <br>I appreciate you reaching out.
+                </p>
+                <p class="thank-you-submessage">
+                    I'll review your message and get back to you as soon as possible.
+                </p>
+                <div class="thank-you-actions">
+                    <a href="index.html" class="thank-you-button">
+                        <span>←</span> Back to Home
+                    </a>
+                    <a href="contact.html" class="thank-you-button">
+                        <span>✉</span> Contact Us
+                    </a>
+                </div>
+
+                <!-- Connect With Us -->
+                <div class="divider"></div>
+                <p class="social-text">Connect With Us</p>
+                <div class="social-icons" aria-label="Social media links">
+                    <!-- <a href="mailto:sreyanpattanayak246@gmail.com" aria-label="Gmail">
+                        <img src="Assets/Images.icons/gmail.png" alt="Gmail" class="social-icon" />
+                    </a>
+                    <a href="mailto:sreyanpattanayak@zohomail.com" aria-label="Zoho Mail">
+                        <img src="Assets/Images.icons/zohomail.png" alt="Zoho Mail" class="social-icon" />
+                    </a> -->
+                    <a href="https://github.com/Ksreyan0725" target="_blank" rel="noopener" aria-label="GitHub">
+                        <img src="Assets/Images.icons/github.png" alt="GitHub" class="social-icon" />
+                    </a>
+                    <a href="https://www.linkedin.com/in/kumar-sreyan-pattanayak-81a495230" target="_blank" rel="noopener" aria-label="LinkedIn">
+                        <img src="Assets/Images.icons/linkedin.png" alt="LinkedIn" class="social-icon" />
+                    </a>
+                    <a href="https://teams.microsoft.com/l/chat/0/0?users=opener" target="_blank" rel="noopener" aria-label="Microsoft Teams">
+                        <img src="Assets/Images.icons/teams.png" alt="Microsoft Teams" class="social-icon" />
+                    </a>
+                    <a href="https://x.com/SreyanPattanay5?t=oXoHwnGs9M9e37zh_Vsd5A&s=09" target="_blank" rel="noopener" aria-label="X">
+                        <img src="Assets/Images.icons/X.png" alt="X" class="social-icon" />
+                    </a>
+                    <!-- <a href="https://t.me/SreyanPattanayak" target="_blank" rel="noopener" aria-label="Telegram">
+                        <img src="Assets/Images.icons/telegram.png" alt="Telegram" class="social-icon" />
+                    </a>
+                    <a href="https://www.instagram.com/p_a_p_u_n01_?igsh=aWwyZnhicTRuaTI3" target="_blank" rel="noopener" aria-label="Instagram">
+                        <img src="Assets/Images.icons/instagram.png" alt="Instagram" class="social-icon" /> -->
+                    </a>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </nav>
+    </main>
 
-  <!-- Thank You Section -->
-  <section id="thank-you" class="contact section">
-    <div class="container">
-      <div class="glass-panel card-glass fade-in thank-you-panel">
-        <div class="thank-you-icon">✅</div>
-        <h2 class="section-title">Thank You!</h2>
-        <div class="thank-you-content">
-          <p class="thank-you-message">
-            Your message has been sent successfully. I appreciate you reaching out!
-          </p>
-          <p class="thank-you-submessage">
-            I'll get back to you as soon as possible.
-          </p>
-          <div class="thank-you-actions">
-            <a href="index.html" class="submit-button button-glass thank-you-button">
-              ← Back to Home
-            </a>
-            <a href="contact.html" class="submit-button button-glass thank-you-button">
-              Send Another Message
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+        <!-- Footer -->
+        <footer style="text-align: center; padding: 2rem 0; opacity: 0.8;">
+            <p><strong>Copyright © 2025</strong> All rights reserved | Made with ❤️</p>
+        </footer>
+    
 
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="container">
-      <p>Copyright &copy; 2025 All rights reserved | Made with ❤️</p>
-    </div>
-  </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Theme handling
+            const themeToggleBtn = document.getElementById('themeToggle');
+            const themeIcon = themeToggleBtn.querySelector('.theme-icon');
+            let currentTheme = 'system';
 
-  <script src="script.js"></script>
+            // Function to get system theme
+            function getSystemTheme() {
+                return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            }
+
+            // Function to update theme
+            function updateTheme(theme) {
+                // Remove any existing theme
+                document.body.removeAttribute('data-theme');
+                
+                // Set new theme after a brief delay to ensure clean transition
+                setTimeout(() => {
+                    if (theme === 'system') {
+                        document.body.setAttribute('data-theme', getSystemTheme());
+                    } else {
+                        document.body.setAttribute('data-theme', theme);
+                    }
+                }, 50);
+
+                // Update icon
+                themeIcon.textContent = {
+                    'system': '⚙️',
+                    'light': '🔆',
+                    'dark': '🌙'
+                }[theme];
+
+                currentTheme = theme;
+                localStorage.setItem('theme', theme);
+            }
+
+            // Listen for system theme changes
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+                if (currentTheme === 'system') {
+                    updateTheme('system');
+                }
+            });
+
+            // Initialize theme
+            const savedTheme = localStorage.getItem('theme') || 'system';
+            updateTheme(savedTheme);
+
+            // Theme toggle click handler
+            themeToggleBtn.addEventListener('click', () => {
+                const themes = ['system', 'light', 'dark'];
+                const currentIndex = themes.indexOf(currentTheme);
+                const nextTheme = themes[(currentIndex + 1) % themes.length];
+                updateTheme(nextTheme);
+            });
+
+            // Force theme check on load
+            setTimeout(() => {
+                updateTheme(currentTheme);
+            }, 0);
+        });
+    </script>
 </body>
 </html>

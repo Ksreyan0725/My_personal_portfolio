@@ -1,414 +1,545 @@
 <!--
-  This project will auto-refresh as you edit the HTML, CSS and JS. See README.md for more info.
+=============================================================================
+File: index_reorganized.html
+Purpose: Main landing page for Kumar Sreyan Pattanayak's personal portfolio
+Description: Showcases education, projects, certifications, and skills with
+             responsive design, dark/light theme support, and smooth animations
+Author: Kumar Sreyan Pattanayak
+Last Updated: October 28, 2025
+=============================================================================
 -->
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Personal portfolio of Kumar Sreyan Pattanayak - BCA Student & Technology Enthusiast">
-<title>Kumar Sreyan Pattanayak - Portfolio</title>
-  
-
-  <!-- this below lines are added for maintenance mode redirection -->
-  <!-- <meta http-equiv="refresh" content="0; url=maintenance.html">
-  <script>window.location.replace('maintenance.html');</script> -->
-
-
-  <!-- Favicon --> 
-  <link rel="icon" type="image/png" href="https://img.icons8.com/arcade/64/s-key.png" sizes="64x64">
-  
-  <!-- Google Fonts - Inter -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  
-  <!-- Styles -->
-  <link href="style.css" rel="stylesheet" type="text/css" />
-  
-</head>
-<body>
-  <!-- Navigation -->
-  <nav class="navbar glass-header">
-    <div class="nav-container">
-      <a href="#home" class="nav-logo" onclick="location.reload(); return false;"></> KSP</a>
-      <ul class="nav-menu">
-        <li class="nav-item"><a href="#home" class="nav-link">Home</a></li>
-        <li class="nav-item"><a href="#about" class="nav-link">About</a></li>
-        <li class="nav-item"><a href="#education" class="nav-link">Education</a></li>
-        <li class="nav-item"><a href="#achievements" class="nav-link">Achievements</a></li>
-        <li class="nav-item"><a href="#skills" class="nav-link">Skills</a></li>
-        <li class="nav-item"><a href="#social" class="nav-link">Social</a></li>
-        <li class="nav-item"><a href="#contact" class="nav-link">Contact</a></li>
-        <li class="nav-item"><a href="services.html" class="nav-link">Services</a></li>
-      </ul>
-      <form class="navbar-search" role="search" aria-label="Site search">
-        <input type="search" placeholder="Search..." aria-label="Search">
-      </form>
-      <div class="hamburger" aria-label="Toggle navigation" role="button" tabindex="0">
-        <span class="bar"></span>
-        <span class="bar"></span>
-        <span class="bar"></span>
-      </div>
-      
-      <!-- Settings Gear Button -->
-      <div class="settings-container">
-        <button id="settingsGear" class="settings-gear" aria-label="Theme settings">
-          <svg class="gear-icon" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.07-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.74,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.8,11.69,4.8,12s0.02,0.64,0.07,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.44-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.47-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z"/>
-          </svg>
-        </button>
-        
-        <!-- Theme Selection Dropdown -->
-        <div id="themeDropdown" class="theme-dropdown">
-          <div class="theme-option" data-theme="system">
-            <span class="theme-icon">🖥️</span>
-            <span class="theme-label">System Default</span>
-          </div>
-          <div class="theme-option" data-theme="light">
-            <span class="theme-icon">☀️</span>
-            <span class="theme-label">Light Mode</span>
-          </div>
-          <div class="theme-option" data-theme="dark">
-            <span class="theme-icon">🌙</span>
-            <span class="theme-label">Dark Mode</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </nav>
-
-  <!-- Notification Panel -->
-  <div id="notificationPanel" class="notification-panel">
-    <div class="notification-content">
-      <span class="notification-icon">📬</span>
-      <span class="notification-text">You can now message me using the button "Get In Touch".</span>
-    </div>
-  </div>
-  <nav>
-    <!-- Your navbar content -->
-</nav>
-
-<!-- <div id="notificationPanel" class="notice-panel">
-  <div class="notification-content">
-    <span class="notification-icon">📬</span>
-    <div class="notice-text">
-         <span class="notification-text">You can now message me using the button "Get In Touch" Button!</span>
-    </div>
-</div> -->
-
-
-  <!-- Hero Section -->
- <section id="home" class="home section">
-  <div class="container">
-    <div class="glass-panel card-glass fade-in">
-      <div class="home-content">
-
-        <!-- Left Side: Profile Photo -->
-        <div class="profile-photo">
-          <img src="Assets/Picture/My_Photo.png" 
-               alt="Kumar Sreyan Pattanayak" 
-               class="profile-img">
-        </div>
-
-        <!-- Right Side: Text -->
-        <div class="text-content">
-          <h1 class="name">Kumar Sreyan Pattanayak</h1>
-          <p class="intro tagline-text">BCA Student & Technology Enthusiast</p>
-          <p class="intro description-text">
-            Passionate about technology, management, and policy analysis. Currently pursuing BCA while preparing for CAT 2026 to pursue MBA in Business Analytics.
-          </p>
-          <a href="contact.html" class="cta-button button-glass">Get In Touch</a>
-        </div>
-
-      </div>
-    </div>
-  </div>
-</section>
-
-
-  <!-- About Me Section -->
-  <section id="about" class="about section">
-    <div class="container">
-      <div class="glass-panel card-glass fade-in">
-        <h2 class="section-title">About Me</h2>
-        <div class="about-content">
-        <div class="about-text">
-          <h3>Personal Details</h3>
-          <div class="details-grid">
-            <div class="detail-item card-glass">
-              <strong>Education:</strong> <span>BCA Student at RIT Berhampur</span>
-            </div>
-            <div class="detail-item card-glass">
-              <strong>Location:</strong> <span>Berhampur, Odisha</span>
-            </div>
-            <div class="detail-item card-glass">
-              <strong>Interests:</strong> <span>Technology, Coding, Legal Systems, Economics</span>
-            </div>
-            <div class="detail-item card-glass">
-              <strong>Future Goals:</strong> <span>MBA & IES Preparation</span>
-            </div>
-          </div>
-          <p class="about-description card-glass">
-            I'm a BCA student at Roland Institute of Technology, Berhampur, with strong interests in technology, management, economics, and law. I'm skilled in Python, Object-Oriented Programming, and Computer Networking, with research experience in governance and systemic issues. Currently preparing for CAT 2026 to pursue an MBA in Business Analytics/Finance, and later planning to qualify for IES, blending tech, law, and economics for impactful policy solutions.
-          </p>
-        </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Education Section -->
-  <section id="education" class="education section">
-    <div class="container">
-      <div class="glass-panel card-glass fade-in">
-        <h2 class="section-title">Education</h2>
-        <div class="timeline">
-        <div class="timeline-item">
-          <div class="timeline-date">2023 - 2026</div>
-          <div class="timeline-content card-glass">
-            <h3>Bachelor of Computer Applications (BCA)</h3>
-            <p>Roland Institute of Technology (RIT), Berhampur</p>
-            <p>Currently pursuing BCA with focus on programming, computer networking, and technology applications.</p>
-          </div>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-date">2022 - 2023</div>
-          <div class="timeline-content card-glass">
-            <h3>Class 12 - Grade B</h3>
-            <p>Board of Secondary Education, Odisha (BSE Odisha)</p>
-            <p>Completed higher secondary education with Grade B, building foundation for computer applications.</p>
-          </div>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-date">2021 - 2022</div>
-          <div class="timeline-content card-glass">
-            <h3>Class 10 - Grade A</h3>
-            <p>Central Board of Secondary Education (CBSE)</p>
-            <p>Achieved Grade A in secondary education, demonstrating strong academic foundation.</p>
-          </div>
-        </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-<!-- Achievements Section -->
-  <section id="achievements" class="achievements section">
-  <div class="container">
-    <div class="glass-panel card-glass fade-in">
-      <h2 class="section-title">Achievements</h2>
-      <div class="achievements-grid">
-
-      <div class="achievement-card card-glass">
-        <div class="achievement-icon">📚</div>
-        <h3>Indian Constitution & Legal Basics</h3>
-        <p>Self-study certification covering Indian Constitution, legal systems, and governance (April 2022).</p>
-      </div>
-
-      <div class="achievement-card card-glass">
-        <div class="achievement-icon">🔬</div>
-        <h3>Systemic Failures Research</h3>
-        <p>Authored comprehensive research paper analyzing corruption, education, and judicial inefficiency in India using AI tools and government data (June 2023 - Present).</p>
-      </div>
-
-      <div class="achievement-card card-glass">
-        <div class="achievement-icon">⚖️</div>
-        <h3>Legal System Understanding</h3>
-        <p>Self-learning project covering Indian Constitution, IPC, civil vs criminal law, and legal reasoning, building strong legal awareness (April 2021 - June 2023).</p>
-      </div>
-
-      <div class="achievement-card card-glass">
-        <div class="achievement-icon">🐍</div>
-        <h3>Python Programming Mastery --Udemy--</h3>
-        <p>Currently pursuing advanced Python programming course on Udemy to build real-world projects and become job-ready.</p>
-        <a href="https://www.udemy.com/course/codewithharry-python/?couponCode=SEPHARRY" target="_blank" rel="noopener" class="course-link">View Course</a>
-      </div>
-
-      <div class="achievement-card card-glass">
-        <div class="achievement-icon">🌐</div>
-        <h3>Ultimate Web Development Course 2025 --Udemy--</h3>
-        <p>(Ongoing) a modern web development course focused on building responsive websites, real-world projects, and leveraging AI tools to accelerate development.</p>
-        <a href="https://www.udemy.com/course/codewithharry-web-development-course/?srsltid=AfmBOooGTxHcQCxjApypCQ6TwDaAhgT06quf1ot2j5j8M-99_qPJXDPO&couponCode=LETSLEARNNOW" target="_blank" rel="noopener" class="course-link">View Course</a>
-      </div>
-
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Skills Section -->
-<section id="skills" class="skills section">
-  <div class="container">
-    <div class="glass-panel card-glass fade-in">
-      <h2 class="section-title">Skills</h2>
-      <div class="skills-content">
-
-      <!-- Technical Skills -->
-      <div class="skills-category card-glass">
-        <h3>Technical Skills</h3>
-
-        <div class="skill">
-          <span>Python</span>
-          <div class="progress-bar"><div class="progress" data-value="30"></div></div>
-        </div>
-
-        <div class="skill">
-          <span>Java Programming</span>
-          <div class="progress-bar"><div class="progress" data-value="10"></div></div>
-        </div>
-
-        <div class="skill">
-          <span>Computer Networking</span>
-          <div class="progress-bar"><div class="progress" data-value="30"></div></div>
-        </div>
-
-        <div class="skill">
-          <span>Full Stack Web Development <small>(Ongoing)</small></span>
-          <div class="progress-bar"><div class="progress" data-value="0"></div></div>
-        </div>
-
-        <div class="skill">
-          <span>Flask</span>
-          <div class="progress-bar"><div class="progress" data-value="10"></div></div>
-        </div>
-      </div>
-
-      <!-- Soft Skills -->
-      <div class="skills-category card-glass">
-        <h3>Soft Skills</h3>
-
-        <div class="skill">
-          <span>Communication Skills</span>
-          <div class="progress-bar"><div class="progress" data-value="40"></div></div>
-        </div>
-
-        <div class="skill">
-          <span>Management</span>
-          <div class="progress-bar"><div class="progress" data-value="10"></div></div>
-        </div>
-
-        <div class="skill">
-          <span>Public Policy Analysis</span>
-          <div class="progress-bar"><div class="progress" data-value="30"></div></div>
-        </div>
-
-        <div class="skill">
-          <span>Legal Systems Awareness</span>
-          <div class="progress-bar"><div class="progress" data-value="30"></div></div>
-        </div>
-
-        <div class="skill">
-          <span>Business Accounting</span>
-          <div class="progress-bar"><div class="progress" data-value="10"></div></div>
-        </div> 
-
-        <div class="skill">
-          <span>Research & Analysis</span>
-          <div class="progress-bar"><div class="progress" data-value="20"></div></div>
-        </div> 
-      </div>
-      </div>
-
-      <!-- Resume Download Button -->
-      <div class="resume-section card-glass">
-      <h2 class="resume-heading">Click the button to download my resume:- </h2>
-      <a href="Assets/Resume.pdf/Kumar_Sreyan_Pattanayak_Resume.pdf" download class="resume-btn button-glass">📄 Download Resume (PDF)</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-  <!-- Social Media Section -->
-  <section id="social" class="social section">
-    <div class="container">
-      <div class="glass-panel card-glass fade-in">
-        <h2 class="section-title">Connect With Me</h2>
-        <div class="social-links">
-        <a href="https://github.com/Ksreyan0725" class="social-link card-glass" target="_blank" rel="noopener">
-          <img src="Assets/Images.icons/github.png" alt="GitHub" class="social-icon">
-          
-          <span class="social-name">GitHub
-          </span>
-        </a>
-          <a href="https://www.facebook.com/share/1Cj1miKofw/" class="social-link card-glass" target="_blank" rel="noopener">
-          <img src="Assets/Images.icons/facebook.png" alt="Instagram" class="social-icon">
-          <span class="social-name">Facebook</span>
-        </a>
-        <a href="https://www.linkedin.com/in/kumar-sreyan-pattanayak-81a495230" class="social-link card-glass" target="_blank" rel="noopener">
-         <img src="Assets/Images.icons/linkedin.png" alt="Instagram" class="social-icon">
-          <span class="social-name">LinkedIn</span>
-        </a>
-        <a href="https://x.com/SreyanPattanay5?t=oXoHwnGs9M9e37zh_Vsd5A&s=09" class="social-link card-glass" target="_blank" rel="noopener">
-          <img src="Assets/Images.icons/X.png" alt="X" class="social-icon">
-          <span class="social-name">X</span>
-        </a>
-         <a href="https://www.instagram.com/p_a_p_u_n01_?igsh=aWwyZnhicTRuaTI3" class="social-link card-glass" target="_blank" rel="noopener">
-         <img src="Assets/Images.icons/instagram.png" alt="Instagram" class="social-icon">
-         <span class="social-name">Instagram</span>
-</a>
-
-         <a href="https://t.me/SreyanPattanayak" class="social-link card-glass" target="_blank" rel="noopener">
-          <img src="Assets/Images.icons/telegram.png" alt="Instagram" class="social-icon">
-          <span class="social-name">Telegram</span>
-        </a>
-         <a href="https://teams.microsoft.com/l/chat/0/0?users=opener" class="social-link card-glass" target="_blank" rel="noopener"> 
-          <img src="Assets/Images.icons/teams.png" alt="Teams" class="social-icon">
-          <span class="social-name">Microsoft Teams</span>
-        </a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Contact Section -->
-<section id="contact" class="contact section">
-  <div class="container">
-    <div class="glass-panel card-glass fade-in">
-      <h2 class="section-title">Get In Touch</h2>
-      <div class="contact-content">
-        <div class="contact-info" id="contact-content">
-        <h3>Contact Information</h3>
-        <div class="contact-item">
-          <strong>Email:</strong> <a href="mailto:sreyanpattanayak246@gmail.com">sreyanpattanayak246@gmail.com</a>
-        </div>
-        <p>Feel free to reach out or just to say hello!</p>
-      </div>
-
-      <!-- Contact Form -->
-        <form class="contact-form card-glass" id="contactForm" action="https://formspree.io/f/mzzjopyn" method="POST">
-        <div class="form-group">
-          <label for="name">Name </label>
-          <input type="text" id="name" name="name" required placeholder="Enter your name">
-        </div>
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input type="email" id="email" name="email" required placeholder="Enter your email">
-        </div>
-        <div class="form-group">
-          <label for="message">Message </label>
-          <textarea id="message" name="message" rows="5" required placeholder="Enter your message"></textarea>
-        </div>
-        <button type="submit" class="submit-button">Submit</button>
-        <p id="form-status"></p>
-      </form>
+    <!-- ==================== Meta Tags ==================== -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Personal portfolio of Kumar Sreyan Pattanayak - BCA Student & Technology Enthusiast specializing in Python, Web Development, and Public Policy Analysis">
+    <meta name="keywords" content="Kumar Sreyan Pattanayak, BCA student, web developer, Python programmer, public policy">
+    <meta name="author" content="Kumar Sreyan Pattanayak">
     
+    <!-- ==================== Page Title & Favicon ==================== -->
+    <title>Kumar Sreyan Pattanayak - Portfolio</title>
+    <link rel="icon" type="image/png" href="Assets/Images.icons/favicon.png" sizes="64x64" />
 
-      </div>
-    </div>
-  </div>
-</section>
+    <!-- ==================== External Resources ==================== -->
+    <!-- Google Fonts - Inter family for modern typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    
+    <!-- ==================== Stylesheets & Scripts ==================== -->
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
 
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="container">
-      <p>
-        <strong>Copyright © 2025</strong>
-        All Rights Reserved | Made with ❤️
-      </p>
+    <!-- ==================== Maintenance Mode (Currently Disabled) ==================== -->
+    <!-- Uncomment below lines to enable maintenance mode redirection -->
+    <!-- <meta http-equiv="refresh" content="0; url=maintenance.html"> -->
+    <!-- <script>window.location.replace('maintenance.html');</script> -->
+</head>
+
+<body>
+    <!-- ==================== Navigation Bar ==================== -->
+    <!-- Fixed top navigation with responsive menu and theme toggle -->
+    <nav id="navbar" role="navigation" aria-label="Main navigation">
+        <div class="nav-container">
+            <!-- Logo/Brand -->
+            <div class="nav-logo" onclick="location.reload(); return false;" role="button" tabindex="0" aria-label="Reload page">
+                <!-- LOGO name -->
+              <strong><i>KSP</i></strong>  
+            </div>
+
+            <!-- Desktop Navigation Links -->
+            <ul class="nav-links desktop-nav" role="menubar">
+                <li role="none"><a href="#home" role="menuitem">Home</a></li>
+                <li role="none"><a href="#education" role="menuitem">Education</a></li>
+                <li role="none"><a href="#projects" role="menuitem">Projects</a></li>
+                <li role="none"><a href="#certifications" role="menuitem">Certifications</a></li>
+                <li role="none"><a href="#skills" role="menuitem">Skills</a></li>
+                <li role="none"><a href="contact.html" role="menuitem">Contact</a></li>
+                <li role="none"><a href="service.html" role="menuitem">Services</a></li>
+            </ul>
+
+            <!-- Search Bar - Desktop -->
+            <div class="search-container desktop-search">
+                <input type="search" class="search-input" placeholder="Search..." aria-label="Search">
+                <button class="search-clear" aria-label="Clear search" hidden>✕</button>
+                <button class="search-button" aria-label="Search">
+                    <img src="Assets/Images.icons/search.png" alt="Search" class="search-icon-img" />
+                </button>
+            </div>
+
+            <!-- Mobile Search Icon -->
+            <button class="mobile-search-icon" id="mobileSearchIcon" aria-label="Search">
+                <img src="Assets/Images.icons/search.png" alt="Search" class="mobile-search-icon-img" />
+            </button>
+
+            <!-- Theme Toggle Button -->
+            <div class="theme-selector">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <span class="theme-icon" aria-hidden="true">⚙️</span>
+                    <span class="theme-text">System</span>
+                </button>
+            </div>
+
+            <!-- Mobile Menu Icon (Hamburger) -->
+            <button class="menu-icon" id="menuIcon" aria-label="Toggle menu" aria-expanded="false">
+                <span class="menu-icon-text">☰</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- ==================== Search Popup Modal ==================== -->
+    <div class="search-modal" id="searchModal" role="dialog" aria-label="Search modal">
+        <div class="search-modal-content">
+            <div class="search-modal-header">
+                <button class="search-modal-close" id="searchModalClose" aria-label="Close search">✕</button>
+            </div>
+            <div class="search-modal-body">
+                <div class="search-modal-input-wrapper">
+                    <input type="search" class="search-modal-input" id="searchModalInput" placeholder="Search projects, skills, certifications..." aria-label="Search">
+                    <button class="search-modal-button" id="searchModalButton" aria-label="Search">
+                        <img src="Assets/Images.icons/search.png" alt="Search" class="search-modal-icon-img" />
+                    </button>
+                </div>
+                <div class="search-results" id="searchResults">
+                    <!-- Search results will appear here -->
+                </div>
+            </div>
+        </div>
     </div>
-  </footer>
-  <script src="script.js"></script>
+
+    <!-- Search Modal Overlay -->
+    <div class="search-modal-overlay" id="searchModalOverlay"></div>
+
+    <!-- ==================== Mobile Sidebar Menu ==================== -->
+    <div class="sidebar-menu" id="sidebarMenu" role="navigation" aria-label="Mobile navigation">
+        <div class="sidebar-header">
+            <div class="sidebar-logo"><strong><i>KSP</i></strong></div>
+            <button class="sidebar-close" id="sidebarClose" aria-label="Close menu">✕</button>
+        </div>
+        <ul class="sidebar-links" role="menubar">
+            <li role="none"><a href="#home" role="menuitem">🏠 Home</a></li>
+            <li role="none"><a href="#education" role="menuitem">🎓 Education</a></li>
+            <li role="none"><a href="#projects" role="menuitem">💼 Projects</a></li>
+            <li role="none"><a href="#certifications" role="menuitem">📜 Certifications</a></li>
+            <li role="none"><a href="#skills" role="menuitem">⚡ Skills</a></li>
+            <li role="none"><a href="contact.html" role="menuitem">📧 Contact</a></li>
+            <li role="none"><a href="service.html" role="menuitem">🛠️ Services</a></li>
+        </ul>
+    </div>
+
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- ==================== Scrolling Notice Banner ==================== -->
+    <!-- News ticker style banner below navbar -->
+    <div class="notice-banner" role="banner" aria-label="Notice banner">
+        <div class="ticker-wrapper">
+            <div class="ticker-content">
+                <span class="ticker-text">Now you can message me using the button 'Get in Touch'.</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== Hero Section ==================== -->
+    <!-- Main header with profile photo, name, and social links -->
+    <header id="home" role="banner">
+        <div class="home-grid">
+            <div class="profile-section">
+                <div class="profile-container">
+                    <img src="./Assets/Picture/My_Photo.png" 
+                         alt="Profile photo" 
+                         class="profile-photo"
+                         loading="lazy">
+                </div>
+
+                <h1 class="name">Kumar Sreyan Pattanayak</h1>
+                <p class="tagline">
+                    <span class="typing-text"></span>
+                    <style>
+                        .typing-text::after {
+                            content: '|';
+                            animation: blink 1s infinite;
+                        }
+                        @keyframes blink {
+                            0%, 100% { opacity: 1; }
+                            50% { opacity: 0; }
+                        }
+                    </style>
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            const text = "BCA Student & Technology Enthusiast";
+                            const typingText = document.querySelector('.typing-text');
+                            let i = 0;
+                            
+                            function typeWriter() {
+                                if (i < text.length) {
+                                    typingText.textContent += text.charAt(i);
+                                    i++;
+                                    setTimeout(typeWriter, 70);
+                                } else {
+                                    setTimeout(() => {
+                                        typingText.textContent = '';
+                                        i = 0;
+                                        typeWriter();
+                                    }, 2000);
+                                }
+                            }
+                            
+                            typeWriter();
+                        });
+                    </script>
+                </p>
+
+                <!-- Social Media Links -->
+                <div class="contact-links social-animated" role="navigation" aria-label="Social media links">
+                    <!-- Gmail -->
+                    <!-- <a href="mailto:sreyanpattanayak246@gmail.com" 
+                       class="ripple-effect social-link-animated" 
+                       aria-label="Send email via Gmail"
+                       style="animation-delay: 0.1s">
+                        <img src="Assets/Images.icons/gmail.png" alt="Gmail" class="social-icon">
+                    </a> -->
+
+                    <!-- Zoho Mail -->
+                    <a href="mailto:sreyanpattanayak@zohomail.com" 
+                       class="ripple-effect social-link-animated" 
+                       aria-label="Send email via Zoho Mail"
+                       style="animation-delay: 0.2s">
+                        <img src="Assets/Images.icons/zohomail.png" alt="Zoho Mail" class="social-icon">
+                    </a>
+
+                    <!-- GitHub -->
+                    <a href="https://github.com/Ksreyan0725" 
+                       class="ripple-effect social-link-animated" 
+                       target="_blank" 
+                       rel="noopener noreferrer"
+                       aria-label="Visit GitHub profile"
+                       style="animation-delay: 0.3s">
+                        <img src="Assets/Images.icons/github.png" alt="GitHub" class="social-icon">
+                    </a>
+
+                    <!-- LinkedIn -->
+                    <a href="https://www.linkedin.com/in/kumar-sreyan-pattanayak-81a495230" 
+                       class="ripple-effect social-link-animated" 
+                       target="_blank" 
+                       rel="noopener noreferrer"
+                       aria-label="Visit LinkedIn profile"
+                       style="animation-delay: 0.4s">
+                        <img src="Assets/Images.icons/linkedin.png" alt="LinkedIn" class="social-icon">
+                    </a>
+
+                    <!-- Microsoft Teams -->
+                    <a href="https://teams.microsoft.com/l/chat/0/0?users=opener" 
+                       class="ripple-effect social-link-animated" 
+                       target="_blank" 
+                       rel="noopener noreferrer"
+                       aria-label="Connect on Microsoft Teams"
+                       style="animation-delay: 0.5s">
+                        <img src="Assets/Images.icons/teams.png" alt="Microsoft Teams" class="social-icon">
+                    </a>
+
+                    <!-- X (formerly Twitter) -->
+                    <!-- <a href="https://x.com/SreyanPattanay5?t=oXoHwnGs9M9e37zh_Vsd5A&s=09" 
+                       class="ripple-effect social-link-animated" 
+                       target="_blank" 
+                       rel="noopener noreferrer"
+                       aria-label="Visit X profile"
+                       style="animation-delay: 0.6s">
+                        <img src="Assets/Images.icons/X.png" alt="X" class="social-icon">
+                    </a> -->
+
+                    <!-- Facebook
+                    <a href="https://www.facebook.com/share/1Cj1miKofw/" 
+                       class="ripple-effect social-link-animated" 
+                       target="_blank" 
+                       rel="noopener noreferrer"
+                       aria-label="Visit Facebook profile"
+                       style="animation-delay: 0.7s">
+                        <img src="Assets/Images.icons/facebook.png" alt="Facebook" class="social-icon">
+                    </a>
+
+                    Telegram
+                    <a href="https://t.me/SreyanPattanayak" 
+                       class="ripple-effect social-link-animated" 
+                       target="_blank" 
+                       rel="noopener noreferrer"
+                       aria-label="Message on Telegram"
+                       style="animation-delay: 0.8s">
+                        <img src="Assets/Images.icons/telegram.png" alt="Telegram" class="social-icon">
+                    </a>
+
+                    Instagram -->
+                    <!-- <a href="https://www.instagram.com/p_a_p_u_n01_?igsh=aWwyZnhicTRuaTI3" 
+                       class="ripple-effect social-link-animated" 
+                       target="_blank" 
+                       rel="noopener noreferrer"
+                       aria-label="Visit Instagram profile"
+                       style="animation-delay: 0.9s">
+                        <img src="Assets/Images.icons/instagram.png" alt="Instagram" class="social-icon">
+                    </a> -->
+                </div>
+            </div>
+
+            <div class="content-section">
+                <div>
+                    <h2 class="section-title">About Me</h2>
+                    <div class="about-card">
+                        <p class="about-text">
+                            I'm a BCA student at Roland Institute of Technology, Berhampur, with strong interests in technology,
+                            management, economics, and law. I'm skilled in Python, object-oriented programming, and computer
+                            networking, and have research experience in governance and systemic issues. I'm currently preparing
+                            for CAT 2026 to pursue an MBA in Business Analytics/Finance, and later plan to qualify for the IES,
+                            blending technology, law, and economics to deliver impactful policy solutions.
+                        </p>
+                        <a href="contact.html" class="cta-button">Get In Touch</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ==================== Main Content Container ==================== -->
+    <main class="container" role="main">
+        
+        <!-- ==================== Education Section ==================== -->
+        <section class="section" id="education">
+            <h2 class="section-title">Education</h2>
+
+            <!-- Bachelor of Computer Applications -->
+            <article class="card">
+                <h3>Bachelor of Computer Applications (BCA)</h3>
+                <p class="date">2023 – 2026</p>
+                <p><strong>Roland Institute of Technology (RIT), Berhampur</strong></p>
+                <p>Currently pursuing BCA with focus on programming, computer networking, and technology applications.</p>
+            </article>
+
+            <!-- Class 12 -->
+            <article class="card">
+                <h3>Class 12 - Grade B</h3>
+                <p class="date">2022 – 2023</p>
+                <p><strong>Board of Secondary Education, Odisha (BSE Odisha)</strong></p>
+                <p>Completed higher secondary education with Grade B, building foundation for computer applications.</p>
+            </article>
+
+            <!-- Class 10 -->
+            <article class="card">
+                <h3>Class 10 - Grade A</h3>
+                <p class="date">2021 – 2022</p>
+                <p><strong>Central Board of Secondary Education (CBSE)</strong></p>
+                <p>Achieved Grade A in secondary education, demonstrating strong academic foundation.</p>
+            </article>
+        </section>
+
+        <!-- ==================== Projects Section ==================== -->
+        <section class="section" id="projects">
+            <h2 class="section-title">Projects</h2>
+
+            <!-- CodePilot AI IDE -->
+            <article class="card">
+                <h3>CodePilot AI IDE</h3>
+                <p class="date">Oct 2024 – Present</p>
+                <p>
+                    Developing a revolutionary web-based AI-powered Integrated Development Environment designed to 
+                    transform the coding experience. Features include intelligent code completion powered by advanced 
+                    AI models, real-time collaboration capabilities for seamless team coding, cloud-based project 
+                    management with automatic version control, multi-language support covering 20+ programming languages, 
+                    integrated debugging tools with smart error detection, and a sleek modern interface with customizable 
+                    themes. Built using cutting-edge web technologies including React, Node.js, and WebAssembly for 
+                    optimal performance.
+                </p>
+            </article>
+
+            <!-- Systemic Failures Research -->
+            <article class="card">
+                <h3>Systemic Failures in India: A Research-Based Report</h3>
+                <p class="date">Jun 2023 – Present</p>
+                <p>
+                    Authored a comprehensive research paper analyzing corruption, weak education, and judicial 
+                    inefficiency in India using AI tools, government data, and reports. The research examines 
+                    systemic challenges and proposes data-driven policy solutions.
+                </p>
+            </article>
+        </section>
+
+        <!-- ==================== Certifications Section ==================== -->
+        <section class="section" id="certifications">
+            <h2 class="section-title">Certifications</h2>
+
+            <!-- Web Development Course -->
+            <article class="card">
+                <h3>Ultimate Web Development Course 2025 – Udemy</h3>
+                <p class="date">Ongoing</p>
+                <p>
+                    A modern web development course focused on building responsive websites, real-world projects, 
+                    and leveraging AI tools to accelerate development.
+                </p>
+                <a href="https://www.udemy.com/course/codewithharry-web-development-course/?srsltid=AfmBOooGTxHcQCxjApypCQ6TwDaAhgT06quf1ot2j5j8M-99_qPJXDPO&couponCode=LETSLEARNNOW" 
+                   target="_blank" 
+                   rel="noopener noreferrer"
+                   class="course-button ripple-effect"
+                   aria-label="Visit Web Development course on Udemy">
+                    <span>Visit Course</span>
+                </a>
+            </article>
+
+            <!-- Python Programming Course -->
+            <article class="card">
+                <h3>Python Programming Mastery – Udemy</h3>
+                <p class="date">Ongoing</p>
+                <p>
+                    Build Real-World Projects and Become Job-Ready in 2025. Comprehensive Python programming 
+                    course covering fundamentals to advanced concepts.
+                </p>
+                <a href="https://www.udemy.com/course/codewithharry-python/?couponCode=SEPHARRY" 
+                   target="_blank" 
+                   rel="noopener noreferrer"
+                   class="course-button ripple-effect"
+                   aria-label="Visit Python course on Udemy">
+                    <span>Visit Course</span>
+                </a>
+            </article>
+
+            <!-- Research Work -->
+            <article class="card">
+                <h3>🎯 Research & Analysis</h3>
+                <h4>Systemic Failures Research</h4>
+                <p>
+                    Authored comprehensive research paper analyzing corruption, education, and judicial inefficiency 
+                    in India using AI tools and government data (June 2023 - Present).
+                </p>
+                <a href="404.html" 
+                   class="course-button ripple-effect"
+                   aria-label="View research details">
+                    <span>View Research</span>
+                </a>
+            </article>
+        </section>
+
+        <!-- ==================== Skills Section ==================== -->
+        <section class="section" id="skills">
+            <h2 class="section-title">Skills</h2>
+            <h3 class="section-subtitle">Technical Skills</h3>
+            <div class="skills-container">
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <span class="skill-name">Python</span>
+                        <span class="skill-rating">0/10</span>
+                    </div>
+                    <div class="skill-bar-container">
+                        <div class="skill-bar" data-width="0"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <span class="skill-name">Java</span>
+                        <span class="skill-rating">0/10</span>
+                    </div>
+                    <div class="skill-bar-container">
+                        <div class="skill-bar" data-width="0"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <span class="skill-name">Object-Oriented Programming</span>
+                        <span class="skill-rating">0/10</span>
+                    </div>
+                    <div class="skill-bar-container">
+                        <div class="skill-bar" data-width="0"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <span class="skill-name">Full Stack Web Development</span>
+                        <span class="skill-rating">0/10</span>
+                    </div>
+                    <div class="skill-bar-container">
+                        <div class="skill-bar" data-width="0"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <span class="skill-name">Computer Networking</span>
+                        <span class="skill-rating">0/10</span>
+                    </div>
+                    <div class="skill-bar-container">
+                        <div class="skill-bar" data-width="0"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <span class="skill-name">Business Accounting</span>
+                        <span class="skill-rating">0/10</span>
+                    </div>
+                    <div class="skill-bar-container">
+                        <div class="skill-bar" data-width="0"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <span class="skill-name">Public Policy Analysis</span>
+                        <span class="skill-rating">0/10</span>
+                    </div>
+                    <div class="skill-bar-container">
+                        <div class="skill-bar" data-width="0"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <span class="skill-name">Legal Systems Awareness</span>
+                        <span class="skill-rating">0/10</span>
+                    </div>
+                    <div class="skill-bar-container">
+                        <div class="skill-bar" data-width="0"></div>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="section-subtitle" style="margin-top: 24px;">Soft Skills</h3>
+            <div class="skills-container">
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <span class="skill-name">Management</span>
+                        <span class="skill-rating">0/10</span>
+                    </div>
+                    <div class="skill-bar-container">
+                        <div class="skill-bar" data-width="0"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <span class="skill-name">Communication Skills</span>
+                        <span class="skill-rating">0/10</span>
+                    </div>
+                    <div class="skill-bar-container">
+                        <div class="skill-bar" data-width="0"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+            <!-- Resume Download Section -->
+            <div class="resume-section">
+                <h3 class="resume-heading">Download My Resume below</h3>
+                <a href="Assets/Resume.pdf/Kumar_Sreyan_Pattanayak_Resume.pdf" 
+                   class="resume-btn" 
+                   download="Kumar_Sreyan_Pattanayak_Resume.pdf" 
+                   aria-label="Download Resume PDF">
+                    <img src="Assets/Images.icons/pdf.png" alt="PDF Icon" class="pdf-icon" width="20" height="20" />
+                    Download Resume (PDF)
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- ==================== Footer ==================== -->
+    <footer role="contentinfo">
+        <p>
+            <strong>Copyright © 2025</strong> Kumar Sreyan Pattanayak
+            <br>
+            All Rights Reserved | Made with ❤️
+        </p>
+    </footer>
 </body>
-
 </html>

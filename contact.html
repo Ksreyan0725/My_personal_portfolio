@@ -1,112 +1,1195 @@
-<!DOCTYPE html>
-<html lang="en" data-theme="dark">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Contact - Kumar Sreyan Pattanayak</title>
-   
-  <!-- this below lines are added for maintenance mode redirection -->
-  <!-- <meta http-equiv="refresh" content="0; url=maintenance.html">
-  <script>window.location.replace('maintenance.html');</script> -->
+﻿<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact Us</title>
+    <link
+      rel="icon"
+      type="image/png"
+  href="Assets/Images.icons/favicon.png"
+      sizes="64x64"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="https://img.icons8.com/arcade/64/s-key.png" sizes="64x64">
-  <link href="style.css" rel="stylesheet" type="text/css" />
-</head>
-<body>
-  <!-- Navigation -->
-  <nav class="navbar glass-header">
-    <div class="nav-container">
-      <a href="index.html" class="nav-logo" onclick="location.reload(); return false;"></> KSP</a>
-      <ul class="nav-menu">
-        <li class="nav-item"><a href="index.html#home" class="nav-link">Home</a></li>
-        <li class="nav-item"><a href="index.html#about" class="nav-link">About</a></li>
-        <li class="nav-item"><a href="index.html#education" class="nav-link">Education</a></li>
-        <li class="nav-item"><a href="index.html#achievements" class="nav-link">Achievements</a></li>
-        <li class="nav-item"><a href="index.html#skills" class="nav-link">Skills</a></li>
-        <li class="nav-item"><a href="index.html#social" class="nav-link">Social</a></li>
-        <li class="nav-item"><a href="contact.html" class="nav-link active">Contact</a></li>
-        <li class="nav-item"><a href="services.html" class="nav-link">Services</a></li>
-      </ul>
-      <form class="navbar-search" role="search" aria-label="Site search">
-        <input type="search" placeholder="Search..." aria-label="Search">
-      </form>
-      <div class="hamburger" aria-label="Toggle navigation" role="button" tabindex="0">
-        <span class="bar"></span>
-        <span class="bar"></span>
-        <span class="bar"></span>
-      </div>
-      
-      <!-- Settings Gear Button -->
-      <div class="settings-container">
-        <button id="settingsGear" class="settings-gear" aria-label="Theme settings">
-          <svg class="gear-icon" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.07-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.74,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.8,11.69,4.8,12s0.02,0.64,0.07,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.44-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.47-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z"/>
-          </svg>
-        </button>
+      :root {
+        /* Dark theme (default) - Pure Black Samsung Style */
+        --bg-primary: #0a0a0a;
+        --bg-secondary: #1a1a1a;
+        --text-primary: #ffffff;
+        --text-secondary: #b0b0b0;
+        --accent: #6366f1;
+        --accent-hover: #4F5BD5;
+        --accent-glow: rgba(99, 102, 241, 0.3);
+        --border: rgba(255, 255, 255, 0.1);
+        --shadow: rgba(0, 0, 0, 0.3);
+        --card-bg: rgba(255, 255, 255, 0.05);
+      }
+
+      [data-theme="dark"] {
+        /* Dark theme - Pure Black */
+        --bg-primary: #0a0a0a;
+        --bg-secondary: #1a1a1a;
+        --text-primary: #ffffff;
+        --text-secondary: #b0b0b0;
+        --accent: #6366f1;
+        --accent-hover: #4F5BD5;
+        --accent-glow: rgba(99, 102, 241, 0.3);
+        --border: rgba(255, 255, 255, 0.1);
+        --shadow: rgba(0, 0, 0, 0.3);
+        --card-bg: rgba(255, 255, 255, 0.05);
+      }
+
+      [data-theme="light"] {
+        /* Light theme - Pure White/Gray Samsung Style */
+        --bg-primary: #e8e8e8;
+        --bg-secondary: #d5d5d5;
+        --text-primary: #2a2a2a;
+        --text-secondary: #5a5a5a;
+        --accent: #4f46e5;
+        --accent-hover: #4338ca;
+        --accent-glow: rgba(79, 70, 229, 0.25);
+        --border: rgba(0, 0, 0, 0.15);
+        --shadow: rgba(0, 0, 0, 0.1);
+        --card-bg: rgba(255, 255, 255, 0.95);
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: var(--bg-primary);
+        color: var(--text-primary);
+        transition: background 0.3s ease, color 0.3s ease;
+        padding: 20px;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      /* Search Bar Styles */
+      .nav-container {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        justify-content: flex-end; /* push theme toggle to right */
+      }
+
+      .search-container {
+        position: relative;
+        width: 300px;
+        margin-right: auto; /* push theme toggle to right end */
+      }
+
+      /* Hide native clear for consistency */
+      .search-input::-webkit-search-cancel-button { -webkit-appearance: none; }
+
+      .search-input {
+        width: 100%;
+        padding: 8px 12px;
+        padding-right: 60px; /* room for clear + search buttons */
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        background: var(--bg-secondary);
+        color: var(--text-primary);
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+      }
+
+      .search-input:focus {
+        outline: none;
+        border-color: var(--accent);
+        box-shadow: 0 0 5px rgba(139, 92, 246, 0.3);
+      }
+
+      .search-button {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        color: var(--text-secondary);
+        cursor: pointer;
+        padding: 5px;
+        transition: color 0.3s ease;
+      }
+
+      .search-button:hover {
+        color: var(--accent);
+      }
+
+      .search-clear {
+        position: absolute;
+        right: 36px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        color: var(--text-secondary);
+        cursor: pointer;
+        padding: 2px 4px;
+        line-height: 1;
+        border-radius: 10px;
+        opacity: 0.7;
+        transition: color 0.2s ease, opacity 0.2s ease, background 0.2s ease;
+      }
+      .search-clear:hover { color: var(--accent); opacity: 1; background: transparent; }
+
+      .search-icon-img {
+        width: 16px;
+        height: 16px;
+        display: block;
+        object-fit: contain;
+        filter: brightness(0.9) contrast(1.05);
+      }
+      [data-theme="light"] .search-icon-img { filter: brightness(0.6) contrast(1.1); }
+      [data-theme="dark"] .search-icon-img { filter: brightness(1) contrast(1.1); }
+
+      @media (max-width: 768px) {
+        .nav-container {
+          flex-direction: row;
+          align-items: center;
+          justify-content: space-between; /* search left, theme right */
+        }
+
+        .search-container {
+          width: auto;
+          flex: 1;
+          margin-right: 12px; /* space before theme toggle */
+        }
         
-        <!-- Theme Selection Dropdown -->
-        <div id="themeDropdown" class="theme-dropdown">
-          <div class="theme-option" data-theme="system">
-            <span class="theme-icon">🖥️</span>
-            <span class="theme-label">System Default</span>
+        .theme-toggle {
+          margin-left: 0; /* reset on mobile */
+          padding: 6px 12px;
+          font-size: 12px;
+        }
+      }
+
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 40px;
+      }
+
+      h1 {
+        font-size: 2.5rem;
+        font-weight: 800;
+        background: linear-gradient(135deg, #6366f1, #8b5cf6, #a78bfa);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .theme-toggle {
+        background: var(--card-bg);
+        color: var(--text-primary);
+        border: 2px solid var(--border);
+        padding: 8px 18px;
+        border-radius: 50px;
+        font-size: 14px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 600;
+        user-select: none;
+        flex-shrink: 0; /* never compress */
+        margin-left: 8px; /* consistent spacing */
+      }
+
+      .theme-toggle:hover {
+        border-color: var(--accent);
+        box-shadow: 0 0 20px var(--accent-glow);
+        transform: scale(1.05);
+      }
+
+      .theme-toggle:active {
+        transform: scale(0.95);
+      }
+
+      .theme-icon {
+        font-size: 16px;
+        transition: transform 0.3s ease;
+      }
+
+      .theme-toggle:hover .theme-icon {
+        transform: rotate(20deg);
+      }
+
+      .content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+      }
+
+      .contact-info {
+        background: var(--card-bg);
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px var(--shadow);
+        border: 1px solid var(--border);
+      }
+
+      .contact-info h2 {
+        margin-bottom: 30px;
+        color: var(--accent);
+        font-weight: 700;
+      }
+
+      .info-item {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 25px;
+        padding: 15px;
+        background: var(--bg-secondary);
+        border-radius: 12px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border: 1px solid var(--border);
+      }
+
+      .info-item:hover {
+        transform: translateX(8px);
+        box-shadow: 0 5px 15px var(--shadow);
+      }
+
+      .info-item i {
+        font-size: 1.5rem;
+        color: var(--accent);
+        min-width: 30px;
+      }
+
+      .info-item div {
+        flex: 1;
+      }
+
+      .info-item label {
+        display: block;
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+        margin-bottom: 5px;
+      }
+
+      .info-item span {
+        font-size: 1rem;
+        color: var(--text-primary);
+      }
+
+      .social-links {
+        margin-top: 40px;
+      }
+
+      .social-links h3 {
+        margin-bottom: 20px;
+        color: var(--text-primary);
+      }
+
+      .social-icons {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+        align-items: center;
+      }
+
+      .social-icons a {
+        width: 48px;
+        height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--bg-secondary);
+        border-radius: 50%;
+        border: 2px solid var(--border);
+        transition: all 0.3s ease;
+        text-decoration: none;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .social-icons a:hover {
+        background: var(--accent);
+        border-color: var(--accent);
+        transform: translateY(-5px) scale(1.05);
+        box-shadow: 0 10px 25px var(--accent-glow);
+      }
+
+      .social-icons .social-icon {
+        width: 24px;
+        height: 24px;
+        object-fit: contain;
+        transition: all 0.3s ease;
+      }
+
+      [data-theme="dark"] .social-icons .social-icon {
+        filter: brightness(0.9);
+      }
+
+      [data-theme="light"] .social-icons .social-icon {
+        filter: brightness(0.85) contrast(1.1);
+      }
+
+      .social-icons a:hover .social-icon {
+        filter: brightness(1.3) contrast(1.1);
+        transform: scale(1.1);
+      }
+
+      .contact-form {
+        background: var(--card-bg);
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px var(--shadow);
+        border: 1px solid var(--border);
+      }
+
+      .contact-form h2 {
+        margin-bottom: 30px;
+        color: var(--accent);
+        font-weight: 700;
+      }
+
+      .form-group {
+        margin-bottom: 25px;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        color: var(--text-primary);
+        font-weight: 600;
+        font-size: 0.95rem;
+      }
+
+      .form-group input,
+      .form-group textarea {
+        width: 100%;
+        padding: 15px;
+        background: var(--bg-secondary);
+        border: 2px solid var(--border);
+        border-radius: 12px;
+        color: var(--text-primary);
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        font-family: inherit;
+      }
+
+      .form-group input:focus,
+      .form-group textarea:focus {
+        outline: none;
+        border-color: var(--accent);
+        box-shadow: 0 0 0 3px var(--accent-glow);
+        background: var(--card-bg);
+      }
+
+      .form-group textarea {
+        resize: vertical;
+        min-height: 150px;
+        line-height: 1.6;
+      }
+      .submit-button {
+        width: auto;
+        min-width: 180px;
+        height: 48px;
+        padding: 0 32px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, var(--accent), #7c3aed);
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        display: block; /* allow margin centering */
+        margin: 16px auto 0; /* centered */
+        position: relative;
+        box-shadow: 0 10px 20px rgba(99, 102, 241, 0.35);
+        transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
+        font-size: 16px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+      }
+
+      .submit-button:hover {
+        transform: translateY(-2px) scale(1.04);
+        box-shadow: 0 14px 28px rgba(99, 102, 241, 0.4);
+      }
+
+      .submit-button:active {
+        transform: translateY(0) scale(0.96);
+      }
+
+      /* Ripple highlight on click */
+      .submit-button::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: 12px;
+        background: radial-gradient(circle at center, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0) 60%);
+        transform: scale(0);
+        opacity: 0;
+        transition: transform 0.4s ease, opacity 0.4s ease;
+        pointer-events: none;
+      }
+
+      .submit-button:active::after {
+        transform: scale(1);
+        opacity: 1;
+      }
+
+      /* Loading state */
+      .submit-button.loading {
+        color: transparent; /* hide label */
+        pointer-events: none;
+      }
+
+      .submit-button.loading::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 24px;
+        height: 24px;
+        margin: -12px 0 0 -12px;
+        border-radius: 50%;
+        border: 3px solid rgba(255, 255, 255, 0.45);
+        border-top-color: #fff;
+        animation: spin 1s linear infinite;
+      }
+
+      /* Success state */
+      .submit-button.success {
+        background: linear-gradient(135deg, #22c55e, #16a34a);
+      }
+
+      .submit-button.success::before {
+        content: "✓";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 20px;
+        color: #fff;
+        animation: fade-in 0.35s ease;
+      }
+
+      /* Keyframe for spinner animation */
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* Keyframe for fade-in animation (for success/error) */
+      @keyframes fade-in {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      /* Footer Styles */
+      footer {
+        text-align: center;
+        padding: 20px 10px;
+        margin-top: 50px;
+        color: var(--text-secondary);
+        border-top: 2px solid var(--border);
+        background: var(--bg-primary);
+        width: 100%;
+        position: relative;
+      }
+
+      footer p {
+        margin: 0;
+        font-size: 0.95rem;
+        line-height: 1.6;
+      }
+
+      footer strong {
+        color: var(--text-primary);
+        font-weight: 600;
+      }
+
+      @media (max-width: 768px) {
+        .content {
+          grid-template-columns: 1fr;
+        }
+
+        h1 {
+          font-size: 2rem;
+        }
+
+        .header {
+          flex-direction: column;
+          gap: 20px;
+        }
+
+        .contact-info,
+        .contact-form {
+          padding: 25px;
+        }
+
+        .social-icons {
+          gap: 16px;
+        }
+
+        .social-icons a {
+          width: 44px;
+          height: 44px;
+        }
+
+        .social-icons .social-icon {
+          width: 22px;
+          height: 22px;
+        }
+      }
+
+      @media (max-width: 525px) {
+        body {
+          padding: 16px;
+        }
+
+        h1 {
+          font-size: 1.8rem;
+        }
+
+        .header {
+          gap: 16px;
+        }
+
+        .nav-container {
+          gap: 12px;
+        }
+
+        .search-container {
+          width: 180px;
+        }
+
+        .search-input {
+          padding: 7px 35px 7px 10px;
+          font-size: 0.9rem;
+        }
+
+        .search-icon-img {
+          width: 16px;
+          height: 16px;
+        }
+
+        .theme-toggle {
+          padding: 6px 12px;
+          font-size: 12px;
+        }
+
+        .theme-text {
+          font-size: 11px;
+        }
+
+        .content {
+          gap: 20px;
+        }
+
+        .contact-info,
+        .contact-form {
+          padding: 20px;
+          border-radius: 18px;
+        }
+
+        .contact-info h2,
+        .contact-form h2 {
+          font-size: 1.4rem;
+          margin-bottom: 14px;
+        }
+
+        .contact-info p,
+        .info-item {
+          font-size: 0.9rem;
+        }
+
+        .info-item {
+          padding: 12px;
+        }
+
+        .info-item i {
+          font-size: 1.1rem;
+        }
+
+        .social-icons {
+          gap: 12px;
+          margin-top: 16px;
+        }
+
+        .social-icons a {
+          width: 42px;
+          height: 42px;
+        }
+
+        .social-icons .social-icon {
+          width: 20px;
+          height: 20px;
+        }
+
+        .form-group label {
+          font-size: 0.9rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+          padding: 10px;
+          font-size: 0.9rem;
+        }
+
+        .submit-btn {
+          padding: 11px 24px;
+          font-size: 0.95rem;
+        }
+
+        footer {
+          padding: 20px;
+          font-size: 0.85rem;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .social-icons {
+          gap: 12px;
+        }
+
+        .social-icons a {
+          width: 40px;
+          height: 40px;
+        }
+
+        .social-icons .social-icon {
+          width: 20px;
+          height: 20px;
+        }
+      }
+
+      @media (max-width: 388px) {
+        body {
+          padding: 12px;
+        }
+
+        h1 {
+          font-size: 1.6rem;
+        }
+
+        .header {
+          gap: 14px;
+        }
+
+        .nav-container {
+          gap: 10px;
+          flex-direction: column;
+          align-items: stretch;
+        }
+
+        .search-container {
+          width: 100%;
+        }
+
+        .search-input {
+          padding: 6px 35px 6px 10px;
+          font-size: 0.85rem;
+        }
+
+        .theme-toggle {
+          padding: 8px 14px;
+          font-size: 11px;
+          width: 100%;
+          justify-content: center;
+        }
+
+        .content {
+          gap: 16px;
+        }
+
+        .contact-info,
+        .contact-form {
+          padding: 18px;
+          border-radius: 16px;
+        }
+
+        .contact-info h2,
+        .contact-form h2 {
+          font-size: 1.3rem;
+          margin-bottom: 12px;
+        }
+
+        .contact-info p,
+        .info-item {
+          font-size: 0.85rem;
+        }
+
+        .info-item {
+          padding: 10px;
+        }
+
+        .info-item i {
+          font-size: 1rem;
+        }
+
+        .social-icons {
+          gap: 10px;
+          margin-top: 14px;
+        }
+
+        .social-icons a {
+          width: 38px;
+          height: 38px;
+        }
+
+        .social-icons .social-icon {
+          width: 18px;
+          height: 18px;
+        }
+
+        .form-group label {
+          font-size: 0.85rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+          padding: 9px;
+          font-size: 0.85rem;
+        }
+
+        .submit-btn {
+          padding: 10px 20px;
+          font-size: 0.9rem;
+        }
+
+        footer {
+          padding: 18px 12px;
+          font-size: 0.8rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header class="header">
+        <h1>Contact Us</h1>
+        <div class="nav-container">
+          <div class="search-container">
+            <input
+              type="search"
+              class="search-input"
+              placeholder="Search..."
+              aria-label="Search"
+            />
+            <button class="search-clear" aria-label="Clear search" hidden>✕</button>
+            <button class="search-button" aria-label="Search">
+              <img src="Assets/Images.icons/search.png" alt="Search" class="search-icon-img" />
+            </button>
           </div>
-          <div class="theme-option" data-theme="light">
-            <span class="theme-icon">☀️</span>
-            <span class="theme-label">Light Mode</span>
+          <button class="theme-toggle" id="themeToggle">
+            <span class="theme-icon">⚙️</span>
+            <span class="theme-text">System</span>
+          </button>
+        </div>
+      </header>
+      <div class="content">
+        <div class="contact-info">
+          <h2>Contact Information</h2>
+
+          <div class="info-item">
+            <i class="fas fa-envelope"></i>
+            <div>
+              <label>Email</label>
+              <span>sreyanpattanayak@zohomail.com</span>
+            </div>
           </div>
-          <div class="theme-option" data-theme="dark">
-            <span class="theme-icon">🌙</span>
-            <span class="theme-label">Dark Mode</span>
+
+          <div class="info-item">
+            <i class="fas fa-phone"></i>
+            <div>
+              <label>Phone</label>
+              <span>+91 8117858010</span>
+            </div>
           </div>
+
+          <div class="info-item">
+            <i class="fas fa-map-marker-alt"></i>
+            <div>
+              <label>Address</label>
+              <span
+                >In Front Of Khuthari Temple, Brahmin Street, patrapur, 761004,
+                ganjam, odisha, india.</span
+              >
+            </div>
+          </div>
+
+          <div class="social-links">
+            <h3>Connect With Us</h3>
+            <div class="social-icons">
+              <!-- <a
+                href="mailto:sreyanpattanayak@zohomail.com"
+                title="Gmail"
+                rel="noopener"
+              >
+                <img
+                  src="Assets/Images.icons/gmail.png"
+                  alt="Gmail"
+                  class="social-icon"
+                />
+              </a>
+
+              <a
+                href="mailto:sreyanpattanayak@zohomail.com"
+                title="Zoho Mail"
+                rel="noopener"
+              >
+                <img
+                  src="Assets/Images.icons/zohomail.png"
+                  alt="Zoho Mail"
+                  class="social-icon"
+                />
+              </a> -->
+
+              <a
+                href="https://github.com/Ksreyan0725"
+                title="GitHub"
+                target="_blank"
+                rel="noopener"
+              >
+                <img
+                  src="Assets/Images.icons/github.png"
+                  alt="GitHub"
+                  class="social-icon"
+                />
+              </a>
+
+              <a
+                href="https://www.facebook.com/share/1Cj1miKofw/"
+                title="Facebook"
+                target="_blank"
+                rel="noopener"
+              >
+                <img
+                  src="Assets/Images.icons/facebook.png"
+                  alt="Facebook"
+                  class="social-icon"
+                />
+              </a>
+
+              <a
+                href="https://www.linkedin.com/in/kumar-sreyan-pattanayak-81a495230"
+                title="LinkedIn"
+                target="_blank"
+                rel="noopener"
+              >
+                <img
+                  src="Assets/Images.icons/linkedin.png"
+                  alt="LinkedIn"
+                  class="social-icon"
+                />
+              </a>
+
+              <a
+                href="https://x.com/SreyanPattanay5?t=oXoHwnGs9M9e37zh_Vsd5A&s=09"
+                title="X"
+                target="_blank"
+                rel="noopener"
+              >
+                <img
+                  src="Assets/Images.icons/X.png"
+                  alt="X"
+                  class="social-icon"
+                />
+              </a>
+
+              <a
+                href="https://www.instagram.com/p_a_p_u_n01_?igsh=aWwyZnhicTRuaTI3"
+                title="Instagram"
+                target="_blank"
+                rel="noopener"
+              >
+                <img
+                  src="Assets/Images.icons/instagram.png"
+                  alt="Instagram"
+                  class="social-icon"
+                />
+              </a>
+
+              <a
+                href="https://t.me/SreyanPattanayak"
+                title="Telegram"
+                target="_blank"
+                rel="noopener"
+              >
+                <img
+                  src="Assets/Images.icons/telegram.png"
+                  alt="Telegram"
+                  class="social-icon"
+                />
+              </a>
+
+              <a
+                href="https://teams.microsoft.com/l/chat/0/0?users=opener"
+                title="Microsoft Teams"
+                target="_blank"
+                rel="noopener"
+              >
+                <img
+                  src="Assets/Images.icons/teams.png"
+                  alt="Microsoft Teams"
+                  class="social-icon"
+                />
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-form">
+          <h3
+            style="margin-bottom: 30px; font-size: 1.8rem; color: var(--accent)"
+          >
+            Send Me a Message
+          </h3>
+          <!-- Contact Form -->
+          <form
+            id="contactForm"
+            action="https://formspree.io/f/mzzjopyn"
+            method="POST"
+          >
+            <div class="form-group">
+              <label for="name">Name </label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                required
+                placeholder="Enter your full name"
+              />
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                required
+                placeholder="Enter your email"
+              />
+            </div>
+            <div class="form-group">
+              <label for="message">Message </label>
+              <textarea
+                id="message"
+                name="message"
+                rows="8"
+                required
+                placeholder="Enter your message"
+              ></textarea>
+            </div>
+            <input type="hidden" name="_subject" value="New contact form submission from portfolio" />
+            <button type="submit" class="submit-button" aria-label="Submit form">Submit</button>
+            <p id="form-status"></p>
+          </form>
         </div>
       </div>
     </div>
-  </nav>
 
-  <!-- Contact Section -->
-  <section id="contact" class="contact section">
-    <div class="container">
-      <div class="glass-panel card-glass fade-in">
-      <h2 class="section-title">Get In Touch</h2>
-      <div class="contact-content">
-        <div class="contact-info" id="contact-content">
-          <h3>Contact Information</h3>
-          <div class="contact-item">
-            <strong>Email:</strong> 
-            <a href="mailto:sreyanpattanayak246@gmail.com">sreyanpattanayak246@gmail.com</a>
-          </div>
-          <p>Feel free to reach out or just to say hello!</p>
-        </div>
+    <script>
+      const themeToggle = document.getElementById("themeToggle");
+      const html = document.documentElement;
+      const themeIcon = themeToggle.querySelector(".theme-icon");
+      const themeText = themeToggle.querySelector(".theme-text");
 
-        <form class="contact-form card-glass" id="contactForm" action="https://formspree.io/f/mzzjopyn" method="POST">
-          <div class="form-group">
-            <label for="name">Name</label>
-            <input type="text" id="name" name="name" required>
-          </div>
-          <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" required>
-          </div>
-          <div class="form-group">
-            <label for="message">Message</label>
-            <textarea id="message" name="message" rows="5" required></textarea>
-          </div>
-          <button type="submit" class="submit-button button-glass">Submit</button>
-          <p id="form-status"></p>
-        </form>
-      </div>
-      </div>
-    </div>
-  </section>
+      const themes = [
+        { name: "system", icon: "💻", text: "System" },
+        { name: "light", icon: "☀️", text: "Light" },
+        { name: "dark", icon: "🌙", text: "Dark" },
+      ];
 
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="container">
-      <p>Copyright &copy; 2025 All rights reserved | Made with ❤️</p>
-    </div>
-  </footer>
+      let currentThemeIndex = 0;
 
-  <script src="script.js"></script>
-</body>
+      // Load saved theme
+      const savedTheme = localStorage.getItem("theme") || "system";
+      currentThemeIndex = themes.findIndex((t) => t.name === savedTheme);
+      if (currentThemeIndex === -1) currentThemeIndex = 0;
+
+      function applyTheme(themeName) {
+        if (themeName === "system") {
+          const prefersDark = window.matchMedia(
+            "(prefers-color-scheme: dark)"
+          ).matches;
+          html.setAttribute("data-theme", prefersDark ? "dark" : "light");
+        } else {
+          html.setAttribute("data-theme", themeName);
+        }
+      }
+
+      function updateThemeButton(index) {
+        themeIcon.textContent = themes[index].icon;
+        themeText.textContent = themes[index].text;
+      }
+
+      // Initialize theme
+      applyTheme(themes[currentThemeIndex].name);
+      updateThemeButton(currentThemeIndex);
+
+      // Listen for system theme changes when in system mode
+      window
+        .matchMedia("(prefers-color-scheme: dark)")
+        .addEventListener("change", (e) => {
+          if (themes[currentThemeIndex].name === "system") {
+            html.setAttribute("data-theme", e.matches ? "dark" : "light");
+          }
+        });
+
+      // Toggle theme on click
+      themeToggle.addEventListener("click", () => {
+        currentThemeIndex = (currentThemeIndex + 1) % themes.length;
+        const currentTheme = themes[currentThemeIndex].name;
+
+        applyTheme(currentTheme);
+        updateThemeButton(currentThemeIndex);
+        localStorage.setItem("theme", currentTheme);
+      });
+
+      // Contact page search behavior: inline results without redirect
+      (function initContactSearch(){
+        const container = document.querySelector('.search-container');
+        if (!container) return;
+        const input = container.querySelector('.search-input');
+        const btn = container.querySelector('.search-button');
+        const clearBtn = container.querySelector('.search-clear');
+
+        const toggleClear = () => {
+          if (!clearBtn) return;
+          const show = input.value.trim().length > 0;
+          clearBtn.hidden = !show;
+        };
+        input.addEventListener('input', toggleClear);
+        toggleClear();
+
+        clearBtn?.addEventListener('click', () => {
+          input.value = '';
+          clearBtn.hidden = true;
+          input.focus();
+        });
+
+        function showSearchMessage(message, isError = false) {
+          // Show message below search bar temporarily
+          let msgEl = document.getElementById('search-message');
+          if (!msgEl) {
+            msgEl = document.createElement('div');
+            msgEl.id = 'search-message';
+            msgEl.style.cssText = `
+              margin-top: 10px;
+              padding: 12px 16px;
+              border-radius: 8px;
+              font-size: 0.9rem;
+              transition: opacity 0.3s ease;
+            `;
+            container.parentElement.appendChild(msgEl);
+          }
+          msgEl.textContent = message;
+          msgEl.style.background = isError ? 'rgba(239, 68, 68, 0.1)' : 'rgba(99, 102, 241, 0.1)';
+          msgEl.style.color = isError ? '#ef4444' : 'var(--accent)';
+          msgEl.style.border = isError ? '1px solid rgba(239, 68, 68, 0.3)' : '1px solid var(--border)';
+          msgEl.style.opacity = '1';
+          
+          // Auto-hide after 3 seconds
+          setTimeout(() => {
+            msgEl.style.opacity = '0';
+            setTimeout(() => msgEl.remove(), 300);
+          }, 3000);
+        }
+
+        function doSearch(){
+          const q = input.value.trim();
+          
+          // Require at least 4 characters
+          if (q.length === 0) {
+            return; // Do nothing if empty
+          }
+          
+          if (q.length < 4) {
+            showSearchMessage('Please enter at least 4 characters to search', true);
+            return;
+          }
+          
+          // Show message that search is available on home page
+          showSearchMessage(`Search for "${q}" is available on the Home page. Click here to go there.`, false);
+          
+          // Optional: Add a link to redirect only if user wants
+          const msgEl = document.getElementById('search-message');
+          if (msgEl) {
+            msgEl.style.cursor = 'pointer';
+            msgEl.onclick = () => {
+              window.location.href = `index.html?q=${encodeURIComponent(q)}`;
+            };
+          }
+        }
+
+        btn?.addEventListener('click', doSearch);
+        input.addEventListener('keypress', (e) => { 
+          if (e.key === 'Enter') doSearch(); 
+        });
+      })();
+
+      // Form submission to Formspree (AJAX)
+      const form = document.getElementById("contactForm");
+      const statusEl = document.getElementById("form-status");
+      const submitButton = form.querySelector(".submit-button");
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        submitButton.classList.add("loading");
+
+        const formData = new FormData(form);
+        try {
+          const res = await fetch(form.action, {
+            method: "POST",
+            body: formData,
+            headers: { Accept: "application/json" },
+          });
+
+          if (res.ok) {
+            submitButton.classList.remove("loading");
+            submitButton.classList.add("success");
+            form.reset();
+            // Redirect to thank-you page after brief success animation
+            setTimeout(() => {
+              window.location.href = "thank-you.html";
+            }, 1500);
+          } else {
+            throw new Error();
+          }
+        } catch (err) {
+          submitButton.classList.remove("loading");
+          // Redirect to 404 page immediately on error
+          setTimeout(() => {
+            window.location.href = "404.html";
+          }, 800);
+        }
+      });
+    </script>
+
+    <footer>
+      <p>
+        <strong>Copyright © 2025</strong> Kumar Sreyan Pattanayak
+        <br>
+        All Rights Reserved | Made with ❤️
+      </p>
+    </footer>
+  </body>
 </html>

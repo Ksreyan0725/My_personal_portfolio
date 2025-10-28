@@ -1,117 +1,990 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Site Under Maintenance</title>
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="https://img.icons8.com/arcade/64/s-key.png" sizes="64x64">
-
-  <link href="style.css" rel="stylesheet" type="text/css" />
-  <meta http-equiv="refresh" content="0; url=maintenance.html">
-  <script>window.location.replace('index.html');</script>
-  
-  <style>
-    /* Full-screen centered maintenance card */
-    html,body { height:100%; margin:0; font-family: Arial, Helvetica, sans-serif; background:#000; color:#4d3934; }
-    .wrap {
-      min-height:100%;
-      display:flex;
-      align-items:flex-start;           /* Align from top so we can push content lower */
-      justify-content:center;
-      padding:2rem;
-      padding-top: calc(55vh + 1rem);  /* Push content further down to clear logo */
-      box-sizing:border-box;
-    }
-    .card {
-      text-align:center;
-      max-width:1000px;
-      width:100%;
-    }
-    .hero-img {
-      width:100%;
-      max-height:420px;
-      object-fit:cover;
-      border-radius:8px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
-
-
-    }
-    h1 { font-size:2.2rem; margin:1rem 0 0.25rem; letter-spacing:1px; }
-    p { margin:0.25rem 0 1rem; opacity:0.9; }
-    .btn {
-      display:inline-flex;             /* Align nicely even if multi-line */
-      align-items:center;
-      justify-content:center;
-      margin-top:1rem;                 /* More space above the button */
-      padding:0.6rem 1rem;
-      background:transparent;
-      color:#d19cb2;
-      border:2px solid rgb(142, 54, 54);
-      border-radius:6px;
-      text-decoration:none;
-      transition:all .18s ease;
-    }
-    .btn:hover { transform:translateY(-3px); border-color:rgba(255,255,255,0.4); }
-    @media (max-width:600px) {
-      h1 { font-size:1.4rem; }
-      .wrap { padding-top: calc(40vh + 1rem); } /* Push lower on small screens too */
-    }
-
-    /* Full-screen background image with cover */
-    .wrap {
-      background-image: url('Assets/Picture/maintainance.jpg'); /* Replace with your maintenance image path */
-      background-size: cover;            /* Make image cover full screen */
-      background-position: center 35%;   /* Raise focal area so card sits below big text */
-      background-repeat: no-repeat;      /* No tiling */
-      background-attachment: fixed;      /* Subtle parallax on scroll */
-      position: relative;                /* For overlay */
-    }
-
-    /* Dark overlay for text readability */
-    .wrap::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: rgba(0, 0, 0, 0);
-    }
-
-    /* Elevate text content above overlay and add readability styles */
-    .card {
-      position: relative;
-      z-index: 1;
-      background: rgba(0, 0, 0, 0.144);   /* Stronger backdrop to prevent overlap visibility */
-      -webkit-backdrop-filter: blur(2px);
-      backdrop-filter: blur(2px);        /* Subtle blur behind text */
-      padding: 1.5rem;
-      border-radius: 10px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-      display: flex;                   /* Stack children vertically */
-      flex-direction: column;
-      align-items: center;
-      gap: 0.75rem;                    /* A bit more space between items */
-    }
-
-    h1, h2 {
-      color:rgb(193, 70, 36);
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Under Maintenance</title>
     
-    
-    p {
-       color: darkolivegreen;
-    }
+    <!-- Favicon with multiple formats for better browser support -->
+    <link rel="icon" type="image/png" href="Assets/Images.icons/maintenance.png?v=1" sizes="32x32" />
+    <link rel="icon" type="image/png" href="Assets/Images.icons/maintenance.png?v=1" sizes="64x64" />
+    <link rel="shortcut icon" type="image/png" href="Assets/Images.icons/maintenance.png?v=1" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-  </style>
+        body {
+            font-family: 'Samsung One', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            min-height: 100vh;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow-x: hidden;
+            overflow-y: auto;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Light mode (default) */
+        body.light-mode {
+            background: linear-gradient(to bottom, #8fa3e0 0%, #9f7fb5 100%);
+            background-attachment: fixed;
+            color: #ffffff;
+        }
+
+        /* Dark mode */
+        body.dark-mode {
+            background: linear-gradient(to bottom, #0f0f1e 0%, #16213e 100%);
+            background-attachment: fixed;
+            color: #ffffff;
+        }
+
+        /* Floating background blobs - toned down for cleaner look */
+        body::before,
+        body::after {
+            content: '';
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.08;
+            animation: blobFloat 25s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        body::before {
+            width: 400px;
+            height: 400px;
+            top: -150px;
+            right: -150px;
+            background: #1f8cff;
+        }
+
+        body::after {
+            width: 350px;
+            height: 350px;
+            bottom: -120px;
+            left: -120px;
+            background: #5fa3ff;
+            animation-delay: -12s;
+        }
+
+        @keyframes blobFloat {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+            }
+            33% {
+                transform: translate(30px, -30px) scale(1.1);
+            }
+            66% {
+                transform: translate(-20px, 20px) scale(0.9);
+            }
+        }
+
+        /* Header with toggle - fixed top right */
+        .header {
+            position: fixed;
+            top: 0;
+            right: 0;
+            padding: 16px 20px;
+            display: flex;
+            justify-content: flex-end;
+            z-index: 100;
+            width: 100%;
+            pointer-events: none;
+        }
+
+        .theme-toggle {
+            pointer-events: auto;
+            min-width: 50px;
+            height: 48px;
+            padding: 0 18px;
+            background: rgba(220, 220, 220, 0.25);
+            backdrop-filter: blur(12px);
+            border-radius: 24px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            color: inherit;
+        }
+
+        .dark-mode .theme-toggle {
+            background: rgba(44, 44, 44, 0.25);
+            box-shadow: 0 4px 12px rgba(255, 255, 255, 0.03);
+        }
+
+        .theme-toggle-icon {
+            font-size: 19px;
+        }
+
+        .theme-toggle-text {
+            display: inline;
+            font-size: 14px;
+        }
+
+        .theme-toggle:hover {
+            transform: translateY(-1px) scale(1.03);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+        }
+
+        @media (max-width: 600px) {
+            .header {
+                padding: 12px 16px;
+            }
+            
+            .theme-toggle {
+                width: 46px;
+                height: 46px;
+                padding: 0;
+                border-radius: 50%;
+                min-width: 46px;
+            }
+
+            .theme-toggle-icon {
+                font-size: 20px;
+            }
+
+            .theme-toggle-text {
+                display: none;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .header {
+                padding: 10px 12px;
+            }
+            
+            .theme-toggle {
+                width: 44px;
+                height: 44px;
+            }
+        }
+
+        /* Main container - perfectly centered */
+        .container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 80px 20px 40px;
+            max-width: 600px;
+            margin: 0 auto;
+            width: 100%;
+            position: relative;
+            z-index: 5;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 70px 16px 32px;
+                max-width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 60px 12px 24px;
+            }
+        }
+
+        /* Icon */
+        .icon {
+            width: 120px;
+            height: 120px;
+            margin-bottom: 40px;
+            position: relative;
+            perspective: 1000px;
+        }
+
+        .wrench-icon {
+            width: 100%;
+            height: 100%;
+            animation: rotate3d 4s ease-in-out infinite;
+            transform-style: preserve-3d;
+            filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.3));
+        }
+
+        @keyframes rotate3d {
+            0%, 100% {
+                transform: rotateY(-15deg) rotateX(10deg) rotateZ(-5deg);
+            }
+            50% {
+                transform: rotateY(15deg) rotateX(-10deg) rotateZ(5deg);
+            }
+        }
+
+        /* Text content */
+        h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            text-align: center;
+            animation: titleFloat 3s ease-in-out infinite;
+            transform-style: preserve-3d;
+        }
+
+        @keyframes titleFloat {
+            0%, 100% {
+                transform: translateY(0) rotateX(0deg);
+            }
+            50% {
+                transform: translateY(-5px) rotateX(5deg);
+            }
+        }
+
+        .light-mode h1 {
+            color: #000000;
+        }
+
+        .dark-mode h1 {
+            color: #ffffff;
+        }
+
+        .description {
+            font-size: 16px;
+            line-height: 24px;
+            text-align: center;
+            margin-bottom: 50px;
+            opacity: 0.7;
+        }
+
+        /* Card */
+        .info-card {
+            width: 100%;
+            padding: 32px 28px;
+            border-radius: 40px;
+            margin-bottom: 24px;
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+            animation: cardFloat 6s ease-in-out infinite;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .info-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(31, 140, 255, 0.05), rgba(95, 163, 255, 0.05));
+            border-radius: 40px;
+            z-index: -1;
+        }
+
+        @keyframes cardFloat {
+            0%, 100% {
+                transform: translateY(0) rotateX(0deg);
+            }
+            50% {
+                transform: translateY(-10px) rotateX(2deg);
+            }
+        }
+
+        .light-mode .info-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 20px 60px rgba(31, 140, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+        }
+
+        .dark-mode .info-card {
+            background: rgba(26, 26, 46, 0.6);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 20px 60px rgba(95, 163, 255, 0.1);
+            border: 1px solid rgba(95, 163, 255, 0.2);
+        }
+
+        .status-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #1f8cff;
+            margin-right: 12px;
+            animation: pulse3d 2s ease-in-out infinite;
+            box-shadow: 0 0 10px rgba(31, 140, 255, 0.8);
+        }
+
+        @keyframes pulse3d {
+            0%, 100% {
+                opacity: 1;
+                transform: scale(1) translateZ(0);
+                box-shadow: 0 0 10px rgba(31, 140, 255, 0.8);
+            }
+            50% {
+                opacity: 0.5;
+                transform: scale(1.3) translateZ(10px);
+                box-shadow: 0 0 20px rgba(31, 140, 255, 1);
+            }
+        }
+
+        .status-text {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .light-mode .status-text {
+            color: #1f8cff;
+        }
+
+        .dark-mode .status-text {
+            color: #5fa3ff;
+        }
+
+        .timer {
+            font-size: 48px;
+            font-weight: 700;
+            text-align: center;
+            margin: 32px 0;
+            font-variant-numeric: tabular-nums;
+            transform-style: preserve-3d;
+            animation: timerPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes timerPulse {
+            0%, 100% {
+                transform: scale(1) translateZ(0);
+            }
+            50% {
+                transform: scale(1.05) translateZ(20px);
+            }
+        }
+
+        .light-mode .timer {
+            color: #1f8cff;
+            text-shadow: 0 10px 30px rgba(31, 140, 255, 0.5);
+        }
+
+        .dark-mode .timer {
+            color: #5fa3ff;
+            text-shadow: 0 10px 30px rgba(95, 163, 255, 0.8);
+        }
+
+        .timer-label {
+            font-size: 15px;
+            text-align: center;
+            opacity: 0.7;
+            margin-bottom: 32px;
+        }
+
+        /* Buttons - compact and consistent */
+        .button-group {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: 12px;
+            width: 100%;
+            max-width: 500px;
+            justify-content: center;
+        }
+
+        .action-button {
+            padding: 12px 28px;
+            border-radius: 50px;
+            border: 2px solid white;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 130px;
+            height: 44px;
+            box-sizing: border-box;
+        }
+
+        /* Primary Button */
+        .action-button.primary {
+            background: white;
+            color: #667eea;
+            border: 2px solid white;
+        }
+
+        .action-button.primary:hover {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Secondary Buttons */
+        .action-button.secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .action-button.secondary:hover {
+            background: white;
+            color: #667eea;
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .action-button:active {
+            transform: translateY(-1px);
+        }
+
+        /* Dark mode button adjustments */
+        .dark-mode .action-button {
+            border-color: rgba(255, 255, 255, 0.8);
+        }
+
+        .dark-mode .action-button.primary {
+            background: rgba(255, 255, 255, 0.9);
+            color: #1a1a2e;
+        }
+
+        .dark-mode .action-button.primary:hover {
+            background: transparent;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .dark-mode .action-button.secondary {
+            background: transparent;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .dark-mode .action-button.secondary:hover {
+            background: rgba(255, 255, 255, 0.9);
+            color: #1a1a2e;
+        }
+
+        /* Loading bar */
+        .loading-bar {
+            width: 100%;
+            max-width: 400px;
+            height: 6px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 0 auto 50px;
+        }
+
+        .light-mode .loading-bar {
+            background: rgba(31, 140, 255, 0.15);
+        }
+
+        .dark-mode .loading-bar {
+            background: rgba(95, 163, 255, 0.15);
+        }
+
+        .loading-progress {
+            height: 100%;
+            width: 0;
+            border-radius: 10px;
+            animation: loading 2s ease-in-out infinite;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .loading-progress::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: linear-gradient(90deg, 
+                transparent,
+                rgba(255, 255, 255, 0.3),
+                transparent);
+            animation: shimmer 1.5s infinite;
+        }
+
+        @keyframes shimmer {
+            0% {
+                transform: translateX(-100%);
+            }
+            100% {
+                transform: translateX(100%);
+            }
+        }
+
+        .light-mode .loading-progress {
+            background: linear-gradient(90deg, #1f8cff, #5fa3ff);
+        }
+
+        .dark-mode .loading-progress {
+            background: linear-gradient(90deg, #5fa3ff, #1f8cff);
+        }
+
+        @keyframes loading {
+            0% {
+                width: 0%;
+            }
+            50% {
+                width: 70%;
+            }
+            100% {
+                width: 100%;
+            }
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(31, 140, 255, 0.95);
+            color: white;
+            padding: 16px 32px;
+            border-radius: 50px;
+            box-shadow: 0 10px 40px rgba(31, 140, 255, 0.4);
+            font-size: 15px;
+            font-weight: 600;
+            z-index: 1000;
+            transition: top 0.4s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .dark-mode .toast {
+            background: rgba(95, 163, 255, 0.95);
+            box-shadow: 0 10px 40px rgba(95, 163, 255, 0.5);
+        }
+
+        .toast.show {
+            top: 30px;
+        }
+
+        /* Email Input Modal */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 30px;
+            max-width: 450px;
+            width: 90%;
+            text-align: center;
+            animation: slideUp 0.3s ease;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .dark-mode .modal-content {
+            background: #1a1a2e;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-content h2 {
+            font-size: 24px;
+            margin-bottom: 12px;
+        }
+
+        .modal-content p {
+            font-size: 14px;
+            opacity: 0.7;
+            margin-bottom: 24px;
+        }
+
+        .modal-input {
+            width: 100%;
+            padding: 16px 20px;
+            border-radius: 50px;
+            border: 2px solid rgba(31, 140, 255, 0.3);
+            font-size: 15px;
+            margin-bottom: 20px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .light-mode .modal-input {
+            background: #f5f5f5;
+            color: #000000;
+        }
+
+        .dark-mode .modal-input {
+            background: #16213e;
+            color: #ffffff;
+            border-color: rgba(95, 163, 255, 0.3);
+        }
+
+        .modal-input:focus {
+            border-color: #1f8cff;
+            box-shadow: 0 0 0 4px rgba(31, 140, 255, 0.1);
+        }
+
+        .dark-mode .modal-input:focus {
+            border-color: #5fa3ff;
+            box-shadow: 0 0 0 4px rgba(95, 163, 255, 0.1);
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .modal-btn {
+            flex: 1;
+            padding: 14px;
+            border-radius: 50px;
+            border: none;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .modal-btn-cancel {
+            background: rgba(0, 0, 0, 0.05);
+            color: #666;
+        }
+
+        .dark-mode .modal-btn-cancel {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ccc;
+        }
+
+        .modal-btn-cancel:hover {
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        .dark-mode .modal-btn-cancel:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .modal-btn-submit {
+            background: linear-gradient(135deg, #1f8cff, #5fa3ff);
+            color: white;
+        }
+
+        .modal-btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(31, 140, 255, 0.4);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 26px;
+            }
+            
+            .description {
+                font-size: 15px;
+                margin-bottom: 40px;
+            }
+            
+            .icon {
+                width: 100px;
+                height: 100px;
+                margin-bottom: 32px;
+            }
+            
+            .button-group {
+                max-width: 100%;
+                gap: 10px;
+            }
+            
+            .action-button {
+                padding: 11px 24px;
+                font-size: 13px;
+                min-width: 120px;
+                height: 42px;
+            }
+            
+            .modal-content {
+                padding: 32px 18px;
+                max-width: 90%;
+            }
+        }
+
+        @media (max-width: 380px) {
+            h1 {
+                font-size: 22px;
+            }
+            
+            .description {
+                font-size: 14px;
+            }
+            
+            .button-group {
+                flex-direction: column;
+                gap: 10px;
+                width: 100%;
+            }
+            
+            .action-button {
+                width: 100%;
+                min-width: auto;
+                padding: 12px 20px;
+            }
+            
+            .modal-content {
+                padding: 28px 16px;
+            }
+        }
+    </style>
 </head>
-<body>
-  <div class="wrap">
-    <div class="card">
-      <!-- Use the maintenance image in the same folder as these HTML files -->
-      <h1>  <strong>This Site Is Under Maintenance</strong></h1>
-      <p>Sorry for the inconvenience,We'll be back shortly!</p>
-      <!-- optional button to go back to home or to contact -->
-      <a class="btn" href="contact.html">Contact Admin</a>
+<body class="light-mode">
+    <div class="header">
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+    
+            <span class="theme-toggle-icon" id="themeIcon">⚙️</span>
+            <span class="theme-toggle-text" id="themeText">System</span>
+        </button>
     </div>
-  </div>
+
+    <div class="container">
+        <div class="icon">
+            <svg class="wrench-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M22.7 19L13.6 9.9C14.5 7.6 14 4.9 12.1 3C10.1 1 7.1 0.6 4.7 1.7L9 6L6 9L1.6 4.7C0.4 7.1 0.9 10.1 2.9 12.1C4.8 14 7.5 14.5 9.8 13.6L18.9 22.7C19.3 23.1 19.9 23.1 20.3 22.7L22.6 20.4C23.1 20 23.1 19.3 22.7 19Z" fill="currentColor" opacity="0.3"/>
+            </svg>
+        </div>
+
+        <h1>Under Maintenance</h1>
+        <p class="description">We're working on something special. Our website will be back online soon.</p>
+
+        <div class="button-group">
+            <button class="action-button secondary" onclick="window.history.back();">Go Back</button>
+            <a href="contact.html" class="action-button secondary" style="text-decoration: none; display: flex; align-items: center; justify-content: center;">Contact Us</a>
+            <button class="action-button primary" id="notifyBtn">Notify me when ready</button>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="toast">
+        <span id="toastMessage"></span>
+    </div>
+
+    <!-- Email Modal -->
+    <div id="emailModal" class="modal">
+        <div class="modal-content">
+            <h2>Get Notified</h2>
+            <p>Enter your email address and we'll notify you when we're back online!</p>
+            <input type="email" id="emailInput" class="modal-input" placeholder="your.email@example.com" required>
+            <div class="modal-buttons">
+                <button class="modal-btn modal-btn-cancel" id="cancelBtn">Cancel</button>
+                <button class="modal-btn modal-btn-submit" id="submitBtn">Subscribe</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Theme toggle with system mode as default
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        const themeText = document.getElementById('themeText');
+        const body = document.body;
+        let themeMode = 'system'; // Default: system, light, dark
+
+        // Detect system theme preference
+        function getSystemTheme() {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                return 'dark-mode';
+            }
+            return 'light-mode';
+        }
+
+        // Update button display
+        function updateButton() {
+            if (themeMode === 'system') {
+                themeIcon.textContent = '⚙️';
+                if (themeText) themeText.textContent = 'System';
+            } else if (themeMode === 'light') {
+                themeIcon.textContent = '☀️';
+                if (themeText) themeText.textContent = 'Light';
+            } else if (themeMode === 'dark') {
+                themeIcon.textContent = '🌙';
+                if (themeText) themeText.textContent = 'Dark';
+            }
+        }
+
+        // Apply theme
+        function applyTheme() {
+            body.setAttribute('data-theme-mode', themeMode);
+            
+            if (themeMode === 'system') {
+                const systemTheme = getSystemTheme();
+                body.className = systemTheme;
+            } else if (themeMode === 'light') {
+                body.className = 'light-mode';
+            } else if (themeMode === 'dark') {
+                body.className = 'dark-mode';
+            }
+            
+            updateButton();
+        }
+
+        // Initialize with system theme
+        applyTheme();
+
+        // Listen for system theme changes (only when in system mode)
+        if (window.matchMedia) {
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+                if (themeMode === 'system') {
+                    body.className = e.matches ? 'dark-mode' : 'light-mode';
+                }
+            });
+        }
+
+        // Toggle button - cycle through: system -> light -> dark -> system
+        themeToggle.addEventListener('click', () => {
+            if (themeMode === 'system') {
+                themeMode = 'light';
+            } else if (themeMode === 'light') {
+                themeMode = 'dark';
+            } else {
+                themeMode = 'system';
+            }
+            applyTheme();
+        });
+
+        // Notification functionality
+        const notifyBtn = document.getElementById('notifyBtn');
+        const emailModal = document.getElementById('emailModal');
+        const emailInput = document.getElementById('emailInput');
+        const cancelBtn = document.getElementById('cancelBtn');
+        const submitBtn = document.getElementById('submitBtn');
+        const toast = document.getElementById('toast');
+        const toastMessage = document.getElementById('toastMessage');
+
+        // Email validation
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        // Show toast notification
+        function showToast(message, duration = 3000) {
+            toastMessage.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, duration);
+        }
+
+        // Open modal when notify button is clicked
+        notifyBtn.addEventListener('click', () => {
+            emailModal.classList.add('show');
+            emailInput.focus();
+        });
+
+        // Close modal on cancel
+        cancelBtn.addEventListener('click', () => {
+            emailModal.classList.remove('show');
+            emailInput.value = '';
+        });
+
+        // Close modal on background click
+        emailModal.addEventListener('click', (e) => {
+            if (e.target === emailModal) {
+                emailModal.classList.remove('show');
+                emailInput.value = '';
+            }
+        });
+
+        // Submit email
+        submitBtn.addEventListener('click', () => {
+            const email = emailInput.value.trim();
+
+            if (!email) {
+                showToast('⚠️ Please enter your email address');
+                return;
+            }
+
+            if (!isValidEmail(email)) {
+                showToast('⚠️ Please enter a valid email address');
+                return;
+            }
+
+            // Store email (in a real app, this would send to a server)
+            const subscribers = JSON.parse(localStorage.getItem('maintenanceSubscribers') || '[]');
+            
+            if (subscribers.includes(email)) {
+                showToast('ℹ️ You\'re already subscribed!');
+            } else {
+                subscribers.push(email);
+                localStorage.setItem('maintenanceSubscribers', JSON.stringify(subscribers));
+                showToast('✅ Success! We\'ll notify you when we\'re back');
+                
+                // Update button text
+                notifyBtn.textContent = 'Subscribed ✓';
+                notifyBtn.disabled = true;
+                notifyBtn.style.opacity = '0.7';
+                notifyBtn.style.cursor = 'not-allowed';
+            }
+
+            // Close modal and clear input
+            emailModal.classList.remove('show');
+            emailInput.value = '';
+        });
+
+        // Handle Enter key in email input
+        emailInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                submitBtn.click();
+            }
+        });
+
+        // Check if user is already subscribed on page load
+        window.addEventListener('load', () => {
+            const subscribers = JSON.parse(localStorage.getItem('maintenanceSubscribers') || '[]');
+            if (subscribers.length > 0) {
+                // You could check if current session has subscribed
+                // For now, we'll just keep the button active
+            }
+        });
+    </script>
 </body>
 </html>
