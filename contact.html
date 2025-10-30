@@ -1021,9 +1021,9 @@
       let currentThemeIndex = 0;
 
       // Load saved theme
-      const savedTheme = localStorage.getItem("theme") || "system";
-      currentThemeIndex = themes.findIndex((t) => t.name === savedTheme);
-      if (currentThemeIndex === -1) currentThemeIndex = 0;
+  const savedTheme = localStorage.getItem("theme") || "system";
+  currentThemeIndex = themes.findIndex((t) => t.name === savedTheme);
+  if (currentThemeIndex === -1) currentThemeIndex = 0;
 
       function applyTheme(themeName) {
         if (themeName === "system") {
@@ -1053,6 +1053,30 @@
             html.setAttribute("data-theme", e.matches ? "dark" : "light");
           }
         });
+
+      // Reapply theme when page becomes visible (handles browser minimize/restore)
+      document.addEventListener("visibilitychange", () => {
+        if (!document.hidden) {
+          const storedTheme = localStorage.getItem("theme") || "system";
+          const storedIndex = themes.findIndex((t) => t.name === storedTheme);
+          if (storedIndex !== -1) {
+            currentThemeIndex = storedIndex;
+            applyTheme(storedTheme);
+            updateThemeButton(currentThemeIndex);
+          }
+        }
+      });
+
+      // Reapply theme when window regains focus (handles browser reopen)
+      window.addEventListener("focus", () => {
+        const storedTheme = localStorage.getItem("theme") || "system";
+        const storedIndex = themes.findIndex((t) => t.name === storedTheme);
+        if (storedIndex !== -1) {
+          currentThemeIndex = storedIndex;
+          applyTheme(storedTheme);
+          updateThemeButton(currentThemeIndex);
+        }
+      });
 
       // Toggle theme on click
       themeToggle.addEventListener("click", () => {

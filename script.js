@@ -6,8 +6,8 @@ const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 document.addEventListener('DOMContentLoaded', () => {
     const htmlElement = document.documentElement;
     const body = document.body;
-    // Default to dark if no preference is saved to avoid unintended light grey on first load
-    let currentTheme = localStorage.getItem('theme') || 'dark';
+    // Default to 'system' if no preference is saved
+    let currentTheme = localStorage.getItem('theme') || 'system';
     // Allowed mailto recipients (enforced site-wide)
     const ALLOWED_MAILTO = new Set(['sreyanpattanayak@zohomail.com']);
 
@@ -62,8 +62,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Initialize theme
-    applyTheme('system');
+    // Initialize theme - use stored preference or default to 'dark'
+    // If no preference, follow system; otherwise, use saved preference
+    applyTheme(currentTheme);
 
     // Theme toggle click handler
     if (themeToggle) {
@@ -80,6 +81,20 @@ document.addEventListener('DOMContentLoaded', () => {
         if (currentTheme === 'system') {
             applyTheme('system', true);
         }
+    });
+
+    // Reapply theme when page becomes visible (handles browser minimize/restore, tab switching)
+    document.addEventListener('visibilitychange', () => {
+        if (!document.hidden) {
+            const storedTheme = localStorage.getItem('theme') || 'system';
+            applyTheme(storedTheme, false);
+        }
+    });
+
+    // Reapply theme when window regains focus (handles browser reopen)
+    window.addEventListener('focus', () => {
+        const storedTheme = localStorage.getItem('theme') || 'system';
+        applyTheme(storedTheme, false);
     });
 
     /* ==================== Ripple Animation Functions ==================== */
@@ -777,7 +792,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const rawHref = a.getAttribute('href');
         if (!rawHref) return;
 
-        // Ignore in-page anchors
+        // Redirect broken placeholder links to 404
+        if (rawHref === '#') {
+            e.preventDefault();
+            window.location.href = '404.html';
+            return;
+        }
+
+        // Ignore valid in-page anchors (like #home, #education, etc.)
         if (rawHref.startsWith('#')) return;
 
         // Validate mailto links and enforce allowlist

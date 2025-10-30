@@ -30,6 +30,19 @@ Last Updated: October 28, 2025
     
     <!-- ==================== Stylesheets & Scripts ==================== -->
     <link rel="stylesheet" href="style.css" />
+    
+    <!-- Early theme initialization to prevent flash of wrong theme -->
+    <script>
+        (function() {
+            const storedTheme = localStorage.getItem('theme') || 'system';
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const effectiveTheme = storedTheme === 'system' ? 
+                (prefersDark ? 'dark' : 'light') : storedTheme;
+            document.documentElement.setAttribute('data-theme', effectiveTheme);
+            document.body.classList.toggle('darkmode', effectiveTheme === 'dark');
+        })();
+    </script>
+    
     <script src="script.js" defer></script>
 
     <!-- ==================== Maintenance Mode (Currently Disabled) ==================== -->
@@ -288,8 +301,7 @@ Last Updated: October 28, 2025
                     <div class="about-card">
                         <p class="about-text">
                             I'm a BCA student at Roland Institute of Technology, Berhampur, with strong interests in technology,
-                            management, economics, and law. I'm skilled in Python, object-oriented programming, and computer
-                            networking, and have research experience in governance and systemic issues. I'm currently preparing
+                            management, economics, and law. I'm currently preparing
                             for CAT 2026 to pursue an MBA in Business Analytics/Finance, and later plan to qualify for the IES,
                             blending technology, law, and economics to deliver impactful policy solutions.
                         </p>
@@ -403,13 +415,13 @@ Last Updated: October 28, 2025
 
             <!-- Research Work -->
             <article class="card">
-                <h3>🎯 Research & Analysis</h3>
+                <h3>Research & Analysis</h3>
                 <h4>Systemic Failures Research</h4>
                 <p>
                     Authored comprehensive research paper analyzing corruption, education, and judicial inefficiency 
                     in India using AI tools and government data (June 2023 - Present).
                 </p>
-                <a href="404.html" 
+                <a href="#" 
                    class="course-button ripple-effect"
                    aria-label="View research details">
                     <span>View Research</span>
@@ -425,79 +437,52 @@ Last Updated: October 28, 2025
                 <div class="skill-item">
                     <div class="skill-header">
                         <span class="skill-name">Python</span>
-                        <span class="skill-rating">0/10</span>
+                        <span class="skill-rating">2/10</span>
                     </div>
                     <div class="skill-bar-container">
-                        <div class="skill-bar" data-width="0"></div>
-                    </div>
-                </div>
-                <div class="skill-item">
-                    <div class="skill-header">
-                        <span class="skill-name">Java</span>
-                        <span class="skill-rating">0/10</span>
-                    </div>
-                    <div class="skill-bar-container">
-                        <div class="skill-bar" data-width="0"></div>
-                    </div>
-                </div>
-                <div class="skill-item">
-                    <div class="skill-header">
-                        <span class="skill-name">Object-Oriented Programming</span>
-                        <span class="skill-rating">0/10</span>
-                    </div>
-                    <div class="skill-bar-container">
-                        <div class="skill-bar" data-width="0"></div>
+                        <div class="skill-bar" data-width="20"></div>
                     </div>
                 </div>
                 <div class="skill-item">
                     <div class="skill-header">
                         <span class="skill-name">Full Stack Web Development</span>
-                        <span class="skill-rating">0/10</span>
+                        <span class="skill-rating">2/10</span>
                     </div>
                     <div class="skill-bar-container">
-                        <div class="skill-bar" data-width="0"></div>
+                        <div class="skill-bar" data-width="20"></div>
                     </div>
                 </div>
                 <div class="skill-item">
                     <div class="skill-header">
                         <span class="skill-name">Computer Networking</span>
-                        <span class="skill-rating">0/10</span>
+                        <span class="skill-rating">4/10</span>
                     </div>
                     <div class="skill-bar-container">
-                        <div class="skill-bar" data-width="0"></div>
-                    </div>
-                </div>
-                <div class="skill-item">
-                    <div class="skill-header">
-                        <span class="skill-name">Business Accounting</span>
-                        <span class="skill-rating">0/10</span>
-                    </div>
-                    <div class="skill-bar-container">
-                        <div class="skill-bar" data-width="0"></div>
+                        <div class="skill-bar" data-width="40"></div>
                     </div>
                 </div>
                 <div class="skill-item">
                     <div class="skill-header">
                         <span class="skill-name">Public Policy Analysis</span>
-                        <span class="skill-rating">0/10</span>
+                        <span class="skill-rating">6/10</span>
                     </div>
                     <div class="skill-bar-container">
-                        <div class="skill-bar" data-width="0"></div>
+                        <div class="skill-bar" data-width="60"></div>
                     </div>
                 </div>
                 <div class="skill-item">
                     <div class="skill-header">
                         <span class="skill-name">Legal Systems Awareness</span>
-                        <span class="skill-rating">0/10</span>
+                        <span class="skill-rating">7/10</span>
                     </div>
                     <div class="skill-bar-container">
-                        <div class="skill-bar" data-width="0"></div>
+                        <div class="skill-bar" data-width="70"></div>
                     </div>
                 </div>
             </div>
 
             <h3 class="section-subtitle" style="margin-top: 24px;">Soft Skills</h3>
-            <div class="skills-container">
+            <!-- <div class="skills-container">
                 <div class="skill-item">
                     <div class="skill-header">
                         <span class="skill-name">Management</span>
@@ -506,16 +491,16 @@ Last Updated: October 28, 2025
                     <div class="skill-bar-container">
                         <div class="skill-bar" data-width="0"></div>
                     </div>
-                </div>
+                </div> -->
                 <div class="skill-item">
                     <div class="skill-header">
                         <span class="skill-name">Communication Skills</span>
-                        <span class="skill-rating">0/10</span>
+                        <span class="skill-rating">4/10</span>
                     </div>
                     <div class="skill-bar-container">
-                        <div class="skill-bar" data-width="0"></div>
+                        <div class="skill-bar" data-width="40"></div>
                     </div>
-                </div>
+                </div>  
             </div>
         </section>
 

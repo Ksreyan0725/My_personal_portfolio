@@ -1,4 +1,8 @@
-﻿/* ==================== Home Section Layout (from home.html) ==================== */ /* Maintenance: If you change any @media rules (add/remove/reorder), update MEDIA_QUERIES_CONSOLIDATED.md line ranges and overall ranges, and commit both files together. */
+﻿/* Move About Me upward to align with profile photo */
+.content-section {
+    align-self: start;
+}
+/* ==================== Home Section Layout (from home.html) ==================== */ /* Maintenance: If you change any @media rules (add/remove/reorder), update MEDIA_QUERIES_CONSOLIDATED.md line ranges and overall ranges, and commit both files together. */
 #home .home-grid {
     max-width: 1400px;
     margin: 0 auto;
@@ -1744,6 +1748,10 @@ html {
     gap: var(--space-xl);
     margin-top: var(--space-xl);
     position: relative;
+}
+
+.resume-section{
+    background-color: #fcfcfc;
 }
 
 .download-resume {

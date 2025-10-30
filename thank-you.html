@@ -486,6 +486,20 @@
                 }
             });
 
+            // Reapply theme when page becomes visible (handles browser minimize/restore)
+            document.addEventListener('visibilitychange', () => {
+                if (!document.hidden) {
+                    const storedTheme = localStorage.getItem('theme') || 'system';
+                    updateTheme(storedTheme);
+                }
+            });
+
+            // Reapply theme when window regains focus (handles browser reopen)
+            window.addEventListener('focus', () => {
+                const storedTheme = localStorage.getItem('theme') || 'system';
+                updateTheme(storedTheme);
+            });
+
             // Initialize theme
             const savedTheme = localStorage.getItem('theme') || 'system';
             updateTheme(savedTheme);

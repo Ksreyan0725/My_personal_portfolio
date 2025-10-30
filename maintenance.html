@@ -826,7 +826,7 @@
         const themeIcon = document.getElementById('themeIcon');
         const themeText = document.getElementById('themeText');
         const body = document.body;
-        let themeMode = 'system'; // Default: system, light, dark
+        let themeMode = localStorage.getItem('theme') || 'system'; // Load saved or default to system
 
         // Detect system theme preference
         function getSystemTheme() {
@@ -864,6 +864,7 @@
             }
             
             updateButton();
+            localStorage.setItem('theme', themeMode); // Save theme preference
         }
 
         // Initialize with system theme
@@ -877,6 +878,22 @@
                 }
             });
         }
+
+        // Reapply theme when page becomes visible (handles browser minimize/restore)
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden) {
+                const storedTheme = localStorage.getItem('theme') || 'system';
+                themeMode = storedTheme;
+                applyTheme();
+            }
+        });
+
+        // Reapply theme when window regains focus (handles browser reopen)
+        window.addEventListener('focus', () => {
+            const storedTheme = localStorage.getItem('theme') || 'system';
+            themeMode = storedTheme;
+            applyTheme();
+        });
 
         // Toggle button - cycle through: system -> light -> dark -> system
         themeToggle.addEventListener('click', () => {

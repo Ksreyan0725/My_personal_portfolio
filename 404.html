@@ -826,8 +826,23 @@
 
         if (backBtn) {
             backBtn.onclick = function() {
-                // Navigate to the main login page
-                window.location.href = '../Login/login.html';
+                // Check if the target exists before navigating
+                var targetPath = '../index.html';
+                
+                // Use fetch to check if path exists (only works for same-origin)
+                fetch(targetPath, { method: 'HEAD' })
+                    .then(function(response) {
+                        if (response.ok) {
+                            window.location.href = targetPath;
+                        } else {
+                            // If path doesn't exist, redirect to 404
+                            window.location.href = '404.html';
+                        }
+                    })
+                    .catch(function() {
+                        // If fetch fails (path doesn't exist), redirect to 404
+                        window.location.href = '404.html';
+                    });
             };
         }
 
@@ -919,6 +934,22 @@
                     }
                 });
             }
+
+            // Reapply theme when page becomes visible (handles browser minimize/restore)
+            document.addEventListener('visibilitychange', function() {
+                if (!document.hidden) {
+                    var storedTheme = localStorage.getItem('theme') || 'system';
+                    currentTheme = storedTheme;
+                    applyTheme(storedTheme);
+                }
+            });
+
+            // Reapply theme when window regains focus (handles browser reopen)
+            window.addEventListener('focus', function() {
+                var storedTheme = localStorage.getItem('theme') || 'system';
+                currentTheme = storedTheme;
+                applyTheme(storedTheme);
+            });
         })();
     </script>
 </body>
