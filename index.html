@@ -416,12 +416,13 @@ Last Updated: October 28, 2025
             <!-- Research Work -->
             <article class="card">
                 <h3>Research & Analysis</h3>
-                <h4>Systemic Failures Research</h4>
+                <h4>SYSTEMIC FAILURES IN INDIA</h4>
+                 <p class="date">Ongoing</p>
                 <p>
                     Authored comprehensive research paper analyzing corruption, education, and judicial inefficiency 
                     in India using AI tools and government data (June 2023 - Present).
                 </p>
-                <a href="#" 
+                <a href="https://drive.google.com/file/d/15-8CB_IjjVsSfOhw1zROQGB-HHGEv0hM/view?usp=drive_link" 
                    class="course-button ripple-effect"
                    aria-label="View research details">
                     <span>View Research</span>
@@ -506,13 +507,14 @@ Last Updated: October 28, 2025
 
             <!-- Resume Download Section -->
             <div class="resume-section">
-                <h3 class="resume-heading">Download My Resume below</h3>
+                <h3 class="resume-heading">View My Resume</h3>
                 <a href="Assets/Resume.pdf/Kumar_Sreyan_Pattanayak_Resume.pdf" 
                    class="resume-btn" 
-                   download="Kumar_Sreyan_Pattanayak_Resume.pdf" 
-                   aria-label="Download Resume PDF">
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   aria-label="View Resume PDF">
                     <img src="Assets/Images.icons/pdf.png" alt="PDF Icon" class="pdf-icon" width="20" height="20" />
-                    Download Resume (PDF)
+                    View Resume PDF
                 </a>
             </div>
         </section>
@@ -526,5 +528,47 @@ Last Updated: October 28, 2025
             All Rights Reserved | Made with ❤️
         </p>
     </footer>
+
+    <!-- ==================== PDF Viewer Functionality ==================== -->
+    <script>
+        const pdfViewer = document.getElementById('pdf-viewer');
+        const prevPageBtn = document.getElementById('prev-page');
+        const nextPageBtn = document.getElementById('next-page');
+        const zoomInBtn = document.getElementById('zoom-in');
+        const zoomOutBtn = document.getElementById('zoom-out');
+
+        let currentPage = 1;
+        let zoomLevel = 1;
+
+        function updateViewer() {
+            pdfViewer.style.transform = `scale(${zoomLevel})`;
+            pdfViewer.style.transformOrigin = 'top left';
+            pdfViewer.src = `path/to/your.pdf#page=${currentPage}`;
+        }
+
+        prevPageBtn.addEventListener('click', () => {
+            if (currentPage > 1) {
+                currentPage--;
+                updateViewer();
+            }
+        });
+
+        nextPageBtn.addEventListener('click', () => {
+            currentPage++;
+            updateViewer();
+        });
+
+        zoomInBtn.addEventListener('click', () => {
+            zoomLevel += 0.1;
+            updateViewer();
+        });
+
+        zoomOutBtn.addEventListener('click', () => {
+            if (zoomLevel > 0.1) {
+                zoomLevel -= 0.1;
+                updateViewer();
+            }
+        });
+    </script>
 </body>
 </html>

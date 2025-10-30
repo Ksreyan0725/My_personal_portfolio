@@ -628,25 +628,43 @@ document.addEventListener('DOMContentLoaded', () => {
     } catch {}
 
     /* ==================== Smooth Scrolling & Active Navigation ==================== */
-    const sections = document.querySelectorAll('section[id]');
-    const sectionNavLinks = document.querySelectorAll('.nav-link');
+    const sections = document.querySelectorAll('section[id], header[id]');
+    const desktopNavLinks = document.querySelectorAll('.nav-links a[href^="#"]');
+    const sidebarNavLinks = document.querySelectorAll('.sidebar-links a[href^="#"]');
+    const allNavLinks = [...desktopNavLinks, ...sidebarNavLinks];
 
     function highlightActiveNav() {
-        const scrollPos = window.scrollY + 100;
+        // Get navbar height to offset scroll position
+        const navbar = document.getElementById('navbar');
+        const navbarHeight = navbar ? navbar.offsetHeight : 80;
+        const scrollPos = window.scrollY + navbarHeight + 10;
+        
+        let currentSection = '';
+        
         sections.forEach(section => {
-            const top = section.offsetTop;
-            const height = section.offsetHeight;
-            const id = section.getAttribute('id');
-
-            if (scrollPos >= top && scrollPos < top + height) {
-                sectionNavLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href') === `#${id}`) {
-                        link.classList.add('active');
-                    }
-                });
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.offsetHeight;
+            
+            // Check if we're in this section
+            if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
+                currentSection = section.getAttribute('id');
             }
         });
+        
+        // If we're at the very top, make sure home is active
+        if (window.scrollY < 100) {
+            currentSection = 'home';
+        }
+        
+        // Update all nav links
+        if (currentSection) {
+            allNavLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${currentSection}`) {
+                    link.classList.add('active');
+                }
+            });
+        }
     }
 
     window.addEventListener('scroll', highlightActiveNav);
