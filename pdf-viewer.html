@@ -171,6 +171,7 @@
             display: flex;
             justify-content: center;
             align-items: flex-start;
+            position: relative; /* anchor for absolute loading indicator */
         } 
         .canvas-wrapper {
             background: var(--card-bg);
@@ -178,6 +179,13 @@
             border-radius: 4px;
             padding: 10px;
             max-width: 100%;
+            transition: background 180ms ease, box-shadow 180ms ease;
+        }
+
+        /* When loading, make the canvas card visually blend with the panel to avoid a stark white box */
+        .canvas-wrapper.loading-active {
+            background: transparent;
+            box-shadow: none;
         }
 
         #pdf-canvas {
@@ -186,26 +194,61 @@
             height: auto;
         }
 
+        /* Multi-page canvas styling (each page will be added dynamically) */
+        .pdf-page-canvas {
+            display: block;
+            max-width: 100%;
+            height: auto;
+            box-shadow: 0 6px 22px rgba(0,0,0,0.08);
+            border-radius: 4px;
+        }
+
+        /* Floating page indicator (visible in multi-page mode) */
+        .floating-page-indicator {
+            position: fixed;
+            right: 18px;
+            bottom: 18px;
+            z-index: 1200;
+            background: rgba(0,0,0,0.6);
+            color: #fff;
+            padding: 8px 12px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 13px;
+            backdrop-filter: blur(6px);
+        }
+        [data-theme="light"] .floating-page-indicator {
+            background: rgba(255,255,255,0.9);
+            color: #111;
+            border: 1px solid rgba(0,0,0,0.06);
+        }
+
         /* ==================== LOADING INDICATOR ==================== */
         .loading {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            color: white;
+            color: var(--text);
             font-size: 18px;
-            font-weight: 600;
+            font-weight: 700;
             text-align: center;
+            z-index: 50;
+            background: transparent;
+            padding: 8px 12px;
+            border-radius: 8px;
         }
 
         .spinner {
-            border: 4px solid rgba(255, 255, 255, 0.3);
-            border-top: 4px solid white;
+            /* use current text color for spinner head so it contrasts in both themes */
+            border: 4px solid rgba(0,0,0,0.12);
+            border-top: 4px solid currentColor;
             border-radius: 50%;
             width: 40px;
             height: 40px;
             animation: spin 1s linear infinite;
             margin: 0 auto 10px;
+            display: block;
         }
 
         @keyframes spin {
@@ -309,6 +352,7 @@
     </style>
 </head>
 <body>
+    <div class="page-frame">
     <div class="pdf-viewer-container">
         <!-- Top Toolbar -->
         <div class="toolbar">
@@ -361,6 +405,9 @@
                 <canvas id="pdf-canvas"></canvas>
             </div>
         </div>
+        <!-- Floating page indicator for multi-page scroll mode -->
+        <div id="floating-page-indicator" class="floating-page-indicator" aria-hidden="true" style="display:none">1 / 1</div>
+    </div>
     </div>
 
     <!-- PDF.js Library -->
@@ -465,7 +512,27 @@
         // 🔧 TO REPLACE THE PDF FILE:
         // Change the path below to point to your PDF file.
         // Example: 'Assets/Docs/Resume.pdf' or 'Assets/Docs/MyDocument.pdf'
-        const PDF_PATH = 'Assets/Resume.pdf/Kumar_Sreyan_Pattanayak_Resume.pdf';
+        // Default PDF path. Will be overridden if ?file=... is provided in the URL.
+    // Default PDF path. Prefer files kept in Assets/Docs
+    let PDF_PATH = 'Assets/Docs/Kumar_Sreyan_Pattanayak_Resume.pdf';
+
+        // If caller passed a `file` query parameter, decode and use it.
+        (function() {
+            try {
+                const params = new URLSearchParams(window.location.search);
+                const fileParam = params.get('file');
+                if (fileParam) {
+                    // Basic sanitization: disallow absolute URLs (must be relative path inside site)
+                    if (/^https?:\/\//i.test(fileParam)) {
+                        console.warn('External URL provided for PDF; using default PDF instead for security.');
+                    } else {
+                        PDF_PATH = decodeURIComponent(fileParam);
+                    }
+                }
+            } catch (e) {
+                console.warn('Failed to parse file parameter', e);
+            }
+        })();
         
         // PDF.js Configuration
         pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
@@ -476,9 +543,11 @@
         let pageRendering = false;
         let pageNumPending = null;
         let scale = 1.5; // Initial zoom level
+    let multiPageMode = false; // when true, render all pages stacked and allow scrolling
 
         // DOM Elements
         const canvas = document.getElementById('pdf-canvas');
+        const canvasWrapper = document.querySelector('.canvas-wrapper');
         const ctx = canvas.getContext('2d');
         const pageInfo = document.getElementById('page-info');
         const prevButton = document.getElementById('prev-page');
@@ -490,48 +559,45 @@
         const loadingElement = document.getElementById('loading');
         const errorElement = document.getElementById('error-message');
 
-        // ==================== RENDER PAGE FUNCTION ====================
+        // ==================== RENDER / NAVIGATION FUNCTIONS ====================
         /**
-         * Renders a specific page of the PDF
+         * Renders a specific page of the PDF into the primary canvas (single-page mode)
          * @param {number} num - Page number to render
          */
         function renderPage(num) {
             pageRendering = true;
 
-            // Get the page
             pdfDoc.getPage(num).then(function(page) {
                 const viewport = page.getViewport({ scale: scale });
                 canvas.height = viewport.height;
                 canvas.width = viewport.width;
 
-                // Render PDF page into canvas context
                 const renderContext = {
                     canvasContext: ctx,
                     viewport: viewport
                 };
 
                 const renderTask = page.render(renderContext);
-
-                // Wait for rendering to finish
                 renderTask.promise.then(function() {
+                    // Reveal the canvas when the first render finishes and restore visuals
+                    canvas.style.display = 'block';
+                    if (canvasWrapper) canvasWrapper.classList.remove('loading-active');
+                    loadingElement.style.display = 'none';
                     pageRendering = false;
                     if (pageNumPending !== null) {
-                        // New page rendering is pending
                         renderPage(pageNumPending);
                         pageNumPending = null;
                     }
                 });
+            }).catch(function(err){
+                showError('❌ Failed to render page: ' + (err && err.message ? err.message : err));
             });
 
             // Update page info
             updatePageInfo();
         }
 
-        // ==================== QUEUE PAGE RENDERING ====================
-        /**
-         * If another page rendering is in progress, queue this page for rendering
-         * @param {number} num - Page number to queue
-         */
+        // If another page rendering is in progress, queue this page for rendering
         function queueRenderPage(num) {
             if (pageRendering) {
                 pageNumPending = num;
@@ -540,27 +606,197 @@
             }
         }
 
-        // ==================== NAVIGATION FUNCTIONS ====================
-        /**
-         * Go to previous page
-         */
+        // Go to previous page (no-op in multi-page mode)
         function onPrevPage() {
-            if (pageNum <= 1) {
-                return;
-            }
+            if (multiPageMode) return;
+            if (pageNum <= 1) return;
             pageNum--;
             queueRenderPage(pageNum);
         }
 
-        /**
-         * Go to next page
-         */
+        // Go to next page (no-op in multi-page mode)
         function onNextPage() {
-            if (pageNum >= pdfDoc.numPages) {
-                return;
-            }
+            if (multiPageMode) return;
+            if (pageNum >= pdfDoc.numPages) return;
             pageNum++;
             queueRenderPage(pageNum);
+        }
+
+        /**
+         * Render all pages stacked vertically inside the canvas wrapper (multi-page scroll mode)
+         */
+        async function renderAllPages() {
+            if (!pdfDoc || !canvasWrapper) return;
+            // Clean up any previous canvases and observers
+            canvasWrapper.innerHTML = '';
+            if (window._pdfRenderObserver) {
+                window._pdfRenderObserver.disconnect();
+                window._pdfRenderObserver = null;
+            }
+            if (window._pdfViewObserver) {
+                window._pdfViewObserver.disconnect();
+                window._pdfViewObserver = null;
+            }
+
+            const pageCount = pdfDoc.numPages;
+            const container = document.createElement('div');
+            container.className = 'pdf-pages-container';
+
+            // Create placeholders for each page
+            for (let i = 1; i <= pageCount; i++) {
+                const pageWrapper = document.createElement('div');
+                pageWrapper.className = 'pdf-page-wrapper';
+                pageWrapper.dataset.pageNumber = i;
+                pageWrapper.style.display = 'block';
+                pageWrapper.style.margin = '14px 0';
+                pageWrapper.style.width = '100%';
+                pageWrapper.style.textAlign = 'center';
+
+                const pageCanvas = document.createElement('canvas');
+                pageCanvas.className = 'pdf-page-canvas';
+                pageCanvas.dataset.page = i;
+                pageCanvas.style.maxWidth = '100%';
+                pageCanvas.style.height = 'auto';
+
+                pageWrapper.appendChild(pageCanvas);
+                container.appendChild(pageWrapper);
+            }
+
+            canvasWrapper.appendChild(container);
+
+            // IntersectionObserver to render pages when they come near the viewport
+            const renderObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const pageCanvas = entry.target.querySelector('.pdf-page-canvas') || entry.target;
+                        const pageNumAttr = pageCanvas.dataset ? pageCanvas.dataset.page : null;
+                        const pageNumber = pageNumAttr ? parseInt(pageNumAttr, 10) : null;
+                        if (pageNumber && !pageCanvas.dataset.rendered) {
+                            // render this page
+                            renderPageCanvas(pageNumber, pageCanvas);
+                        }
+                    }
+                });
+            }, { root: document.getElementById('pdf-container'), rootMargin: '500px 0px' });
+
+            // IntersectionObserver to determine which page is most visible (for indicator)
+            const viewObserver = new IntersectionObserver((entries) => {
+                let best = {ratio: 0, page: null};
+                entries.forEach(en => {
+                    const pageCanvas = en.target.querySelector('.pdf-page-canvas') || en.target;
+                    const pageNumAttr = pageCanvas.dataset ? pageCanvas.dataset.page : null;
+                    const pageNumber = pageNumAttr ? parseInt(pageNumAttr, 10) : null;
+                    if (pageNumber && en.intersectionRatio > best.ratio) {
+                        best.ratio = en.intersectionRatio;
+                        best.page = pageNumber;
+                    }
+                });
+                if (best.page) {
+                    const indicator = document.getElementById('floating-page-indicator');
+                    if (indicator) {
+                        indicator.textContent = best.page + ' / ' + pageCount;
+                        indicator.style.display = '';
+                    }
+                }
+            }, { root: document.getElementById('pdf-container'), threshold: [0.15, 0.35, 0.6] });
+
+            // Observe each page wrapper
+            const wrappers = container.querySelectorAll('.pdf-page-wrapper');
+            wrappers.forEach(w => {
+                renderObserver.observe(w);
+                viewObserver.observe(w);
+            });
+
+            // save observers so we can disconnect later
+            window._pdfRenderObserver = renderObserver;
+            window._pdfViewObserver = viewObserver;
+
+            // Kick off by attempting to render the first visible pages immediately
+            // (Observer with rootMargin will handle subsequent pages)
+            // Hide single-canvas while using multi-page canvases
+            if (canvas) canvas.style.display = 'none';
+
+            // If no page becomes visible in a short time, ensure we render page 1
+            setTimeout(() => {
+                const firstCanvas = container.querySelector('.pdf-page-canvas');
+                if (firstCanvas && !firstCanvas.dataset.rendered) {
+                    renderPageCanvas(1, firstCanvas);
+                }
+            }, 300);
+        }
+
+        // Helper: smooth-scroll the pdf-container to a given page number (used by floating indicator)
+        function scrollToPageNumber(n) {
+            const containerEl = document.getElementById('pdf-container');
+            if (!containerEl) return;
+            const target = containerEl.querySelector(`.pdf-page-wrapper[data-page-number="${n}"]`);
+            if (!target) return;
+            const rect = target.getBoundingClientRect();
+            const containerRect = containerEl.getBoundingClientRect();
+            const offset = rect.top - containerRect.top + containerEl.scrollTop - 60; // 60px to clear toolbar
+            containerEl.scrollTo({ top: Math.max(0, offset), behavior: 'smooth' });
+        }
+
+        // Make the floating indicator interactive: click to enter a page number and jump
+        (function bindFloatingIndicator() {
+            const indicator = document.getElementById('floating-page-indicator');
+            if (!indicator) return;
+            indicator.style.cursor = 'pointer';
+            indicator.title = 'Click to jump to a page';
+            indicator.addEventListener('click', () => {
+                try {
+                    if (!pdfDoc) return;
+                    const total = pdfDoc.numPages || 1;
+                    // Extract current shown page from the indicator text if available
+                    const current = (indicator.textContent || '').split('/')[0]?.trim();
+                    const defaultVal = (current && !isNaN(parseInt(current, 10))) ? current : '1';
+                    const input = window.prompt(`Enter page number (1 - ${total}):`, defaultVal);
+                    if (!input) return;
+                    const n = parseInt(input, 10);
+                    if (isNaN(n) || n < 1 || n > total) {
+                        alert('Please enter a valid page number between 1 and ' + total);
+                        return;
+                    }
+                    if (multiPageMode) {
+                        // Ensure the page is rendered (observer will kick in); then scroll to it
+                        const canvasEl = document.querySelector(`.pdf-page-canvas[data-page="${n}"]`);
+                        if (canvasEl && !canvasEl.dataset.rendered) {
+                            renderPageCanvas(n, canvasEl);
+                        }
+                        scrollToPageNumber(n);
+                    } else {
+                        pageNum = n;
+                        queueRenderPage(pageNum);
+                    }
+                } catch (e) {
+                    console.warn('Floating indicator jump failed', e);
+                }
+            });
+        })();
+
+        /**
+         * Render a specific page into a provided canvas element
+         * @param {number} pageNumber
+         * @param {HTMLCanvasElement} canvasEl
+         */
+        async function renderPageCanvas(pageNumber, canvasEl) {
+            if (!pdfDoc) return;
+            try {
+                const page = await pdfDoc.getPage(pageNumber);
+                const viewport = page.getViewport({ scale: scale });
+                // Resize canvas to page size
+                canvasEl.width = viewport.width;
+                canvasEl.height = viewport.height;
+                const ctxLocal = canvasEl.getContext('2d');
+                await page.render({ canvasContext: ctxLocal, viewport }).promise;
+                canvasEl.dataset.rendered = 'true';
+                // ensure visible
+                canvasEl.style.display = 'block';
+                if (canvasWrapper) canvasWrapper.classList.remove('loading-active');
+                loadingElement.style.display = 'none';
+            } catch (err) {
+                console.error('Failed to render canvas for page', pageNumber, err);
+            }
         }
 
         // ==================== ZOOM FUNCTIONS ====================
@@ -570,7 +806,11 @@
         function onZoomIn() {
             if (scale < 3) { // Max zoom limit
                 scale += 0.25;
-                queueRenderPage(pageNum);
+                if (multiPageMode) {
+                    renderAllPages();
+                } else {
+                    queueRenderPage(pageNum);
+                }
             }
         }
 
@@ -580,7 +820,11 @@
         function onZoomOut() {
             if (scale > 0.5) { // Min zoom limit
                 scale -= 0.25;
-                queueRenderPage(pageNum);
+                if (multiPageMode) {
+                    renderAllPages();
+                } else {
+                    queueRenderPage(pageNum);
+                }
             }
         }
 
@@ -646,6 +890,8 @@
             errorElement.textContent = message;
             errorElement.style.display = 'block';
             loadingElement.style.display = 'none';
+            if (canvasWrapper) canvasWrapper.classList.remove('loading-active');
+            if (canvas) canvas.style.display = 'none';
         }
 
         // ==================== LOAD PDF ====================
@@ -656,18 +902,40 @@
             // Show loading indicator
             loadingElement.style.display = 'block';
             errorElement.style.display = 'none';
+            // hide canvas until we have rendered the first page
+            canvas.style.display = 'none';
+            if (canvasWrapper) canvasWrapper.classList.add('loading-active');
 
             // Load the PDF document
             pdfjsLib.getDocument(PDF_PATH).promise.then(function(pdfDoc_) {
                 pdfDoc = pdfDoc_;
-                
-                // Hide loading indicator
-                loadingElement.style.display = 'none';
 
-                // Initial page rendering
-                renderPage(pageNum);
+                // Decide rendering mode: single-page (controls) or multi-page scroll
+                if (pdfDoc.numPages > 1) {
+                    multiPageMode = true;
+                    // Remove single-page navigation controls from the DOM when in multi-page mode
+                    try {
+                        if (prevButton && prevButton.parentNode) prevButton.parentNode.removeChild(prevButton);
+                        if (nextButton && nextButton.parentNode) nextButton.parentNode.removeChild(nextButton);
+                        if (pageInfo && pageInfo.parentNode) pageInfo.parentNode.removeChild(pageInfo);
+                    } catch (e) {
+                        console.warn('Failed to remove navigation controls:', e);
+                    }
 
-                // Enable buttons
+                    // Render all pages stacked
+                    renderAllPages();
+                } else {
+                    multiPageMode = false;
+                    // show controls
+                    if (prevButton) prevButton.style.display = '';
+                    if (nextButton) nextButton.style.display = '';
+                    if (pageInfo) pageInfo.style.display = '';
+
+                    // Initial page rendering (renderPage will hide the loader once first page renders)
+                    renderPage(pageNum);
+                }
+
+                // Enable download/print
                 downloadButton.disabled = false;
                 printButton.disabled = false;
             }).catch(function(error) {

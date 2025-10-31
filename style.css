@@ -386,6 +386,27 @@ html {
             overflow-x: hidden;
         }
 
+/* Page fixed design frame for screenshot / preview at 2560x1600
+   - Opt-in: only active when <body class="use-page-frame"> is present.
+   - This avoids breaking normal layout while keeping the wrapper markup in HTML.
+*/
+body.use-page-frame .page-frame {
+    width: 2560px;
+    height: 1600px;
+    margin: 0 auto; /* center horizontally */
+    position: relative;
+    overflow: auto; /* allow scrolling when viewport is smaller */
+    background: transparent; /* inherit page background */
+}
+
+/* Optional helper to scale the frame down on small viewports while keeping aspect ratio.
+   To enable, add the class 'scale-to-fit' to the page-frame and set --page-scale via JS.
+*/
+body.use-page-frame .page-frame.scale-to-fit {
+    transform-origin: top left;
+    transform: scale(var(--page-scale, 1));
+}
+
         nav {
             position: fixed;
             top: 0;

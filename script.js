@@ -204,10 +204,10 @@ document.addEventListener('DOMContentLoaded', () => {
         { title: 'Skills', description: 'Programming languages and technical skills', link: '#skills' },
         { title: 'Contact', description: 'Get in touch via email or social media', link: 'contact.html' },
         { title: 'Services', description: 'Professional services offered', link: 'service.html' },
-        { title: 'Resume', description: 'Download resume PDF file', link: 'Assets/Resume.pdf/Kumar_Sreyan_Pattanayak_Resume.pdf' },
-        { title: 'Download Resume', description: 'Download Kumar Sreyan Pattanayak resume PDF', link: 'Assets/Resume.pdf/Kumar_Sreyan_Pattanayak_Resume.pdf' },
-        { title: 'CV', description: 'Curriculum Vitae - Resume PDF download', link: 'Assets/Resume.pdf/Kumar_Sreyan_Pattanayak_Resume.pdf' },
-        { title: 'PDF', description: 'Resume in PDF format for download', link: 'Assets/Resume.pdf/Kumar_Sreyan_Pattanayak_Resume.pdf' },
+        { title: 'Resume', description: 'Download resume PDF file', link: 'Assets/Docs/Kumar_Sreyan_Pattanayak_Resume.pdf' },
+        { title: 'Download Resume', description: 'Download Kumar Sreyan Pattanayak resume PDF', link: 'Assets/Docs/Kumar_Sreyan_Pattanayak_Resume.pdf' },
+        { title: 'CV', description: 'Curriculum Vitae - Resume PDF download', link: 'Assets/Docs/Kumar_Sreyan_Pattanayak_Resume.pdf' },
+        { title: 'PDF', description: 'Resume in PDF format for download', link: 'Assets/Docs/Kumar_Sreyan_Pattanayak_Resume.pdf' },
         { title: 'Python', description: 'Programming language - Python development', link: '#skills' },
         { title: 'JavaScript', description: 'Programming language - Web development', link: '#skills' },
         { title: 'Web Development', description: 'HTML, CSS, JavaScript, React', link: '#skills' },
@@ -409,8 +409,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 addRecentSearch(query);
                 
                 // Handle different link types
-                if (link.includes('.pdf') || link.includes('download')) {
-                    // For download links, create a temporary anchor element
+                if (link.includes('.pdf') && !link.toLowerCase().includes('download')) {
+                    // Open PDF in the site viewer (pass file path via query param)
+                    // Open in a new tab to avoid losing the current page
+                    window.open('pdf-viewer.html?file=' + encodeURIComponent(link), '_blank', 'noopener');
+                } else if (link.includes('download')) {
+                    // For explicit download links, create a temporary anchor element
                     const tempLink = document.createElement('a');
                     tempLink.href = link;
                     tempLink.download = link.split('/').pop(); // Get filename
@@ -468,8 +472,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     addRecentSearch(searchModalInput.value.trim());
                     
                     // Handle different link types
-                    if (link.includes('.pdf') || link.includes('download')) {
-                        // For download links, create a temporary anchor element
+                    if (link.includes('.pdf') && !link.toLowerCase().includes('download')) {
+                        // Open PDF in the site viewer (pass file path via query param)
+                        // Open in a new tab to avoid losing the current page
+                        window.open('pdf-viewer.html?file=' + encodeURIComponent(link), '_blank', 'noopener');
+                    } else if (link.includes('download')) {
+                        // For explicit download links, create a temporary anchor element
                         const tempLink = document.createElement('a');
                         tempLink.href = link;
                         tempLink.download = link.split('/').pop(); // Get filename
