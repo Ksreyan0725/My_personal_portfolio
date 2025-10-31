@@ -65,8 +65,10 @@
 
         /* ==================== TOOLBAR STYLES ==================== */
         .toolbar {
-            position: sticky;
+            position: fixed;
             top: 0;
+            left: 0;
+            right: 0;
             z-index: 1000;
             background: var(--toolbar-bg);
             -webkit-backdrop-filter: saturate(180%) blur(12px);
@@ -78,6 +80,7 @@
             flex-wrap: wrap;
             gap: 10px;
             border-bottom: 1px solid var(--toolbar-border);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.12);
         }
 
         .toolbar-section {
@@ -164,12 +167,11 @@
             flex: 1;
             overflow: auto;
             background: var(--panel-bg);
-            padding: 20px;
+            padding: 96px 20px 20px; /* top padding to clear fixed toolbar height */
             display: flex;
             justify-content: center;
             align-items: flex-start;
-        }
-
+        } 
         .canvas-wrapper {
             background: var(--card-bg);
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
@@ -273,7 +275,7 @@
             }
 
             .pdf-container {
-                padding: 10px;
+                padding: 88px 10px 10px; /* clear fixed toolbar on small screens */
             }
         }
 
