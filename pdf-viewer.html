@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Viewer - Portfolio</title>
+    <link rel="icon" type="image/png" href="Assets/Images.icons/favicon.png" sizes="64x64" />
+    <style>
+        /* ==================== THEME VARIABLES (Black & White) ==================== */
+        :root {
+            --bg: #ffffff;
+            --text: #111111;
+            --toolbar-bg: rgba(255, 255, 255, 0.7);
+            --toolbar-border: rgba(0, 0, 0, 0.12);
+            --button-bg: #ffffff;
+            --button-bg-hover: #f0f0f0;
+            --button-text: #000000;
+            --panel-bg: #f5f5f5;
+            --card-bg: #ffffff;
+            --pageinfo-bg: #ffffff;
+            --pageinfo-text: #000000;
+        }
+
+        [data-theme="dark"] {
+            --bg: #000000;
+            --text: #f5f5f5;
+            --toolbar-bg: rgba(0, 0, 0, 0.45);
+            --toolbar-border: rgba(255, 255, 255, 0.12);
+            --button-bg: #f5f5f5;
+            --button-bg-hover: #ffffff;
+            --button-text: #000000;
+            --panel-bg: #0a0a0a;
+            --card-bg: #111111;
+            --pageinfo-bg: #1a1a1a;
+            --pageinfo-text: #f5f5f5;
+        }
+        /* ==================== GLOBAL STYLES ==================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ==================== MAIN CONTAINER ==================== */
+        .pdf-viewer-container {
+            background: var(--bg);
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ==================== TOOLBAR STYLES ==================== */
+        .toolbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: var(--toolbar-bg);
+            -webkit-backdrop-filter: saturate(180%) blur(12px);
+            backdrop-filter: saturate(180%) blur(12px);
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+            border-bottom: 1px solid var(--toolbar-border);
+        }
+
+        .toolbar-section {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .toolbar button {
+            background: transparent;
+            color: var(--text);
+            border: 1px solid var(--toolbar-border);
+            padding: 10px 16px;
+            border-radius: 9999px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .toolbar button img {
+            width: 20px;
+            height: 20px;
+            filter: none; /* show native icon colors to avoid accidental invisibility */
+            flex-shrink: 0;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        /* Ripple effect for buttons (adapted from script.js) */
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            transform: scale(0);
+            animation: ripple 600ms linear;
+            background-color: rgba(0, 0, 0, 0.2);
+            pointer-events: none;
+        }
+        [data-theme="dark"] .ripple { background-color: rgba(255, 255, 255, 0.25); }
+        @keyframes ripple {
+            to { transform: scale(4); opacity: 0; }
+        }
+
+        .button-text {
+            display: inline;
+        }
+
+        .toolbar button:hover {
+            background: var(--button-bg-hover);
+            color: var(--button-text);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .toolbar button:active {
+            transform: translateY(0);
+        }
+
+        .toolbar button:disabled {
+            background: transparent;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+            opacity: 0.6;
+        }
+
+        .page-info {
+            color: var(--pageinfo-text);
+            font-size: 14px;
+            font-weight: 500;
+            padding: 8px 15px;
+            background: var(--pageinfo-bg);
+            border-radius: 6px;
+            min-width: 120px;
+            text-align: center;
+        }
+
+        /* ==================== PDF CANVAS CONTAINER ==================== */
+        .pdf-container {
+            flex: 1;
+            overflow: auto;
+            background: var(--panel-bg);
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .canvas-wrapper {
+            background: var(--card-bg);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            border-radius: 4px;
+            padding: 10px;
+            max-width: 100%;
+        }
+
+        #pdf-canvas {
+            display: block;
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* ==================== LOADING INDICATOR ==================== */
+        .loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid white;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* ==================== ERROR MESSAGE ==================== */
+        .error-message {
+            color: #b00020;
+            background: #ffd6d6;
+            padding: 15px 20px;
+            margin: 20px;
+            border-radius: 6px;
+            border-left: 4px solid #b00020;
+            display: none;
+        }
+
+        /* Icons inside toolbar buttons (including theme toggle SVGs) */
+        .toolbar button svg {
+            width: 20px;
+            height: 20px;
+            display: inline-block;
+            vertical-align: middle;
+            fill: currentColor;
+        }
+
+        /* Theme toggle icons visibility */
+    /* icon-sun/icon-moon no longer used (dropdown instead) */
+
+        /* Improve contrast of dark-theme PNG icons */
+        body[data-theme="dark"] .toolbar button img {
+            filter: invert(1) grayscale(1) contrast(1.2);
+        }
+        /* When hovering (light background in dark theme), show native dark icons */
+        body[data-theme="dark"] .toolbar button:hover img {
+            filter: none;
+        }
+
+        /* Theme toggle style to match index nav button */
+        .theme-toggle {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: transparent;
+            color: var(--text);
+            border: 1px solid var(--toolbar-border);
+            padding: 10px 16px;
+            border-radius: 9999px;
+        }
+
+        /* ==================== RESPONSIVE DESIGN ==================== */
+        @media (max-width: 768px) {
+            .toolbar {
+                padding: 12px 15px;
+            }
+
+            .toolbar button {
+                padding: 8px 12px;
+                font-size: 12px;
+            }
+
+            .page-info {
+                font-size: 12px;
+                padding: 6px 10px;
+                min-width: 100px;
+            }
+
+            .pdf-container {
+                padding: 10px;
+            }
+        }
+
+        /* Hide button text on laptops/tablets and smaller screens */
+        @media (max-width: 1200px) {
+            .button-text {
+                display: none;
+            }
+
+            .toolbar button {
+                padding: 10px;
+                min-width: 40px;
+                justify-content: center;
+            }
+
+            .toolbar button img {
+                margin: 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .toolbar {
+                justify-content: center;
+            }
+
+            .toolbar-section {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="pdf-viewer-container">
+        <!-- Top Toolbar -->
+        <div class="toolbar">
+            <div class="toolbar-section">
+                <button id="prev-page" title="Previous Page">
+                    <span>◀</span> <span class="button-text">Previous</span>
+                </button>
+                <div class="page-info">
+                    <span id="page-info">Page 1 of 1</span>
+                </div>
+                <button id="next-page" title="Next Page">
+                    <span class="button-text">Next</span> <span>▶</span>
+                </button>
+            </div>
+
+            <div class="toolbar-section">
+                <button id="zoom-out" title="Zoom Out">
+                    <span style="font-size: 18px;">−</span>
+                </button>
+                <button id="zoom-in" title="Zoom In">
+                    <span style="font-size: 18px;">+</span>
+                </button>
+                <button id="print-pdf" title="Print PDF" aria-label="Print PDF">
+                    <img id="printIcon" src="Assets/Images.icons/printer.png" alt="Print" width="20" height="20" onerror="this.onerror=null; this.src='./Assets/Images.icons/printer.png';" />
+                    <span class="button-text">Print</span>
+                </button>
+                <button id="download-pdf" title="Download PDF" aria-label="Download PDF">
+                    <img id="downloadIcon" src="Assets/Images.icons/download.png" alt="Download" width="20" height="20" onerror="this.onerror=null; this.src='./Assets/Images.icons/download.png';" />
+                    <span class="button-text">Download</span>
+                </button>
+                <!-- Theme menu: gear button with dropdown -->
+                <!-- Theme Toggle Button (match index.html) -->
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <span class="theme-icon" aria-hidden="true">⚙️</span>
+                    <span class="theme-text button-text">System</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Error Message (hidden by default) -->
+        <div class="error-message" id="error-message"></div>
+
+        <!-- PDF Display Area -->
+        <div class="pdf-container" id="pdf-container">
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                Loading PDF...
+            </div>
+            <div class="canvas-wrapper">
+                <canvas id="pdf-canvas"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- PDF.js Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
+    <script>
+        // Attach ripple to toolbar buttons
+        function attachRipples() {
+            document.querySelectorAll('.toolbar button').forEach(btn => {
+                btn.style.position = 'relative';
+                btn.style.overflow = 'hidden';
+                btn.addEventListener('click', function(e){
+                    const rect = btn.getBoundingClientRect();
+                    const ripple = document.createElement('span');
+                    const size = Math.max(rect.width, rect.height);
+                    const x = e.clientX - rect.left - size / 2;
+                    const y = e.clientY - rect.top - size / 2;
+                    ripple.className = 'ripple';
+                    ripple.style.width = ripple.style.height = size + 'px';
+                    ripple.style.left = x + 'px';
+                    ripple.style.top = y + 'px';
+                    btn.appendChild(ripple);
+                    setTimeout(() => ripple.remove(), 600);
+                });
+            });
+        }
+        // ==================== THEME TOGGLE (logic adapted from script.js) ====================
+        (function setupThemeToggle(){
+            const htmlElement = document.documentElement;
+            const body = document.body;
+            const themeToggle = document.getElementById('themeToggle');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+            let currentTheme = localStorage.getItem('theme') || 'system';
+
+            function updateToggleLabel(theme) {
+                if (!themeToggle) return;
+                const icon = themeToggle.querySelector('.theme-icon');
+                const text = themeToggle.querySelector('.theme-text');
+                if (icon) icon.textContent = theme === 'system' ? '⚙️' : (theme === 'dark' ? '🌙' : '☀️');
+                if (text) text.textContent = theme.charAt(0).toUpperCase() + theme.slice(1);
+            }
+
+            function applyTheme(theme, animate = false) {
+                const systemPrefersDark = prefersDark.matches;
+                const effectiveTheme = theme === 'system' ? (systemPrefersDark ? 'dark' : 'light') : theme;
+
+                htmlElement.setAttribute('data-theme', effectiveTheme);
+                body.classList.toggle('darkmode', effectiveTheme === 'dark');
+                updateToggleLabel(theme);
+
+                try { localStorage.setItem('theme', theme); } catch {}
+                currentTheme = theme;
+            }
+
+            // init
+            applyTheme(currentTheme);
+
+            if (themeToggle) {
+                themeToggle.addEventListener('click', function(){
+                    const themes = ['system', 'light', 'dark'];
+                    const idx = themes.indexOf(currentTheme);
+                    const next = themes[(idx + 1) % themes.length];
+                    applyTheme(next, true);
+                });
+            }
+
+            // listen to system changes when in system mode
+            prefersDark.addEventListener('change', () => {
+                if (currentTheme === 'system') applyTheme('system', true);
+            });
+        })();
+
+        // ==================== ICON PATH RESOLUTION ====================
+        // Some hosts (like GitHub Pages) require repo-prefixed absolute paths.
+        // We'll robustly set icon paths at runtime.
+        function resolveAssetPath(relativePath) {
+            // Try as-is
+            return relativePath;
+        }
+
+        function setIconSrc(imgEl, fileName) {
+            if (!imgEl) return;
+            const candidates = [
+                `Assets/Images.icons/${fileName}`,
+                `./Assets/Images.icons/${fileName}`,
+                `${window.location.pathname.split('/')[1] ? '/' + window.location.pathname.split('/')[1] : ''}/Assets/Images.icons/${fileName}`
+            ];
+
+            let idx = 0;
+            const tryNext = () => {
+                if (idx >= candidates.length) return;
+                const url = candidates[idx++];
+                const testImg = new Image();
+                testImg.onload = () => { imgEl.src = url; };
+                testImg.onerror = tryNext;
+                testImg.src = url + `?v=${Date.now()}`; // bust cache while testing
+            };
+            tryNext();
+        }
+
+        // ==================== CONFIGURATION ====================
+        // 🔧 TO REPLACE THE PDF FILE:
+        // Change the path below to point to your PDF file.
+        // Example: 'Assets/Docs/Resume.pdf' or 'Assets/Docs/MyDocument.pdf'
+        const PDF_PATH = 'Assets/Resume.pdf/Kumar_Sreyan_Pattanayak_Resume.pdf';
+        
+        // PDF.js Configuration
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+        // ==================== VARIABLES ====================
+        let pdfDoc = null;
+        let pageNum = 1;
+        let pageRendering = false;
+        let pageNumPending = null;
+        let scale = 1.5; // Initial zoom level
+
+        // DOM Elements
+        const canvas = document.getElementById('pdf-canvas');
+        const ctx = canvas.getContext('2d');
+        const pageInfo = document.getElementById('page-info');
+        const prevButton = document.getElementById('prev-page');
+        const nextButton = document.getElementById('next-page');
+        const zoomInButton = document.getElementById('zoom-in');
+        const zoomOutButton = document.getElementById('zoom-out');
+        const downloadButton = document.getElementById('download-pdf');
+        const printButton = document.getElementById('print-pdf');
+        const loadingElement = document.getElementById('loading');
+        const errorElement = document.getElementById('error-message');
+
+        // ==================== RENDER PAGE FUNCTION ====================
+        /**
+         * Renders a specific page of the PDF
+         * @param {number} num - Page number to render
+         */
+        function renderPage(num) {
+            pageRendering = true;
+
+            // Get the page
+            pdfDoc.getPage(num).then(function(page) {
+                const viewport = page.getViewport({ scale: scale });
+                canvas.height = viewport.height;
+                canvas.width = viewport.width;
+
+                // Render PDF page into canvas context
+                const renderContext = {
+                    canvasContext: ctx,
+                    viewport: viewport
+                };
+
+                const renderTask = page.render(renderContext);
+
+                // Wait for rendering to finish
+                renderTask.promise.then(function() {
+                    pageRendering = false;
+                    if (pageNumPending !== null) {
+                        // New page rendering is pending
+                        renderPage(pageNumPending);
+                        pageNumPending = null;
+                    }
+                });
+            });
+
+            // Update page info
+            updatePageInfo();
+        }
+
+        // ==================== QUEUE PAGE RENDERING ====================
+        /**
+         * If another page rendering is in progress, queue this page for rendering
+         * @param {number} num - Page number to queue
+         */
+        function queueRenderPage(num) {
+            if (pageRendering) {
+                pageNumPending = num;
+            } else {
+                renderPage(num);
+            }
+        }
+
+        // ==================== NAVIGATION FUNCTIONS ====================
+        /**
+         * Go to previous page
+         */
+        function onPrevPage() {
+            if (pageNum <= 1) {
+                return;
+            }
+            pageNum--;
+            queueRenderPage(pageNum);
+        }
+
+        /**
+         * Go to next page
+         */
+        function onNextPage() {
+            if (pageNum >= pdfDoc.numPages) {
+                return;
+            }
+            pageNum++;
+            queueRenderPage(pageNum);
+        }
+
+        // ==================== ZOOM FUNCTIONS ====================
+        /**
+         * Zoom in (increase scale)
+         */
+        function onZoomIn() {
+            if (scale < 3) { // Max zoom limit
+                scale += 0.25;
+                queueRenderPage(pageNum);
+            }
+        }
+
+        /**
+         * Zoom out (decrease scale)
+         */
+        function onZoomOut() {
+            if (scale > 0.5) { // Min zoom limit
+                scale -= 0.25;
+                queueRenderPage(pageNum);
+            }
+        }
+
+        // ==================== DOWNLOAD FUNCTION ====================
+        /**
+         * Download the currently displayed PDF file
+         */
+        function downloadPDF() {
+            const link = document.createElement('a');
+            link.href = PDF_PATH;
+            link.download = PDF_PATH.split('/').pop(); // Extract filename
+            link.click();
+        }
+
+        // ==================== PRINT FUNCTION ====================
+        /**
+         * Print the currently displayed PDF file
+         */
+        function printPDF() {
+            // Create a hidden iframe for printing
+            const printFrame = document.createElement('iframe');
+            printFrame.style.display = 'none';
+            document.body.appendChild(printFrame);
+            
+            // Load the PDF in the iframe
+            printFrame.src = PDF_PATH;
+            
+            // Wait for the PDF to load, then print
+            printFrame.onload = function() {
+                printFrame.contentWindow.print();
+            };
+            
+            // Alternative method: Open in new window and print
+            // This works better for some browsers
+            setTimeout(() => {
+                const printWindow = window.open(PDF_PATH, '_blank');
+                if (printWindow) {
+                    printWindow.onload = function() {
+                        printWindow.print();
+                    };
+                }
+            }, 100);
+        }
+
+        // ==================== UPDATE PAGE INFO ====================
+        /**
+         * Update the page information display and button states
+         */
+        function updatePageInfo() {
+            pageInfo.textContent = `Page ${pageNum} of ${pdfDoc.numPages}`;
+            
+            // Enable/disable navigation buttons
+            prevButton.disabled = pageNum <= 1;
+            nextButton.disabled = pageNum >= pdfDoc.numPages;
+        }
+
+        // ==================== SHOW ERROR ====================
+        /**
+         * Display error message to user
+         * @param {string} message - Error message to display
+         */
+        function showError(message) {
+            errorElement.textContent = message;
+            errorElement.style.display = 'block';
+            loadingElement.style.display = 'none';
+        }
+
+        // ==================== LOAD PDF ====================
+        /**
+         * Load and initialize the PDF document
+         */
+        function loadPDF() {
+            // Show loading indicator
+            loadingElement.style.display = 'block';
+            errorElement.style.display = 'none';
+
+            // Load the PDF document
+            pdfjsLib.getDocument(PDF_PATH).promise.then(function(pdfDoc_) {
+                pdfDoc = pdfDoc_;
+                
+                // Hide loading indicator
+                loadingElement.style.display = 'none';
+
+                // Initial page rendering
+                renderPage(pageNum);
+
+                // Enable buttons
+                downloadButton.disabled = false;
+                printButton.disabled = false;
+            }).catch(function(error) {
+                console.error('Error loading PDF:', error);
+                showError('❌ Failed to load PDF. Please check if the file exists at: ' + PDF_PATH);
+            });
+        }
+
+        // ==================== EVENT LISTENERS ====================
+        prevButton.addEventListener('click', onPrevPage);
+        nextButton.addEventListener('click', onNextPage);
+        zoomInButton.addEventListener('click', onZoomIn);
+        zoomOutButton.addEventListener('click', onZoomOut);
+        downloadButton.addEventListener('click', downloadPDF);
+        printButton.addEventListener('click', printPDF);
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            switch(e.key) {
+                case 'ArrowLeft':
+                    onPrevPage();
+                    break;
+                case 'ArrowRight':
+                    onNextPage();
+                    break;
+                case '+':
+                case '=':
+                    onZoomIn();
+                    break;
+                case '-':
+                    onZoomOut();
+                    break;
+                case 'p':
+                case 'P':
+                    if (e.ctrlKey || e.metaKey) {
+                        e.preventDefault();
+                        printPDF();
+                    }
+                    break;
+            }
+        });
+
+        // ==================== INITIALIZE ====================
+        // Start loading the PDF when page loads and set icons robustly
+        window.addEventListener('load', function() {
+            // Resolve icons
+            setIconSrc(document.getElementById('printIcon'), 'printer.png');
+            setIconSrc(document.getElementById('downloadIcon'), 'download.png');
+            // Attach ripple interactions
+            attachRipples();
+            // Load PDF
+            loadPDF();
+        });
+    </script>
+</body>
+</html>
