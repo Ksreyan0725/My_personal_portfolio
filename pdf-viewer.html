@@ -608,18 +608,31 @@
 
         // Go to previous page (no-op in multi-page mode)
         function onPrevPage() {
-            if (multiPageMode) return;
             if (pageNum <= 1) return;
-            pageNum--;
-            queueRenderPage(pageNum);
+            const target = pageNum - 1;
+            if (multiPageMode) {
+                // Scroll to previous page and ensure it's rendered
+                const canvasEl = document.querySelector(`.pdf-page-canvas[data-page="${target}"]`);
+                if (canvasEl && !canvasEl.dataset.rendered) renderPageCanvas(target, canvasEl);
+                scrollToPageNumber(target);
+            } else {
+                pageNum--;
+                queueRenderPage(pageNum);
+            }
         }
 
         // Go to next page (no-op in multi-page mode)
         function onNextPage() {
-            if (multiPageMode) return;
             if (pageNum >= pdfDoc.numPages) return;
-            pageNum++;
-            queueRenderPage(pageNum);
+            const target = pageNum + 1;
+            if (multiPageMode) {
+                const canvasEl = document.querySelector(`.pdf-page-canvas[data-page="${target}"]`);
+                if (canvasEl && !canvasEl.dataset.rendered) renderPageCanvas(target, canvasEl);
+                scrollToPageNumber(target);
+            } else {
+                pageNum++;
+                queueRenderPage(pageNum);
+            }
         }
 
         /**
@@ -696,6 +709,9 @@
                     if (indicator) {
                         indicator.textContent = best.page + ' / ' + pageCount;
                         indicator.style.display = '';
+                        // Keep global pageNum in sync so Prev/Next and page-info work in multi-page mode
+                        pageNum = best.page;
+                        updatePageInfo();
                     }
                 }
             }, { root: document.getElementById('pdf-container'), threshold: [0.15, 0.35, 0.6] });
@@ -723,6 +739,11 @@
                     renderPageCanvas(1, firstCanvas);
                 }
             }, 300);
+
+            // Ensure Prev/Next/page-info controls remain available in multi-page mode
+            if (prevButton) prevButton.style.display = '';
+            if (nextButton) nextButton.style.display = '';
+            if (pageInfo) pageInfo.style.display = '';
         }
 
         // Helper: smooth-scroll the pdf-container to a given page number (used by floating indicator)
