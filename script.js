@@ -645,19 +645,34 @@ document.addEventListener('DOMContentLoaded', () => {
         // Get navbar height to offset scroll position
         const navbar = document.getElementById('navbar');
         const navbarHeight = navbar ? navbar.offsetHeight : 80;
-        const scrollPos = window.scrollY + navbarHeight + 10;
+        const scrollPos = window.scrollY + navbarHeight + 50; // Increased offset for better detection
         
         let currentSection = '';
+        let closestSection = null;
+        let closestDistance = Infinity;
         
         sections.forEach(section => {
             const sectionTop = section.offsetTop;
             const sectionHeight = section.offsetHeight;
+            const sectionBottom = sectionTop + sectionHeight;
             
-            // Check if we're in this section
-            if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
+            // Check if scroll position is within this section
+            if (scrollPos >= sectionTop && scrollPos < sectionBottom) {
                 currentSection = section.getAttribute('id');
             }
+            
+            // Also track the closest section above us
+            const distanceFromTop = Math.abs(scrollPos - sectionTop);
+            if (scrollPos >= sectionTop && distanceFromTop < closestDistance) {
+                closestDistance = distanceFromTop;
+                closestSection = section.getAttribute('id');
+            }
         });
+        
+        // Use closest section if no current section found
+        if (!currentSection && closestSection) {
+            currentSection = closestSection;
+        }
         
         // If we're at the very top, make sure home is active
         if (window.scrollY < 100) {
@@ -675,7 +690,17 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    window.addEventListener('scroll', highlightActiveNav);
+    // Throttle function to limit scroll event firing
+    let scrollThrottle;
+    function throttledHighlight() {
+        if (scrollThrottle) return;
+        scrollThrottle = setTimeout(() => {
+            highlightActiveNav();
+            scrollThrottle = null;
+        }, 50); // Update every 50ms for smooth highlighting
+    }
+
+    window.addEventListener('scroll', throttledHighlight, { passive: true });
     highlightActiveNav();
 
     /* ==================== Skill Bars Animation ==================== */

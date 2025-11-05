@@ -8,7 +8,6 @@ Author: Kumar Sreyan Pattanayak
 Last Updated: October 28, 2025
 =============================================================================
 -->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -401,7 +400,7 @@ Last Updated: October 28, 2025
             <!-- Python Programming Course -->
             <article class="card">
                 <h3>Python Programming Mastery – Udemy</h3>
-                <p class="date">Ongoing</p>
+                <p class="date"></p>
                 <p>
                     Build Real-World Projects and Become Job-Ready in 2025. Comprehensive Python programming 
                     course covering fundamentals to advanced concepts.
@@ -520,7 +519,7 @@ Last Updated: October 28, 2025
                     View Resume PDF
                 </a>
             </div>
-        </section>
+
     </main>
 
     <!-- ==================== Footer ==================== -->
@@ -532,47 +531,6 @@ Last Updated: October 28, 2025
         </p>
     </footer>
 
-    <!-- ==================== PDF Viewer Functionality ==================== -->
-    <script>
-        const pdfViewer = document.getElementById('pdf-viewer');
-        const prevPageBtn = document.getElementById('prev-page');
-        const nextPageBtn = document.getElementById('next-page');
-        const zoomInBtn = document.getElementById('zoom-in');
-        const zoomOutBtn = document.getElementById('zoom-out');
-
-        let currentPage = 1;
-        let zoomLevel = 1;
-
-        function updateViewer() {
-            pdfViewer.style.transform = `scale(${zoomLevel})`;
-            pdfViewer.style.transformOrigin = 'top left';
-            pdfViewer.src = `path/to/your.pdf#page=${currentPage}`;
-        }
-
-        prevPageBtn.addEventListener('click', () => {
-            if (currentPage > 1) {
-                currentPage--;
-                updateViewer();
-            }
-        });
-
-        nextPageBtn.addEventListener('click', () => {
-            currentPage++;
-            updateViewer();
-        });
-
-        zoomInBtn.addEventListener('click', () => {
-            zoomLevel += 0.1;
-            updateViewer();
-        });
-
-        zoomOutBtn.addEventListener('click', () => {
-            if (zoomLevel > 0.1) {
-                zoomLevel -= 0.1;
-                updateViewer();
-            }
-        });
-    </script>
     </div>
 </body>
 </html>

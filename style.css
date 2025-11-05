@@ -1812,6 +1812,114 @@ body.use-page-frame .page-frame.scale-to-fit {
             box-shadow: 0 15px 40px var(--accent-glow);
         }
 
+        /* Certifications Section - Background-only style with blue glow border */
+        #certifications .card {
+            background: none !important;
+            backdrop-filter: none !important;
+            border: 2px solid rgba(142, 162, 183, 0.4); /* Light grayish-blue default border */
+            border-radius: 15px; /* Subtle rounded corners */
+            box-shadow: none;
+            transition: all 0.4s ease;
+        }
+
+        #certifications .card::before {
+            display: none; /* Remove the shine effect */
+        }
+
+        #certifications .card:hover {
+            background: none !important;
+            border-color: rgba(99, 102, 241, 0.8); /* Blue accent color */
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.4), 
+                        0 0 40px rgba(99, 102, 241, 0.2); /* Blue glow effect */
+            transform: translateY(-5px);
+        }
+
+        [data-theme="dark"] #certifications .card {
+            border-color: rgba(142, 162, 183, 0.3);
+        }
+
+        [data-theme="dark"] #certifications .card:hover {
+            border-color: rgba(139, 142, 255, 0.9);
+            box-shadow: 0 0 25px rgba(139, 142, 255, 0.5), 
+                        0 0 50px rgba(139, 142, 255, 0.3);
+        }
+
+        /* Projects Section - Two column layout without card boxes */
+        #projects {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        #projects .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            grid-column: 1 / -1; /* Span full width */
+        }
+
+        /* Create grid layout for projects */
+        #projects {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+        }
+
+        /* Remove card styling from projects */
+        #projects .card {
+            background: none !important;
+            backdrop-filter: none !important;
+            border: 2px solid var(--border);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: none;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+
+        /* Restore shine animation for projects */
+        #projects .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, var(--accent-glow), transparent);
+            transition: left 0.5s ease;
+            display: block !important;
+        }
+
+        #projects .card:hover::before {
+            left: 100%;
+        }
+
+        #projects .card:hover {
+            border-color: var(--accent);
+            box-shadow: 0 15px 40px var(--accent-glow);
+            transform: translateY(-5px);
+        }
+
+        [data-theme="dark"] #projects .card {
+            border-color: rgba(142, 162, 183, 0.3);
+        }
+
+        [data-theme="dark"] #projects .card:hover {
+            border-color: var(--accent);
+            box-shadow: 0 15px 40px var(--accent-glow);
+        }
+
+        /* Responsive - stack on mobile */
+        @media (max-width: 768px) {
+            #projects {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+            
+            #projects .card {
+                padding: 20px;
+            }
+        }
+
         .card h3 {
             color: var(--accent);
             font-size: 1.5rem;
