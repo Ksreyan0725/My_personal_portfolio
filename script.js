@@ -550,36 +550,219 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 3000);
     }
 
-    // Add search functionality to desktop search bars (open modal, reuse same engine)
+    // Add search functionality to desktop search bars (dropdown with results, desktop-only)
     const desktopSearchInputs = document.querySelectorAll('.desktop-search .search-input');
     const desktopSearchButtons = document.querySelectorAll('.desktop-search .search-button');
     const desktopSearchClears = document.querySelectorAll('.desktop-search .search-clear');
+    const desktopSearchResultsContainer = document.getElementById('desktopSearchResults');
+    let currentDesktopResultIndex = -1;
+
+    // Desktop gating (Laptop and larger only)
+    const desktopMql = window.matchMedia('(min-width: 1025px)');
+    let isDesktop = desktopMql.matches;
+
+    function hideAllDesktopDropdowns() {
+        document.querySelectorAll('.desktop-search-results').forEach(rc => rc.classList.remove('active'));
+        currentDesktopResultIndex = -1;
+    }
+
+    desktopMql.addEventListener('change', (e) => {
+        isDesktop = e.matches;
+        if (!isDesktop) hideAllDesktopDropdowns();
+    });
+
+    // Helper function to show search results in dropdown
+    function showDesktopSearchResults(query, container) {
+        if (!container) return;
+
+        if (query.length < 2) {
+            container.classList.remove('active');
+            container.innerHTML = '';
+            return;
+        }
+
+        const lowerQuery = query.toLowerCase().trim();
+        const tokens = lowerQuery.split(/\s+/).filter(Boolean);
+        const resultsFull = searchableContent
+            .map(item => {
+                const hay = (item.title + ' ' + item.description).toLowerCase();
+                const score = tokens.reduce((s, t) => s + (hay.includes(t) ? 1 : 0), 0) +
+                              (item.title.toLowerCase().startsWith(lowerQuery) ? 2 : 0) +
+                              (item.title.toLowerCase().includes(lowerQuery) ? 1 : 0);
+                return { item, score };
+            })
+            .filter(x => x.score > 0)
+            .sort((a, b) => b.score - a.score);
+
+        const totalCount = resultsFull.length;
+        const results = resultsFull.slice(0, 6); // Limit to top 6 results
+
+        // Header without 'View all' button
+        const headerHtml = `
+            <div class="desktop-search-results-header">
+                <div class="desktop-search-results-title">Top results</div>
+            </div>
+        `;
+
+        let bodyHtml = '';
+        if (totalCount === 0) {
+            const suggestions = ['Projects', 'Skills', 'Education', 'Certifications', 'Contact', 'Services'];
+            bodyHtml = `
+                <div class="desktop-search-no-results">No results found</div>
+                <div class="desktop-search-suggestions" aria-label="Try searching">
+                    ${suggestions.map(s => `<button type=\"button\" class=\"suggestion-chip\" data-q=\"${s}\">${s}</button>`).join('')}
+                </div>
+            `;
+        } else {
+            currentDesktopResultIndex = -1;
+            bodyHtml = results.map((result, idx) => `
+                <div class="desktop-search-result-item" data-index="${idx}" data-link="${result.item.link}">
+                    <div class="desktop-search-result-title">${highlightMatches(result.item.title, query)}</div>
+                    <div class="desktop-search-result-description">${highlightMatches(result.item.description, query)}</div>
+                </div>
+            `).join('');
+        }
+
+        // No footer on desktop
+        const footerHtml = '';
+
+        // Wrap body in scrollable container
+        container.innerHTML = headerHtml + `<div class="desktop-search-results-body">${bodyHtml}</div>` + footerHtml;
+
+        container.classList.add('active');
+
+        // No View all buttons to wire up
+
+        // Wire suggestion chips
+        const parentSearch = container.closest('.desktop-search');
+        const parentInput = parentSearch ? parentSearch.querySelector('.search-input') : null;
+        container.querySelectorAll('.suggestion-chip').forEach(chip => {
+            chip.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const q = chip.getAttribute('data-q') || '';
+                if (parentInput) parentInput.value = q;
+                showDesktopSearchResults(q, container);
+            });
+        });
+
+        // Add click handlers to results
+        container.querySelectorAll('.desktop-search-result-item').forEach(el => {
+            el.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const link = el.getAttribute('data-link');
+                addRecentSearch(query);
+                navigateToLink(link);
+                container.classList.remove('active');
+            });
+        });
+    }
+
+    // Helper function to navigate to different link types
+    function navigateToLink(link) {
+        if (link.includes('.pdf') && !link.toLowerCase().includes('download')) {
+            window.open('pdf-viewer.html?file=' + encodeURIComponent(link), '_blank', 'noopener');
+        } else if (link.includes('download')) {
+            const tempLink = document.createElement('a');
+            tempLink.href = link;
+            tempLink.download = link.split('/').pop();
+            tempLink.style.display = 'none';
+            document.body.appendChild(tempLink);
+            tempLink.click();
+            document.body.removeChild(tempLink);
+        } else {
+            window.location.href = link;
+        }
+    }
+
+    // Debounced search for desktop
+    const debouncedDesktopSearch = debounce((query, container) => {
+        showDesktopSearchResults(query, container);
+    }, 300);
 
     desktopSearchInputs.forEach(input => {
-        // toggle clear button visibility
         const container = input.closest('.desktop-search');
         const clearBtn = container?.querySelector('.search-clear');
+        const resultsContainer = container?.querySelector('.desktop-search-results');
+
+        // Toggle clear button visibility
         const toggleClear = () => {
             if (!clearBtn) return;
             const show = input.value.trim().length > 0;
             clearBtn.hidden = !show;
         };
-        input.addEventListener('input', toggleClear);
-        // initialize
+        input.addEventListener('input', (e) => {
+            toggleClear();
+            const query = e.target.value.trim();
+            if (!isDesktop) {
+                // Do not show dropdown on non-desktop
+                resultsContainer?.classList.remove('active');
+                return;
+            }
+            if (query.length >= 2) {
+                debouncedDesktopSearch(query, resultsContainer);
+            } else {
+                resultsContainer?.classList.remove('active');
+            }
+        });
         toggleClear();
 
+        // Handle keyboard navigation
+        input.addEventListener('keydown', (e) => {
+            if (!isDesktop) return; // desktop-only navigation
+            if (!resultsContainer) return;
+            const items = Array.from(resultsContainer.querySelectorAll('.desktop-search-result-item'));
+            
+            if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                if (!items.length) return;
+                currentDesktopResultIndex = (currentDesktopResultIndex + 1) % items.length;
+                items.forEach((el, i) => el.classList.toggle('active', i === currentDesktopResultIndex));
+                items[currentDesktopResultIndex].scrollIntoView({ block: 'nearest' });
+            } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                if (!items.length) return;
+                currentDesktopResultIndex = (currentDesktopResultIndex - 1 + items.length) % items.length;
+                items.forEach((el, i) => el.classList.toggle('active', i === currentDesktopResultIndex));
+                items[currentDesktopResultIndex].scrollIntoView({ block: 'nearest' });
+            } else if (e.key === 'Enter') {
+                e.preventDefault();
+                const active = items[currentDesktopResultIndex] || items[0];
+                if (active) {
+                    const link = active.getAttribute('data-link');
+                    addRecentSearch(input.value.trim());
+                    navigateToLink(link);
+                    resultsContainer.classList.remove('active');
+                }
+            } else if (e.key === 'Escape') {
+                resultsContainer.classList.remove('active');
+                currentDesktopResultIndex = -1;
+            }
+        });
+
+        // Show results on focus if there's a query (desktop only)
+        input.addEventListener('focus', () => {
+            if (!isDesktop) return;
+            const query = input.value.trim();
+            if (query.length >= 2 && resultsContainer) {
+                showDesktopSearchResults(query, resultsContainer);
+            }
+        });
+
+        // On non-desktop, Enter opens the modal with results
         input.addEventListener('keypress', (e) => {
+            if (isDesktop) return;
             if (e.key === 'Enter') {
-                const query = input.value.trim();
-                if (query.length < 4) {
-                    // Show inline message for validation
-                    showDesktopSearchMessage(input, 'Please enter at least 4 characters to search', true);
+                const q = input.value.trim();
+                if (q.length < 2) {
+                    showDesktopSearchMessage(input, 'Please enter at least 2 characters to search', true);
                     return;
                 }
                 openSearchModal();
                 setTimeout(() => {
-                    searchModalInput.value = input.value;
-                    doSearch(input.value);
+                    if (searchModalInput) {
+                        searchModalInput.value = q;
+                        doSearch(q);
+                    }
                 }, 150);
             }
         });
@@ -588,32 +771,50 @@ document.addEventListener('DOMContentLoaded', () => {
     desktopSearchButtons.forEach(button => {
         button.addEventListener('click', () => {
             const input = button.closest('.desktop-search')?.querySelector('.search-input');
-            if (input && input.value.trim()) {
-                const query = input.value.trim();
-                if (query.length < 4) {
-                    showDesktopSearchMessage(input, 'Please enter at least 4 characters to search', true);
-                    return;
-                }
+            const resultsContainer = button.closest('.desktop-search')?.querySelector('.desktop-search-results');
+            if (!input) return;
+            const query = input.value.trim();
+            if (query.length < 2) {
+                showDesktopSearchMessage(input, 'Please enter at least 2 characters to search', true);
+                return;
+            }
+            if (isDesktop && resultsContainer) {
+                showDesktopSearchResults(query, resultsContainer);
+            } else {
+                // Non-desktop: open modal flow
                 openSearchModal();
                 setTimeout(() => {
-                    searchModalInput.value = input.value;
-                    doSearch(input.value);
+                    if (searchModalInput) {
+                        searchModalInput.value = query;
+                        doSearch(query);
+                    }
                 }, 150);
-            } else {
-                openSearchModal();
             }
         });
     });
 
     desktopSearchClears.forEach(btn => {
         btn.addEventListener('click', () => {
-            const input = btn.parentElement?.querySelector('.search-input');
+            const container = btn.closest('.desktop-search');
+            const input = container?.querySelector('.search-input');
+            const resultsContainer = container?.querySelector('.desktop-search-results');
             if (input) {
                 input.value = '';
                 btn.hidden = true;
                 input.focus();
             }
+            if (resultsContainer) {
+                resultsContainer.classList.remove('active');
+            }
         });
+    });
+
+    // Close dropdown when clicking outside (desktop only)
+    document.addEventListener('click', (e) => {
+        if (!isDesktop) return;
+        if (!e.target.closest('.desktop-search')) {
+            hideAllDesktopDropdowns();
+        }
     });
 
     // Build index after DOM is ready

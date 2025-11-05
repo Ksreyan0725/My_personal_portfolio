@@ -55,6 +55,8 @@
                 <button class="search-button" aria-label="Search">
                     <img src="Assets/Images.icons/search.png" alt="Search" class="search-icon-img" />
                 </button>
+                <!-- Desktop Search Dropdown Results -->
+                <div class="desktop-search-results" id="desktopSearchResults"></div>
             </div>
 
             <!-- Mobile Search Icon -->
@@ -76,6 +78,29 @@
             </button>
         </div>
     </nav>
+
+    <!-- ==================== Search Popup Modal ==================== -->
+    <div class="search-modal" id="searchModal" role="dialog" aria-label="Search modal">
+        <div class="search-modal-content">
+            <div class="search-modal-header">
+                <button class="search-modal-close" id="searchModalClose" aria-label="Close search">✕</button>
+            </div>
+            <div class="search-modal-body">
+                <div class="search-modal-input-wrapper">
+                    <input type="search" class="search-modal-input" id="searchModalInput" placeholder="Search projects, skills, certifications..." aria-label="Search">
+                    <button class="search-modal-button" id="searchModalButton" aria-label="Search">
+                        <img src="Assets/Images.icons/search.png" alt="Search" class="search-modal-icon-img" />
+                    </button>
+                </div>
+                <div class="search-results" id="searchResults">
+                    <!-- Search results will appear here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Search Modal Overlay -->
+    <div class="search-modal-overlay" id="searchModalOverlay"></div>
 
     <!-- Sidebar Menu (Mobile) -->
     <aside class="sidebar-menu" id="sidebarMenu" role="navigation" aria-label="Mobile navigation">
