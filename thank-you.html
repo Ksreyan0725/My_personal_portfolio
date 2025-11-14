@@ -4,9 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Thank You - Kumar Sreyan Pattanayak</title>
+    <link rel="icon" type="image/png" href="Assets/Images.icons/favicon.png" sizes="64x64" />
     
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" href="Assets/Images.icons/favicon.png" sizes="64x64">
     <style>
         html, body {
             margin: 0;
@@ -30,7 +29,6 @@
             color: #FFFFFF !important;
         }
         
-        /* Scoped background cleanup: avoid global resets to prevent side effects */
         html, body, main, .thank-you-content-wrapper, .thank-you-button, .theme-toggle, .theme-toggle-container, footer {
             background: transparent;
         }
@@ -58,14 +56,17 @@
             gap: 8px;
             font-size: 14px;
             transition: all 0.3s ease;
+            color: #000000;
         }
 
         body[data-theme="dark"] .theme-toggle {
             border-color: rgba(255, 255, 255, 0.2);
+            color: #FFFFFF;
         }
 
         .theme-toggle:hover {
             border-color: rgba(99, 102, 241, 0.5);
+            transform: scale(1.05);
         }
 
         .theme-icon {
@@ -73,60 +74,8 @@
             opacity: 0.8;
         }
 
-        .theme-text {
-            font-weight: 500;
-            border: 2px solid currentColor;
-            border-radius: 50%;
-            padding: 0;
-            cursor: pointer;
-            font-size: 1.2rem;
-            transition: all 0.3s ease;
-            width: 45px;
-            height: 45px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .theme-toggle::before {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            border: 2px solid currentColor;
-            border-radius: 50%;
-            animation: pulse 2s infinite;
-            opacity: 0;
-        }
-
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
-                opacity: 0.5;
-            }
-            100% {
-                transform: scale(1.5);
-                opacity: 0;
-            }
-        }
-
-        .theme-toggle:hover {
-            transform: scale(1.1);
-        }
-
-        .theme-toggle:hover::before {
-            animation: none;
-        }
-
-        .theme-text {
-            display: none;
-        }
-
-        .theme-icon {
-            position: relative;
-            z-index: 1;
+        *:focus {
+            outline: none !important;
         }
 
         main {
@@ -219,12 +168,6 @@
             opacity: 0.9;
         }
 
-        .thank-you-button span {
-            position: relative;
-            z-index: 1;
-        }
-
-        /* Connect With Us + Social layout (from thank-you-page 1.html) */
         .divider {
             width: 100%;
             height: 1px;
@@ -254,7 +197,7 @@
             width: 48px;
             height: 48px;
             border-radius: 50%;
-            background: #ffffff !important; /* override global reset */
+            background: #ffffff !important;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -265,13 +208,12 @@
         }
 
         body[data-theme="dark"] .social-icons a {
-            background: #1e1e1e !important;
-            color: #a0a0a0;
+            background: #2a2a2a !important;
+            color: #ffffff;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
-            border-color: rgba(255,255,255,0.08);
+            border-color: rgba(255,255,255,0.15);
         }
 
-        /* Hover/focus animation */
         .social-icons a:hover,
         .social-icons a:focus-visible {
             transform: translateY(-3px) scale(1.06);
@@ -300,11 +242,6 @@
             filter: brightness(1.08) contrast(1.05);
         }
 
-        /* Remove focus outline color */
-        *:focus {
-            outline: none !important;
-        }
-
         @keyframes scaleIn {
             from { 
                 transform: scale(0); 
@@ -319,17 +256,6 @@
         @keyframes bounce {
             0%, 100% { transform: translateY(0) rotate(0deg); }
             50% { transform: translateY(-10px) rotate(5deg); }
-        }
-
-        @keyframes floatPanel {
-            0%, 100% { 
-                transform: translateY(0);
-                box-shadow: 0 8px 32px 0 var(--glass-shadow);
-            }
-            50% { 
-                transform: translateY(-10px);
-                box-shadow: 0 12px 48px 0 var(--glass-shadow);
-            }
         }
 
         @keyframes fadeInUp {
@@ -348,19 +274,13 @@
                 opacity: 0;
                 transform: translateY(10px);
             }
-            to { 
+            to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
 
-        /* Responsive adjustments */
         @media (max-width: 480px) {
-            .thank-you-panel {
-                margin: 2rem auto;
-                padding: 2rem 1.5rem;
-            }
-
             .thank-you-actions {
                 flex-direction: column;
                 gap: 1rem;
@@ -377,7 +297,7 @@
     <div class="page-frame">
     <!-- Theme Toggle Button -->
     <div class="theme-toggle-container">
-        <button class="theme-toggle" id="themeToggle">
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
             <span class="theme-icon">⚙️</span>
         </button>
     </div>
@@ -396,11 +316,11 @@
                     I'll review your message and get back to you as soon as possible.
                 </p>
                 <div class="thank-you-actions">
-                    <a href="#" class="thank-you-button">
+                    <a href="index.html" class="thank-you-button">
                         <span>←</span> Back to Home
                     </a>
-                    <a href="maintenance.html" class="thank-you-button">
-                        <span>✉</span> Contact Us
+                    <a href="service.html" class="thank-you-button">
+                        <span>✉</span> Services 
                     </a>
                 </div>
 
@@ -408,115 +328,66 @@
                 <div class="divider"></div>
                 <p class="social-text">Connect With Us</p>
                 <div class="social-icons" aria-label="Social media links">
-                    <!-- <a href="mailto:sreyanpattanayak246@gmail.com" aria-label="Gmail">
-                        <img src="Assets/Images.icons/gmail.png" alt="Gmail" class="social-icon" />
-                    </a>
-                    <a href="mailto:sreyanpattanayak@zohomail.com" aria-label="Zoho Mail">
-                        <img src="Assets/Images.icons/zohomail.png" alt="Zoho Mail" class="social-icon" />
-                    </a> -->
                     <a href="https://github.com/Ksreyan0725" target="_blank" rel="noopener" aria-label="GitHub">
                         <img src="Assets/Images.icons/github.png" alt="GitHub" class="social-icon" />
                     </a>
                     <a href="https://www.linkedin.com/in/kumar-sreyan-pattanayak-81a495230" target="_blank" rel="noopener" aria-label="LinkedIn">
                         <img src="Assets/Images.icons/linkedin.png" alt="LinkedIn" class="social-icon" />
                     </a>
-                    <a href="https://teams.microsoft.com/l/chat/0/0?users=opener" target="_blank" rel="noopener" aria-label="Microsoft Teams">
-                        <img src="Assets/Images.icons/teams.png" alt="Microsoft Teams" class="social-icon" />
-                    </a>
-                    <a href="https://x.com/SreyanPattanay5?t=oXoHwnGs9M9e37zh_Vsd5A&s=09" target="_blank" rel="noopener" aria-label="X">
+                    <a href="https://x.com/SreyanPattanay5" target="_blank" rel="noopener" aria-label="X">
                         <img src="Assets/Images.icons/X.png" alt="X" class="social-icon" />
-                    </a>
-                    <!-- <a href="https://t.me/SreyanPattanayak" target="_blank" rel="noopener" aria-label="Telegram">
-                        <img src="Assets/Images.icons/telegram.png" alt="Telegram" class="social-icon" />
-                    </a>
-                    <a href="https://www.instagram.com/p_a_p_u_n01_?igsh=aWwyZnhicTRuaTI3" target="_blank" rel="noopener" aria-label="Instagram">
-                        <img src="Assets/Images.icons/instagram.png" alt="Instagram" class="social-icon" /> -->
                     </a>
                 </div>
             </div>
         </div>
     </main>
 
-        <!-- Footer -->
-        <footer style="text-align: center; padding: 2rem 0; opacity: 0.8;">
-            <p><strong>Copyright © 2025</strong> All rights reserved | Made with ❤️</p>
-        </footer>
-    
+    <!-- Footer -->
+    <footer style="text-align: center; padding: 2rem 0; opacity: 0.8;">
+        <p><strong>Copyright © 2025</strong> All rights reserved | Made with ❤️</p>
+    </footer>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Theme handling
-            const themeToggleBtn = document.getElementById('themeToggle');
-            const themeIcon = themeToggleBtn.querySelector('.theme-icon');
-            let currentTheme = 'system';
+        let currentTheme = 'system';
+        const themeToggleBtn = document.getElementById('themeToggle');
+        const themeIcon = themeToggleBtn.querySelector('.theme-icon');
 
-            // Function to get system theme
-            function getSystemTheme() {
-                return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        function getSystemTheme() {
+            return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+
+        function applyTheme(theme) {
+            if (theme === 'system') {
+                document.body.setAttribute('data-theme', getSystemTheme());
+            } else {
+                document.body.setAttribute('data-theme', theme);
             }
 
-            // Function to update theme
-            function updateTheme(theme) {
-                // Remove any existing theme
-                document.body.removeAttribute('data-theme');
-                
-                // Set new theme after a brief delay to ensure clean transition
-                setTimeout(() => {
-                    if (theme === 'system') {
-                        document.body.setAttribute('data-theme', getSystemTheme());
-                    } else {
-                        document.body.setAttribute('data-theme', theme);
-                    }
-                }, 50);
+            themeIcon.textContent = {
+                'system': '⚙️',
+                'light': '🔆',
+                'dark': '🌙'
+            }[theme];
 
-                // Update icon
-                themeIcon.textContent = {
-                    'system': '⚙️',
-                    'light': '🔆',
-                    'dark': '🌙'
-                }[theme];
+            currentTheme = theme;
+        }
 
-                currentTheme = theme;
-                localStorage.setItem('theme', theme);
+        // Initialize with system theme
+        applyTheme('system');
+
+        // Listen for system theme changes
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+            if (currentTheme === 'system') {
+                applyTheme('system');
             }
+        });
 
-            // Listen for system theme changes
-            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-                if (currentTheme === 'system') {
-                    updateTheme('system');
-                }
-            });
-
-            // Reapply theme when page becomes visible (handles browser minimize/restore)
-            document.addEventListener('visibilitychange', () => {
-                if (!document.hidden) {
-                    const storedTheme = localStorage.getItem('theme') || 'system';
-                    updateTheme(storedTheme);
-                }
-            });
-
-            // Reapply theme when window regains focus (handles browser reopen)
-            window.addEventListener('focus', () => {
-                const storedTheme = localStorage.getItem('theme') || 'system';
-                updateTheme(storedTheme);
-            });
-
-            // Initialize theme
-            const savedTheme = localStorage.getItem('theme') || 'system';
-            updateTheme(savedTheme);
-
-            // Theme toggle click handler
-            themeToggleBtn.addEventListener('click', () => {
-                const themes = ['system', 'light', 'dark'];
-                const currentIndex = themes.indexOf(currentTheme);
-                const nextTheme = themes[(currentIndex + 1) % themes.length];
-                updateTheme(nextTheme);
-            });
-
-            // Force theme check on load
-            setTimeout(() => {
-                updateTheme(currentTheme);
-            }, 0);
+        // Theme toggle click handler
+        themeToggleBtn.addEventListener('click', () => {
+            const themes = ['system', 'light', 'dark'];
+            const currentIndex = themes.indexOf(currentTheme);
+            const nextTheme = themes[(currentIndex + 1) % themes.length];
+            applyTheme(nextTheme);
         });
     </script>
     </div>
