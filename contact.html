@@ -14,7 +14,236 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
-    <style>
+  <script src="script.js" defer></script>
+  </head>
+  <body>
+    <div class="page-frame">
+    <div class="container">
+      <header class="header">
+        <h1>Contact Us</h1>
+        <div class="nav-container">
+          <div class="search-container">
+            <input
+              type="search"
+              class="search-input"
+              placeholder="Search..."
+              aria-label="Search"
+            />
+            <button class="search-clear" aria-label="Clear search" hidden>✕</button>
+            <button class="search-button" aria-label="Search">
+              <img src="Assets/Images.icons/search.png" alt="Search" class="search-icon-img" />
+            </button>
+            <!-- Desktop Search Dropdown Results -->
+            <div class="desktop-search-results" id="desktopSearchResults"></div>
+          </div>
+          <button class="theme-toggle" id="themeToggle">
+            <span class="theme-icon">⚙️</span>
+            <span class="theme-text">System</span>
+          </button>
+        </div>
+      </header>
+      <div class="content">
+        <div class="contact-info">
+          <h2>Contact Information</h2>
+
+          <div class="info-item">
+            <i class="fas fa-envelope"></i>
+            <div>
+              <label>Email</label>
+              <span>sreyanpattanayak@zohomail.com</span>
+            </div>
+          </div>
+
+          <div class="info-item">
+            <i class="fas fa-phone"></i>
+            <div>
+              <label>Phone</label>
+              <span>+91 8117858010</span>
+            </div>
+          </div>
+
+          <div class="info-item">
+            <i class="fas fa-map-marker-alt"></i>
+            <div>
+              <label>Address</label>
+              <span
+                >In Front Of Khuthari Temple, Brahmin Street, patrapur, 761004,
+                ganjam, odisha, india.</span
+              >
+            </div>
+          </div>
+
+          <div class="social-links">
+            <h3>Connect With Us</h3>
+            <div class="social-icons">
+              <!-- <a
+                href="mailto:sreyanpattanayak@zohomail.com"
+                title="Gmail"
+                rel="noopener"
+              >
+                <img
+                  src="Assets/Images.icons/gmail.png"
+                  alt="Gmail"
+                  class="social-icon"
+                />
+              </a>
+
+              <a
+                href="mailto:sreyanpattanayak@zohomail.com"
+                title="Zoho Mail"
+                rel="noopener"
+              >
+                <img
+                  src="Assets/Images.icons/zohomail.png"
+                  alt="Zoho Mail"
+                  class="social-icon"
+                />
+              </a> -->
+<!-- 
+              <a
+                href="https://github.com/Ksreyan0725"
+                title="GitHub"
+                target="_blank"
+                rel="noopener"
+              > -->
+                <!-- <img
+                  src="Assets/Images.icons/github.png"
+                  alt="GitHub"
+                  class="social-icon"
+                />
+              </a> -->
+               
+               <a
+                href="https://www.linkedin.com/in/kumar-sreyan-pattanayak-81a495230"
+                title="LinkedIn"
+                target="_blank"
+                rel="noopener"
+              >
+                <img
+                  src="Assets/Images.icons/linkedin.png"
+                  alt="LinkedIn"
+                  class="social-icon"
+                />
+              </a>
+              
+              <a
+                href="https://www.facebook.com/share/1Cj1miKofw/"
+                title="Facebook"
+                target="_blank"
+                rel="noopener"
+              >
+                <img
+                  src="Assets/Images.icons/facebook.png"
+                  alt="Facebook"
+                  class="social-icon"
+                />
+              </a>
+
+              <a
+                href="https://x.com/SreyanPattanay5?t=oXoHwnGs9M9e37zh_Vsd5A&s=09"
+                title="X"
+                target="_blank"
+                rel="noopener"
+              >
+                <img
+                  src="Assets/Images.icons/X.png"
+                  alt="X"
+                  class="social-icon"
+                />
+              </a>
+
+              <a
+                href="https://www.instagram.com/p_a_p_u_n01_?igsh=aWwyZnhicTRuaTI3"
+                title="Instagram"
+                target="_blank"
+                rel="noopener"
+              >
+                <img
+                  src="Assets/Images.icons/instagram.png"
+                  alt="Instagram"
+                  class="social-icon"
+                />
+              </a>
+
+              <a
+                href="#"
+                title="Telegram"
+                target="_blank"
+                rel="noopener"
+              >
+                <img
+                  src="Assets/Images.icons/telegram.png"
+                  alt="Telegram"
+                  class="social-icon"
+                />
+              </a>
+
+              <!-- <a
+                href="https://teams.microsoft.com/l/chat/0/0?users=opener"
+                title="Microsoft Teams"
+                target="_blank"
+                rel="noopener"
+              >
+                <img
+                  src="Assets/Images.icons/teams.png"
+                  alt="Microsoft Teams"
+                  class="social-icon"
+                />
+              </a> -->
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-form">
+          <h3
+            style="margin-bottom: 30px; font-size: 1.8rem; color: var(--accent)"
+          >
+            Send Me a Message
+          </h3>
+          <!-- Contact Form -->
+          <form
+            id="contactForm"
+            action="https://formspree.io/f/mzzjopyn"
+            method="POST"
+          >
+            <div class="form-group">
+              <label for="name">Name </label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                required
+                placeholder="Enter your full name"
+              />
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                required
+                placeholder="Enter your email"
+              />
+            </div>
+            <div class="form-group">
+              <label for="message">Message </label>
+              <textarea
+                id="message"
+                name="message"
+                rows="8"
+                required
+                placeholder="Enter your message"
+              ></textarea>
+            </div>
+            <input type="hidden" name="_subject" value="New contact form submission from portfolio" />
+            <button type="submit" class="submit-button" aria-label="Submit form">Submit</button>
+            <p id="form-status"></p>
+          </form>
+        </div>
+      </div>
+    </div>
+<style>
       * {
         margin: 0;
         padding: 0;
@@ -780,235 +1009,6 @@
         }
       }
     </style>
-  </head>
-  <body>
-    <div class="page-frame">
-    <div class="container">
-      <header class="header">
-        <h1>Contact Us</h1>
-        <div class="nav-container">
-          <div class="search-container">
-            <input
-              type="search"
-              class="search-input"
-              placeholder="Search..."
-              aria-label="Search"
-            />
-            <button class="search-clear" aria-label="Clear search" hidden>✕</button>
-            <button class="search-button" aria-label="Search">
-              <img src="Assets/Images.icons/search.png" alt="Search" class="search-icon-img" />
-            </button>
-            <!-- Desktop Search Dropdown Results -->
-            <div class="desktop-search-results" id="desktopSearchResults"></div>
-          </div>
-          <button class="theme-toggle" id="themeToggle">
-            <span class="theme-icon">⚙️</span>
-            <span class="theme-text">System</span>
-          </button>
-        </div>
-      </header>
-      <div class="content">
-        <div class="contact-info">
-          <h2>Contact Information</h2>
-
-          <div class="info-item">
-            <i class="fas fa-envelope"></i>
-            <div>
-              <label>Email</label>
-              <span>sreyanpattanayak@zohomail.com</span>
-            </div>
-          </div>
-
-          <div class="info-item">
-            <i class="fas fa-phone"></i>
-            <div>
-              <label>Phone</label>
-              <span>+91 8117858010</span>
-            </div>
-          </div>
-
-          <div class="info-item">
-            <i class="fas fa-map-marker-alt"></i>
-            <div>
-              <label>Address</label>
-              <span
-                >In Front Of Khuthari Temple, Brahmin Street, patrapur, 761004,
-                ganjam, odisha, india.</span
-              >
-            </div>
-          </div>
-
-          <div class="social-links">
-            <h3>Connect With Us</h3>
-            <div class="social-icons">
-              <!-- <a
-                href="mailto:sreyanpattanayak@zohomail.com"
-                title="Gmail"
-                rel="noopener"
-              >
-                <img
-                  src="Assets/Images.icons/gmail.png"
-                  alt="Gmail"
-                  class="social-icon"
-                />
-              </a>
-
-              <a
-                href="mailto:sreyanpattanayak@zohomail.com"
-                title="Zoho Mail"
-                rel="noopener"
-              >
-                <img
-                  src="Assets/Images.icons/zohomail.png"
-                  alt="Zoho Mail"
-                  class="social-icon"
-                />
-              </a> -->
-
-              <a
-                href="https://github.com/Ksreyan0725"
-                title="GitHub"
-                target="_blank"
-                rel="noopener"
-              >
-                <img
-                  src="Assets/Images.icons/github.png"
-                  alt="GitHub"
-                  class="social-icon"
-                />
-              </a>
-
-              <a
-                href="https://www.facebook.com/share/1Cj1miKofw/"
-                title="Facebook"
-                target="_blank"
-                rel="noopener"
-              >
-                <img
-                  src="Assets/Images.icons/facebook.png"
-                  alt="Facebook"
-                  class="social-icon"
-                />
-              </a>
-
-              <a
-                href="https://www.linkedin.com/in/kumar-sreyan-pattanayak-81a495230"
-                title="LinkedIn"
-                target="_blank"
-                rel="noopener"
-              >
-                <img
-                  src="Assets/Images.icons/linkedin.png"
-                  alt="LinkedIn"
-                  class="social-icon"
-                />
-              </a>
-
-              <a
-                href="https://x.com/SreyanPattanay5?t=oXoHwnGs9M9e37zh_Vsd5A&s=09"
-                title="X"
-                target="_blank"
-                rel="noopener"
-              >
-                <img
-                  src="Assets/Images.icons/X.png"
-                  alt="X"
-                  class="social-icon"
-                />
-              </a>
-
-              <a
-                href="https://www.instagram.com/p_a_p_u_n01_?igsh=aWwyZnhicTRuaTI3"
-                title="Instagram"
-                target="_blank"
-                rel="noopener"
-              >
-                <img
-                  src="Assets/Images.icons/instagram.png"
-                  alt="Instagram"
-                  class="social-icon"
-                />
-              </a>
-
-              <a
-                href="https://t.me/SreyanPattanayak"
-                title="Telegram"
-                target="_blank"
-                rel="noopener"
-              >
-                <img
-                  src="Assets/Images.icons/telegram.png"
-                  alt="Telegram"
-                  class="social-icon"
-                />
-              </a>
-
-              <a
-                href="https://teams.microsoft.com/l/chat/0/0?users=opener"
-                title="Microsoft Teams"
-                target="_blank"
-                rel="noopener"
-              >
-                <img
-                  src="Assets/Images.icons/teams.png"
-                  alt="Microsoft Teams"
-                  class="social-icon"
-                />
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <div class="contact-form">
-          <h3
-            style="margin-bottom: 30px; font-size: 1.8rem; color: var(--accent)"
-          >
-            Send Me a Message
-          </h3>
-          <!-- Contact Form -->
-          <form
-            id="contactForm"
-            action="https://formspree.io/f/mzzjopyn"
-            method="POST"
-          >
-            <div class="form-group">
-              <label for="name">Name </label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                required
-                placeholder="Enter your full name"
-              />
-            </div>
-            <div class="form-group">
-              <label for="email">Email</label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                required
-                placeholder="Enter your email"
-              />
-            </div>
-            <div class="form-group">
-              <label for="message">Message </label>
-              <textarea
-                id="message"
-                name="message"
-                rows="8"
-                required
-                placeholder="Enter your message"
-              ></textarea>
-            </div>
-            <input type="hidden" name="_subject" value="New contact form submission from portfolio" />
-            <button type="submit" class="submit-button" aria-label="Submit form">Submit</button>
-            <p id="form-status"></p>
-          </form>
-        </div>
-      </div>
-    </div>
-
     <script>
       const themeToggle = document.getElementById("themeToggle");
       const html = document.documentElement;
@@ -1016,7 +1016,7 @@
       const themeText = themeToggle.querySelector(".theme-text");
 
       const themes = [
-        { name: "system", icon: "💻", text: "System" },
+        { name: "system", icon: "⚙️", text: "System" },
         { name: "light", icon: "☀️", text: "Light" },
         { name: "dark", icon: "🌙", text: "Dark" },
       ];

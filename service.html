@@ -1,156 +1,210 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Services - Kumar Sreyan Pattanayak</title>
-    <link rel="icon" type="image/png" href="Assets/Images.icons/favicon.png" sizes="64x64" />
-    
-    <!-- Google Fonts - Inter family for modern typography -->
+
+    <link
+      rel="icon"
+      type="image/png"
+      href="Assets/Images.icons/favicon.png"
+      sizes="64x64"
+    />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-    
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
     <link rel="stylesheet" href="style.css" />
-    
-    <!-- Early theme initialization to prevent flash of wrong theme -->
+        <!-- ==================== Maintenance Mode (Currently Disabled) ==================== -->
+    <!-- Uncomment below lines to enable maintenance mode redirection -->
+    <meta http-equiv="refresh" content="0; url=service.html">
+    <script>window.location.replace('404.html');</script> 
+
+
     <script>
-        (function() {
-            const storedTheme = localStorage.getItem('theme') || 'system';
-            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-            const effectiveTheme = storedTheme === 'system' ? 
-                (prefersDark ? 'dark' : 'light') : storedTheme;
-            document.documentElement.setAttribute('data-theme', effectiveTheme);
-            document.body.classList.toggle('darkmode', effectiveTheme === 'dark');
-        })();
+      (function () {
+        const storedTheme = localStorage.getItem("theme") || "system";
+        const prefersDark = window.matchMedia(
+          "(prefers-color-scheme: dark)"
+        ).matches;
+        const effectiveTheme =
+          storedTheme === "system"
+            ? prefersDark
+              ? "dark"
+              : "light"
+            : storedTheme;
+        document.documentElement.setAttribute("data-theme", effectiveTheme);
+        document.body.classList.toggle("darkmode", effectiveTheme === "dark");
+      })();
     </script>
-    
+
     <script src="script.js" defer></script>
-</head>
-<body>
+  </head>
+  <body>
     <div class="page-frame">
-    <!-- Navigation Bar -->
-    <nav id="navbar" role="navigation" aria-label="Main navigation">
+      <nav id="navbar" role="navigation" aria-label="Main navigation">
         <div class="nav-container">
-            <!-- Logo/Brand -->
-            <div class="nav-logo" onclick="location.href='index.html'" role="button" tabindex="0" aria-label="Go to home">
-                <strong><i>KSP</i></strong>
-            </div>
+          <div
+            class="nav-logo"
+            onclick="location.href='index.html'"
+            role="button"
+            tabindex="0"
+            aria-label="Go to home"
+          >
+            <strong><i>KSP</i></strong>
+          </div>
 
-            <!-- Desktop Navigation Links -->
-            <ul class="nav-links desktop-nav" role="menubar">
-                <li role="none"><a href="index.html#home" role="menuitem">Home</a></li>
-                <li role="none"><a href="index.html#education" role="menuitem">Education</a></li>
-                <li role="none"><a href="index.html#projects" role="menuitem">Projects</a></li>
-                <li role="none"><a href="index.html#certifications" role="menuitem">Certifications</a></li>
-                <li role="none"><a href="index.html#skills" role="menuitem">Skills</a></li>
-                <li role="none"><a href="contact.html" role="menuitem">Contact</a></li>
-                <li role="none"><a href="service.html" class="active" role="menuitem">Services</a></li>
-            </ul>
+          <ul class="nav-links desktop-nav" role="menubar">
+            <li role="none">
+              <a href="index.html#home" role="menuitem">Home</a>
+            </li>
+            <li role="none">
+              <a href="index.html#education" role="menuitem">Education</a>
+            </li>
+            <li role="none">
+              <a href="index.html#projects" role="menuitem">Projects</a>
+            </li>
+            <li role="none">
+              <a href="index.html#certifications" role="menuitem"
+                >Certifications</a
+              >
+            </li>
+            <li role="none">
+              <a href="index.html#skills" role="menuitem">Skills</a>
+            </li>
+            <li role="none">
+              <a href="contact.html" role="menuitem">Contact</a>
+            </li>
+            <li role="none">
+              <a href="#" class="active" role="menuitem">Services</a>
+            </li>
+          </ul>
 
-            <!-- Search Bar - Desktop -->
-            <div class="search-container desktop-search">
-                <input type="search" class="search-input" placeholder="Search..." aria-label="Search">
-                <button class="search-clear" aria-label="Clear search" hidden>✕</button>
-                <button class="search-button" aria-label="Search">
-                    <img src="Assets/Images.icons/search.png" alt="Search" class="search-icon-img" />
-                </button>
-                <!-- Desktop Search Dropdown Results -->
-                <div class="desktop-search-results" id="desktopSearchResults"></div>
-            </div>
-
-            <!-- Mobile Search Icon -->
-            <button class="mobile-search-icon" id="mobileSearchIcon" aria-label="Search">
-                <img src="Assets/Images.icons/search.png" alt="Search" class="mobile-search-icon-img" />
+          <div class="search-container desktop-search">
+            <input
+              type="search"
+              class="search-input"
+              placeholder="Search..."
+              aria-label="Search"
+            />
+            <button class="search-clear" aria-label="Clear search" hidden>
+              ✕
             </button>
-
-            <!-- Theme Toggle Button -->
-            <div class="theme-selector">
-                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-                    <span class="theme-icon" aria-hidden="true">⚙️</span>
-                    <span class="theme-text">System</span>
-                </button>
-            </div>
-
-            <!-- Mobile Menu Icon (Hamburger) -->
-            <button class="menu-icon" id="menuIcon" aria-label="Toggle menu" aria-expanded="false">
-                <span class="menu-icon-text">☰</span>
+            <button class="search-button" aria-label="Search">
+              <img
+                src="Assets/Images.icons/search.png"
+                alt="Search"
+                class="search-icon-img"
+              />
             </button>
+            <div class="desktop-search-results" id="desktopSearchResults"></div>
+          </div>
+
+          <button
+            class="mobile-search-icon"
+            id="mobileSearchIcon"
+            aria-label="Search"
+          >
+            <img
+              src="Assets/Images.icons/search.png"
+              alt="Search"
+              class="mobile-search-icon-img"
+            />
+          </button>
+
+          <div class="theme-selector">
+            <button
+              class="theme-toggle"
+              id="themeToggle"
+              aria-label="Toggle theme"
+            >
+              <span class="theme-icon" aria-hidden="true">⚙️</span>
+              <span class="theme-text">System</span>
+            </button>
+          </div>
+
+          <button
+            class="menu-icon"
+            id="menuIcon"
+            aria-label="Toggle menu"
+            aria-expanded="false"
+          >
+            <span class="menu-icon-text">☰</span>
+          </button>
         </div>
-    </nav>
+      </nav>
 
-    <!-- ==================== Search Popup Modal ==================== -->
-    <div class="search-modal" id="searchModal" role="dialog" aria-label="Search modal">
-        <div class="search-modal-content">
-            <div class="search-modal-header">
-                <button class="search-modal-close" id="searchModalClose" aria-label="Close search">✕</button>
-            </div>
-            <div class="search-modal-body">
-                <div class="search-modal-input-wrapper">
-                    <input type="search" class="search-modal-input" id="searchModalInput" placeholder="Search projects, skills, certifications..." aria-label="Search">
-                    <button class="search-modal-button" id="searchModalButton" aria-label="Search">
-                        <img src="Assets/Images.icons/search.png" alt="Search" class="search-modal-icon-img" />
-                    </button>
-                </div>
-                <div class="search-results" id="searchResults">
-                    <!-- Search results will appear here -->
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Search Modal Overlay -->
-    <div class="search-modal-overlay" id="searchModalOverlay"></div>
-
-    <!-- Sidebar Menu (Mobile) -->
-    <aside class="sidebar-menu" id="sidebarMenu" role="navigation" aria-label="Mobile navigation">
-        <ul class="sidebar-links" role="menubar">
-            <li role="none"><a href="index.html#home" role="menuitem">Home</a></li>
-            <li role="none"><a href="index.html#education" role="menuitem">Education</a></li>
-            <li role="none"><a href="index.html#projects" role="menuitem">Projects</a></li>
-            <li role="none"><a href="index.html#certifications" role="menuitem">Certifications</a></li>
-            <li role="none"><a href="index.html#skills" role="menuitem">Skills</a></li>
-            <li role="none"><a href="contact.html" role="menuitem">Contact</a></li>
-            <li role="none"><a href="service.html" class="active" role="menuitem">Services</a></li>
-        </ul>
-    </aside>
-    <div class="sidebar-overlay" id="sidebarOverlay"></div>
-
-    <!-- Main Content -->
-    <main class="container" style="padding-top: 100px;">
+      <main class="container" style="padding-top: 100px">
         <section class="section" id="services">
-            <h2 class="section-title">
-                Services
-                <span class="coming-soon-badge">Coming Soon</span>
-            </h2>
-            <p class="section-desc" style="text-align: center; max-width: 700px; margin: 0 auto 40px;">
-                Explore upcoming innovative solutions designed to empower developers and businesses with cutting-edge technology.
-            </p>
-            
-            <div class="services-grid">
-                <div class="service-card" style="grid-column: 1 / -1; max-width: 700px; margin: 0 auto;">
-                    <span class="coming-soon-overlay">Soon</span>
-                    <span class="service-icon">🤖💻</span>
-                    <h3 class="service-title">CodePilot AI IDE</h3>
-                    <p class="service-desc">A revolutionary web-based AI-powered Integrated Development Environment. Code smarter with intelligent suggestions, real-time collaboration, and seamless cloud integration.</p>
-                </div>
-            </div>
+          <h2 class="section-title">
+            Services
+            <span class=""></span>
+          </h2>
+          <div class="services-grid">
+            <div
+              class="service-card"
+              style="grid-column: 1 / -1; max-width: 700px; margin: 0 auto"
+            >
+              <span class="coming-soon-overlay">Soon</span>
+              <span class="service-icon">#</span>
+              <h3 class="service-title">CodePilot AI IDE</h3>
+              <p class="service-desc">
+                A revolutionary web-based AI-powered Integrated Development
+                Environment. Code smarter with intelligent suggestions,
+                real-time collaboration, and seamless cloud integration.
+              </p>
 
-            <!-- CTA Button -->
-            <div style="text-align: center; margin-top: 60px;">
-                <a href="index.html" class="cta-button">Back to Home</a>
+              <!-- NEW BUTTON FOR IDE LANDING PAGE -->
+              <div style="text-align: center; margin-top: 40px">
+                <a href="#" class="ctaa-button" target="_blank"
+                  >Go to IDE</a
+                >
+                <style>
+                  .ctaa-button {
+                    display: inline-flex;
+                    justify-content: center;
+                    align-items: center;
+                    padding: 12px 28px; /* capsule shape */
+                    border-radius: 50px; /* full rounded edges */
+                    border: 2px solid rgba(7,101,156,0.3);   /* before hover */
+                    background: linear-gradient(rgb(98, 60, 60) rgb(79, 114, 79) rgb(55, 55, 136));
+                    color: #d807079a; /* adjust based on your theme */
+                    text-decoration: none;
+                    font-size: 15px;
+                    font-weight: 600;
+                    backdrop-filter: blur(6px); /* frosted glass effect */
+                    transition: 0.3s ease;
+                    position: relative;
+                    z-index: 20;
+                  }
+
+
+                  .ctaa-button:hover {
+                    border-color: rgba(7, 101, 156, 0.8);
+                    transform: translateY(-2px);
+                  }
+                </style>
+              </div>
             </div>
+          </div>
+
+          <div style="text-align: center; margin-top: 60px">
+            <a href="index.html" class="cta-button">Back to Home</a>
+          </div>
         </section>
-    </main>
+      </main>
 
-    <!-- Footer -->
-     <footer role="contentinfo">
+      <footer role="contentinfo">
         <p>
-            <strong>Copyright © 2025</strong> Kumar Sreyan Pattanayak
-            <br>
-            All Rights Reserved | Made with ❤️
+          <strong>Copyright © 2025</strong> Kumar Sreyan Pattanayak<br />
+          All Rights Reserved | Made with ❤️
         </p>
-    </footer>
+      </footer>
     </div>
-</body>
+  </body>
 </html>

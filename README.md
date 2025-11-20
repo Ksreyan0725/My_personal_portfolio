@@ -18,26 +18,15 @@ Always learning. Always building. Always growing.
 
 Skills & Technologies
 ---------------------
-- Languages: C, C++, Java, Python, JavaScript  
-- Frontend: HTML5, CSS3, React.js, TailwindCSS  
+- Frontend: HTML5, CSS3, Javascript 
 - Backend: Formspree
-- Databases: ........
 - Tools & Platforms: Git, GitHub, VS Code, GitHub Pages  
 
 ------------------------------------------------------------
 
-Featured Projects
------------------
-
-Portfolio Website  
-Description: My personal portfolio showcasing my projects and skills.  
-Tech Used: HTML, CSS, JavaScript  
-Source Code: https://github.com/Ksreyan0725/My_personal_portfolio
-
-
 Career Goals
 ------------
-- Strengthen my expertise in DSA, OOP, and full-stack development  
+- Strengthen my expertise in Python and  full-stack development  
 - Build impactful real-world applications  
 - Contribute to open-source projects and collaborate with developers globally  
 
@@ -47,7 +36,6 @@ Contact
 -------
 Email: sreyanpattanayak246@gmail.com
 LinkedIn: www.linkedin.com/in/kumar-sreyan-pattanayak-81a495230
-GitHub: https://github.com/ksreyanportfolio  
 
 ------------------------------------------------------------
 
