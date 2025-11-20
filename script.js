@@ -1100,3 +1100,94 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }, true); // capture phase to intercept early
 });
+
+/* ==================== Mobile Sidebar Swipe Functionality ==================== */
+class MobileSidebarSwipe {
+  constructor() {
+    this.touchStartX = 0;
+    this.touchEndX = 0;
+    this.sidebarMenu = document.querySelector('.sidebar-menu');
+    this.threshold = 50;
+    this.isOpen = false;
+    this.init();
+  }
+
+  init() {
+    document.addEventListener('touchstart', (e) => this.handleTouchStart(e), false);
+    document.addEventListener('touchend', (e) => this.handleTouchEnd(e), false);
+    document.addEventListener('click', (e) => this.handleOutsideClick(e));
+
+    const sidebarLinks = document.querySelectorAll('.sidebar-links a');
+    sidebarLinks.forEach((link) => {
+      link.addEventListener('click', () => this.closeSidebar());
+    });
+
+    const menuIcon = document.querySelector('.menu-icon');
+    if (menuIcon) {
+      menuIcon.addEventListener('click', () => this.toggleSidebar());
+    }
+
+    const closeBtn = document.querySelector('.sidebar-close');
+    if (closeBtn) {
+      closeBtn.addEventListener('click', () => this.closeSidebar());
+    }
+  }
+
+  handleTouchStart(e) {
+    this.touchStartX = e.changedTouches[0].screenX;
+  }
+
+  handleTouchEnd(e) {
+    this.touchEndX = e.changedTouches[0].screenX;
+    this.handleSwipe();
+  }
+
+  handleSwipe() {
+    const swipeDistance = this.touchStartX - this.touchEndX;
+    if (swipeDistance < -this.threshold) {
+      this.openSidebar();
+    }
+    if (swipeDistance > this.threshold) {
+      this.closeSidebar();
+    }
+  }
+
+  openSidebar() {
+    if (!this.isOpen && this.sidebarMenu) {
+      this.sidebarMenu.classList.add('open');
+      this.isOpen = true;
+      document.body.style.overflow = 'hidden';
+    }
+  }
+
+  closeSidebar() {
+    if (this.sidebarMenu) {
+      this.sidebarMenu.classList.remove('open');
+      this.isOpen = false;
+      document.body.style.overflow = '';
+    }
+  }
+
+  toggleSidebar() {
+    if (this.isOpen) {
+      this.closeSidebar();
+    } else {
+      this.openSidebar();
+    }
+  }
+
+  handleOutsideClick(e) {
+    if (
+      this.sidebarMenu &&
+      this.isOpen &&
+      !this.sidebarMenu.contains(e.target) &&
+      !document.querySelector('.menu-icon').contains(e.target)
+    ) {
+      this.closeSidebar();
+    }
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  new MobileSidebarSwipe();
+});
