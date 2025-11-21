@@ -1,8 +1,29 @@
-// Modern Portfolio JavaScript with Ripple Animations
+// Modern Portfolio JavaScrip
 
 // Detect touch devices
 const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
+// Early theme initialization (moved from inline <head> script)
+// Sets `data-theme` immediately and toggles `body.darkmode` as soon as possible
+(function() {
+    try {
+        const storedTheme = localStorage.getItem('theme') || 'system';
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const effectiveTheme = storedTheme === 'system' ? (prefersDark ? 'dark' : 'light') : storedTheme;
+        document.documentElement.setAttribute('data-theme', effectiveTheme);
+        if (document.body) {
+            document.body.classList.toggle('darkmode', effectiveTheme === 'dark');
+        } else {
+            document.addEventListener('DOMContentLoaded', function onLoad() {
+                document.body.classList.toggle('darkmode', effectiveTheme === 'dark');
+                document.removeEventListener('DOMContentLoaded', onLoad);
+            });
+        }
+    } catch (e) {
+        // silent fail - localStorage may be unavailable in some contexts
+        console.warn('Early theme init failed:', e && e.message);
+    }
+})();
 document.addEventListener('DOMContentLoaded', () => {
     const htmlElement = document.documentElement;
     const body = document.body;
@@ -135,54 +156,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /* ==================== Mobile Navigation ==================== */
-    const menuIcon = document.getElementById('menuIcon');
-    const sidebarMenu = document.getElementById('sidebarMenu');
-    const sidebarClose = document.getElementById('sidebarClose');
-    const sidebarOverlay = document.getElementById('sidebarOverlay');
-    const sidebarLinks = document.querySelectorAll('.sidebar-links a');
-
-    // Open sidebar
-    function openSidebar() {
-        sidebarMenu.classList.add('active');
-        sidebarOverlay.classList.add('active');
-        menuIcon.setAttribute('aria-expanded', 'true');
-        document.body.style.overflow = 'hidden'; // Prevent background scrolling
-    }
-
-    // Close sidebar
-    function closeSidebar() {
-        sidebarMenu.classList.remove('active');
-        sidebarOverlay.classList.remove('active');
-        menuIcon.setAttribute('aria-expanded', 'false');
-        document.body.style.overflow = ''; // Restore scrolling
-    }
-
-    // Event listeners
-    if (menuIcon) {
-        menuIcon.addEventListener('click', openSidebar);
-    }
-
-    if (sidebarClose) {
-        sidebarClose.addEventListener('click', closeSidebar);
-    }
-
-    if (sidebarOverlay) {
-        sidebarOverlay.addEventListener('click', closeSidebar);
-    }
-
-    // Close sidebar when clicking a link
-    sidebarLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            closeSidebar();
-        });
-    });
-
-    // Close sidebar on escape key
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && sidebarMenu.classList.contains('active')) {
-            closeSidebar();
-        }
-    });
+    /* Sidebar handling is now managed by MobileSidebarSwipe class below */
+    /* This provides both click and swipe functionality */
 
     /* ==================== Search Modal Functionality ==================== */
     const mobileSearchIcon = document.getElementById('mobileSearchIcon');
@@ -435,6 +410,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // Mobile search icon opens the search modal
     if (mobileSearchIcon) {
         mobileSearchIcon.addEventListener('click', openSearchModal);
+    }
+
+    // Desktop search button opens the search modal
+    const searchButton = document.querySelector('.search-button');
+    if (searchButton) {
+        searchButton.addEventListener('click', openSearchModal);
     }
 
     if (searchModalClose) {
@@ -1078,7 +1059,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Only attempt fetch checks when running over HTTP(S) and same-origin
         if (!isHttpContext()) return;
-
+ 
         let url;
         try { url = new URL(rawHref, location.href); } catch { return; }
 
@@ -1105,16 +1086,26 @@ document.addEventListener('DOMContentLoaded', () => {
 class MobileSidebarSwipe {
   constructor() {
     this.touchStartX = 0;
+    this.touchStartY = 0;
     this.touchEndX = 0;
+    this.touchEndY = 0;
+    this.touchStartTime = 0;
     this.sidebarMenu = document.querySelector('.sidebar-menu');
-    this.threshold = 50;
+    this.threshold = 40; // minimum swipe distance (px)
+    this.velocityThreshold = 0.3; // minimum velocity (px/ms)
     this.isOpen = false;
+    this.isAnimating = false;
     this.init();
   }
 
   init() {
-    document.addEventListener('touchstart', (e) => this.handleTouchStart(e), false);
-    document.addEventListener('touchend', (e) => this.handleTouchEnd(e), false);
+    if (!this.sidebarMenu) {
+      console.error('Sidebar menu element not found');
+      return;
+    }
+
+    document.addEventListener('touchstart', (e) => this.handleTouchStart(e), { passive: true });
+    document.addEventListener('touchend', (e) => this.handleTouchEnd(e), { passive: true });
     document.addEventListener('click', (e) => this.handleOutsideClick(e));
 
     const sidebarLinks = document.querySelectorAll('.sidebar-links a');
@@ -1131,40 +1122,106 @@ class MobileSidebarSwipe {
     if (closeBtn) {
       closeBtn.addEventListener('click', () => this.closeSidebar());
     }
+
+    // Close sidebar when clicking overlay
+    const sidebarOverlay = document.getElementById('sidebarOverlay');
+    if (sidebarOverlay) {
+      sidebarOverlay.addEventListener('click', () => this.closeSidebar());
+    }
+
+    this.sidebarMenu.addEventListener('transitionend', () => {
+      this.isAnimating = false;
+    });
+
+    // Close on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && this.isOpen) {
+        this.closeSidebar();
+      }
+    });
+
+    console.log('MobileSidebarSwipe initialized successfully');
   }
 
   handleTouchStart(e) {
     this.touchStartX = e.changedTouches[0].screenX;
+    this.touchStartY = e.changedTouches[0].screenY;
+    this.touchStartTime = Date.now();
+    console.log('Touch START:', { x: this.touchStartX, y: this.touchStartY, time: this.touchStartTime });
   }
 
   handleTouchEnd(e) {
     this.touchEndX = e.changedTouches[0].screenX;
+    this.touchEndY = e.changedTouches[0].screenY;
+    console.log('Touch END:', { x: this.touchEndX, y: this.touchEndY });
     this.handleSwipe();
   }
 
   handleSwipe() {
-    const swipeDistance = this.touchStartX - this.touchEndX;
-    if (swipeDistance < -this.threshold) {
-      this.openSidebar();
+    // Ignore if already animating
+    if (this.isAnimating) {
+      console.log('Already animating, ignoring swipe');
+      return;
     }
-    if (swipeDistance > this.threshold) {
-      this.closeSidebar();
+
+    // Ignore mostly-vertical gestures
+    const verticalDistance = Math.abs(this.touchEndY - this.touchStartY);
+    if (verticalDistance > 80) {
+      console.log('Vertical gesture ignored:', verticalDistance);
+      return;
     }
+
+    const horizontalDistance = this.touchEndX - this.touchStartX;
+    const duration = Date.now() - this.touchStartTime;
+    const velocity = Math.abs(horizontalDistance) / duration;
+
+    console.log('Swipe detected:', {
+      horizontalDistance,
+      duration,
+      velocity,
+      touchStartX: this.touchStartX,
+      isOpen: this.isOpen
+    });
+
+        // Swipe right (positive distance) to open
+        if (!this.isOpen && horizontalDistance > this.threshold) {
+            console.log('Opening sidebar via swipe (right swipe detected)');
+            this.openSidebar();
+            return;
+        }
+    
+        // Swipe left (negative distance) to close when open
+        if (this.isOpen && horizontalDistance < -this.threshold) {
+            console.log('Closing sidebar via swipe (left swipe detected)');
+            this.closeSidebar();
+            return;
+        }
   }
 
   openSidebar() {
+    const sidebarOverlay = document.getElementById('sidebarOverlay');
+    const menuIcon = document.querySelector('.menu-icon');
     if (!this.isOpen && this.sidebarMenu) {
-      this.sidebarMenu.classList.add('open');
-      this.isOpen = true;
+      this.isAnimating = true;
+      this.sidebarMenu.classList.add('active');
+      if (sidebarOverlay) sidebarOverlay.classList.add('active');
+      if (menuIcon) menuIcon.setAttribute('aria-expanded', 'true');
       document.body.style.overflow = 'hidden';
+      this.isOpen = true;
+      console.log('Sidebar opened via swipe');
     }
   }
 
   closeSidebar() {
+    const sidebarOverlay = document.getElementById('sidebarOverlay');
+    const menuIcon = document.querySelector('.menu-icon');
     if (this.sidebarMenu) {
-      this.sidebarMenu.classList.remove('open');
-      this.isOpen = false;
+      this.isAnimating = true;
+      this.sidebarMenu.classList.remove('active', 'open', 'closing');
+      if (sidebarOverlay) sidebarOverlay.classList.remove('active');
+      if (menuIcon) menuIcon.setAttribute('aria-expanded', 'false');
       document.body.style.overflow = '';
+      this.isOpen = false;
     }
   }
 
@@ -1181,7 +1238,7 @@ class MobileSidebarSwipe {
       this.sidebarMenu &&
       this.isOpen &&
       !this.sidebarMenu.contains(e.target) &&
-      !document.querySelector('.menu-icon').contains(e.target)
+      !(document.querySelector('.menu-icon') && document.querySelector('.menu-icon').contains(e.target))
     ) {
       this.closeSidebar();
     }
@@ -1191,3 +1248,78 @@ class MobileSidebarSwipe {
 document.addEventListener('DOMContentLoaded', () => {
   new MobileSidebarSwipe();
 });
+
+/* ==================== Mobile inline expandable search (small screens) ==================== */
+// Convert the mobile search icon into an inline expandable full-width search on smaller displays
+(function setupInlineMobileSearch(){
+    const mobileIcon = document.getElementById('mobileSearchIcon');
+    if (!mobileIcon) return;
+
+    const smallMql = window.matchMedia('(max-width: 1024px)');
+
+    // Remove previous handler that opened modal on mobile so we can replace it
+    try { mobileIcon.removeEventListener('click', openSearchModal); } catch(e){}
+
+    let inlineEl = null;
+
+    function closeInline() {
+        if (!inlineEl) return;
+        inlineEl.classList.remove('active');
+        setTimeout(() => inlineEl?.remove(), 220);
+        inlineEl = null;
+        document.removeEventListener('click', onDocClickInline);
+    }
+
+    function onDocClickInline(e){
+        if (!inlineEl) return;
+        if (!inlineEl.contains(e.target) && !mobileIcon.contains(e.target)) closeInline();
+    }
+
+    function openInline() {
+        if (inlineEl) return;
+        const nav = document.getElementById('navbar') || document.body;
+        inlineEl = document.createElement('div');
+        inlineEl.className = 'inline-mobile-search active';
+        inlineEl.innerHTML = `
+            <input class="inline-search-input" type="search" placeholder="Search site..." aria-label="Search">
+            <button class="inline-search-close" aria-label="Close search">✕</button>
+        `;
+        nav.appendChild(inlineEl);
+        const input = inlineEl.querySelector('.inline-search-input');
+        const closeBtn = inlineEl.querySelector('.inline-search-close');
+        setTimeout(()=> input.focus(), 80);
+
+        closeBtn.addEventListener('click', (e) => { e.stopPropagation(); closeInline(); });
+
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') { closeInline(); }
+            else if (e.key === 'Enter') {
+                const q = input.value.trim();
+                if (q.length < 1) return;
+                // Reuse the modal search UI for results to avoid duplicating rendering logic
+                openSearchModal();
+                setTimeout(() => {
+                    if (window.searchModalInput) {
+                        window.searchModalInput.value = q;
+                        // call doSearch if available
+                        try { doSearch(q); } catch(e) { /* fallback to modal */ }
+                    }
+                }, 120);
+                closeInline();
+            }
+        });
+
+        document.addEventListener('click', onDocClickInline);
+    }
+
+    mobileIcon.addEventListener('click', (e) => {
+        if (smallMql.matches) {
+            e.preventDefault();
+            e.stopPropagation();
+            openInline();
+        } else {
+            // on larger screens keep modal behavior
+            openSearchModal();
+        }
+    });
+})();

@@ -33,16 +33,7 @@ Last Updated: October 28, 2025
     <link rel="stylesheet" href="style.css" />
     
     <!-- Early theme initialization to prevent flash of wrong theme -->
-    <script>
-        (function() {
-            const storedTheme = localStorage.getItem('theme') || 'system';
-            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-            const effectiveTheme = storedTheme === 'system' ? 
-                (prefersDark ? 'dark' : 'light') : storedTheme;
-            document.documentElement.setAttribute('data-theme', effectiveTheme);
-            document.body.classList.toggle('darkmode', effectiveTheme === 'dark');
-        })();
-    </script>
+    <!-- Early theme initialization moved to script.js to keep head clean -->
     
     <script src="script.js" defer></script>
 
