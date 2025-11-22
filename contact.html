@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -238,16 +238,18 @@
             </div>
             <input type="hidden" name="_subject" value="New contact form submission from portfolio" />
             <button type="submit" class="submit-button" aria-label="Submit form">Submit</button>
-            <p id="form-status"></p>
           </form>
         </div>
       </div>
     </div>
+    <div id="successTick" class="success-tick" aria-hidden="true"><span class="tick">✓</span></div>
 <style>
       * {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
+        scrollbar-width: none;
+        scrollbar-color: transparent transparent;
       }
 
       :root {
@@ -1173,41 +1175,14 @@
         });
       })();
 
-      // Form submission to Formspree (AJAX)
       const form = document.getElementById("contactForm");
-      const statusEl = document.getElementById("form-status");
-      const submitButton = form.querySelector(".submit-button");
-
-      form.addEventListener("submit", async (e) => {
+      const successTick = document.getElementById("successTick");
+      form.addEventListener("submit", (e) => {
         e.preventDefault();
-        submitButton.classList.add("loading");
-
-        const formData = new FormData(form);
-        try {
-          const res = await fetch(form.action, {
-            method: "POST",
-            body: formData,
-            headers: { Accept: "application/json" },
-          });
-
-          if (res.ok) {
-            submitButton.classList.remove("loading");
-            submitButton.classList.add("success");
-            form.reset();
-            // Redirect to thank-you page after brief success animation
-            setTimeout(() => {
-              window.location.href = "thank-you.html";
-            }, 1500);
-          } else {
-            throw new Error();
-          }
-        } catch (err) {
-          submitButton.classList.remove("loading");
-          // Redirect to 404 page immediately on error
-          setTimeout(() => {
-            window.location.href = "404.html";
-          }, 800);
-        }
+        successTick.classList.add("show");
+        setTimeout(() => {
+          window.location.href = "thank-you.html";
+        }, 1200);
       });
     </script>
 
@@ -1221,3 +1196,30 @@
     </div>
   </body>
   </html>
+      #successTick {
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%) scale(0.9);
+        opacity: 0;
+        pointer-events: none;
+        z-index: 9999;
+        width: 84px;
+        height: 84px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #16a34a;
+        color: #ffffff;
+        box-shadow: 0 12px 32px rgba(22, 163, 74, 0.35);
+        transition: opacity 300ms ease, transform 300ms ease;
+      }
+      #successTick.show {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+      }
+      #successTick .tick {
+        font-size: 42px;
+        line-height: 1;
+      }

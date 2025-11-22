@@ -823,66 +823,232 @@ document.addEventListener('DOMContentLoaded', () => {
     const sidebarNavLinks = document.querySelectorAll('.sidebar-links a[href^="#"]');
     const allNavLinks = [...desktopNavLinks, ...sidebarNavLinks];
 
-    function highlightActiveNav() {
-        // Get navbar height to offset scroll position
+    // Calculate dynamic offsets (navbar + banner)
+    function getOffsets() {
         const navbar = document.getElementById('navbar');
-        const navbarHeight = navbar ? navbar.offsetHeight : 80;
-        const scrollPos = window.scrollY + navbarHeight + 50; // Increased offset for better detection
-        
-        let currentSection = '';
-        let closestSection = null;
-        let closestDistance = Infinity;
-        
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop;
-            const sectionHeight = section.offsetHeight;
-            const sectionBottom = sectionTop + sectionHeight;
+        const noticeBanner = document.querySelector('.notice-banner');
+        const navbarHeight = navbar ? navbar.offsetHeight : 48;
+        const bannerHeight = noticeBanner ? noticeBanner.offsetHeight : 35;
+        return navbarHeight + bannerHeight;
+    }
+
+    // Update active navigation link
+    function updateActiveLink(sectionId) {
+        allNavLinks.forEach(link => {
+            const href = link.getAttribute('href');
+            link.classList.remove('active');
             
-            // Check if scroll position is within this section
-            if (scrollPos >= sectionTop && scrollPos < sectionBottom) {
-                currentSection = section.getAttribute('id');
-            }
-            
-            // Also track the closest section above us
-            const distanceFromTop = Math.abs(scrollPos - sectionTop);
-            if (scrollPos >= sectionTop && distanceFromTop < closestDistance) {
-                closestDistance = distanceFromTop;
-                closestSection = section.getAttribute('id');
+            // Normalize href to handle: #section, index.html#section, ./index.html#section, etc.
+            const normalizedHref = href.replace(/^.*#/, '#');
+            if (normalizedHref === `#${sectionId}`) {
+                link.classList.add('active');
             }
         });
+    }
+
+    // Main function to determine active section
+    function highlightActiveNav() {
+        const totalOffset = getOffsets();
+        const scrollPos = window.scrollY;
+        const activationPoint = scrollPos + totalOffset + 50; // 50px buffer for better UX
         
-        // Use closest section if no current section found
-        if (!currentSection && closestSection) {
-            currentSection = closestSection;
-        }
+        let currentSection = null;
+        let bestScore = -Infinity;
         
-        // If we're at the very top, make sure home is active
-        if (window.scrollY < 100) {
+        // If at the very top, always highlight home
+        if (scrollPos < 80) {
             currentSection = 'home';
-        }
-        
-        // Update all nav links
-        if (currentSection) {
-            allNavLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === `#${currentSection}`) {
-                    link.classList.add('active');
+        } else {
+            sections.forEach(section => {
+                const sectionId = section.getAttribute('id');
+                if (!sectionId) return;
+                
+                const rect = section.getBoundingClientRect();
+                const sectionTop = rect.top + scrollPos;
+                const sectionBottom = sectionTop + rect.height;
+                
+                // Check if activation point is within this section
+                const isInSection = activationPoint >= sectionTop && activationPoint <= sectionBottom;
+                
+                // Also check if section top has passed the activation point (for sections we're scrolling into)
+                const hasPassedActivation = sectionTop <= activationPoint;
+                
+                if (isInSection || hasPassedActivation) {
+                    // Calculate score: prefer sections where activation point is closer to section top
+                    const distanceFromTop = Math.abs(activationPoint - sectionTop);
+                    const sectionHeight = rect.height;
+                    const normalizedDistance = distanceFromTop / Math.max(sectionHeight, 100);
+                    
+                    // Higher score for sections where we're closer to the top
+                    let score = 1000 - normalizedDistance;
+                    
+                    // If activation point is within section, boost score
+                    if (isInSection) {
+                        score += 500;
+                    }
+                    
+                    if (score > bestScore) {
+                        bestScore = score;
+                        currentSection = sectionId;
+                    }
                 }
             });
+            
+            // Fallback: if no section found, find the closest one above activation point
+            if (!currentSection) {
+                let closestSection = null;
+                let closestDistance = Infinity;
+                
+                sections.forEach(section => {
+                    const sectionId = section.getAttribute('id');
+                    if (!sectionId) return;
+                    
+                    const rect = section.getBoundingClientRect();
+                    const sectionTop = rect.top + scrollPos;
+                    
+                    if (sectionTop <= activationPoint) {
+                        const distance = activationPoint - sectionTop;
+                        if (distance < closestDistance) {
+                            closestDistance = distance;
+                            closestSection = sectionId;
+                        }
+                    }
+                });
+                
+                if (closestSection) {
+                    currentSection = closestSection;
+                } else {
+                    // Ultimate fallback: use home
+                    currentSection = 'home';
+                }
+            }
+        }
+        
+        // Update navigation links
+        if (currentSection) {
+            updateActiveLink(currentSection);
         }
     }
 
-    // Throttle function to limit scroll event firing
+    // Use IntersectionObserver as primary method for accurate detection
+    let activeSectionId = 'home';
+    let observerInstance = null;
+
+    function setupObserver() {
+        // Clean up existing observer
+        if (observerInstance) {
+            sections.forEach(section => {
+                if (section.getAttribute('id')) {
+                    observerInstance.unobserve(section);
+                }
+            });
+        }
+
+        const totalOffset = getOffsets();
+        observerInstance = new IntersectionObserver((entries) => {
+            // Find the section that's most visible at the activation point
+            const activationPoint = window.scrollY + totalOffset + 50;
+            let bestSection = null;
+            let bestScore = -Infinity;
+            
+            entries.forEach(entry => {
+                const sectionId = entry.target.getAttribute('id');
+                if (!sectionId) return;
+                
+                const rect = entry.target.getBoundingClientRect();
+                const sectionTop = rect.top + window.scrollY;
+                
+                // Check if section is intersecting and near activation point
+                if (entry.isIntersecting) {
+                    const distanceFromActivation = Math.abs((sectionTop + totalOffset) - activationPoint);
+                    const visibilityScore = entry.intersectionRatio * 1000;
+                    const proximityScore = 1000 / (1 + distanceFromActivation / 10);
+                    const totalScore = visibilityScore + proximityScore;
+                    
+                    if (totalScore > bestScore) {
+                        bestScore = totalScore;
+                        bestSection = sectionId;
+                    }
+                }
+            });
+            
+            // Also check all sections for the one at activation point
+            sections.forEach(section => {
+                const sectionId = section.getAttribute('id');
+                if (!sectionId) return;
+                
+                const rect = section.getBoundingClientRect();
+                const sectionTop = rect.top + window.scrollY;
+                const sectionBottom = sectionTop + rect.height;
+                
+                if (activationPoint >= sectionTop && activationPoint <= sectionBottom) {
+                    const distanceFromTop = activationPoint - sectionTop;
+                    const score = 2000 - (distanceFromTop / 10);
+                    
+                    if (score > bestScore) {
+                        bestScore = score;
+                        bestSection = sectionId;
+                    }
+                }
+            });
+            
+            // Handle top of page
+            if (window.scrollY < 80) {
+                bestSection = 'home';
+            }
+            
+            if (bestSection && bestSection !== activeSectionId) {
+                activeSectionId = bestSection;
+                updateActiveLink(bestSection);
+            }
+        }, {
+            root: null,
+            rootMargin: `-${totalOffset}px 0px -50% 0px`,
+            threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
+        });
+
+        // Observe all sections
+        sections.forEach(section => {
+            if (section.getAttribute('id')) {
+                observerInstance.observe(section);
+            }
+        });
+    }
+
+    // Initialize observer
+    setupObserver();
+
+    // Throttled scroll handler as backup
     let scrollThrottle;
     function throttledHighlight() {
         if (scrollThrottle) return;
         scrollThrottle = setTimeout(() => {
             highlightActiveNav();
             scrollThrottle = null;
-        }, 50); // Update every 50ms for smooth highlighting
+        }, 50);
     }
 
     window.addEventListener('scroll', throttledHighlight, { passive: true });
+    
+    // Handle resize to recalculate offsets and update observer
+    let resizeThrottle;
+    window.addEventListener('resize', () => {
+        if (resizeThrottle) return;
+        resizeThrottle = setTimeout(() => {
+            setupObserver();
+            highlightActiveNav();
+            resizeThrottle = null;
+        }, 150);
+    }, { passive: true });
+    
+    // Initialize on load
+    window.addEventListener('load', () => {
+        setupObserver();
+        highlightActiveNav();
+        setTimeout(highlightActiveNav, 100);
+    });
+    
+    // Initial highlight
     highlightActiveNav();
 
     /* ==================== Skill Bars Animation ==================== */
@@ -1249,77 +1415,150 @@ document.addEventListener('DOMContentLoaded', () => {
   new MobileSidebarSwipe();
 });
 
-/* ==================== Mobile inline expandable search (small screens) ==================== */
-// Convert the mobile search icon into an inline expandable full-width search on smaller displays
-(function setupInlineMobileSearch(){
-    const mobileIcon = document.getElementById('mobileSearchIcon');
-    if (!mobileIcon) return;
-
-    const smallMql = window.matchMedia('(max-width: 1024px)');
-
-    // Remove previous handler that opened modal on mobile so we can replace it
-    try { mobileIcon.removeEventListener('click', openSearchModal); } catch(e){}
-
-    let inlineEl = null;
-
-    function closeInline() {
-        if (!inlineEl) return;
-        inlineEl.classList.remove('active');
-        setTimeout(() => inlineEl?.remove(), 220);
-        inlineEl = null;
-        document.removeEventListener('click', onDocClickInline);
+/* Mobile inline expandable search removed to prevent duplicate inputs.
+   Mobile icon will open the modal via existing click handler (openSearchModal).
+   Desktop search continues to show dropdown on ≥1025px. */
+ 
+class SwipeCircleArrow {
+  constructor() {
+    this.el = null;
+    this.state = 'idle';
+    this.startX = 0;
+    this.startY = 0;
+    this.endX = 0;
+    this.endY = 0;
+    this.startTime = 0;
+    this.hamburgerActive = false;
+    this.minDistance = 100;
+    this.minVelocity = 0.5;
+    this.angleTolerance = 45;
+    this.resizeHandler = null;
+    this.menuIcon = document.querySelector('.menu-icon');
+    this.sidebarMenu = document.querySelector('.sidebar-menu');
+    this.init();
+  }
+  init() {
+    document.addEventListener('touchstart', (e) => this.onStart(e), { passive: true });
+    document.addEventListener('touchmove', (e) => this.onMove(e), { passive: true });
+    document.addEventListener('touchend', (e) => this.onEnd(e), { passive: true });
+    if (this.menuIcon) {
+      this.menuIcon.addEventListener('touchstart', () => { this.hamburgerActive = true; console.debug('hamburger touchstart'); }, { passive: true });
+      this.menuIcon.addEventListener('touchend', () => { this.hamburgerActive = false; console.debug('hamburger touchend'); }, { passive: true });
+      this.menuIcon.addEventListener('click', () => { console.debug('hamburger click'); });
     }
-
-    function onDocClickInline(e){
-        if (!inlineEl) return;
-        if (!inlineEl.contains(e.target) && !mobileIcon.contains(e.target)) closeInline();
+    this.resizeHandler = () => { console.debug('viewport', { w: window.innerWidth, h: window.innerHeight }); };
+    window.addEventListener('resize', this.resizeHandler, { passive: true });
+    window.addEventListener('beforeunload', () => this.destroy());
+  }
+  ensureEl() {
+    if (this.el) return;
+    const div = document.createElement('div');
+    div.className = 'swipe-indicator';
+    const arrow = document.createElement('span');
+    arrow.className = 'arrow';
+    arrow.textContent = '→';
+    div.appendChild(arrow);
+    document.body.appendChild(div);
+    this.el = div;
+  }
+  positionAt(y) {
+    if (!this.el) return;
+    const pad = parseInt(getComputedStyle(document.body).paddingLeft || '0', 10) || 0;
+    this.el.style.left = pad + 'px';
+    this.el.style.top = y + 'px';
+  }
+  activate(y) {
+    this.ensureEl();
+    this.positionAt(y);
+    if (this.menuIcon) {
+      this.el.style.zIndex = '5';
     }
-
-    function openInline() {
-        if (inlineEl) return;
-        const nav = document.getElementById('navbar') || document.body;
-        inlineEl = document.createElement('div');
-        inlineEl.className = 'inline-mobile-search active';
-        inlineEl.innerHTML = `
-            <input class="inline-search-input" type="search" placeholder="Search site..." aria-label="Search">
-            <button class="inline-search-close" aria-label="Close search">✕</button>
-        `;
-        nav.appendChild(inlineEl);
-        const input = inlineEl.querySelector('.inline-search-input');
-        const closeBtn = inlineEl.querySelector('.inline-search-close');
-        setTimeout(()=> input.focus(), 80);
-
-        closeBtn.addEventListener('click', (e) => { e.stopPropagation(); closeInline(); });
-
-        input.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') { closeInline(); }
-            else if (e.key === 'Enter') {
-                const q = input.value.trim();
-                if (q.length < 1) return;
-                // Reuse the modal search UI for results to avoid duplicating rendering logic
-                openSearchModal();
-                setTimeout(() => {
-                    if (window.searchModalInput) {
-                        window.searchModalInput.value = q;
-                        // call doSearch if available
-                        try { doSearch(q); } catch(e) { /* fallback to modal */ }
-                    }
-                }, 120);
-                closeInline();
-            }
-        });
-
-        document.addEventListener('click', onDocClickInline);
+    this.state = 'active';
+    this.el.classList.remove('fade');
+    this.el.classList.add('active');
+    console.debug('animation state', this.state);
+  }
+  complete() {
+    if (!this.el) return;
+    this.state = 'completing';
+    console.debug('animation state', this.state);
+    this.el.classList.add('fade');
+    setTimeout(() => this.reset(), 200);
+  }
+  cancel() {
+    if (!this.el) return;
+    console.debug('animation cancel');
+    this.reset();
+  }
+  reset() {
+    if (!this.el) return;
+    this.state = 'idle';
+    this.el.classList.remove('active');
+    this.el.classList.remove('fade');
+    this.el.style.transform = '';
+    this.el.style.opacity = '';
+  }
+  onStart(e) {
+    const t = e.changedTouches[0];
+    this.startX = t.screenX;
+    this.startY = t.screenY;
+    this.endX = this.startX;
+    this.endY = this.startY;
+    this.startTime = Date.now();
+    const target = e.target;
+    if (this.menuIcon && (this.menuIcon.contains(target))) {
+      this.hamburgerActive = true;
+    } else {
+      this.hamburgerActive = false;
     }
-
-    mobileIcon.addEventListener('click', (e) => {
-        if (smallMql.matches) {
-            e.preventDefault();
-            e.stopPropagation();
-            openInline();
-        } else {
-            // on larger screens keep modal behavior
-            openSearchModal();
-        }
-    });
-})();
+    console.debug('swipe start', { x: this.startX, y: this.startY, time: this.startTime, hamburger: this.hamburgerActive });
+  }
+  onMove(e) {
+    const t = e.changedTouches[0];
+    const prevX = this.endX;
+    this.endX = t.screenX;
+    this.endY = t.screenY;
+    const dx = this.endX - this.startX;
+    const dy = this.endY - this.startY;
+    const angle = Math.abs(Math.atan2(dy, dx) * 180 / Math.PI);
+    if (this.state === 'active' && dx < prevX - this.startX) {
+      this.cancel();
+    }
+    if (dx > 0 && angle <= this.angleTolerance && !this.hamburgerActive) {
+      this.activate(this.startY);
+    }
+  }
+  onEnd(e) {
+    const t = e.changedTouches[0];
+    this.endX = t.screenX;
+    this.endY = t.screenY;
+    const dx = this.endX - this.startX;
+    const dy = this.endY - this.startY;
+    const distance = Math.hypot(dx, dy);
+    const duration = Date.now() - this.startTime;
+    const velocity = distance / duration;
+    const angle = Math.abs(Math.atan2(dy, dx) * 180 / Math.PI);
+    const sidebarOpen = !!document.querySelector('.sidebar-menu.active');
+    console.debug('swipe end', { dx, dy, distance, duration, velocity, angle, sidebarOpen });
+    const valid = dx > 0 && angle <= this.angleTolerance && distance >= this.minDistance && velocity >= this.minVelocity && !this.hamburgerActive && !sidebarOpen;
+    if (valid && this.state === 'active') {
+      this.complete();
+    } else {
+      this.cancel();
+    }
+    if (performance && performance.memory) {
+      console.debug('memory', performance.memory);
+    }
+  }
+  destroy() {
+    document.removeEventListener('touchstart', this.onStart);
+    document.removeEventListener('touchmove', this.onMove);
+    document.removeEventListener('touchend', this.onEnd);
+    window.removeEventListener('resize', this.resizeHandler);
+    if (this.el && this.el.parentNode) this.el.parentNode.removeChild(this.el);
+    this.el = null;
+  }
+}
+document.addEventListener('DOMContentLoaded', () => {
+  new SwipeCircleArrow();
+});

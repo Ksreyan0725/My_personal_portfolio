@@ -5,7 +5,7 @@ Purpose: Main landing page for Kumar Sreyan Pattanayak's personal portfolio
 Description: Showcases education, projects, certifications, and skills with
              responsive design, dark/light theme support, and smooth animations
 Author: Kumar Sreyan Pattanayak
-Last Updated: October 28, 2025
+Last Updated: November 22, 2025
 =============================================================================
 --> 
 
@@ -31,10 +31,6 @@ Last Updated: October 28, 2025
     
     <!-- ==================== Stylesheets & Scripts ==================== -->
     <link rel="stylesheet" href="style.css" />
-    
-    <!-- Early theme initialization to prevent flash of wrong theme -->
-    <!-- Early theme initialization moved to script.js to keep head clean -->
-    
     <script src="script.js" defer></script>
 
     <!-- ==================== Maintenance Mode (Currently Disabled) ==================== -->
@@ -76,19 +72,15 @@ Last Updated: October 28, 2025
                 <!-- Desktop Search Dropdown Results -->
                 <div class="desktop-search-results" id="desktopSearchResults"></div>
             </div>
+            <button class="theme-toggle" id="themeToggle">
+                <span class="theme-icon">⚙️</span>
+                <span class="theme-text">System</span>
+            </button>
 
             <!-- Mobile Search Icon -->
             <button class="mobile-search-icon" id="mobileSearchIcon" aria-label="Search">
                 <img src="Assets/Images.icons/search.png" alt="Search" class="mobile-search-icon-img" />
             </button>
-
-            <!-- Theme Toggle Button -->
-            <div class="theme-selector">
-                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-                    <span class="theme-icon" aria-hidden="true">⚙️</span>
-                    <span class="theme-text">System</span>
-                </button>
-            </div>
 
             <!-- Mobile Menu Icon (Hamburger) -->
             <button class="menu-icon" id="menuIcon" aria-label="Toggle menu" aria-expanded="false">
@@ -117,7 +109,7 @@ Last Updated: October 28, 2025
         </div>
     </div>
 
-    <!-- Search Modal Overlay -->
+    Search Modal Overlay
     <div class="search-modal-overlay" id="searchModalOverlay"></div>
 
     <!-- ==================== Mobile Sidebar Menu ==================== -->
