@@ -9,7 +9,7 @@
   padding: 65px 40px 60px; /* Adjusted for smaller navbar + banner (50px + 35px = 85px) */
   display: grid;
   grid-template-columns: 400px 1fr;
-  gap: 90px;
+  gap: 80px;
   align-items: start;
 }
 
@@ -19,7 +19,7 @@
   align-items: center;
   text-align: center;
   position: sticky;
-  top: 80px; /* below fixed navbar (50px) + banner (35px) + 10px spacing */
+  top: 95px; /* below fixed navbar (50px) + banner (35px) + 10px spacing */
 }
 
 /* ==================== PDF Viewer Styles ==================== */
@@ -95,8 +95,6 @@
   color: #fff;
   box-shadow: 0 14px 28px rgba(99, 102, 241, 0.25);
 }
-
-/* ==================== OLD MEDIA QUERIES REMOVED - NOW AT END OF FILE ==================== */
 
 /* CSS Reset and Variables */
 * {
@@ -231,7 +229,7 @@ html {
 
 .search-input {
   width: 100%;
-  padding: 5px 56px 5px 10px;
+  padding: 5px 56px 5px 10px; /* room for clear + search buttons */
   border: 2px solid var(--border);
   border-radius: 20px;
   background: rgba(var(--bg-secondary-rgb), 0.6);
@@ -293,10 +291,8 @@ html {
   padding: 4px;
   transition: all 0.3s ease;
   opacity: 0.7;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
+
 
 .search-button:hover,
 .search-container:focus-within .search-button {
@@ -577,9 +573,8 @@ html {
   transition: all 0.3s ease;
   width: 36px;
   height: 36px;
-  line-height: 5;
+  line-height: 1;
 }
-
 
 .menu-icon:hover {
   opacity: 0.7;
@@ -597,7 +592,7 @@ html {
 /* Clear (X) button inside search */
 .search-clear {
   position: absolute;
-  right: 32px;
+  right: 32px; /* before search button */
   top: 50%;
   transform: translateY(-50%);
   background: none;
@@ -610,7 +605,6 @@ html {
   opacity: 0.7;
   transition: color 0.2s ease, opacity 0.2s ease, background 0.2s ease;
   display: none;
-  font-size: 0.85rem;
 }
 .search-clear:hover {
   color: var(--accent);
@@ -749,30 +743,38 @@ nav.scrolled {
   background: var(--accent);
 }
 
+.theme-selector {
+  display: flex;
+  align-items: center;
+  order: 4;
+  margin-left: 8px; /* consistent spacing after search */
+  margin-right: 0; /* always at the right end */
+  flex-shrink: 0; /* never compress */
+}
+
 /* ==================== ALL OLD SCATTERED MEDIA QUERIES REMOVED - NOW CONSOLIDATED AT END OF FILE ==================== */
 
 /* Theme Toggle - Default (Mobile): Circular button */
 .theme-toggle {
-    background: var(--card-bg);
-    color: var(--text-primary);
-    border: 2px solid var(--border);
-    box-sizing: border-box;
-    padding: 8px 18px;
-    border-radius: 50px;
-    font-size: 14px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-weight: 600;
-    user-select: none;
-    flex-shrink: 0;
-    order: 4;
-    margin-left: 8px;
-    margin-right: 0;
-    white-space: nowrap;
-    overflow: visible;
+  background: var(--card-bg);
+  border: 2px solid var(--border);
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  max-width: 36px;
+  padding: 0;
+  border-radius: 50%;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  aspect-ratio: 1 / 1;
+  outline: none;
 }
 
 .theme-toggle:hover {
@@ -783,10 +785,18 @@ nav.scrolled {
 
 .theme-toggle:active {
   transform: scale(0.95);
+  border-color: var(--accent);
+  box-shadow: 0 0 20px var(--accent-glow);
+}
+
+.theme-toggle:focus {
+  outline: none;
+  border-color: var(--border);
+  box-shadow: none;
 }
 
 .theme-icon {
-  font-size: 16px;
+  font-size: 18px;
   line-height: 1;
   transition: transform 0.3s ease;
 }
@@ -1257,52 +1267,18 @@ header {
   position: relative;
 }
 
-/* Animated separator after home section (header) */
-#home {
-  position: relative;
-  padding-bottom: 60px;
-}
-
-#home::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: clamp(240px, 75%, 900px);
-  height: 3px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    #ff006e,
-    #8338ec,
-    #3a86ff,
-    #00d4ff,
-    #00ff88,
-    #ffbe0b,
-    #ff006e,
-    transparent
-  );
-  background-size: 200% 100%;
-  border-radius: 50px;
-  animation: glowPulse 3s ease-in-out infinite, gradientShift 8s linear infinite;
-  box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
-  z-index: 1;
-}
-
 .profile-container {
-  margin-bottom: 8px;
+  margin-bottom: 5px;
   display: flex;
   justify-content: center;
-  height: 210px;
+  height: 190px;
 }
 
 .profile-photo {
-  width: 190px;
-  height: 190px;
+  width: 180px;
+  height: 160px;
   aspect-ratio: 1 / 1; /* This ensures a perfect square aspect ratio */
   object-fit: cover; /* This crops the image to fit the square without distortion */
-  object-position: top center; /* Show more hair at the top */
   border: 4px solid var(--accent); /* This creates a square border */
   box-shadow: 0 0 40px var(--accent-glow);
   background: linear-gradient(135deg, #63b3f1, #478d56, #2d5e68);
@@ -1552,8 +1528,8 @@ header {
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: clamp(240px, 75%, 900px);
-  height: 3px;
+  width: 80%;
+  height: 2px;
   background: linear-gradient(
     90deg,
     transparent,
@@ -1570,7 +1546,6 @@ header {
   border-radius: 50px;
   animation: glowPulse 3s ease-in-out infinite, gradientShift 8s linear infinite;
   box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
-  z-index: 1;
 }
 
 @keyframes glowPulse {
@@ -1594,14 +1569,7 @@ header {
   }
 }
 
-/* Keep separator for all sections - show on all including the last one */
-/* The separator will appear below each section */
-main > .section::after {
-  display: block !important;
-}
-
-/* Only hide separator if it's after the resume section (which is not a section) */
-.resume-section::after {
+.section:last-of-type::after {
   display: none;
 }
 
@@ -1986,7 +1954,6 @@ main > .section::after {
 #education {
   margin: 10px 0;
   padding-bottom: 20px;
-  padding-top: 24px;
 }
 
 #education .section-title {
@@ -2047,12 +2014,6 @@ main > .section::after {
 #education {
   position: relative;
 }
-
-/* Remove duplicate separator for education - using unified .section::after instead */
-#education::before {
-  display: none;
-}
-
 
 #education .card {
   background: transparent;
@@ -2875,43 +2836,118 @@ nav {
   font-size: 1.5rem;
 }
 
-  .desktop-nav {
-    display: none !important; /* Hidden on mobile */
+.desktop-nav {
+  display: none !important; /* Hidden on mobile */
+}
+
+/* Below 590px: Show search bar instead of icon */
+@media (max-width: 590px) {
+  .desktop-search {
+    display: flex !important;
+    order: 3;
+    margin-left: auto;
+    margin-right: 8px;
+    max-width: 160px;
+    flex-shrink: 1;
+    min-width: 100px;
   }
 
-
-
-
-  .theme-selector {
-    order: 4;
-    margin-left: 0;
+  .search-input {
+    padding: 6px 35px 6px 10px;
+    font-size: 0.85rem;
+    height: 32px;
   }
-  /* Mobile base: show search icon, hide desktop search */
-  #navbar .desktop-search { display: none !important; }
-  #navbar .mobile-search-icon { 
-    display: flex !important; 
-    order: 3; 
-    margin-left: auto; 
-    margin-right: 8px; 
+
+  .search-button {
+    right: 6px;
+    padding: 3px;
   }
+
+  .search-icon-img {
+    width: 14px;
+    height: 14px;
+  }
+
+  .search-clear {
+    right: 28px;
+    font-size: 0.85rem;
+    padding: 1px 3px;
+  }
+
+  .mobile-search-icon {
+    display: none !important;
+  }
+
+  /* Adjust dropdown for mobile screens */
+  .desktop-search-results {
+    max-width: 90vw;
+    left: auto;
+    right: 0;
+    max-height: 300px;
+    font-size: 0.85rem;
+  }
+
+  .desktop-search-result-item {
+    padding: 10px 12px;
+  }
+
+  .desktop-search-result-title {
+    font-size: 0.85rem;
+  }
+
+  .desktop-search-result-description {
+    font-size: 0.7rem;
+  }
+}
+
+/* Above 591px but below 601px: Hide both search elements */
+@media (min-width: 591px) and (max-width: 600px) {
+  .desktop-search {
+    display: none !important;
+  }
+
+  .mobile-search-icon {
+    display: flex !important;
+    order: 3;
+    margin-left: auto;
+    margin-right: 8px;
+  }
+}
+
+/* Below 591px on default (when not specified by other media queries) */
+.desktop-search {
+  display: none !important;
+}
+
+.mobile-search-icon {
+  display: flex !important;
+  order: 3;
+  margin-left: auto;
+  margin-right: 8px; /* Space before theme toggle */
+}
+
+.theme-selector {
+  order: 4;
+  margin-left: 0;
+}
 
 .theme-toggle {
   background: var(--card-bg);
   border: 2px solid var(--border);
-  width: 28px !important;
-  height: 28px !important;
-  min-width: 28px !important;
-  max-width: 28px !important;
-  min-height: 28px !important;
+  width: 36px !important;
+  height: 36px !important;
+  min-width: 36px !important;
+  max-width: 36px !important;
   padding: 0 !important;
   border-radius: 50% !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
   backdrop-filter: blur(10px);
-  aspect-ratio: 1 / 1;
-  box-sizing: border-box !important;
-  flex-shrink: 0;
+  /*
+    aspect-ratio: 1 / 1;
+    box-sizing: border-box !important;
+    flex-shrink: 0;
 }
 
 .theme-toggle:hover {
@@ -2995,11 +3031,10 @@ nav {
   .theme-toggle {
     background: var(--card-bg);
     border: 2px solid var(--border);
-    width: 30px !important;
-    height: 30px !important;
-    min-width: 30px !important;
-    max-width: 30px !important;
-    min-height: 30px !important;
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+    max-width: 36px !important;
     padding: 0 !important;
     border-radius: 50% !important;
     backdrop-filter: blur(10px);
@@ -3288,11 +3323,10 @@ nav {
   .theme-toggle {
     background: var(--card-bg);
     border: 2px solid var(--border);
-    width: 28px !important;
-    height: 28px !important;
-    min-width: 28px !important;
-    min-height: 28px !important;
-    max-width: 28px !important;
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+    min-height: 36px !important;
     padding: 0 !important;
     border-radius: 50% !important;
     backdrop-filter: blur(10px);
@@ -3621,20 +3655,22 @@ nav {
   .theme-toggle {
     background: var(--card-bg);
     border: 2px solid var(--border);
-    width: 30px !important;
-    height: 30px !important;
-    min-width: 30px !important;
-    max-width: 30px !important;
-    min-height: 30px !important;
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+    max-width: 36px !important;
     padding: 0 !important;
     border-radius: 50% !important;
     backdrop-filter: blur(10px);
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-    aspect-ratio: 1 / 1 !important;
-    box-sizing: border-box !important;
-    flex-shrink: 0;
+    aspect-ratio: auto !important;
+    gap: 6px;
+    font-weight: 500;
+    font-size: 13px;
+    color: var(--text-primary);
+    white-space: nowrap;
   }
 
   .theme-text {
@@ -3790,13 +3826,12 @@ nav {
     display: flex !important;
     order: 3;
     margin-left: auto;
-    max-width: 160px;
+    max-width: 180px;
   }
 
   .search-input {
-    padding: 6px 32px 6px 10px;
-    font-size: 0.85rem;
-    height: 32px;
+    padding: 7px 35px 7px 12px;
+    font-size: 0.9rem;
   }
 
   /* Hide mobile icons */
@@ -3813,7 +3848,7 @@ nav {
 
   .theme-toggle {
     padding: 8px 16px !important;
-    height: 36px !important;
+    height: 40px !important;
     border-radius: 50px !important;
     width: auto !important;
     min-width: auto !important;
@@ -3920,15 +3955,12 @@ nav {
     display: flex !important;
     order: 3;
     margin-left: auto;
-    max-width: 120px;
-    height: 36px;
-  
+    max-width: 220px;
   }
 
   .search-input {
-    padding: 4px 40px 4px 10px;
-    height: 30px;
-    font-size: 0.8rem;
+    padding: 8px 40px 8px 14px;
+    height: 36px;
   }
 
   .theme-selector {
@@ -3936,34 +3968,20 @@ nav {
     margin-left: 10px;
   }
 
-  
   .theme-toggle {
-    background: var(--card-bg);
-    color: var(--text-primary);
-    border: 2px solid var(--border);
-    box-sizing: border-box;
-    padding: 8px 18px;
-    border-radius: 50px;
-    font-size: 14px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: flex !important;
-    align-items: center;
-    gap: 8px;
-    font-weight: 600;
-    user-select: none;
-    flex-shrink: 0;
-    margin-left: 8px;
-    white-space: nowrap;
-    overflow: visible;
+    padding: 8px 18px !important;
+    height: 40px !important;
+    border-radius: 50px !important;
     width: auto !important;
-    height: auto !important;
     min-width: auto !important;
     max-width: none !important;
-    min-height: auto !important;
-    max-height: none !important;
+    aspect-ratio: auto !important;
+    gap: 6px;
+    font-weight: 500;
+    font-size: 13px;
+    color: var(--text-primary);
+    white-space: nowrap;
   }
-
 
   .theme-text {
     display: inline !important;
@@ -4002,8 +4020,8 @@ nav {
   }
 
   .profile-photo {
-    width: 220px;
-    height: 220px;
+    width: 180px;
+    height: 180px;
   }
 
   .name {
@@ -4057,12 +4075,8 @@ nav {
     padding: 10px 14px;
   }
 
-  #navbar .desktop-search {
+  .desktop-search {
     max-width: 250px;
-  }
-  #navbar .theme-toggle:hover { 
-    border-color: var(--accent); 
-    box-shadow: 0 0 14px var(--accent-glow); 
   }
 
   /* Hero - maximum width */
@@ -4106,6 +4120,40 @@ nav {
   }
 }
 
+/* ===========================================
+   PRINT STYLES
+   =========================================== */
+@media print {
+  nav,
+  .theme-selector,
+  .search-container,
+  .notice-banner,
+  .menu-icon,
+  .mobile-search-icon,
+  .sidebar-menu,
+  .search-modal {
+    display: none !important;
+  }
+
+  body {
+    color: black;
+    background: white;
+  }
+
+  .section {
+    page-break-inside: avoid;
+  }
+
+  a {
+    text-decoration: none;
+    color: black;
+  }
+
+  .card {
+    border: 1px solid #ccc;
+    break-inside: avoid;
+  }
+}
 /* ===========================================
    SIDEBAR SWIPE ANIMATION STYLES
    =========================================== */
@@ -4301,185 +4349,5 @@ body.sidebar-open {
   nav, .theme-selector, .search-container, .notice-banner,
   .menu-icon, .mobile-search-icon, .sidebar-menu, .search-modal {
     display: none !important;
-  }
-}
-
-/* ===========================================
-   SEARCH VISIBILITY OVERRIDES (FINAL)
-   =========================================== */
-/* Laptop ≥1025px: match stylegit.css sizing for search */
-@media (min-width: 1025px) {
-  #navbar .desktop-search { 
-    display: flex !important;
-    order: 3;
-    margin-left: auto !important;
-    max-width: 220px !important;
-    flex: 0 1 auto !important;
-  }
-  #navbar .search-container {
-    max-width: 220px !important;
-  }
-  #navbar .search-container:focus-within {
-    max-width: 280px !important;
-  }
-  #navbar .search-input {
-    height: 36px !important;
-    padding: 8px 40px 8px 14px !important;
-    border-width: 2px !important;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-  }
-  #navbar .mobile-search-icon { display: none !important; }
-}
-
-/* Tablet 601–1024px: show compact desktop search, reduce padding/width */
-@media (min-width: 601px) and (max-width: 1024px) {
-  #navbar .desktop-search {
-    display: flex !important;
-    flex: 0 1 auto !important;
-    max-width: 120px !important;
-    margin-left: auto !important;
-  }
-  #navbar .search-container {
-    max-width: 120px !important;
-  }
-  #navbar .search-container:focus-within {
-    max-width: 150px !important;
-  }
-  #navbar .search-input {
-    height: 30px !important;
-    padding: 4px 36px 4px 8px !important;
-    font-size: 0.8rem !important;
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-  }
-  #navbar .mobile-search-icon { display: none !important; }
-}
-
-/* Small 481–600px: keep a narrow search bar */
-@media (min-width: 481px) and (max-width: 600px) {
-  #navbar .desktop-search {
-    display: flex !important;
-    flex: 0 1 auto !important;
-    max-width: 100px !important;
-    margin-left: auto !important;
-  }
-  #navbar .search-container {
-    max-width: 100px !important;
-  }
-  #navbar .search-container:focus-within {
-    max-width: 130px !important;
-  }
-  #navbar .search-input {
-    height: 28px !important;
-    padding: 3px 32px 3px 6px !important;
-    font-size: 0.75rem !important;
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
-  }
-  #navbar .mobile-search-icon { display: none !important; }
-}
-
-/* Swipe circle arrow indicator */
-.swipe-indicator {
-  position: fixed;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%) scale(0.9);
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  background: #0ea5e9;
-  color: #ffffff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transition: opacity 200ms cubic-bezier(0.4, 0, 0.2, 1), transform 200ms cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 10px 24px rgba(14, 165, 233, 0.35);
-  z-index: 5;
-  pointer-events: none;
-}
-.swipe-indicator.active {
-  opacity: 1;
-  transform: translateY(-50%) scale(1);
-}
-.swipe-indicator.fade {
-  opacity: 0;
-}
-.swipe-indicator .arrow {
-  font-size: 24px;
-  line-height: 1;
-}
-@media (max-width: 590px) {
-  #navbar .desktop-search { display: none !important; }
-  #navbar .mobile-search-icon { display: inline-flex !important; order: 3; margin-left: auto; margin-right: 8px; }
-}
-@media (min-width: 769px) and (max-width: 1024px) {
-  #navbar .desktop-search { display: flex !important; order: 3; margin-left: auto; max-width: 200px; }
-  #navbar .search-container { max-width: 200px; }
-  #navbar .search-container:focus-within { max-width: 240px; }
-  #navbar .search-input { height: 34px; padding: 6px 38px 6px 12px; border-width: 1.3px; }
-  #navbar .mobile-search-icon { display: none !important; }
-  #navbar .theme-toggle { 
-    width: 44px !important; 
-    height: 44px !important; 
-    min-width: 44px !important; 
-    min-height: 44px !important; 
-    border: 1.3px solid var(--border) !important; 
-    border-radius: 50% !important; 
-    background: var(--card-bg) !important; 
-    backdrop-filter: blur(8px); 
-    -webkit-backdrop-filter: blur(8px); 
-    transition: background 0.3s ease, border-color 0.3s ease, transform 0.2s ease; 
-  }
-}
-@media (max-width: 768px) {
-  #navbar .desktop-search { display: none !important; }
-  #navbar .mobile-search-icon { 
-    display: inline-flex !important; 
-    align-items: center; 
-    justify-content: center; 
-    width: 48px; 
-    height: 48px; 
-    min-width: 48px; 
-    min-height: 48px; 
-    border: 2px solid var(--border); 
-    border-radius: 50%; 
-    background: var(--card-bg); 
-    color: var(--text-secondary); 
-    transition: background 0.3s ease, border-color 0.3s ease, transform 0.2s ease; 
-    backdrop-filter: blur(8px); 
-    -webkit-backdrop-filter: blur(8px); 
-  }
-  #navbar .mobile-search-icon:hover { border-color: var(--accent); }
-  #navbar .mobile-search-icon:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--accent-glow); }
-  #navbar .mobile-search-icon-img { width: 20px; height: 20px; }
-  #navbar .theme-toggle { 
-    width: 48px !important; 
-    height: 48px !important; 
-    min-width: 48px !important; 
-    min-height: 48px !important; 
-    border: 2px solid var(--border) !important; 
-    border-radius: 50% !important; 
-    background: var(--card-bg) !important; 
-    display: inline-flex !important; 
-    align-items: center !important; 
-    justify-content: center !important; 
-    backdrop-filter: blur(8px); 
-    -webkit-backdrop-filter: blur(8px); 
-    transition: background 0.3s ease, border-color 0.3s ease, transform 0.2s ease; 
-  }
-  #navbar .theme-toggle:hover { border-color: var(--accent); }
-  #navbar .theme-toggle:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--accent-glow); }
-  #navbar .theme-icon { font-size: 20px; }
-}
-@media (min-width: 591px) and (max-width: 600px) {
-  #navbar .desktop-search { display: none !important; }
-  #navbar .mobile-search-icon { 
-    display: flex !important; 
-    order: 3; 
-    margin-left: auto; 
-    margin-right: 8px; 
   }
 }

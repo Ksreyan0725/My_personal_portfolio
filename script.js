@@ -407,16 +407,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Event listeners for search modal
-    // Mobile search icon opens the search modal
-    if (mobileSearchIcon) {
-        mobileSearchIcon.addEventListener('click', openSearchModal);
-    }
+    // Mobile search icon disabled from opening modal
 
-    // Desktop search button opens the search modal
-    const searchButton = document.querySelector('.search-button');
-    if (searchButton) {
-        searchButton.addEventListener('click', openSearchModal);
-    }
+    // Desktop search button handled below per breakpoint
 
     if (searchModalClose) {
         searchModalClose.addEventListener('click', closeSearchModal);
@@ -762,14 +755,24 @@ document.addEventListener('DOMContentLoaded', () => {
             if (isDesktop && resultsContainer) {
                 showDesktopSearchResults(query, resultsContainer);
             } else {
-                // Non-desktop: open modal flow
-                openSearchModal();
-                setTimeout(() => {
-                    if (searchModalInput) {
-                        searchModalInput.value = query;
-                        doSearch(query);
-                    }
-                }, 150);
+                const lowerQuery = query.toLowerCase().trim();
+                const tokens = lowerQuery.split(/\s+/).filter(Boolean);
+                const ranked = searchableContent
+                  .map(item => {
+                    const hay = (item.title + ' ' + item.description).toLowerCase();
+                    const score = tokens.reduce((s, t) => s + (hay.includes(t) ? 1 : 0), 0) +
+                                 (item.title.toLowerCase().startsWith(lowerQuery) ? 2 : 0) +
+                                 (item.title.toLowerCase().includes(lowerQuery) ? 1 : 0);
+                    return { item, score };
+                  })
+                  .filter(x => x.score > 0)
+                  .sort((a, b) => b.score - a.score);
+                if (ranked.length > 0) {
+                  addRecentSearch(query);
+                  navigateToLink(ranked[0].item.link);
+                } else {
+                  showDesktopSearchMessage(input, 'No results found', true);
+                }
             }
         });
     });
