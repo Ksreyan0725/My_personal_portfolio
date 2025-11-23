@@ -1,11 +1,11 @@
-// Modern Portfolio JavaScrip
+// Modern Portfolio JavaScript
 
 // Detect touch devices
 const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
 // Early theme initialization (moved from inline <head> script)
 // Sets `data-theme` immediately and toggles `body.darkmode` as soon as possible
-(function() {
+(function () {
     try {
         const storedTheme = localStorage.getItem('theme') || 'system';
         const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -40,11 +40,11 @@ document.addEventListener('DOMContentLoaded', () => {
     /* ==================== Theme Management ==================== */
     const themeToggle = document.getElementById('themeToggle');
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
-    
+
     // Theme application function
     function applyTheme(theme, animate = false) {
         const systemPrefersDark = prefersDark.matches;
-        const effectiveTheme = theme === 'system' ? 
+        const effectiveTheme = theme === 'system' ?
             (systemPrefersDark ? 'dark' : 'light') : theme;
 
         if (animate) {
@@ -59,11 +59,11 @@ document.addEventListener('DOMContentLoaded', () => {
         if (themeToggle) {
             const themeIcon = themeToggle.querySelector('.theme-icon');
             const themeText = themeToggle.querySelector('.theme-text');
-            
+
             if (themeIcon && themeText) {
                 // Show gear icon for System mode, sun/moon for explicit Light/Dark
-                themeIcon.textContent = theme === 'system' ? '⚙️' : 
-                                      theme === 'dark' ? '🌙' : '☀️';
+                themeIcon.textContent = theme === 'system' ? '⚙️' :
+                    theme === 'dark' ? '🌙' : '☀️';
                 // Keep the label as the selected mode (System/Light/Dark)
                 themeText.textContent = theme.charAt(0).toUpperCase() + theme.slice(1);
             }
@@ -126,31 +126,31 @@ document.addEventListener('DOMContentLoaded', () => {
         const size = Math.max(rect.width, rect.height);
         const x = event.clientX - rect.left - size / 2;
         const y = event.clientY - rect.top - size / 2;
-        
+
         ripple.className = 'ripple';
         ripple.style.width = ripple.style.height = size + 'px';
         ripple.style.left = x + 'px';
         ripple.style.top = y + 'px';
-        
+
         button.appendChild(ripple);
         setTimeout(() => ripple.remove(), 600);
     }
-    
+
     // Theme transition wave
     function createThemeTransitionWave(theme) {
         const settingsGear = document.getElementById('settingsGear');
         if (!settingsGear) return;
-        
+
         const ripple = document.createElement('div');
         const rect = settingsGear.getBoundingClientRect();
         const x = rect.left + rect.width / 2;
         const y = rect.top + rect.height / 2;
-        
+
         ripple.className = 'page-ripple';
         ripple.style.left = x + 'px';
         ripple.style.top = y + 'px';
         ripple.setAttribute('data-target-theme', theme);
-        
+
         document.body.appendChild(ripple);
         setTimeout(() => ripple.remove(), 800);
     }
@@ -178,7 +178,7 @@ document.addEventListener('DOMContentLoaded', () => {
         { title: 'Certifications', description: 'Professional certifications and courses', link: '#certifications' },
         { title: 'Skills', description: 'Programming languages and technical skills', link: '#skills' },
         { title: 'Contact', description: 'Get in touch via email or social media', link: 'contact.html' },
-        { title: 'Services', description: 'Professional services offered', link: 'service.html' },
+
         { title: 'Resume', description: 'Download resume PDF file', link: 'Assets/Docs/Kumar_Sreyan_Pattanayak_Resume.pdf' },
         { title: 'Download Resume', description: 'Download Kumar Sreyan Pattanayak resume PDF', link: 'Assets/Docs/Kumar_Sreyan_Pattanayak_Resume.pdf' },
         { title: 'CV', description: 'Curriculum Vitae - Resume PDF download', link: 'Assets/Docs/Kumar_Sreyan_Pattanayak_Resume.pdf' },
@@ -195,67 +195,67 @@ document.addEventListener('DOMContentLoaded', () => {
     function buildSearchIndex() {
         try {
             const items = [];
-            
+
             // Sections by id and heading text
             document.querySelectorAll('section[id]').forEach(sec => {
                 const id = sec.getAttribute('id');
                 const title = sec.querySelector('h1, h2, h3, .section-title')?.textContent?.trim();
                 if (title) items.push({ title, description: `Go to ${title} section`, link: `#${id}` });
             });
-            
+
             // Project cards
             document.querySelectorAll('.project-card').forEach(card => {
                 const title = card.querySelector('.project-title, h3, h4')?.textContent?.trim();
                 const desc = card.querySelector('.project-description, p')?.textContent?.trim()?.slice(0, 120) || 'Project';
                 if (title) items.push({ title, description: desc, link: '#projects' });
             });
-            
+
             // Skills
             document.querySelectorAll('.skill-item, .skill-card').forEach(skill => {
                 const title = skill.querySelector('.skill-name, h4, h5')?.textContent?.trim();
                 if (title) items.push({ title, description: 'Skill', link: '#skills' });
             });
-            
+
             // Resume/Download buttons and links
             document.querySelectorAll('a.resume-btn, .resume-btn, a[download], a[href*="resume"], a[href*="cv"]').forEach(link => {
                 const text = link.textContent?.trim();
                 const href = link.getAttribute('href');
                 if (text && (text.toLowerCase().includes('resume') || text.toLowerCase().includes('download') || text.toLowerCase().includes('cv'))) {
-                    items.push({ 
-                        title: text, 
-                        description: 'Download resume PDF file', 
-                        link: href || '#resume' 
+                    items.push({
+                        title: text,
+                        description: 'Download resume PDF file',
+                        link: href || '#resume'
                     });
                 }
             });
-            
+
             // CTA buttons and action buttons
             document.querySelectorAll('.cta-button, .btn, button[aria-label*="download"], button[aria-label*="resume"]').forEach(btn => {
                 const text = btn.textContent?.trim() || btn.getAttribute('aria-label');
                 if (text && (text.toLowerCase().includes('resume') || text.toLowerCase().includes('download') || text.toLowerCase().includes('get in touch'))) {
                     const section = btn.closest('section');
                     const sectionId = section?.getAttribute('id') || 'main';
-                    items.push({ 
-                        title: text, 
-                        description: `Action button: ${text}`, 
-                        link: `#${sectionId}` 
+                    items.push({
+                        title: text,
+                        description: `Action button: ${text}`,
+                        link: `#${sectionId}`
                     });
                 }
             });
-            
+
             // Contact and navigation links
-            document.querySelectorAll('a[href*="contact"], a[href*="service"]').forEach(link => {
+            document.querySelectorAll('a[href*="contact"]').forEach(link => {
                 const text = link.textContent?.trim();
                 const href = link.getAttribute('href');
                 if (text) {
-                    items.push({ 
-                        title: text, 
-                        description: `Navigate to ${text} page`, 
-                        link: href 
+                    items.push({
+                        title: text,
+                        description: `Navigate to ${text} page`,
+                        link: href
                     });
                 }
             });
-            
+
             // Merge and de-duplicate by title+link
             const key = o => `${o.title}|${o.link}`.toLowerCase();
             const map = new Map(searchableContent.map(i => [key(i), i]));
@@ -281,14 +281,21 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Close search modal
+    // Close search modal with slide-down animation
     function closeSearchModal() {
-        searchModal.classList.remove('active');
+        // Add closing class for slide-down animation
+        searchModal.classList.add('closing');
         searchModalOverlay.classList.remove('active');
-        document.body.style.overflow = '';
-        searchModalInput.value = '';
-        searchResults.innerHTML = '';
-        currentResultIndex = -1;
+
+        // Wait for animation to complete before removing active class
+        setTimeout(() => {
+            searchModal.classList.remove('active');
+            searchModal.classList.remove('closing');
+            document.body.style.overflow = '';
+            searchModalInput.value = '';
+            searchResults.innerHTML = '';
+            currentResultIndex = -1;
+        }, 400); // Match the CSS transition duration
     }
 
     // Debounce helper
@@ -345,7 +352,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Perform search with rendering
     function doSearch(query) {
         const lowerQuery = query.toLowerCase().trim();
-        
+
         if (lowerQuery.length < 2) {
             renderSuggestions();
             return;
@@ -356,8 +363,8 @@ document.addEventListener('DOMContentLoaded', () => {
             .map(item => {
                 const hay = (item.title + ' ' + item.description).toLowerCase();
                 const score = tokens.reduce((s, t) => s + (hay.includes(t) ? 1 : 0), 0) +
-                              (item.title.toLowerCase().startsWith(lowerQuery) ? 2 : 0) +
-                              (item.title.toLowerCase().includes(lowerQuery) ? 1 : 0);
+                    (item.title.toLowerCase().startsWith(lowerQuery) ? 2 : 0) +
+                    (item.title.toLowerCase().includes(lowerQuery) ? 1 : 0);
                 return { item, score };
             })
             .filter(x => x.score > 0)
@@ -382,7 +389,7 @@ document.addEventListener('DOMContentLoaded', () => {
             el.addEventListener('click', () => {
                 const link = el.getAttribute('data-link');
                 addRecentSearch(query);
-                
+
                 // Handle different link types
                 if (link.includes('.pdf') && !link.toLowerCase().includes('download')) {
                     // Open PDF in the site viewer (pass file path via query param)
@@ -407,7 +414,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Event listeners for search modal
-    // Mobile search icon disabled from opening modal
+    // Mobile search icon opens modal on mobile/tablet (below 1025px)
+    if (mobileSearchIcon) {
+        mobileSearchIcon.addEventListener('click', () => {
+            openSearchModal();
+        });
+    }
 
     // Desktop search button handled below per breakpoint
 
@@ -444,7 +456,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (active) {
                     const link = active.getAttribute('data-link');
                     addRecentSearch(searchModalInput.value.trim());
-                    
+
                     // Handle different link types
                     if (link.includes('.pdf') && !link.toLowerCase().includes('download')) {
                         // Open PDF in the site viewer (pass file path via query param)
@@ -561,8 +573,8 @@ document.addEventListener('DOMContentLoaded', () => {
             .map(item => {
                 const hay = (item.title + ' ' + item.description).toLowerCase();
                 const score = tokens.reduce((s, t) => s + (hay.includes(t) ? 1 : 0), 0) +
-                              (item.title.toLowerCase().startsWith(lowerQuery) ? 2 : 0) +
-                              (item.title.toLowerCase().includes(lowerQuery) ? 1 : 0);
+                    (item.title.toLowerCase().startsWith(lowerQuery) ? 2 : 0) +
+                    (item.title.toLowerCase().includes(lowerQuery) ? 1 : 0);
                 return { item, score };
             })
             .filter(x => x.score > 0)
@@ -580,7 +592,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         let bodyHtml = '';
         if (totalCount === 0) {
-            const suggestions = ['Projects', 'Skills', 'Education', 'Certifications', 'Contact', 'Services'];
+            const suggestions = ['Projects', 'Skills', 'Education', 'Certifications', 'Contact'];
             bodyHtml = `
                 <div class="desktop-search-no-results">No results found</div>
                 <div class="desktop-search-suggestions" aria-label="Try searching">
@@ -685,7 +697,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!isDesktop) return; // desktop-only navigation
             if (!resultsContainer) return;
             const items = Array.from(resultsContainer.querySelectorAll('.desktop-search-result-item'));
-            
+
             if (e.key === 'ArrowDown') {
                 e.preventDefault();
                 if (!items.length) return;
@@ -700,12 +712,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 items[currentDesktopResultIndex].scrollIntoView({ block: 'nearest' });
             } else if (e.key === 'Enter') {
                 e.preventDefault();
-                const active = items[currentDesktopResultIndex] || items[0];
-                if (active) {
+                const query = input.value.trim();
+
+                // If there are visible results, navigate to the selected/first one
+                if (items.length > 0) {
+                    const active = items[currentDesktopResultIndex] || items[0];
                     const link = active.getAttribute('data-link');
-                    addRecentSearch(input.value.trim());
+                    addRecentSearch(query);
                     navigateToLink(link);
                     resultsContainer.classList.remove('active');
+                } else if (query.length >= 2) {
+                    // No visible results but valid query - trigger search
+                    showDesktopSearchResults(query, resultsContainer);
+                } else {
+                    // Query too short
+                    showDesktopSearchMessage(input, 'Please enter at least 2 characters to search', true);
                 }
             } else if (e.key === 'Escape') {
                 resultsContainer.classList.remove('active');
@@ -758,20 +779,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 const lowerQuery = query.toLowerCase().trim();
                 const tokens = lowerQuery.split(/\s+/).filter(Boolean);
                 const ranked = searchableContent
-                  .map(item => {
-                    const hay = (item.title + ' ' + item.description).toLowerCase();
-                    const score = tokens.reduce((s, t) => s + (hay.includes(t) ? 1 : 0), 0) +
-                                 (item.title.toLowerCase().startsWith(lowerQuery) ? 2 : 0) +
-                                 (item.title.toLowerCase().includes(lowerQuery) ? 1 : 0);
-                    return { item, score };
-                  })
-                  .filter(x => x.score > 0)
-                  .sort((a, b) => b.score - a.score);
+                    .map(item => {
+                        const hay = (item.title + ' ' + item.description).toLowerCase();
+                        const score = tokens.reduce((s, t) => s + (hay.includes(t) ? 1 : 0), 0) +
+                            (item.title.toLowerCase().startsWith(lowerQuery) ? 2 : 0) +
+                            (item.title.toLowerCase().includes(lowerQuery) ? 1 : 0);
+                        return { item, score };
+                    })
+                    .filter(x => x.score > 0)
+                    .sort((a, b) => b.score - a.score);
                 if (ranked.length > 0) {
-                  addRecentSearch(query);
-                  navigateToLink(ranked[0].item.link);
+                    addRecentSearch(query);
+                    navigateToLink(ranked[0].item.link);
                 } else {
-                  showDesktopSearchMessage(input, 'No results found', true);
+                    showDesktopSearchMessage(input, 'No results found', true);
                 }
             }
         });
@@ -790,6 +811,47 @@ document.addEventListener('DOMContentLoaded', () => {
             if (resultsContainer) {
                 resultsContainer.classList.remove('active');
             }
+        });
+    });
+
+    // Progressive Responsive Search - Auto-detect overflow and switch modes
+    function updateSearchMode() {
+        const desktopSearchContainers = document.querySelectorAll('.desktop-search');
+
+        desktopSearchContainers.forEach(container => {
+            const navContainer = container.closest('.nav-container');
+            if (!navContainer) return;
+
+            // Check if navbar items are overflowing
+            const navWidth = navContainer.offsetWidth;
+            const navScrollWidth = navContainer.scrollWidth;
+            const isOverflowing = navScrollWidth > navWidth;
+
+            // Also check viewport width for responsive breakpoints
+            const viewportWidth = window.innerWidth;
+
+            // Switch to icon mode if:
+            // 1. Navbar is overflowing, OR
+            // 2. Viewport is below 900px (medium-small screens)
+            const shouldUseIconMode = isOverflowing || viewportWidth < 900;
+
+            if (shouldUseIconMode) {
+                container.classList.add('icon-mode');
+            } else {
+                container.classList.remove('icon-mode');
+            }
+        });
+    }
+
+    // Run on load and resize
+    updateSearchMode();
+    window.addEventListener('resize', debounce(updateSearchMode, 150));
+
+    // Handle search icon button click (opens modal when in icon mode)
+    const searchIconButtons = document.querySelectorAll('.desktop-search .search-icon-button');
+    searchIconButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            openSearchModal();
         });
     });
 
@@ -818,7 +880,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const cleanUrl = location.pathname + location.hash;
             window.history.replaceState({}, '', cleanUrl);
         }
-    } catch {}
+    } catch { }
 
     /* ==================== Smooth Scrolling & Active Navigation ==================== */
     const sections = document.querySelectorAll('section[id], header[id]');
@@ -840,7 +902,7 @@ document.addEventListener('DOMContentLoaded', () => {
         allNavLinks.forEach(link => {
             const href = link.getAttribute('href');
             link.classList.remove('active');
-            
+
             // Normalize href to handle: #section, index.html#section, ./index.html#section, etc.
             const normalizedHref = href.replace(/^.*#/, '#');
             if (normalizedHref === `#${sectionId}`) {
@@ -854,10 +916,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const totalOffset = getOffsets();
         const scrollPos = window.scrollY;
         const activationPoint = scrollPos + totalOffset + 50; // 50px buffer for better UX
-        
+
         let currentSection = null;
         let bestScore = -Infinity;
-        
+
         // If at the very top, always highlight home
         if (scrollPos < 80) {
             currentSection = 'home';
@@ -865,50 +927,50 @@ document.addEventListener('DOMContentLoaded', () => {
             sections.forEach(section => {
                 const sectionId = section.getAttribute('id');
                 if (!sectionId) return;
-                
+
                 const rect = section.getBoundingClientRect();
                 const sectionTop = rect.top + scrollPos;
                 const sectionBottom = sectionTop + rect.height;
-                
+
                 // Check if activation point is within this section
                 const isInSection = activationPoint >= sectionTop && activationPoint <= sectionBottom;
-                
+
                 // Also check if section top has passed the activation point (for sections we're scrolling into)
                 const hasPassedActivation = sectionTop <= activationPoint;
-                
+
                 if (isInSection || hasPassedActivation) {
                     // Calculate score: prefer sections where activation point is closer to section top
                     const distanceFromTop = Math.abs(activationPoint - sectionTop);
                     const sectionHeight = rect.height;
                     const normalizedDistance = distanceFromTop / Math.max(sectionHeight, 100);
-                    
+
                     // Higher score for sections where we're closer to the top
                     let score = 1000 - normalizedDistance;
-                    
+
                     // If activation point is within section, boost score
                     if (isInSection) {
                         score += 500;
                     }
-                    
+
                     if (score > bestScore) {
                         bestScore = score;
                         currentSection = sectionId;
                     }
                 }
             });
-            
+
             // Fallback: if no section found, find the closest one above activation point
             if (!currentSection) {
                 let closestSection = null;
                 let closestDistance = Infinity;
-                
+
                 sections.forEach(section => {
                     const sectionId = section.getAttribute('id');
                     if (!sectionId) return;
-                    
+
                     const rect = section.getBoundingClientRect();
                     const sectionTop = rect.top + scrollPos;
-                    
+
                     if (sectionTop <= activationPoint) {
                         const distance = activationPoint - sectionTop;
                         if (distance < closestDistance) {
@@ -917,7 +979,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         }
                     }
                 });
-                
+
                 if (closestSection) {
                     currentSection = closestSection;
                 } else {
@@ -926,7 +988,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         }
-        
+
         // Update navigation links
         if (currentSection) {
             updateActiveLink(currentSection);
@@ -953,53 +1015,53 @@ document.addEventListener('DOMContentLoaded', () => {
             const activationPoint = window.scrollY + totalOffset + 50;
             let bestSection = null;
             let bestScore = -Infinity;
-            
+
             entries.forEach(entry => {
                 const sectionId = entry.target.getAttribute('id');
                 if (!sectionId) return;
-                
+
                 const rect = entry.target.getBoundingClientRect();
                 const sectionTop = rect.top + window.scrollY;
-                
+
                 // Check if section is intersecting and near activation point
                 if (entry.isIntersecting) {
                     const distanceFromActivation = Math.abs((sectionTop + totalOffset) - activationPoint);
                     const visibilityScore = entry.intersectionRatio * 1000;
                     const proximityScore = 1000 / (1 + distanceFromActivation / 10);
                     const totalScore = visibilityScore + proximityScore;
-                    
+
                     if (totalScore > bestScore) {
                         bestScore = totalScore;
                         bestSection = sectionId;
                     }
                 }
             });
-            
+
             // Also check all sections for the one at activation point
             sections.forEach(section => {
                 const sectionId = section.getAttribute('id');
                 if (!sectionId) return;
-                
+
                 const rect = section.getBoundingClientRect();
                 const sectionTop = rect.top + window.scrollY;
                 const sectionBottom = sectionTop + rect.height;
-                
+
                 if (activationPoint >= sectionTop && activationPoint <= sectionBottom) {
                     const distanceFromTop = activationPoint - sectionTop;
                     const score = 2000 - (distanceFromTop / 10);
-                    
+
                     if (score > bestScore) {
                         bestScore = score;
                         bestSection = sectionId;
                     }
                 }
             });
-            
+
             // Handle top of page
             if (window.scrollY < 80) {
                 bestSection = 'home';
             }
-            
+
             if (bestSection && bestSection !== activeSectionId) {
                 activeSectionId = bestSection;
                 updateActiveLink(bestSection);
@@ -1032,7 +1094,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     window.addEventListener('scroll', throttledHighlight, { passive: true });
-    
+
     // Handle resize to recalculate offsets and update observer
     let resizeThrottle;
     window.addEventListener('resize', () => {
@@ -1043,14 +1105,14 @@ document.addEventListener('DOMContentLoaded', () => {
             resizeThrottle = null;
         }, 150);
     }, { passive: true });
-    
+
     // Initialize on load
     window.addEventListener('load', () => {
         setupObserver();
         highlightActiveNav();
         setTimeout(highlightActiveNav, 100);
     });
-    
+
     // Initial highlight
     highlightActiveNav();
 
@@ -1110,7 +1172,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!CSS.supports || !CSS.supports('backdrop-filter', 'blur(10px)')) {
         document.documentElement.classList.add('no-backdrop');
     }
-    
+
     // Handle reduced motion preference
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     function applyMotionPreference() {
@@ -1128,16 +1190,16 @@ document.addEventListener('DOMContentLoaded', () => {
     if (contactForm) {
         contactForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            
+
             const submitButton = contactForm.querySelector('.submit-button');
             const formStatus = document.getElementById('form-status');
             const originalText = submitButton.textContent;
-            
+
             submitButton.textContent = 'Sending...';
             submitButton.disabled = true;
             formStatus.textContent = '';
             formStatus.style.color = '';
-            
+
             try {
                 const response = await fetch(contactForm.action, {
                     method: contactForm.method,
@@ -1146,14 +1208,14 @@ document.addEventListener('DOMContentLoaded', () => {
                         'Accept': 'application/json'
                     }
                 });
-                
+
                 if (response.ok) {
                     formStatus.textContent = '✓ Thank you for your message! I will get back to you soon.';
                     formStatus.style.color = '#10b981';
                     contactForm.reset();
                 } else {
                     const data = await response.json();
-                    formStatus.textContent = '✗ ' + (data.errors ? 
+                    formStatus.textContent = '✗ ' + (data.errors ?
                         data.errors.map(error => error.message).join(', ') :
                         'Oops! There was a problem submitting your form.');
                     formStatus.style.color = '#ef4444';
@@ -1228,7 +1290,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Only attempt fetch checks when running over HTTP(S) and same-origin
         if (!isHttpContext()) return;
- 
+
         let url;
         try { url = new URL(rawHref, location.href); } catch { return; }
 
@@ -1253,104 +1315,104 @@ document.addEventListener('DOMContentLoaded', () => {
 
 /* ==================== Mobile Sidebar Swipe Functionality ==================== */
 class MobileSidebarSwipe {
-  constructor() {
-    this.touchStartX = 0;
-    this.touchStartY = 0;
-    this.touchEndX = 0;
-    this.touchEndY = 0;
-    this.touchStartTime = 0;
-    this.sidebarMenu = document.querySelector('.sidebar-menu');
-    this.threshold = 40; // minimum swipe distance (px)
-    this.velocityThreshold = 0.3; // minimum velocity (px/ms)
-    this.isOpen = false;
-    this.isAnimating = false;
-    this.init();
-  }
-
-  init() {
-    if (!this.sidebarMenu) {
-      console.error('Sidebar menu element not found');
-      return;
+    constructor() {
+        this.touchStartX = 0;
+        this.touchStartY = 0;
+        this.touchEndX = 0;
+        this.touchEndY = 0;
+        this.touchStartTime = 0;
+        this.sidebarMenu = document.querySelector('.sidebar-menu');
+        this.threshold = 40; // minimum swipe distance (px)
+        this.velocityThreshold = 0.3; // minimum velocity (px/ms)
+        this.isOpen = false;
+        this.isAnimating = false;
+        this.init();
     }
 
-    document.addEventListener('touchstart', (e) => this.handleTouchStart(e), { passive: true });
-    document.addEventListener('touchend', (e) => this.handleTouchEnd(e), { passive: true });
-    document.addEventListener('click', (e) => this.handleOutsideClick(e));
+    init() {
+        if (!this.sidebarMenu) {
+            console.error('Sidebar menu element not found');
+            return;
+        }
 
-    const sidebarLinks = document.querySelectorAll('.sidebar-links a');
-    sidebarLinks.forEach((link) => {
-      link.addEventListener('click', () => this.closeSidebar());
-    });
+        document.addEventListener('touchstart', (e) => this.handleTouchStart(e), { passive: true });
+        document.addEventListener('touchend', (e) => this.handleTouchEnd(e), { passive: true });
+        document.addEventListener('click', (e) => this.handleOutsideClick(e));
 
-    const menuIcon = document.querySelector('.menu-icon');
-    if (menuIcon) {
-      menuIcon.addEventListener('click', () => this.toggleSidebar());
+        const sidebarLinks = document.querySelectorAll('.sidebar-links a');
+        sidebarLinks.forEach((link) => {
+            link.addEventListener('click', () => this.closeSidebar());
+        });
+
+        const menuIcon = document.querySelector('.menu-icon');
+        if (menuIcon) {
+            menuIcon.addEventListener('click', () => this.toggleSidebar());
+        }
+
+        const closeBtn = document.querySelector('.sidebar-close');
+        if (closeBtn) {
+            closeBtn.addEventListener('click', () => this.closeSidebar());
+        }
+
+        // Close sidebar when clicking overlay
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+        if (sidebarOverlay) {
+            sidebarOverlay.addEventListener('click', () => this.closeSidebar());
+        }
+
+        this.sidebarMenu.addEventListener('transitionend', () => {
+            this.isAnimating = false;
+        });
+
+        // Close on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && this.isOpen) {
+                this.closeSidebar();
+            }
+        });
+
+        console.log('MobileSidebarSwipe initialized successfully');
     }
 
-    const closeBtn = document.querySelector('.sidebar-close');
-    if (closeBtn) {
-      closeBtn.addEventListener('click', () => this.closeSidebar());
+    handleTouchStart(e) {
+        this.touchStartX = e.changedTouches[0].screenX;
+        this.touchStartY = e.changedTouches[0].screenY;
+        this.touchStartTime = Date.now();
+        console.log('Touch START:', { x: this.touchStartX, y: this.touchStartY, time: this.touchStartTime });
     }
 
-    // Close sidebar when clicking overlay
-    const sidebarOverlay = document.getElementById('sidebarOverlay');
-    if (sidebarOverlay) {
-      sidebarOverlay.addEventListener('click', () => this.closeSidebar());
+    handleTouchEnd(e) {
+        this.touchEndX = e.changedTouches[0].screenX;
+        this.touchEndY = e.changedTouches[0].screenY;
+        console.log('Touch END:', { x: this.touchEndX, y: this.touchEndY });
+        this.handleSwipe();
     }
 
-    this.sidebarMenu.addEventListener('transitionend', () => {
-      this.isAnimating = false;
-    });
+    handleSwipe() {
+        // Ignore if already animating
+        if (this.isAnimating) {
+            console.log('Already animating, ignoring swipe');
+            return;
+        }
 
-    // Close on Escape key
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && this.isOpen) {
-        this.closeSidebar();
-      }
-    });
+        // Ignore mostly-vertical gestures
+        const verticalDistance = Math.abs(this.touchEndY - this.touchStartY);
+        if (verticalDistance > 80) {
+            console.log('Vertical gesture ignored:', verticalDistance);
+            return;
+        }
 
-    console.log('MobileSidebarSwipe initialized successfully');
-  }
+        const horizontalDistance = this.touchEndX - this.touchStartX;
+        const duration = Date.now() - this.touchStartTime;
+        const velocity = Math.abs(horizontalDistance) / duration;
 
-  handleTouchStart(e) {
-    this.touchStartX = e.changedTouches[0].screenX;
-    this.touchStartY = e.changedTouches[0].screenY;
-    this.touchStartTime = Date.now();
-    console.log('Touch START:', { x: this.touchStartX, y: this.touchStartY, time: this.touchStartTime });
-  }
-
-  handleTouchEnd(e) {
-    this.touchEndX = e.changedTouches[0].screenX;
-    this.touchEndY = e.changedTouches[0].screenY;
-    console.log('Touch END:', { x: this.touchEndX, y: this.touchEndY });
-    this.handleSwipe();
-  }
-
-  handleSwipe() {
-    // Ignore if already animating
-    if (this.isAnimating) {
-      console.log('Already animating, ignoring swipe');
-      return;
-    }
-
-    // Ignore mostly-vertical gestures
-    const verticalDistance = Math.abs(this.touchEndY - this.touchStartY);
-    if (verticalDistance > 80) {
-      console.log('Vertical gesture ignored:', verticalDistance);
-      return;
-    }
-
-    const horizontalDistance = this.touchEndX - this.touchStartX;
-    const duration = Date.now() - this.touchStartTime;
-    const velocity = Math.abs(horizontalDistance) / duration;
-
-    console.log('Swipe detected:', {
-      horizontalDistance,
-      duration,
-      velocity,
-      touchStartX: this.touchStartX,
-      isOpen: this.isOpen
-    });
+        console.log('Swipe detected:', {
+            horizontalDistance,
+            duration,
+            velocity,
+            touchStartX: this.touchStartX,
+            isOpen: this.isOpen
+        });
 
         // Swipe right (positive distance) to open
         if (!this.isOpen && horizontalDistance > this.threshold) {
@@ -1358,210 +1420,241 @@ class MobileSidebarSwipe {
             this.openSidebar();
             return;
         }
-    
+
         // Swipe left (negative distance) to close when open
         if (this.isOpen && horizontalDistance < -this.threshold) {
             console.log('Closing sidebar via swipe (left swipe detected)');
             this.closeSidebar();
             return;
         }
-  }
-
-  openSidebar() {
-    const sidebarOverlay = document.getElementById('sidebarOverlay');
-    const menuIcon = document.querySelector('.menu-icon');
-    if (!this.isOpen && this.sidebarMenu) {
-      this.isAnimating = true;
-      this.sidebarMenu.classList.add('active');
-      if (sidebarOverlay) sidebarOverlay.classList.add('active');
-      if (menuIcon) menuIcon.setAttribute('aria-expanded', 'true');
-      document.body.style.overflow = 'hidden';
-      this.isOpen = true;
-      console.log('Sidebar opened via swipe');
     }
-  }
 
-  closeSidebar() {
-    const sidebarOverlay = document.getElementById('sidebarOverlay');
-    const menuIcon = document.querySelector('.menu-icon');
-    if (this.sidebarMenu) {
-      this.isAnimating = true;
-      this.sidebarMenu.classList.remove('active', 'open', 'closing');
-      if (sidebarOverlay) sidebarOverlay.classList.remove('active');
-      if (menuIcon) menuIcon.setAttribute('aria-expanded', 'false');
-      document.body.style.overflow = '';
-      this.isOpen = false;
+    openSidebar() {
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+        const menuIcon = document.querySelector('.menu-icon');
+        if (!this.isOpen && this.sidebarMenu) {
+            this.isAnimating = true;
+            this.sidebarMenu.classList.add('active');
+            if (sidebarOverlay) sidebarOverlay.classList.add('active');
+            if (menuIcon) menuIcon.setAttribute('aria-expanded', 'true');
+            document.body.style.overflow = 'hidden';
+            this.isOpen = true;
+            console.log('Sidebar opened via swipe');
+        }
     }
-  }
 
-  toggleSidebar() {
-    if (this.isOpen) {
-      this.closeSidebar();
-    } else {
-      this.openSidebar();
+    closeSidebar() {
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+        const menuIcon = document.querySelector('.menu-icon');
+        if (this.sidebarMenu) {
+            this.isAnimating = true;
+            this.sidebarMenu.classList.remove('active', 'open', 'closing');
+            if (sidebarOverlay) sidebarOverlay.classList.remove('active');
+            if (menuIcon) menuIcon.setAttribute('aria-expanded', 'false');
+            document.body.style.overflow = '';
+            this.isOpen = false;
+        }
     }
-  }
 
-  handleOutsideClick(e) {
-    if (
-      this.sidebarMenu &&
-      this.isOpen &&
-      !this.sidebarMenu.contains(e.target) &&
-      !(document.querySelector('.menu-icon') && document.querySelector('.menu-icon').contains(e.target))
-    ) {
-      this.closeSidebar();
+    toggleSidebar() {
+        if (this.isOpen) {
+            this.closeSidebar();
+        } else {
+            this.openSidebar();
+        }
     }
-  }
+
+    handleOutsideClick(e) {
+        if (
+            this.sidebarMenu &&
+            this.isOpen &&
+            !this.sidebarMenu.contains(e.target) &&
+            !(document.querySelector('.menu-icon') && document.querySelector('.menu-icon').contains(e.target))
+        ) {
+            this.closeSidebar();
+        }
+    }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  new MobileSidebarSwipe();
+    new MobileSidebarSwipe();
 });
 
 /* Mobile inline expandable search removed to prevent duplicate inputs.
    Mobile icon will open the modal via existing click handler (openSearchModal).
    Desktop search continues to show dropdown on ≥1025px. */
- 
+
 class SwipeCircleArrow {
-  constructor() {
-    this.el = null;
-    this.state = 'idle';
-    this.startX = 0;
-    this.startY = 0;
-    this.endX = 0;
-    this.endY = 0;
-    this.startTime = 0;
-    this.hamburgerActive = false;
-    this.minDistance = 100;
-    this.minVelocity = 0.5;
-    this.angleTolerance = 45;
-    this.resizeHandler = null;
-    this.menuIcon = document.querySelector('.menu-icon');
-    this.sidebarMenu = document.querySelector('.sidebar-menu');
-    this.init();
-  }
-  init() {
-    document.addEventListener('touchstart', (e) => this.onStart(e), { passive: true });
-    document.addEventListener('touchmove', (e) => this.onMove(e), { passive: true });
-    document.addEventListener('touchend', (e) => this.onEnd(e), { passive: true });
-    if (this.menuIcon) {
-      this.menuIcon.addEventListener('touchstart', () => { this.hamburgerActive = true; console.debug('hamburger touchstart'); }, { passive: true });
-      this.menuIcon.addEventListener('touchend', () => { this.hamburgerActive = false; console.debug('hamburger touchend'); }, { passive: true });
-      this.menuIcon.addEventListener('click', () => { console.debug('hamburger click'); });
+    constructor() {
+        this.el = null;
+        this.state = 'idle';
+        this.startX = 0;
+        this.startY = 0;
+        this.endX = 0;
+        this.endY = 0;
+        this.startTime = 0;
+        this.hamburgerActive = false;
+        this.minDistance = 100;
+        this.minVelocity = 0.5;
+        this.angleTolerance = 45;
+        this.resizeHandler = null;
+        this.menuIcon = document.querySelector('.menu-icon');
+        this.sidebarMenu = document.querySelector('.sidebar-menu');
+        this.init();
     }
-    this.resizeHandler = () => { console.debug('viewport', { w: window.innerWidth, h: window.innerHeight }); };
-    window.addEventListener('resize', this.resizeHandler, { passive: true });
-    window.addEventListener('beforeunload', () => this.destroy());
-  }
-  ensureEl() {
-    if (this.el) return;
-    const div = document.createElement('div');
-    div.className = 'swipe-indicator';
-    const arrow = document.createElement('span');
-    arrow.className = 'arrow';
-    arrow.textContent = '→';
-    div.appendChild(arrow);
-    document.body.appendChild(div);
-    this.el = div;
-  }
-  positionAt(y) {
-    if (!this.el) return;
-    const pad = parseInt(getComputedStyle(document.body).paddingLeft || '0', 10) || 0;
-    this.el.style.left = pad + 'px';
-    this.el.style.top = y + 'px';
-  }
-  activate(y) {
-    this.ensureEl();
-    this.positionAt(y);
-    if (this.menuIcon) {
-      this.el.style.zIndex = '5';
+    init() {
+        document.addEventListener('touchstart', (e) => this.onStart(e), { passive: true });
+        document.addEventListener('touchmove', (e) => this.onMove(e), { passive: true });
+        document.addEventListener('touchend', (e) => this.onEnd(e), { passive: true });
+        if (this.menuIcon) {
+            this.menuIcon.addEventListener('touchstart', () => { this.hamburgerActive = true; console.debug('hamburger touchstart'); }, { passive: true });
+            this.menuIcon.addEventListener('touchend', () => { this.hamburgerActive = false; console.debug('hamburger touchend'); }, { passive: true });
+            this.menuIcon.addEventListener('click', () => { console.debug('hamburger click'); });
+        }
+        this.resizeHandler = () => { console.debug('viewport', { w: window.innerWidth, h: window.innerHeight }); };
+        window.addEventListener('resize', this.resizeHandler, { passive: true });
+        window.addEventListener('beforeunload', () => this.destroy());
     }
-    this.state = 'active';
-    this.el.classList.remove('fade');
-    this.el.classList.add('active');
-    console.debug('animation state', this.state);
-  }
-  complete() {
-    if (!this.el) return;
-    this.state = 'completing';
-    console.debug('animation state', this.state);
-    this.el.classList.add('fade');
-    setTimeout(() => this.reset(), 200);
-  }
-  cancel() {
-    if (!this.el) return;
-    console.debug('animation cancel');
-    this.reset();
-  }
-  reset() {
-    if (!this.el) return;
-    this.state = 'idle';
-    this.el.classList.remove('active');
-    this.el.classList.remove('fade');
-    this.el.style.transform = '';
-    this.el.style.opacity = '';
-  }
-  onStart(e) {
-    const t = e.changedTouches[0];
-    this.startX = t.screenX;
-    this.startY = t.screenY;
-    this.endX = this.startX;
-    this.endY = this.startY;
-    this.startTime = Date.now();
-    const target = e.target;
-    if (this.menuIcon && (this.menuIcon.contains(target))) {
-      this.hamburgerActive = true;
-    } else {
-      this.hamburgerActive = false;
+    ensureEl() {
+        if (this.el) return;
+        const div = document.createElement('div');
+        div.className = 'swipe-indicator';
+        const arrow = document.createElement('span');
+        arrow.className = 'arrow';
+        arrow.textContent = '→';
+        div.appendChild(arrow);
+        document.body.appendChild(div);
+        this.el = div;
     }
-    console.debug('swipe start', { x: this.startX, y: this.startY, time: this.startTime, hamburger: this.hamburgerActive });
-  }
-  onMove(e) {
-    const t = e.changedTouches[0];
-    const prevX = this.endX;
-    this.endX = t.screenX;
-    this.endY = t.screenY;
-    const dx = this.endX - this.startX;
-    const dy = this.endY - this.startY;
-    const angle = Math.abs(Math.atan2(dy, dx) * 180 / Math.PI);
-    if (this.state === 'active' && dx < prevX - this.startX) {
-      this.cancel();
+    positionAt(y) {
+        if (!this.el) return;
+        const pad = parseInt(getComputedStyle(document.body).paddingLeft || '0', 10) || 0;
+        this.el.style.left = pad + 'px';
+        this.el.style.top = y + 'px';
     }
-    if (dx > 0 && angle <= this.angleTolerance && !this.hamburgerActive) {
-      this.activate(this.startY);
+    activate(y) {
+        this.ensureEl();
+        this.positionAt(y);
+        if (this.menuIcon) {
+            this.el.style.zIndex = '5';
+        }
+        this.state = 'active';
+        this.el.classList.remove('fade');
+        this.el.classList.add('active');
+        console.debug('animation state', this.state);
     }
-  }
-  onEnd(e) {
-    const t = e.changedTouches[0];
-    this.endX = t.screenX;
-    this.endY = t.screenY;
-    const dx = this.endX - this.startX;
-    const dy = this.endY - this.startY;
-    const distance = Math.hypot(dx, dy);
-    const duration = Date.now() - this.startTime;
-    const velocity = distance / duration;
-    const angle = Math.abs(Math.atan2(dy, dx) * 180 / Math.PI);
-    const sidebarOpen = !!document.querySelector('.sidebar-menu.active');
-    console.debug('swipe end', { dx, dy, distance, duration, velocity, angle, sidebarOpen });
-    const valid = dx > 0 && angle <= this.angleTolerance && distance >= this.minDistance && velocity >= this.minVelocity && !this.hamburgerActive && !sidebarOpen;
-    if (valid && this.state === 'active') {
-      this.complete();
-    } else {
-      this.cancel();
+    complete() {
+        if (!this.el) return;
+        this.state = 'completing';
+        console.debug('animation state', this.state);
+        this.el.classList.add('fade');
+        setTimeout(() => this.reset(), 200);
     }
-    if (performance && performance.memory) {
-      console.debug('memory', performance.memory);
+    cancel() {
+        if (!this.el) return;
+        console.debug('animation cancel');
+        this.reset();
     }
-  }
-  destroy() {
-    document.removeEventListener('touchstart', this.onStart);
-    document.removeEventListener('touchmove', this.onMove);
-    document.removeEventListener('touchend', this.onEnd);
-    window.removeEventListener('resize', this.resizeHandler);
-    if (this.el && this.el.parentNode) this.el.parentNode.removeChild(this.el);
-    this.el = null;
-  }
+    reset() {
+        if (!this.el) return;
+        this.state = 'idle';
+        this.el.classList.remove('active');
+        this.el.classList.remove('fade');
+        this.el.style.transform = '';
+        this.el.style.opacity = '';
+    }
+    onStart(e) {
+        const t = e.changedTouches[0];
+        this.startX = t.screenX;
+        this.startY = t.screenY;
+        this.endX = this.startX;
+        this.endY = this.startY;
+        this.startTime = Date.now();
+        const target = e.target;
+        if (this.menuIcon && (this.menuIcon.contains(target))) {
+            this.hamburgerActive = true;
+        } else {
+            this.hamburgerActive = false;
+        }
+        console.debug('swipe start', { x: this.startX, y: this.startY, time: this.startTime, hamburger: this.hamburgerActive });
+    }
+    onMove(e) {
+        const t = e.changedTouches[0];
+        const prevX = this.endX;
+        this.endX = t.screenX;
+        this.endY = t.screenY;
+        const dx = this.endX - this.startX;
+        const dy = this.endY - this.startY;
+        const angle = Math.abs(Math.atan2(dy, dx) * 180 / Math.PI);
+        if (this.state === 'active' && dx < prevX - this.startX) {
+            this.cancel();
+        }
+        if (dx > 0 && angle <= this.angleTolerance && !this.hamburgerActive) {
+            this.activate(this.startY);
+        }
+    }
+    onEnd(e) {
+        const t = e.changedTouches[0];
+        this.endX = t.screenX;
+        this.endY = t.screenY;
+        const dx = this.endX - this.startX;
+        const dy = this.endY - this.startY;
+        const distance = Math.hypot(dx, dy);
+        const duration = Date.now() - this.startTime;
+        const velocity = distance / duration;
+        const angle = Math.abs(Math.atan2(dy, dx) * 180 / Math.PI);
+        const sidebarOpen = !!document.querySelector('.sidebar-menu.active');
+        console.debug('swipe end', { dx, dy, distance, duration, velocity, angle, sidebarOpen });
+        const valid = dx > 0 && angle <= this.angleTolerance && distance >= this.minDistance && velocity >= this.minVelocity && !this.hamburgerActive && !sidebarOpen;
+        if (valid && this.state === 'active') {
+            this.complete();
+        } else {
+            this.cancel();
+        }
+        if (performance && performance.memory) {
+            console.debug('memory', performance.memory);
+        }
+    }
+    destroy() {
+        document.removeEventListener('touchstart', this.onStart);
+        document.removeEventListener('touchmove', this.onMove);
+        document.removeEventListener('touchend', this.onEnd);
+        window.removeEventListener('resize', this.resizeHandler);
+        if (this.el && this.el.parentNode) this.el.parentNode.removeChild(this.el);
+        this.el = null;
+    }
 }
 document.addEventListener('DOMContentLoaded', () => {
-  new SwipeCircleArrow();
+    new SwipeCircleArrow();
+});
+
+// Logo Click Animation & Reload Logic
+document.addEventListener('DOMContentLoaded', () => {
+    // Restore scroll position if saved
+    const savedScroll = sessionStorage.getItem('restoreScrollPosition');
+    if (savedScroll) {
+        // Use setTimeout to ensure layout is stable before scrolling
+        setTimeout(() => {
+            window.scrollTo(0, parseInt(savedScroll, 10));
+        }, 0);
+        sessionStorage.removeItem('restoreScrollPosition');
+    }
+
+    const logo = document.querySelector('.nav-logo');
+    if (logo) {
+        logo.addEventListener('click', (e) => {
+            e.preventDefault();
+
+            // Save current scroll position
+            sessionStorage.setItem('restoreScrollPosition', window.scrollY);
+
+            // Add animation class
+            logo.classList.add('logo-exit-anim');
+
+            // Wait for animation to finish (500ms) then reload
+            setTimeout(() => {
+                location.reload();
+            }, 500);
+        });
+    }
 });

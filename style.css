@@ -212,16 +212,81 @@ html {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Search Bar Styles */
+/* Search Bar Styles - Progressive Responsive Design */
 .search-container {
   position: relative;
   width: 100%;
-  max-width: 220px;
-  transition: max-width 0.3s ease;
+  max-width: 280px;
+  transition: all 0.3s ease;
 }
 
 .search-container:focus-within {
-  max-width: 280px;
+  max-width: 320px;
+}
+
+/* Search icon button - hidden by default, shown when search collapses to icon */
+.desktop-search .search-icon-button {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  min-height: 36px;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  background: var(--card-bg);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.desktop-search .search-icon-button:hover {
+  border-color: var(--accent);
+  /* Removed background and box-shadow glow as requested */
+  transform: scale(1.05);
+}
+
+.desktop-search .search-icon-button:active,
+.desktop-search .search-icon-button:focus-visible {
+  border-color: var(--accent);
+  background: var(--accent-glow);
+  box-shadow: 0 0 20px var(--accent-glow);
+  transform: scale(0.95);
+  outline: none;
+}
+
+.desktop-search .search-icon-button img {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+}
+
+/* When search is in icon mode */
+.desktop-search.icon-mode .search-icon-button {
+  display: inline-flex;
+}
+
+.desktop-search.icon-mode .search-input,
+.desktop-search.icon-mode .search-button,
+.desktop-search.icon-mode .search-clear,
+.desktop-search.icon-mode .desktop-search-results {
+  display: none !important;
+}
+
+/* Keep placeholder visible until icon mode */
+.desktop-search:not(.icon-mode) .search-input::placeholder {
+  opacity: 0.7;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Hide placeholder only in icon mode */
+.desktop-search.icon-mode .search-input::placeholder {
+  opacity: 0;
 }
 
 /* Hide native clear button for consistency */
@@ -564,10 +629,11 @@ html {
   filter: brightness(1) contrast(1.1);
 }
 
-/* Menu icon (hamburger) button styling */
+/* Menu icon (hamburger) button styling - matches mobile search icon */
 .menu-icon {
-  background: transparent;
-  border: none;
+  background: var(--card-bg);
+  border: 2px solid var(--border);
+  border-radius: 10px;
   cursor: pointer;
   padding: 0;
   display: flex;
@@ -577,12 +643,21 @@ html {
   transition: all 0.3s ease;
   width: 36px;
   height: 36px;
-  line-height: 5;
+  min-width: 36px;
+  min-height: 36px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
-
 .menu-icon:hover {
-  opacity: 0.7;
+  border-color: var(--accent);
+  background: var(--accent-glow);
+  transform: scale(1.05);
+}
+
+.menu-icon:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--accent-glow);
 }
 
 /* Dark mode menu icon - ensure proper contrast */
@@ -674,8 +749,8 @@ nav.scrolled {
   display: flex;
   justify-content: flex-start; /* left pack logo + links */
   align-items: center;
-  padding: 0 20px;
-  gap: 16px; /* equal spacing between items */
+  padding: 0 20px; /* Reverted to standard 20px */
+  gap: 10px; /* Kept reduced spacing */
   flex-wrap: nowrap;
   height: 100%;
 }
@@ -694,7 +769,7 @@ nav.scrolled {
 
 .nav-links {
   display: flex;
-  gap: 20px;
+  gap: 15px; /* Reduced from 20px for tighter spacing */
   align-items: center;
   list-style: none;
   flex: 0 0 auto; /* don't stretch, keep left-aligned */
@@ -705,7 +780,14 @@ nav.scrolled {
 /* Desktop search goes to the right */
 .desktop-search {
   order: 3;
-  margin-left: auto; /* push to right */
+  margin-left: auto; /* push to right - this keeps it far right */
+  flex-shrink: 0;
+}
+
+/* Theme toggle comes after search */
+.theme-toggle {
+  order: 4;
+  margin-left: 8px; /* small gap after search */
   flex-shrink: 0;
 }
 
@@ -768,21 +850,24 @@ nav.scrolled {
     font-weight: 600;
     user-select: none;
     flex-shrink: 0;
-    order: 4;
-    margin-left: 8px;
-    margin-right: 0;
     white-space: nowrap;
     overflow: visible;
 }
 
 .theme-toggle:hover {
   border-color: var(--accent);
+  background: var(--accent-glow);
   box-shadow: 0 0 20px var(--accent-glow);
   transform: scale(1.05);
 }
 
-.theme-toggle:active {
+.theme-toggle:active,
+.theme-toggle:focus-visible {
+  border-color: var(--accent);
+  background: var(--accent-glow);
+  box-shadow: 0 0 20px var(--accent-glow);
   transform: scale(0.95);
+  outline: none;
 }
 
 .theme-icon {
@@ -835,10 +920,9 @@ nav.scrolled {
 
 /* Ensure hamburger glyph is centered and sized nicely */
 .menu-icon-text {
-  font-size: 18px;
+  font-size: 16px;
   line-height: 1;
   display: inline-block;
-  transform: translateY(-1px); /* optical alignment */
 }
 
 /* ==================== Sidebar Menu (Mobile) ==================== */
@@ -987,12 +1071,21 @@ nav.scrolled {
   border-radius: 20px;
   box-shadow: 0 10px 50px rgba(0, 0, 0, 0.3);
   z-index: 1002;
-  transition: top 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: top 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
   overflow: hidden;
+  opacity: 0;
 }
 
 .search-modal.active {
   top: 100px;
+  opacity: 1;
+}
+
+/* Slide down animation when closing */
+.search-modal.closing {
+  top: 100vh !important;
+  opacity: 0;
+  transition: top 0.4s cubic-bezier(0.6, 0, 0.8, 0.4), opacity 0.3s ease;
 }
 
 .search-modal-content {
@@ -1020,7 +1113,11 @@ nav.scrolled {
 
 .search-modal-close:hover {
   color: var(--accent);
-  transform: rotate(90deg);
+  /* No rotation - just color change */
+}
+
+.search-modal-close:active {
+  transform: scale(0.9);
 }
 
 .search-modal-body {
@@ -1627,92 +1724,6 @@ main > .section::after {
     transform: scale(1.05);
     opacity: 0.8;
   }
-}
-
-.services-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 25px;
-  margin-top: 30px;
-}
-
-.service-card {
-  background: var(--card-bg);
-  padding: 40px 30px;
-  border-radius: 30px;
-  border: 2px solid var(--border);
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-  transition: all 0.4s ease;
-}
-
-.service-card::before {
-  content: "";
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
-  opacity: 0;
-  transition: opacity 0.4s ease;
-}
-
-.service-card:hover::before {
-  opacity: 1;
-  animation: rotate 3s linear infinite;
-}
-
-/* .service-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            border-color: var(--accent);
-            box-shadow: 0 20px 50px var(--accent-glow);
-        } */
-
-.service-icon {
-  font-size: 3.5rem;
-  margin-bottom: 20px;
-  display: block;
-  animation: float 3s ease-in-out infinite;
-  filter: grayscale(0.3);
-}
-
-.service-card:hover .service-icon {
-  animation: bounce 0.6s ease;
-  filter: grayscale(0);
-}
-
-@keyframes bounce {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  25% {
-    transform: translateY(-15px);
-  }
-  50% {
-    transform: translateY(0);
-  }
-  75% {
-    transform: translateY(-7px);
-  }
-}
-
-.service-title {
-  font-size: 1.3rem;
-  font-weight: 600;
-  color: var(--text-primary);
-  margin-bottom: 10px;
-  position: relative;
-  z-index: 1;
-}
-
-.service-desc {
-  color: var(--text-secondary);
-  line-height: 1.6;
-  position: relative;
-  z-index: 1;
 }
 
 .coming-soon-overlay {
@@ -2879,9 +2890,6 @@ nav {
     display: none !important; /* Hidden on mobile */
   }
 
-
-
-
   .theme-selector {
     order: 4;
     margin-left: 0;
@@ -2944,299 +2952,6 @@ nav {
   grid-template-columns: 1fr;
 }
 
-/* ===========================================
-   SMALL MOBILE: Below 525px
-   Extra optimization for small screens
-   =========================================== */
-@media (max-width: 525px) {
-  /* Navigation - more compact */
-  nav {
-    height: 44px;
-    padding: 4px 0;
-  }
-
-  .nav-container {
-    gap: 8px;
-    padding: 0 12px;
-  }
-
-  .menu-icon {
-    font-size: 1.4rem;
-    padding: 4px;
-  }
-
-  /* Adjust search bar for smaller screens */
-  .desktop-search {
-    max-width: 140px !important;
-    min-width: 90px !important;
-    margin-right: 6px !important;
-  }
-
-  .search-input {
-    font-size: 0.8rem !important;
-    height: 30px !important;
-    padding: 5px 32px 5px 8px !important;
-  }
-
-  .search-icon-img {
-    width: 13px !important;
-    height: 13px !important;
-  }
-
-  .mobile-search-icon {
-    padding: 6px;
-  }
-
-  .mobile-search-icon-img {
-    width: 18px;
-    height: 18px;
-  }
-
-  .theme-toggle {
-    background: var(--card-bg);
-    border: 2px solid var(--border);
-    width: 30px !important;
-    height: 30px !important;
-    min-width: 30px !important;
-    max-width: 30px !important;
-    min-height: 30px !important;
-    padding: 0 !important;
-    border-radius: 50% !important;
-    backdrop-filter: blur(10px);
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    aspect-ratio: 1 / 1;
-    box-sizing: border-box !important;
-    flex-shrink: 0;
-  }
-
-  .theme-text {
-    display: none !important;
-  }
-
-  .theme-icon {
-    font-size: 15px;
-    line-height: 1;
-  }
-
-  /* Banner - smaller */
-  .notice-banner {
-    top: 44px;
-    height: 28px;
-  }
-
-  .ticker-text {
-    font-size: 0.8rem;
-    padding: 0 10px;
-  }
-
-  /* Hero section - tighter spacing */
-  #home .home-grid {
-    gap: 28px;
-    padding: 75px 14px 35px;
-  }
-
-  #home .about-card {
-    padding: 20px;
-    border-radius: 18px;
-  }
-
-  /* Profile photo - smaller */
-  .profile-photo {
-    width: 130px;
-    height: 130px;
-    font-size: 2.8rem;
-    border: 3px solid var(--accent);
-  }
-
-  /* Name and tagline - smaller */
-  .name {
-    font-size: 1.8rem;
-    letter-spacing: -0.02em;
-    margin-bottom: 6px;
-  }
-
-  .tagline {
-    font-size: 0.9rem;
-    margin-top: 8px;
-    margin-bottom: 16px;
-  }
-
-  /* Social links - compact */
-  .contact-links {
-    gap: 10px;
-    margin-top: 12px;
-    margin-bottom: 10px; /* ensure spacing below icons to avoid overlap */
-  }
-
-  .contact-links a {
-    width: 44px;
-    height: 44px;
-    padding: 10px;
-  }
-
-  .social-icon {
-    width: 20px;
-    height: 20px;
-  }
-
-  /* Container - tighter */
-  .container {
-    padding: 40px 14px;
-  }
-
-  header {
-    padding: 75px 14px 35px;
-  }
-
-  /* Section titles - smaller */
-  .section-title {
-    font-size: 1.8rem;
-    margin-bottom: 24px;
-  }
-
-  .section-subtitle {
-    font-size: 1.2rem;
-    margin-bottom: 16px;
-  }
-
-  /* Cards - more compact */
-  .card {
-    padding: 20px;
-    margin: 16px 0;
-    border-radius: 20px;
-  }
-
-  .card h3 {
-    font-size: 1.2rem;
-    margin-bottom: 8px;
-  }
-
-  .card p {
-    font-size: 0.9rem;
-    line-height: 1.5;
-  }
-
-  .card .date {
-    font-size: 0.8rem;
-    margin-bottom: 10px;
-  }
-
-  /* Buttons - smaller */
-  .cta-button,
-  .course-button,
-  .resume-btn {
-    padding: 10px 20px;
-    font-size: 0.9rem;
-    min-width: 150px;
-    gap: 6px;
-  }
-
-  .pdf-icon {
-    width: 16px;
-    height: 16px;
-  }
-
-  /* Skills section */
-  .skills-container {
-    gap: var(--space-md);
-  }
-
-  .skill-item {
-    margin-bottom: 16px;
-  }
-
-  .skill-name {
-    font-size: 0.9rem;
-  }
-
-  .skill-rating {
-    font-size: 0.85rem;
-  }
-
-  .skill-bar-container {
-    height: 20px;
-  }
-
-  /* Footer */
-  footer {
-    padding: 20px 14px;
-    font-size: 0.85rem;
-  }
-
-  /* Search modal - adjust for small screens */
-  .search-modal {
-    width: 95%;
-    max-width: 380px;
-    border-radius: 16px;
-  }
-
-  .search-modal.active {
-    top: 85px; /* Below navbar (44px) + banner (28px) + spacing (13px) */
-  }
-
-  .search-modal-input {
-    padding: 10px 45px 10px 12px;
-    font-size: 0.9rem;
-  }
-
-  .search-modal-button {
-    right: 5px;
-    padding: 10px;
-    width: 38px;
-    height: 38px;
-  }
-
-  .search-modal-icon-img {
-    width: 16px;
-    height: 16px;
-  }
-
-  /* Sidebar menu - narrower */
-  .sidebar-menu {
-    width: 260px;
-    left: -260px;
-  }
-
-  .sidebar-header {
-    padding: 16px;
-  }
-
-  .sidebar-logo {
-    font-size: 1.2rem;
-  }
-
-  .sidebar-links a {
-    padding: 12px 16px;
-    font-size: 0.95rem;
-  }
-
-  /* About text */
-  .about-text {
-    font-size: 0.95rem;
-    line-height: 1.6;
-    padding: 0 4px;
-  }
-
-  /* Education section adjustments */
-  #education .card {
-    padding: 18px;
-  }
-
-  /* Resume section */
-  .resume-section {
-    padding: 24px 16px;
-    margin-top: 24px;
-  }
-
-  .resume-heading {
-    font-size: 1.1rem;
-    margin-bottom: 12px;
-  }
-}
-
-/* ===================================================================================================================================== */
 
 /* ===========================================
    EXTRA SMALL MOBILE: Below 388px
@@ -3752,6 +3467,299 @@ nav {
     padding: 24px 14px;
   }
 }
+
+/* ===========================================
+   SMALL MOBILE: Below 525px
+   Extra optimization for small screens
+   =========================================== */
+@media (max-width: 525px) {
+  /* Navigation - more compact */
+  nav {
+    height: 44px;
+    padding: 4px 0;
+  }
+
+  .nav-container {
+    gap: 8px;
+    padding: 0 12px;
+  }
+
+  .menu-icon {
+    font-size: 1.4rem;
+    padding: 4px;
+  }
+
+  /* Adjust search bar for smaller screens */
+  .desktop-search {
+    max-width: 140px !important;
+    min-width: 90px !important;
+    margin-right: 6px !important;
+  }
+
+  .search-input {
+    font-size: 0.8rem !important;
+    height: 30px !important;
+    padding: 5px 32px 5px 8px !important;
+  }
+
+  .search-icon-img {
+    width: 13px !important;
+    height: 13px !important;
+  }
+
+  .mobile-search-icon {
+    padding: 6px;
+  }
+
+  .mobile-search-icon-img {
+    width: 18px;
+    height: 18px;
+  }
+
+  .theme-toggle {
+    background: var(--card-bg);
+    border: 2px solid var(--border);
+    width: 30px !important;
+    height: 30px !important;
+    min-width: 30px !important;
+    max-width: 30px !important;
+    min-height: 30px !important;
+    padding: 0 !important;
+    border-radius: 50% !important;
+    backdrop-filter: blur(10px);
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    aspect-ratio: 1 / 1;
+    box-sizing: border-box !important;
+    flex-shrink: 0;
+  }
+
+  .theme-text {
+    display: none !important;
+  }
+
+  .theme-icon {
+    font-size: 15px;
+    line-height: 1;
+  }
+
+  /* Banner - smaller */
+  .notice-banner {
+    top: 44px;
+    height: 28px;
+  }
+
+  .ticker-text {
+    font-size: 0.8rem;
+    padding: 0 10px;
+  }
+
+  /* Hero section - tighter spacing */
+  #home .home-grid {
+    gap: 28px;
+    padding: 75px 14px 35px;
+  }
+
+  #home .about-card {
+    padding: 20px;
+    border-radius: 18px;
+  }
+
+  /* Profile photo - smaller */
+  .profile-photo {
+    width: 130px;
+    height: 130px;
+    font-size: 2.8rem;
+    border: 3px solid var(--accent);
+  }
+
+  /* Name and tagline - smaller */
+  .name {
+    font-size: 1.8rem;
+    letter-spacing: -0.02em;
+    margin-bottom: 6px;
+  }
+
+  .tagline {
+    font-size: 0.9rem;
+    margin-top: 8px;
+    margin-bottom: 16px;
+  }
+
+  /* Social links - compact */
+  .contact-links {
+    gap: 10px;
+    margin-top: 12px;
+    margin-bottom: 10px; /* ensure spacing below icons to avoid overlap */
+  }
+
+  .contact-links a {
+    width: 44px;
+    height: 44px;
+    padding: 10px;
+  }
+
+  .social-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  /* Container - tighter */
+  .container {
+    padding: 40px 14px;
+  }
+
+  header {
+    padding: 75px 14px 35px;
+  }
+
+  /* Section titles - smaller */
+  .section-title {
+    font-size: 1.8rem;
+    margin-bottom: 24px;
+  }
+
+  .section-subtitle {
+    font-size: 1.2rem;
+    margin-bottom: 16px;
+  }
+
+  /* Cards - more compact */
+  .card {
+    padding: 20px;
+    margin: 16px 0;
+    border-radius: 20px;
+  }
+
+  .card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+  }
+
+  .card p {
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  .card .date {
+    font-size: 0.8rem;
+    margin-bottom: 10px;
+  }
+
+  /* Buttons - smaller */
+  .cta-button,
+  .course-button,
+  .resume-btn {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    min-width: 150px;
+    gap: 6px;
+  }
+
+  .pdf-icon {
+    width: 16px;
+    height: 16px;
+  }
+
+  /* Skills section */
+  .skills-container {
+    gap: var(--space-md);
+  }
+
+  .skill-item {
+    margin-bottom: 16px;
+  }
+
+  .skill-name {
+    font-size: 0.9rem;
+  }
+
+  .skill-rating {
+    font-size: 0.85rem;
+  }
+
+  .skill-bar-container {
+    height: 20px;
+  }
+
+  /* Footer */
+  footer {
+    padding: 20px 14px;
+    font-size: 0.85rem;
+  }
+
+  /* Search modal - adjust for small screens */
+  .search-modal {
+    width: 95%;
+    max-width: 380px;
+    border-radius: 16px;
+  }
+
+  .search-modal.active {
+    top: 85px; /* Below navbar (44px) + banner (28px) + spacing (13px) */
+  }
+
+  .search-modal-input {
+    padding: 10px 45px 10px 12px;
+    font-size: 0.9rem;
+  }
+
+  .search-modal-button {
+    right: 5px;
+    padding: 10px;
+    width: 38px;
+    height: 38px;
+  }
+
+  .search-modal-icon-img {
+    width: 16px;
+    height: 16px;
+  }
+
+  /* Sidebar menu - narrower */
+  .sidebar-menu {
+    width: 260px;
+    left: -260px;
+  }
+
+  .sidebar-header {
+    padding: 16px;
+  }
+
+  .sidebar-logo {
+    font-size: 1.2rem;
+  }
+
+  .sidebar-links a {
+    padding: 12px 16px;
+    font-size: 0.95rem;
+  }
+
+  /* About text */
+  .about-text {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    padding: 0 4px;
+  }
+
+  /* Education section adjustments */
+  #education .card {
+    padding: 18px;
+  }
+
+  /* Resume section */
+  .resume-section {
+    padding: 24px 16px;
+    margin-top: 24px;
+  }
+
+  .resume-heading {
+    font-size: 1.1rem;
+    margin-bottom: 12px;
+  }
+}
+
 /* ===========================================
    TABLET: 601px - 1024px
    2-column layouts, show more navigation
@@ -3792,11 +3800,51 @@ nav {
     margin-left: auto;
     max-width: 160px;
   }
+  
+  /* Progressive search box sizing - gradually shrink as screen gets smaller */
+  @media (min-width: 1200px) {
+    .desktop-search .search-container {
+      max-width: 280px;
+    }
+    .desktop-search .search-input::placeholder {
+      opacity: 0.7 !important;
+    }
+  }
+  
+  @media (min-width: 1100px) and (max-width: 1199px) {
+    .desktop-search .search-container {
+      max-width: 240px;
+    }
+    .desktop-search .search-input::placeholder {
+      opacity: 0.7 !important;
+    }
+  }
+  
+  @media (min-width: 1000px) and (max-width: 1099px) {
+    .desktop-search .search-container {
+      max-width: 200px;
+    }
+    .desktop-search .search-input::placeholder {
+      opacity: 0.7 !important;
+    }
+  }
+  
+  @media (min-width: 900px) and (max-width: 999px) {
+    .desktop-search .search-container {
+      max-width: 180px;
+    }
+    .desktop-search .search-input::placeholder {
+      opacity: 0.7 !important;
+    }
+  }
 
   .search-input {
     padding: 6px 32px 6px 10px;
     font-size: 0.85rem;
-    height: 32px;
+    height: 36px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
   }
 
   /* Hide mobile icons */
@@ -3957,7 +4005,8 @@ nav {
     white-space: nowrap;
     overflow: visible;
     width: auto !important;
-    height: auto !important;
+    height: 36px !important;
+    padding: 0 18px !important;
     min-width: auto !important;
     max-width: none !important;
     min-height: auto !important;
@@ -4305,6 +4354,32 @@ body.sidebar-open {
 }
 
 /* ===========================================
+   THEME TOGGLE RESPONSIVE (STANDALONE)
+   =========================================== */
+/* Progressive theme toggle - hide text below 1150px */
+@media (max-width: 1150px) {
+  .theme-text {
+    display: none !important;
+  }
+  .theme-toggle {
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+    min-height: 36px !important;
+    padding: 0 !important;
+    border: 2px solid var(--border) !important;
+    border-width: 2px !important; /* Force 2px width */
+    border-radius: 10px !important;
+    justify-content: center !important;
+    display: inline-flex !important;
+    align-items: center !important;
+  }
+  .theme-icon {
+    font-size: 18px !important;
+  }
+}
+
+/* ===========================================
    SEARCH VISIBILITY OVERRIDES (FINAL)
    =========================================== */
 /* Laptop ≥1025px: match stylegit.css sizing for search */
@@ -4332,8 +4407,8 @@ body.sidebar-open {
   #navbar .mobile-search-icon { display: none !important; }
 }
 
-/* Tablet 601–1024px: show compact desktop search, reduce padding/width */
-@media (min-width: 601px) and (max-width: 1024px) {
+/* Tablet 601–899px: show compact desktop search, reduce padding/width */
+@media (min-width: 601px) and (max-width: 899px) {
   #navbar .desktop-search {
     display: flex !important;
     flex: 0 1 auto !important;
@@ -4347,11 +4422,12 @@ body.sidebar-open {
     max-width: 150px !important;
   }
   #navbar .search-input {
-    height: 30px !important;
+    height: 36px !important;
     padding: 4px 36px 4px 8px !important;
     font-size: 0.8rem !important;
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
+    border: 2px solid var(--border) !important; /* Ensure consistent border width */
   }
   #navbar .mobile-search-icon { display: none !important; }
 }
@@ -4371,7 +4447,7 @@ body.sidebar-open {
     max-width: 130px !important;
   }
   #navbar .search-input {
-    height: 28px !important;
+    height: 36px !important;
     padding: 3px 32px 3px 6px !important;
     font-size: 0.75rem !important;
     backdrop-filter: blur(6px);
@@ -4419,49 +4495,61 @@ body.sidebar-open {
   #navbar .desktop-search { display: flex !important; order: 3; margin-left: auto; max-width: 200px; }
   #navbar .search-container { max-width: 200px; }
   #navbar .search-container:focus-within { max-width: 240px; }
-  #navbar .search-input { height: 34px; padding: 6px 38px 6px 12px; border-width: 1.3px; }
+  #navbar .search-input { 
+    height: 36px !important; 
+    padding: 6px 38px 6px 12px; 
+    border-width: 2px !important; 
+  }
   #navbar .mobile-search-icon { display: none !important; }
   #navbar .theme-toggle { 
-    width: 44px !important; 
-    height: 44px !important; 
-    min-width: 44px !important; 
-    min-height: 44px !important; 
-    border: 1.3px solid var(--border) !important; 
-    border-radius: 50% !important; 
+    width: 36px !important; 
+    height: 36px !important; 
+    min-width: 36px !important; 
+    min-height: 36px !important; 
+    border: 2px solid var(--border) !important; 
+    border-radius: 10px !important; 
     background: var(--card-bg) !important; 
     backdrop-filter: blur(8px); 
     -webkit-backdrop-filter: blur(8px); 
     transition: background 0.3s ease, border-color 0.3s ease, transform 0.2s ease; 
+    margin-left: 8px;
+    order: 4;
   }
 }
 @media (max-width: 768px) {
+  .nav-container {
+    justify-content: space-between !important;
+    padding: 0 15px !important;
+  }
   #navbar .desktop-search { display: none !important; }
   #navbar .mobile-search-icon { 
     display: inline-flex !important; 
     align-items: center; 
     justify-content: center; 
-    width: 48px; 
-    height: 48px; 
-    min-width: 48px; 
-    min-height: 48px; 
+    width: 36px; 
+    height: 36px; 
+    min-width: 36px; 
+    min-height: 36px; 
     border: 2px solid var(--border); 
-    border-radius: 50%; 
+    border-radius: 10px; 
     background: var(--card-bg); 
     color: var(--text-secondary); 
     transition: background 0.3s ease, border-color 0.3s ease, transform 0.2s ease; 
     backdrop-filter: blur(8px); 
     -webkit-backdrop-filter: blur(8px); 
+    margin-left: auto; /* Push to right */
+    order: 3;
   }
   #navbar .mobile-search-icon:hover { border-color: var(--accent); }
   #navbar .mobile-search-icon:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--accent-glow); }
-  #navbar .mobile-search-icon-img { width: 20px; height: 20px; }
+  #navbar .mobile-search-icon-img { width: 16px; height: 16px; }
   #navbar .theme-toggle { 
-    width: 48px !important; 
-    height: 48px !important; 
-    min-width: 48px !important; 
-    min-height: 48px !important; 
+    width: 36px !important; 
+    height: 36px !important; 
+    min-width: 36px !important; 
+    min-height: 36px !important; 
     border: 2px solid var(--border) !important; 
-    border-radius: 50% !important; 
+    border-radius: 10px !important; 
     background: var(--card-bg) !important; 
     display: inline-flex !important; 
     align-items: center !important; 
@@ -4469,10 +4557,12 @@ body.sidebar-open {
     backdrop-filter: blur(8px); 
     -webkit-backdrop-filter: blur(8px); 
     transition: background 0.3s ease, border-color 0.3s ease, transform 0.2s ease; 
+    margin-left: 8px; /* Gap between search and theme */
+    order: 4;
   }
   #navbar .theme-toggle:hover { border-color: var(--accent); }
   #navbar .theme-toggle:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--accent-glow); }
-  #navbar .theme-icon { font-size: 20px; }
+  #navbar .theme-icon { font-size: 18px; }
 }
 @media (min-width: 591px) and (max-width: 600px) {
   #navbar .desktop-search { display: none !important; }
@@ -4480,6 +4570,47 @@ body.sidebar-open {
     display: flex !important; 
     order: 3; 
     margin-left: auto; 
-    margin-right: 8px; 
+    margin-right: 0; 
   }
+}
+
+/* ===========================================
+   LOGO ANIMATION
+   =========================================== */
+@keyframes scaleInwardFade {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0.8); /* Move inward/shrink */
+    opacity: 0;
+  }
+}
+
+.logo-exit-anim {
+  animation: scaleInwardFade 0.5s ease-in forwards;
+  pointer-events: none;
+  position: relative;
+  z-index: 10000;
+}
+
+/* Sidebar Icons */
+.sidebar-icon {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  margin-right: 12px;
+  vertical-align: middle;
+  filter: brightness(0.9);
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+[data-theme="light"] .sidebar-icon {
+  filter: brightness(0.2);
+}
+
+.sidebar-links a:hover .sidebar-icon {
+  filter: brightness(1);
+  transform: scale(1.1);
 }

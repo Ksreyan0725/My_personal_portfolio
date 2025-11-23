@@ -46,7 +46,7 @@ Last Updated: November 22, 2025
     <nav id="navbar" role="navigation" aria-label="Main navigation">
         <div class="nav-container">
             <!-- Logo/Brand -->
-            <div class="nav-logo" onclick="location.reload(); return false;" role="button" tabindex="0" aria-label="Reload page">
+            <div class="nav-logo" role="button" tabindex="0" aria-label="Reload page">
                 <!-- LOGO name -->
               <strong><i>KSP</i></strong>  
             </div>
@@ -59,11 +59,16 @@ Last Updated: November 22, 2025
                 <li role="none"><a href="#certifications" role="menuitem">Certifications</a></li>
                 <li role="none"><a href="#skills" role="menuitem">Skills</a></li>
                 <li role="none"><a href="contact.html" role="menuitem">Contact</a></li>
-                <li role="none"><a href="service.html" role="menuitem">Services</a></li>
+
             </ul>
 
             <!-- Search Bar - Desktop -->
             <div class="search-container desktop-search">
+                <!-- Search icon button (shown when collapsed to icon mode) -->
+                <button class="search-icon-button" aria-label="Open search">
+                    <img src="Assets/Images.icons/search.png" alt="Search" />
+                </button>
+                <!-- Full search input (shown when expanded) -->
                 <input type="search" class="search-input" placeholder="Search..." aria-label="Search">
                 <button class="search-clear" aria-label="Clear search" hidden>✕</button>
                 <button class="search-button" aria-label="Search">
@@ -118,13 +123,12 @@ Last Updated: November 22, 2025
             <button class="sidebar-close" id="sidebarClose" aria-label="Close menu">✕</button>
         </div>
         <ul class="sidebar-links" role="menubar">
-            <li role="none"><a href="#home" role="menuitem">🏠 Home</a></li>
-            <li role="none"><a href="#education" role="menuitem">🎓 Education</a></li>
-            <li role="none"><a href="#projects" role="menuitem">💼 Projects</a></li>
-            <li role="none"><a href="#certifications" role="menuitem">📜 Certifications</a></li>
-            <li role="none"><a href="#skills" role="menuitem">⚡ Skills</a></li>
-            <li role="none"><a href="contact.html" role="menuitem">📞 Contact</a></li>
-            <li role="none"><a href="service.html" role="menuitem">🛠️ Services</a></li>
+            <li role="none"><a href="#home" role="menuitem"><img src="Assets/Images.icons/Home.png" alt="Home" class="sidebar-icon"> Home</a></li>
+            <li role="none"><a href="#education" role="menuitem"><img src="Assets/Images.icons/education.png" alt="Education" class="sidebar-icon"> Education</a></li>
+            <li role="none"><a href="#projects" role="menuitem"><img src="Assets/Images.icons/Project.png" alt="Projects" class="sidebar-icon"> Projects</a></li>
+            <li role="none"><a href="#certifications" role="menuitem"><img src="Assets/Images.icons/Certification.png" alt="Certifications" class="sidebar-icon"> Certifications</a></li>
+            <li role="none"><a href="#skills" role="menuitem"><img src="Assets/Images.icons/skills.png" alt="Skills" class="sidebar-icon"> Skills</a></li>
+            <li role="none"><a href="contact.html" role="menuitem"><img src="Assets/Images.icons/Phone.png" alt="Contact" class="sidebar-icon"> Contact</a></li>
         </ul>
     </div>
 

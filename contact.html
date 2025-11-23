@@ -444,12 +444,18 @@
 
       .theme-toggle:hover {
         border-color: var(--accent);
+        background: var(--accent-glow);
         box-shadow: 0 0 20px var(--accent-glow);
         transform: scale(1.05);
       }
 
-      .theme-toggle:active {
+      .theme-toggle:active,
+      .theme-toggle:focus-visible {
+        border-color: var(--accent);
+        background: var(--accent-glow);
+        box-shadow: 0 0 20px var(--accent-glow);
         transform: scale(0.95);
+        outline: none;
       }
 
       .theme-icon {
@@ -790,6 +796,35 @@
         }
       }
 
+      /* Success Tick Animation */
+      #successTick {
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%) scale(0.9);
+        opacity: 0;
+        pointer-events: none;
+        z-index: 9999;
+        width: 84px;
+        height: 84px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #16a34a;
+        color: #ffffff;
+        box-shadow: 0 12px 32px rgba(22, 163, 74, 0.35);
+        transition: opacity 300ms ease, transform 300ms ease;
+      }
+      #successTick.show {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+      }
+      #successTick .tick {
+        font-size: 42px;
+        line-height: 1;
+      }
+
       @media (max-width: 525px) {
         body {
           padding: 16px;
@@ -1116,19 +1151,27 @@
         });
 
         function showSearchMessage(message, isError = false) {
-          // Show message below search bar temporarily
+          // Show message below header, positioned absolutely to avoid layout shift
           let msgEl = document.getElementById('search-message');
           if (!msgEl) {
             msgEl = document.createElement('div');
             msgEl.id = 'search-message';
             msgEl.style.cssText = `
+              position: absolute;
+              top: 100%;
+              left: 0;
+              right: 0;
               margin-top: 10px;
               padding: 12px 16px;
               border-radius: 8px;
               font-size: 0.9rem;
               transition: opacity 0.3s ease;
+              z-index: 1000;
+              box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
             `;
-            container.parentElement.appendChild(msgEl);
+            // Append to header instead of nav-container to avoid layout shift
+            document.querySelector('.header').style.position = 'relative';
+            document.querySelector('.header').appendChild(msgEl);
           }
           msgEl.textContent = message;
           msgEl.style.background = isError ? 'rgba(239, 68, 68, 0.1)' : 'rgba(99, 102, 241, 0.1)';
@@ -1151,8 +1194,8 @@
             return; // Do nothing if empty
           }
           
-          if (q.length < 4) {
-            showSearchMessage('Please enter at least 4 characters to search', true);
+          if (q.length < 2) {
+            showSearchMessage('Please enter at least 2 characters to search', true);
             return;
           }
           
@@ -1196,30 +1239,3 @@
     </div>
   </body>
   </html>
-      #successTick {
-        position: fixed;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%) scale(0.9);
-        opacity: 0;
-        pointer-events: none;
-        z-index: 9999;
-        width: 84px;
-        height: 84px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: #16a34a;
-        color: #ffffff;
-        box-shadow: 0 12px 32px rgba(22, 163, 74, 0.35);
-        transition: opacity 300ms ease, transform 300ms ease;
-      }
-      #successTick.show {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(1);
-      }
-      #successTick .tick {
-        font-size: 42px;
-        line-height: 1;
-      }
