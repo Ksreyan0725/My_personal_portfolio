@@ -213,7 +213,7 @@
                 id="name"
                 name="name"
                 required
-                placeholder="Enter your full name"
+                placeholder="Enter your full name here..."
               />
             </div>
             <div class="form-group">
@@ -223,7 +223,7 @@
                 id="email"
                 name="email"
                 required
-                placeholder="Enter your email"
+                placeholder="Enter your email address..."
               />
             </div>
             <div class="form-group">
@@ -231,9 +231,9 @@
               <textarea
                 id="message"
                 name="message"
-                rows="8"
+                rows="2"
                 required
-                placeholder="Enter your message"
+                placeholder="Enter your message here..."
               ></textarea>
             </div>
             <input type="hidden" name="_subject" value="New contact form submission from portfolio" />
@@ -243,6 +243,7 @@
       </div>
     </div>
     <div id="successTick" class="success-tick" aria-hidden="true"><span class="tick">✓</span></div>
+    <div id="contactToast" class="toast" role="alert" aria-live="polite"></div>
 <style>
       * {
         margin: 0;
@@ -334,14 +335,22 @@
         border-radius: 20px;
         background: var(--bg-secondary);
         color: var(--text-primary);
+        caret-color: var(--text-primary);
         font-size: 0.9rem;
         transition: all 0.3s ease;
+      }
+      .search-input::placeholder { color: var(--text-secondary); opacity: 0.8; }
+      .search-input:hover {
+        border-color: var(--accent);
+        box-shadow: 0 0 14px var(--accent-glow);
+        background: var(--card-bg);
       }
 
       .search-input:focus {
         outline: none;
         border-color: var(--accent);
         box-shadow: 0 0 5px rgba(139, 92, 246, 0.3);
+        background: var(--card-bg);
       }
 
       .search-button {
@@ -388,6 +397,61 @@
       [data-theme="light"] .search-icon-img { filter: brightness(0.6) contrast(1.1); }
       [data-theme="dark"] .search-icon-img { filter: brightness(1) contrast(1.1); }
 
+      .search-error {
+        position: absolute;
+        top: calc(100% + 6px);
+        left: 0;
+        width: 100%;
+        padding: 10px 12px;
+        background: rgba(239, 68, 68, 0.95);
+        color: #fff;
+        border-radius: 12px;
+        border: 1px solid rgba(239, 68, 68, 0.35);
+        box-shadow: 0 10px 24px rgba(239, 68, 68, 0.35);
+        font-size: 0.9rem;
+        line-height: 1.4;
+        opacity: 0;
+        transform: translateY(-6px);
+        transition: opacity 0.25s ease, transform 0.25s ease;
+        z-index: 1000;
+        pointer-events: none;
+      }
+      .search-error.show { opacity: 1; transform: translateY(0); }
+
+      .desktop-search-results {
+        position: absolute;
+        top: calc(100% + 6px);
+        left: 0;
+        width: 100%;
+        background: var(--card-bg);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25);
+        max-height: 260px;
+        overflow-y: auto;
+        opacity: 0;
+        transform: translateY(-6px);
+        transition: opacity 0.2s ease, transform 0.2s ease;
+        z-index: 999;
+        pointer-events: none;
+      }
+      .desktop-search-results.active { opacity: 1; transform: translateY(0); pointer-events: auto; }
+      .desktop-search-result-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 12px;
+        cursor: pointer;
+        color: var(--text-primary);
+      }
+      .desktop-search-result-item:hover { background: var(--bg-secondary); }
+      .desktop-search-result-title { font-weight: 600; }
+      .desktop-search-result-desc { font-size: 0.85rem; color: var(--text-secondary); }
+      .desktop-search-result-item.no-results {
+        cursor: default;
+        color: #ef4444;
+      }
+
       @media (max-width: 768px) {
         .nav-container {
           flex-direction: row;
@@ -427,7 +491,7 @@
       .theme-toggle {
         background: var(--card-bg);
         color: var(--text-primary);
-        border: 2px solid var(--border);
+        border: 1px solid var(--border);
         padding: 8px 18px;
         border-radius: 50px;
         font-size: 14px;
@@ -446,7 +510,7 @@
         border-color: var(--accent);
         background: var(--accent-glow);
         box-shadow: 0 0 20px var(--accent-glow);
-        transform: scale(1.05);
+        transform: scale(1.02);
       }
 
       .theme-toggle:active,
@@ -474,11 +538,11 @@
       }
 
       .contact-info {
-        background: var(--card-bg);
+        background: transparent;
         padding: 40px;
-        border-radius: 20px;
-        box-shadow: 0 10px 30px var(--shadow);
-        border: 1px solid var(--border);
+        border-radius: 0;
+        box-shadow: none;
+        border: none;
       }
 
       .contact-info h2 {
@@ -493,15 +557,16 @@
         gap: 15px;
         margin-bottom: 25px;
         padding: 15px;
-        background: var(--bg-secondary);
-        border-radius: 12px;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        border: 1px solid var(--border);
+        background: transparent;
+        border-radius: 0;
+        transition: transform 0.3s ease;
+        border: none;
+        box-shadow: none;
       }
 
       .info-item:hover {
         transform: translateX(8px);
-        box-shadow: 0 5px 15px var(--shadow);
+        box-shadow: none;
       }
 
       .info-item i {
@@ -587,7 +652,7 @@
       .contact-form {
         background: var(--card-bg);
         padding: 40px;
-        border-radius: 20px;
+        border-radius: 12px;
         box-shadow: 0 10px 30px var(--shadow);
         border: 1px solid var(--border);
       }
@@ -633,7 +698,8 @@
 
       .form-group textarea {
         resize: vertical;
-        min-height: 150px;
+        height: 120px;
+        min-height: 100px;
         line-height: 1.6;
       }
       .submit-button {
@@ -719,6 +785,23 @@
         animation: fade-in 0.35s ease;
       }
 
+      .toast {
+        position: fixed;
+        top: -100px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(239, 68, 68, 0.95);
+        color: #ffffff;
+        padding: 12px 20px;
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(239, 68, 68, 0.4);
+        z-index: 2000;
+        transition: top 0.35s ease, opacity 0.35s ease;
+        opacity: 0;
+      }
+      .toast.show { top: 30px; opacity: 1; }
+      [data-theme="dark"] .toast { background: rgba(239, 68, 68, 0.9); }
+
       /* Keyframe for spinner animation */
       @keyframes spin {
         0% {
@@ -780,6 +863,7 @@
         .contact-form {
           padding: 25px;
         }
+        .search-input { height: 36px; }
 
         .social-icons {
           gap: 16px;
@@ -849,6 +933,7 @@
         .search-input {
           padding: 7px 35px 7px 10px;
           font-size: 0.9rem;
+          height: 34px;
         }
 
         .search-icon-img {
@@ -872,8 +957,9 @@
         .contact-info,
         .contact-form {
           padding: 20px;
-          border-radius: 18px;
+          border-radius: 12px;
         }
+        .form-group textarea { height: 100px; }
 
         .contact-info h2,
         .contact-form h2 {
@@ -972,6 +1058,7 @@
         .search-input {
           padding: 6px 35px 6px 10px;
           font-size: 0.85rem;
+          height: 32px;
         }
 
         .theme-toggle {
@@ -988,8 +1075,9 @@
         .contact-info,
         .contact-form {
           padding: 18px;
-          border-radius: 16px;
+          border-radius: 10px;
         }
+        .form-group textarea { height: 100px; }
 
         .contact-info h2,
         .contact-form h2 {
@@ -1135,13 +1223,23 @@
         const input = container.querySelector('.search-input');
         const btn = container.querySelector('.search-button');
         const clearBtn = container.querySelector('.search-clear');
+        const resultsEl = container.querySelector('#desktopSearchResults') || container.querySelector('.desktop-search-results');
 
         const toggleClear = () => {
           if (!clearBtn) return;
           const show = input.value.trim().length > 0;
           clearBtn.hidden = !show;
         };
-        input.addEventListener('input', toggleClear);
+        input.addEventListener('input', (e) => {
+          toggleClear();
+          const q = e.target.value.trim();
+          if (q.length >= 2) {
+            renderResults(q);
+          } else {
+            resultsEl?.classList.remove('active');
+            resultsEl?.replaceChildren();
+          }
+        });
         toggleClear();
 
         clearBtn?.addEventListener('click', () => {
@@ -1151,39 +1249,84 @@
         });
 
         function showSearchMessage(message, isError = false) {
-          // Show message below header, positioned absolutely to avoid layout shift
-          let msgEl = document.getElementById('search-message');
+          let msgEl = container.querySelector('.search-error');
           if (!msgEl) {
             msgEl = document.createElement('div');
-            msgEl.id = 'search-message';
-            msgEl.style.cssText = `
-              position: absolute;
-              top: 100%;
-              left: 0;
-              right: 0;
-              margin-top: 10px;
-              padding: 12px 16px;
-              border-radius: 8px;
-              font-size: 0.9rem;
-              transition: opacity 0.3s ease;
-              z-index: 1000;
-              box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            `;
-            // Append to header instead of nav-container to avoid layout shift
-            document.querySelector('.header').style.position = 'relative';
-            document.querySelector('.header').appendChild(msgEl);
+            msgEl.className = 'search-error';
+            container.appendChild(msgEl);
           }
           msgEl.textContent = message;
-          msgEl.style.background = isError ? 'rgba(239, 68, 68, 0.1)' : 'rgba(99, 102, 241, 0.1)';
-          msgEl.style.color = isError ? '#ef4444' : 'var(--accent)';
-          msgEl.style.border = isError ? '1px solid rgba(239, 68, 68, 0.3)' : '1px solid var(--border)';
-          msgEl.style.opacity = '1';
-          
-          // Auto-hide after 3 seconds
+          if (isError) {
+            msgEl.style.background = 'rgba(239, 68, 68, 0.95)';
+            msgEl.style.borderColor = 'rgba(239, 68, 68, 0.35)';
+            msgEl.style.boxShadow = '0 10px 24px rgba(239, 68, 68, 0.35)';
+          } else {
+            msgEl.style.background = 'rgba(99, 102, 241, 0.95)';
+            msgEl.style.borderColor = 'rgba(99, 102, 241, 0.35)';
+            msgEl.style.boxShadow = '0 10px 24px rgba(99, 102, 241, 0.35)';
+          }
+          requestAnimationFrame(() => {
+            msgEl.classList.add('show');
+          });
           setTimeout(() => {
-            msgEl.style.opacity = '0';
-            setTimeout(() => msgEl.remove(), 300);
-          }, 3000);
+            msgEl.classList.remove('show');
+            setTimeout(() => msgEl.remove(), 250);
+          }, 2500);
+        }
+
+        function getDataset() {
+          try {
+            if (typeof searchableContent !== 'undefined' && Array.isArray(searchableContent)) {
+              return searchableContent;
+            }
+          } catch {}
+          return [
+            { title: 'Home', description: 'Go to home', link: 'index.html#home' },
+            { title: 'Projects', description: 'View projects', link: 'index.html#projects' },
+            { title: 'Skills', description: 'View skills', link: 'index.html#skills' },
+            { title: 'Contact', description: 'Contact page', link: 'contact.html' },
+          ];
+        }
+
+        function renderResults(query) {
+          if (!resultsEl) return;
+          const items = getDataset();
+          const q = query.toLowerCase();
+          const tokens = q.split(/\s+/).filter(Boolean);
+          const ranked = items
+            .map(item => {
+              const hay = (item.title + ' ' + item.description).toLowerCase();
+              const score = tokens.reduce((s, t) => s + (hay.includes(t) ? 1 : 0), 0) +
+                (item.title.toLowerCase().startsWith(q) ? 2 : 0) +
+                (item.title.toLowerCase().includes(q) ? 1 : 0);
+              return { item, score };
+            })
+            .filter(x => x.score > 0)
+            .sort((a, b) => b.score - a.score)
+            .slice(0, 6);
+
+          resultsEl.replaceChildren();
+          if (!ranked.length) {
+            const empty = document.createElement('div');
+            empty.className = 'desktop-search-result-item no-results';
+            empty.setAttribute('role', 'status');
+            empty.textContent = 'No results found';
+            resultsEl.appendChild(empty);
+            resultsEl.classList.add('active');
+            return;
+          }
+          ranked.forEach(({ item }) => {
+            const el = document.createElement('div');
+            el.className = 'desktop-search-result-item';
+            el.setAttribute('data-link', item.link);
+            el.innerHTML = `<div class="desktop-search-result-title">${item.title}</div>
+                            <div class="desktop-search-result-desc">${item.description}</div>`;
+            el.addEventListener('click', () => {
+              window.location.href = item.link;
+            });
+            resultsEl.appendChild(el);
+          });
+          resultsEl.classList.add('active');
         }
 
         function doSearch(){
@@ -1199,29 +1342,59 @@
             return;
           }
           
-          // Show message that search is available on home page
-          showSearchMessage(`Search for "${q}" is available on the Home page. Click here to go there.`, false);
-          
-          // Optional: Add a link to redirect only if user wants
-          const msgEl = document.getElementById('search-message');
-          if (msgEl) {
-            msgEl.style.cursor = 'pointer';
-            msgEl.onclick = () => {
-              window.location.href = `index.html?q=${encodeURIComponent(q)}`;
-            };
-          }
+          showSearchMessage(`Search for "${q}" is available on the Home page.`, false);
         }
 
-        btn?.addEventListener('click', doSearch);
+        btn?.addEventListener('click', () => {
+          const q = input.value.trim();
+          if (q.length >= 2) {
+            renderResults(q);
+            const first = resultsEl?.querySelector('.desktop-search-result-item');
+            const link = first?.getAttribute('data-link');
+            if (link) window.location.href = link;
+          } else if (q.length > 0) {
+            showSearchMessage('Please enter at least 2 characters to search', true);
+          }
+        });
         input.addEventListener('keypress', (e) => { 
-          if (e.key === 'Enter') doSearch(); 
+          if (e.key === 'Enter') {
+            const q = input.value.trim();
+            if (q.length >= 2) {
+              renderResults(q);
+              const first = resultsEl?.querySelector('.desktop-search-result-item');
+              const link = first?.getAttribute('data-link');
+              if (link) window.location.href = link;
+            } else if (q.length > 0) {
+              showSearchMessage('Please enter at least 2 characters to search', true);
+            }
+          }
+        });
+        document.addEventListener('click', (e) => {
+          if (!container.contains(e.target)) {
+            resultsEl?.classList.remove('active');
+          }
         });
       })();
 
       const form = document.getElementById("contactForm");
       const successTick = document.getElementById("successTick");
+      const toast = document.getElementById("contactToast");
+      function showToast(message) {
+        if (!toast) return;
+        toast.textContent = message;
+        toast.classList.add("show");
+        setTimeout(() => {
+          toast.classList.remove("show");
+        }, 2500);
+      }
       form.addEventListener("submit", (e) => {
         e.preventDefault();
+        const emailInput = document.getElementById("email");
+        const emailVal = (emailInput && emailInput.value || "").trim();
+        if (!emailVal.includes("@")) {
+          showToast("Please enter a valid email address containing @");
+          return;
+        }
         successTick.classList.add("show");
         setTimeout(() => {
           window.location.href = "thank-you.html";

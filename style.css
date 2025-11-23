@@ -1,8 +1,8 @@
-﻿/* Move About Me upward to align with profile photo */
+/* Move About Me upward to align with profile photo */
 .content-section {
   align-self: start;
 }
-/* ==================== Home Section Layout (from home.html) ==================== */ /* Maintenance: If you change any @media rules (add/remove/reorder), update MEDIA_QUERIES_CONSOLIDATED.md line ranges and overall ranges, and commit both files together. */
+/* ==================== Home Section Layout (from home.html) ==================== */ 
 #home .home-grid {
   max-width: 1400px;
   margin: 0 auto;
@@ -3786,7 +3786,10 @@ nav {
     display: flex !important;
     order: 2;
     gap: 18px;
+    flex: 1 1 auto;
   }
+  #navbar .desktop-search { order: 3; margin-left: auto; }
+  #navbar .theme-toggle { order: 4; }
 
   .nav-links a {
     font-size: 0.9rem;
@@ -3957,7 +3960,10 @@ nav {
 
   .desktop-nav {
     display: flex !important;
+    flex: 1 1 auto;
   }
+  #navbar .desktop-search { order: 3; margin-left: auto; }
+  #navbar .theme-toggle { order: 4; }
 
   .nav-links a {
     font-size: 0.95rem;
@@ -4109,6 +4115,7 @@ nav {
   #navbar .desktop-search {
     max-width: 250px;
   }
+  #navbar .theme-toggle { order: 4; }
   #navbar .theme-toggle:hover { 
     border-color: var(--accent); 
     box-shadow: 0 0 14px var(--accent-glow); 
