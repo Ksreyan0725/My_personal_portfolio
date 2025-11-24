@@ -1950,9 +1950,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 const { y, timestamp } = JSON.parse(savedData);
                 // Only restore if data is recent (within 5 minutes)
                 if (Date.now() - timestamp < 300000) {
-                    setTimeout(() => {
+                    let attempts = 0;
+                    const restore = () => {
                         window.scrollTo(0, y);
-                    }, 0);
+                        if (Math.abs((window.scrollY || window.pageYOffset) - y) > 2 && attempts < 10) {
+                            attempts++;
+                            setTimeout(restore, 50);
+                        }
+                    };
+                    setTimeout(restore, 0);
                 }
             }
         } catch (e) {
@@ -1985,9 +1991,74 @@ document.addEventListener('DOMContentLoaded', () => {
     // Restore scroll position on popstate (back/forward navigation)
     window.addEventListener('popstate', (event) => {
         if (event.state && event.state.scrollPos !== undefined) {
+            let attempts = 0;
+            const y = event.state.scrollPos;
+            const restore = () => {
+                window.scrollTo(0, y);
+                if (Math.abs((window.scrollY || window.pageYOffset) - y) > 2 && attempts < 10) {
+                    attempts++;
+                    setTimeout(restore, 50);
+                }
+            };
+            setTimeout(restore, 0);
+        }
+    });
+
+    window.addEventListener('pageshow', (e) => {
+        try {
+            const stateY = history.state && history.state.scrollPos !== undefined ? history.state.scrollPos : null;
+            let y = stateY;
+            if (y === null) {
+                const savedData = sessionStorage.getItem(`scrollPos_${window.location.pathname}`);
+                if (savedData) {
+                    const parsed = JSON.parse(savedData);
+                    if (parsed && typeof parsed.y === 'number') y = parsed.y;
+                }
+            }
+            if (typeof y === 'number') {
+                let attempts = 0;
+                const restore = () => {
+                    window.scrollTo(0, y);
+                    if (Math.abs((window.scrollY || window.pageYOffset) - y) > 2 && attempts < 10) {
+                        attempts++;
+                        setTimeout(restore, 50);
+                    }
+                };
+                setTimeout(restore, 0);
+            }
+        } catch {}
+    });
+
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+            saveScrollToHistory();
+        }
+    });
+
+    window.addEventListener('orientationchange', () => {
+        const stateY = history.state && history.state.scrollPos !== undefined ? history.state.scrollPos : null;
+        let y = stateY;
+        if (y === null) {
+            try {
+                const savedData = sessionStorage.getItem(`scrollPos_${window.location.pathname}`);
+                if (savedData) {
+                    const parsed = JSON.parse(savedData);
+                    if (parsed && typeof parsed.y === 'number') y = parsed.y;
+                }
+            } catch {}
+        }
+        if (typeof y === 'number') {
             setTimeout(() => {
-                window.scrollTo(0, event.state.scrollPos);
-            }, 0);
+                let attempts = 0;
+                const restore = () => {
+                    window.scrollTo(0, y);
+                    if (Math.abs((window.scrollY || window.pageYOffset) - y) > 2 && attempts < 10) {
+                        attempts++;
+                        setTimeout(restore, 50);
+                    }
+                };
+                restore();
+            }, 100);
         }
     });
 
