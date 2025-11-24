@@ -1769,11 +1769,11 @@ class SwipeCircleArrow {
         document.addEventListener('touchmove', (e) => this.onMove(e), { passive: true });
         document.addEventListener('touchend', (e) => this.onEnd(e), { passive: true });
         if (this.menuIcon) {
-            this.menuIcon.addEventListener('touchstart', () => { this.hamburgerActive = true; console.debug('hamburger touchstart'); }, { passive: true });
-            this.menuIcon.addEventListener('touchend', () => { this.hamburgerActive = false; console.debug('hamburger touchend'); }, { passive: true });
-            this.menuIcon.addEventListener('click', () => { console.debug('hamburger click'); });
+            this.menuIcon.addEventListener('touchstart', () => { this.hamburgerActive = true; }, { passive: true });
+            this.menuIcon.addEventListener('touchend', () => { this.hamburgerActive = false; }, { passive: true });
+            this.menuIcon.addEventListener('click', () => { });
         }
-        this.resizeHandler = () => { console.debug('viewport', { w: window.innerWidth, h: window.innerHeight }); };
+        this.resizeHandler = () => { };
         window.addEventListener('resize', this.resizeHandler, { passive: true });
         window.addEventListener('beforeunload', () => this.destroy());
     }
@@ -1803,18 +1803,15 @@ class SwipeCircleArrow {
         this.state = 'active';
         this.el.classList.remove('fade');
         this.el.classList.add('active');
-        console.debug('animation state', this.state);
     }
     complete() {
         if (!this.el) return;
         this.state = 'completing';
-        console.debug('animation state', this.state);
         this.el.classList.add('fade');
         setTimeout(() => this.reset(), 200);
     }
     cancel() {
         if (!this.el) return;
-        console.debug('animation cancel');
         this.reset();
     }
     reset() {
@@ -1838,7 +1835,6 @@ class SwipeCircleArrow {
         } else {
             this.hamburgerActive = false;
         }
-        console.debug('swipe start', { x: this.startX, y: this.startY, time: this.startTime, hamburger: this.hamburgerActive });
     }
     onMove(e) {
         const t = e.changedTouches[0];
@@ -1866,7 +1862,6 @@ class SwipeCircleArrow {
         const velocity = distance / duration;
         const angle = Math.abs(Math.atan2(dy, dx) * 180 / Math.PI);
         const sidebarOpen = !!document.querySelector('.sidebar-menu.active');
-        console.debug('swipe end', { dx, dy, distance, duration, velocity, angle, sidebarOpen });
         const valid = dx > 0 && angle <= this.angleTolerance && distance >= this.minDistance && velocity >= this.minVelocity && !this.hamburgerActive && !sidebarOpen;
         if (valid && this.state === 'active') {
             this.complete();
@@ -1874,7 +1869,7 @@ class SwipeCircleArrow {
             this.cancel();
         }
         if (performance && performance.memory) {
-            console.debug('memory', performance.memory);
+            void performance.memory;
         }
     }
     destroy() {
@@ -1887,7 +1882,8 @@ class SwipeCircleArrow {
     }
 }
 document.addEventListener('DOMContentLoaded', () => {
-    new SwipeCircleArrow();
+    // Initialize the advanced swipe handler
+    new MobileSidebarSwipe();
 });
 
 // Logo Click Animation & Reload Logic
@@ -1901,6 +1897,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 0);
         sessionStorage.removeItem('restoreScrollPosition');
     }
+
 
     const logo = document.querySelector('.nav-logo');
     if (logo) {
@@ -1918,5 +1915,362 @@ document.addEventListener('DOMContentLoaded', () => {
                 location.reload();
             }, 500);
         });
+    }
+
+    /* ==================== Scroll Position Restoration System ==================== */
+    /**
+     * Dual-layer scroll position restoration:
+     * 1. Primary: Browser's native History API (automatic)
+     * 2. Fallback: Manual sessionStorage tracking (for older browsers)
+     */
+
+    // Enable browser's native scroll restoration
+    if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'auto';
+    }
+
+    // Manual tracking as fallback
+    window.addEventListener('beforeunload', () => {
+        try {
+            const scrollData = {
+                y: window.scrollY,
+                timestamp: Date.now()
+            };
+            sessionStorage.setItem(`scrollPos_${window.location.pathname}`, JSON.stringify(scrollData));
+        } catch (e) {
+            console.warn('Could not save scroll position:', e);
+        }
+    });
+
+    // Restore scroll position on page load
+    window.addEventListener('load', () => {
+        try {
+            const savedData = sessionStorage.getItem(`scrollPos_${window.location.pathname}`);
+            if (savedData) {
+                const { y, timestamp } = JSON.parse(savedData);
+                // Only restore if data is recent (within 5 minutes)
+                if (Date.now() - timestamp < 300000) {
+                    setTimeout(() => {
+                        window.scrollTo(0, y);
+                    }, 0);
+                }
+            }
+        } catch (e) {
+            console.warn('Could not restore scroll position:', e);
+        }
+    });
+
+    // Save scroll position to history state before navigation
+    function saveScrollToHistory() {
+        try {
+            const currentState = history.state || {};
+            history.replaceState({
+                ...currentState,
+                scrollPos: window.scrollY,
+                timestamp: Date.now()
+            }, '', window.location.href);
+        } catch (e) {
+            console.warn('Could not save scroll to history:', e);
+        }
+    }
+
+    // Save scroll position when clicking links
+    document.addEventListener('click', (e) => {
+        const link = e.target.closest('a');
+        if (link && !link.hasAttribute('target') && link.href && !link.href.startsWith('javascript:')) {
+            saveScrollToHistory();
+        }
+    });
+
+    // Restore scroll position on popstate (back/forward navigation)
+    window.addEventListener('popstate', (event) => {
+        if (event.state && event.state.scrollPos !== undefined) {
+            setTimeout(() => {
+                window.scrollTo(0, event.state.scrollPos);
+            }, 0);
+        }
+    });
+
+    /* ==================== Back Navigation Swipe Gesture ==================== */
+    /**
+     * BackNavigationSwipe - Swipe from left edge to go back
+     * 
+     * Features:
+     * - Swipe right from left edge triggers browser back navigation
+     * - Circular indicator with ← arrow (flipped from sidebar mode)
+     * - Page slide-out animation
+     * - Automatic scroll position restoration
+     * - Safety checks for history availability
+     */
+    class BackNavigationSwipe {
+        constructor(options = {}) {
+            // Configuration
+            this.config = {
+                swipeThreshold: 50,
+                velocityThreshold: 0.3,
+                glowColor: options.glowColor || '#0ea5e9',
+                maxGlowIntensity: options.maxGlowIntensity || 0.6,
+                indicatorSize: 56,
+                transitionDuration: 280,
+                indicatorFadeDuration: 200,
+                easeOutCubic: (t) => 1 - Math.pow(1 - t, 3),
+                mobileMaxWidth: 768,
+                ...options
+            };
+
+            // State
+            this.isSwiping = false;
+            this.startX = 0;
+            this.startY = 0;
+            this.currentX = 0;
+            this.currentY = 0;
+            this.lastX = 0;
+            this.lastTime = 0;
+            this.velocity = 0;
+
+            // Swipe indicator element
+            this.indicator = null;
+
+            // Check if we're on mobile
+            this.isMobile = () => window.innerWidth <= this.config.mobileMaxWidth;
+
+            this.init();
+        }
+
+        init() {
+            // Create swipe indicator
+            this.createIndicator();
+
+            // Bind events
+            this.bindEvents();
+
+            // Handle window resize
+            window.addEventListener('resize', () => this.handleResize());
+        }
+
+        createIndicator() {
+            // Create circular arrow indicator (pointing left for back navigation)
+            this.indicator = document.createElement('div');
+            this.indicator.className = 'swipe-indicator back-mode';
+            this.indicator.innerHTML = '<span class="arrow">←</span>';
+
+            // Apply custom color
+            this.indicator.style.background = this.config.glowColor;
+            this.indicator.style.boxShadow = `0 10px 24px ${this.hexToRgba(this.config.glowColor, 0.35)}`;
+
+            document.body.appendChild(this.indicator);
+        }
+
+        bindEvents() {
+            // Touch events for swipe gesture
+            document.addEventListener('touchstart', (e) => this.handleTouchStart(e), { passive: false });
+            document.addEventListener('touchmove', (e) => this.handleTouchMove(e), { passive: false });
+            document.addEventListener('touchend', (e) => this.handleTouchEnd(e), { passive: false });
+        }
+
+        handleTouchStart(e) {
+            // Only handle on mobile
+            if (!this.isMobile()) return;
+
+            const touch = e.touches[0];
+            this.startX = touch.clientX;
+            this.startY = touch.clientY;
+            this.lastX = touch.clientX;
+            this.lastTime = Date.now();
+
+            // Only start swipe if touch starts near left edge (within 30px)
+            const isEdgeSwipe = this.startX < 30;
+
+            if (isEdgeSwipe && window.history.length > 1) {
+                this.isSwiping = true;
+                this.showIndicator();
+            }
+        }
+
+        handleTouchMove(e) {
+            if (!this.isSwiping || !this.isMobile()) return;
+
+            const touch = e.touches[0];
+            this.currentX = touch.clientX;
+            this.currentY = touch.clientY;
+
+            const deltaX = this.currentX - this.startX;
+            const deltaY = this.currentY - this.startY;
+
+            // Calculate velocity
+            const now = Date.now();
+            const timeDelta = now - this.lastTime;
+            if (timeDelta > 0) {
+                this.velocity = (this.currentX - this.lastX) / timeDelta;
+            }
+            this.lastX = this.currentX;
+            this.lastTime = now;
+
+            // Only handle horizontal swipes to the right
+            if (Math.abs(deltaX) > Math.abs(deltaY) * 1.5 && deltaX > 0) {
+                e.preventDefault();
+
+                const progress = Math.min(deltaX / 200, 1); // 200px for full progress
+                this.updateSwipeProgress(progress, deltaX);
+            }
+        }
+
+        handleTouchEnd(e) {
+            if (!this.isSwiping || !this.isMobile()) return;
+
+            const deltaX = this.currentX - this.startX;
+            const deltaY = this.currentY - this.startY;
+
+            // Only process if it's a horizontal swipe to the right
+            if (Math.abs(deltaX) > Math.abs(deltaY) * 1.5 && deltaX > 0) {
+                const progress = Math.min(deltaX / 200, 1);
+
+                // Determine if we should navigate back
+                const shouldGoBack =
+                    progress > 0.4 || // More than 40% swiped
+                    Math.abs(this.velocity) > this.config.velocityThreshold; // Fast swipe
+
+                if (deltaX > this.config.swipeThreshold && shouldGoBack) {
+                    this.navigateBack();
+                } else {
+                    this.resetSwipe();
+                }
+            }
+
+            this.isSwiping = false;
+            this.hideIndicator();
+        }
+
+        updateSwipeProgress(progress, deltaX) {
+            // Clamp progress
+            progress = Math.max(0, Math.min(1, progress));
+
+            // Calculate dynamic values
+            const absVelocity = Math.abs(this.velocity);
+            const velocityFactor = Math.min(absVelocity * 2, 1);
+
+            // Update indicator position and effects
+            if (this.indicator) {
+                const indicatorX = Math.max(0, deltaX - this.config.indicatorSize / 2);
+                const scale = 0.9 + (progress * 0.3) + (velocityFactor * 0.2);
+                const glowSpread = 10 + (progress * 20) + (velocityFactor * 15);
+                const glowIntensity = 0.35 + (progress * 0.3) + (velocityFactor * 0.2);
+
+                this.indicator.style.left = `${indicatorX}px`;
+                this.indicator.style.transform = `translateY(-50%) scale(${scale})`;
+                this.indicator.style.boxShadow = `0 ${glowSpread}px ${glowSpread * 2}px ${this.hexToRgba(this.config.glowColor, glowIntensity)}`;
+            }
+
+            // Optional: Add page slide effect
+            if (progress > 0.1) {
+                document.body.style.transform = `translateX(${progress * 20}px)`;
+                document.body.style.opacity = `${1 - (progress * 0.1)}`;
+            }
+        }
+
+        showIndicator() {
+            if (this.indicator) {
+                this.indicator.style.opacity = '0';
+                this.indicator.classList.remove('fade');
+                this.indicator.classList.add('active');
+
+                requestAnimationFrame(() => {
+                    this.indicator.style.opacity = '1';
+                });
+            }
+        }
+
+        hideIndicator() {
+            if (this.indicator) {
+                this.indicator.classList.add('fade');
+                this.indicator.classList.remove('active');
+
+                setTimeout(() => {
+                    this.indicator.style.opacity = '0';
+                    this.indicator.style.left = '0';
+                    this.indicator.style.transform = 'translateY(-50%) scale(0.9)';
+                }, this.config.indicatorFadeDuration);
+            }
+        }
+
+        navigateBack() {
+            // Save current scroll position before navigating
+            saveScrollToHistory();
+
+            // Add slide-out animation
+            document.body.style.transition = 'transform 0.3s ease-out, opacity 0.3s ease-out';
+            document.body.style.transform = 'translateX(100%)';
+            document.body.style.opacity = '0.5';
+
+            // Navigate back after animation
+            setTimeout(() => {
+                window.history.back();
+            }, 300);
+        }
+
+        resetSwipe() {
+            // Reset page position
+            document.body.style.transition = 'transform 0.3s ease-out, opacity 0.3s ease-out';
+            document.body.style.transform = 'translateX(0)';
+            document.body.style.opacity = '1';
+
+            setTimeout(() => {
+                document.body.style.transition = '';
+            }, 300);
+        }
+
+        handleResize() {
+            // Reset if switching to desktop
+            if (!this.isMobile()) {
+                this.resetSwipe();
+            }
+        }
+
+        // Utility: Convert hex color to rgba
+        hexToRgba(hex, alpha = 1) {
+            hex = hex.replace('#', '');
+            const r = parseInt(hex.substring(0, 2), 16);
+            const g = parseInt(hex.substring(2, 4), 16);
+            const b = parseInt(hex.substring(4, 6), 16);
+            return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+        }
+    }
+
+    /* ==================== Page Detection and Initialization ==================== */
+    /**
+     * Detect page type and initialize appropriate swipe handler
+     * - index.html with sidebar: MobileSidebarSwipe (already initialized above)
+     * - Other pages: BackNavigationSwipe
+     */
+    function detectPageType() {
+        // Check if sidebar menu exists in DOM
+        const hasSidebar = document.getElementById('sidebarMenu') !== null;
+
+        // Check current page filename
+        const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+
+        if (hasSidebar && (currentPage === 'index.html' || currentPage === '')) {
+            return 'sidebar';
+        } else {
+            return 'back';
+        }
+    }
+
+    // Initialize appropriate swipe handler based on page type
+    // Note: Sidebar swipe is already initialized above (lines 553-589)
+    // We only need to initialize back navigation swipe for non-index pages
+    if (window.innerWidth <= 768) {
+        const pageType = detectPageType();
+
+        if (pageType === 'back') {
+            // Initialize back navigation swipe for non-index pages
+            const backSwipe = new BackNavigationSwipe({
+                glowColor: '#0ea5e9', // Sky blue - matches accent
+                maxGlowIntensity: 0.6,
+                swipeThreshold: 50,
+                velocityThreshold: 0.3
+            });
+        }
+        // Sidebar swipe is already initialized above for index.html
     }
 });

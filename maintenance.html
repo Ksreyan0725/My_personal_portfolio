@@ -9,6 +9,11 @@
     <link rel="icon" type="image/png" href="Assets/Images.icons/maintenance.png?v=1" sizes="32x32" />
     <link rel="icon" type="image/png" href="Assets/Images.icons/maintenance.png?v=1" sizes="64x64" />
     <link rel="shortcut icon" type="image/png" href="Assets/Images.icons/maintenance.png?v=1" />
+    
+    <!-- Shared Styles and Scripts -->
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+    
     <style>
         * {
             margin: 0;
@@ -775,11 +780,39 @@
             }
         }
     </style>
+    <style>
+        /* Tooltips */
+        [data-tooltip] { position: relative; }
+        [data-tooltip]::before, [data-tooltip]::after {
+            position: absolute; opacity: 0; visibility: hidden;
+            transition: opacity 0.2s ease, visibility 0.2s ease;
+            transition-delay: 0.3s; pointer-events: none; z-index: 1005;
+        }
+        [data-tooltip]::before {
+            content: attr(data-tooltip); background: rgba(20, 20, 20, 0.9);
+            color: #fff; padding: 6px 10px; border-radius: 6px; font-size: 12px;
+            white-space: nowrap; font-weight: 500; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            top: 100%; left: 50%; transform: translateX(-50%) translateY(10px); margin-top: 8px;
+        }
+        [data-tooltip]::after {
+            content: ''; border-width: 6px; border-style: solid;
+            border-color: transparent transparent rgba(20, 20, 20, 0.9) transparent;
+            top: 100%; left: 50%; transform: translateX(-50%) translateY(10px); margin-top: -4px;
+        }
+        [data-tooltip]:hover::before, [data-tooltip]:hover::after {
+            opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0);
+        }
+        @media (max-width: 768px) {
+            [data-tooltip]::before, [data-tooltip]::after { display: none; }
+        }
+    </style>
 </head>
 <body class="light-mode">
     <div class="page-frame">
     <div class="header">
-        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" data-tooltip="Toggle Theme">
     
             <span class="theme-toggle-icon" id="themeIcon">⚙️</span>
             <span class="theme-toggle-text" id="themeText">System</span>
@@ -797,7 +830,7 @@
         <p class="description">We're working on something special. Our website will be back online soon.</p>
 
         <div class="button-group">
-            <a href="index.html" class="action-button secondary" style="text-decoration: none; display: flex; align-items: center; justify-content: center;">Home</a>
+            <a href="index.html" class="action-button secondary" style="text-decoration: none; display: flex; align-items: center; justify-content: center;" data-tooltip="Go Home">Home</a>
             <button class="action-button primary" id="notifyBtn">Notify me when ready</button>
         </div>
     </div>

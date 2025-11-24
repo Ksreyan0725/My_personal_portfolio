@@ -1004,17 +1004,23 @@ nav.scrolled {
 }
 
 .sidebar-close {
-  background: none;
-  border: none;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
   font-size: 2rem;
   color: var(--text-primary);
   cursor: pointer;
   padding: 5px 10px;
+  border-radius: 6px;
   transition: all 0.3s ease;
   line-height: 1;
+  outline: none;
 }
 
-.sidebar-close:hover { color: var(--accent); }
+.sidebar-close:hover {
+  color: var(--accent);
+  background: rgba(99, 102, 241, 0.1);
+  border-color: var(--accent);
+}
 
 
 .sidebar-links {
@@ -1117,23 +1123,27 @@ nav.scrolled {
 }
 
 .search-modal-close {
-  background: none;
-  border: none;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
   font-size: 2rem;
   color: var(--text-primary);
   cursor: pointer;
   padding: 5px 10px;
+  border-radius: 6px;
   transition: all 0.3s ease;
   line-height: 1;
+  outline: none;
 }
 
 .search-modal-close:hover {
   color: var(--accent);
-  /* No rotation - just color change */
+  background: rgba(99, 102, 241, 0.1);
+  border-color: var(--accent);
 }
 
 .search-modal-close:active {
-  transform: scale(0.9);
+  transform: none;
+  background: rgba(99, 102, 241, 0.1);
 }
 
 .search-modal-body {
@@ -1336,7 +1346,6 @@ nav.scrolled {
 .ticker-content {
   display: inline-block;
   align-content: center;
-  /* padding: 25px; */
   animation: scroll-right-to-left 20s linear infinite;
 }
 
@@ -1428,7 +1437,6 @@ header {
   animation: profileGlow 2s ease-in-out infinite;
   position: relative;
   overflow: hidden;
-  /* The `border-radius: 50%;` property has been removed */
 }
 
 .profile-photo::before {
@@ -4953,5 +4961,124 @@ body.sidebar-open {
 @media (min-width: 769px) {
   .swipe-indicator {
     display: none !important;
+  }
+}
+
+/* ==================== Back Navigation Swipe Styles ==================== */
+/* Swipe indicator for back navigation - arrow points left */
+.swipe-indicator.back-mode .arrow {
+  /* Arrow already points left (←), no rotation needed */
+  font-size: 28px;
+}
+
+/* Page slide animation for back navigation */
+@keyframes pageSlideOut {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0.5;
+  }
+}
+
+.page-sliding-back {
+  animation: pageSlideOut 0.3s ease-out forwards;
+}
+
+/* Ensure body can be transformed for swipe effect */
+body {
+  transition: transform 0s, opacity 0s; /* No transition by default */
+}
+
+/* ==================== Tooltips ==================== */
+[data-tooltip] {
+  position: relative;
+}
+
+[data-tooltip]::before,
+[data-tooltip]::after {
+  position: absolute;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+  transition-delay: 0.3s; /* Hover delay */
+  pointer-events: none;
+  z-index: 1005;
+}
+
+/* Tooltip Text */
+[data-tooltip]::before {
+  content: attr(data-tooltip);
+  background: rgba(20, 20, 20, 0.9);
+  color: #fff;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  white-space: nowrap;
+  font-weight: 500;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  
+  /* Positioning - Default (Bottom) */
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(10px);
+  margin-top: 8px;
+}
+
+/* Tooltip Arrow */
+[data-tooltip]::after {
+  content: '';
+  border-width: 6px;
+  border-style: solid;
+  border-color: transparent transparent rgba(20, 20, 20, 0.9) transparent;
+  
+  /* Positioning - Default (Bottom) */
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(10px);
+  margin-top: -4px; /* Overlap slightly */
+}
+
+/* Hover State */
+[data-tooltip]:hover::before,
+[data-tooltip]:hover::after {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Position: Top (for elements near bottom or specifically requested) */
+[data-tooltip-pos="top"]::before {
+  top: auto;
+  bottom: 100%;
+  margin-top: 0;
+  margin-bottom: 8px;
+  transform: translateX(-50%) translateY(-10px);
+}
+
+[data-tooltip-pos="top"]::after {
+  top: auto;
+  bottom: 100%;
+  border-color: rgba(20, 20, 20, 0.9) transparent transparent transparent;
+  margin-top: 0;
+  margin-bottom: -4px;
+  transform: translateX(-50%) translateY(-10px);
+}
+
+[data-tooltip-pos="top"]:hover::before,
+[data-tooltip-pos="top"]:hover::after {
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  [data-tooltip]::before,
+  [data-tooltip]::after {
+    display: none; /* Hide on mobile to prevent sticking */
   }
 }

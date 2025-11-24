@@ -15,6 +15,34 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
   <script src="script.js" defer></script>
+    <style>
+        /* Tooltips */
+        [data-tooltip] { position: relative; }
+        [data-tooltip]::before, [data-tooltip]::after {
+            position: absolute; opacity: 0; visibility: hidden;
+            transition: opacity 0.2s ease, visibility 0.2s ease;
+            transition-delay: 0.3s; pointer-events: none; z-index: 1005;
+        }
+        [data-tooltip]::before {
+            content: attr(data-tooltip); background: rgba(20, 20, 20, 0.9);
+            color: #fff; padding: 6px 10px; border-radius: 6px; font-size: 12px;
+            white-space: nowrap; font-weight: 500; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            top: 100%; left: 50%; transform: translateX(-50%) translateY(10px); margin-top: 8px;
+        }
+        [data-tooltip]::after {
+            content: ''; border-width: 6px; border-style: solid;
+            border-color: transparent transparent rgba(20, 20, 20, 0.9) transparent;
+            top: 100%; left: 50%; transform: translateX(-50%) translateY(10px); margin-top: -4px;
+        }
+        [data-tooltip]:hover::before, [data-tooltip]:hover::after {
+            opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0);
+        }
+        @media (max-width: 768px) {
+            [data-tooltip]::before, [data-tooltip]::after { display: none; }
+        }
+    </style>
   </head>
   <body>
     <div class="page-frame">
@@ -118,6 +146,7 @@
                 title="LinkedIn"
                 target="_blank"
                 rel="noopener"
+                data-tooltip="Connect on LinkedIn"
               >
                 <img
                   src="Assets/Images.icons/linkedin.png"
@@ -131,6 +160,7 @@
                 title="Facebook"
                 target="_blank"
                 rel="noopener"
+                data-tooltip="Facebook"
               >
                 <img
                   src="Assets/Images.icons/facebook.png"
@@ -144,6 +174,7 @@
                 title="X"
                 target="_blank"
                 rel="noopener"
+                data-tooltip="X"
               >
                 <img
                   src="Assets/Images.icons/X.png"
@@ -157,6 +188,7 @@
                 title="Instagram"
                 target="_blank"
                 rel="noopener"
+                data-tooltip="Instagram"
               >
                 <img
                   src="Assets/Images.icons/instagram.png"
@@ -170,6 +202,7 @@
                 title="Telegram"
                 target="_blank"
                 rel="noopener"
+                data-tooltip="Telegram"
               >
                 <img
                   src="Assets/Images.icons/telegram.png"
@@ -177,7 +210,6 @@
                   class="social-icon"
                 />
               </a>
-
               <!-- <a
                 href="https://teams.microsoft.com/l/chat/0/0?users=opener"
                 title="Microsoft Teams"
@@ -200,7 +232,7 @@
           >
             Send Me a Message
           </h3>
-          <!-- Contact Form -->
+          
           <form
             id="contactForm"
             action="https://formspree.io/f/mzzjopyn"
