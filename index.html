@@ -163,11 +163,11 @@ Last Updated: November 23, 2025
                     <style>
                         .typing-text::after {
                             content: '|';
-                            animation: blink 1s infinite;
+                            animation: blink 1.5s ease-in-out infinite;
                         }
                         @keyframes blink {
                             0%, 100% { opacity: 1; }
-                            50% { opacity: 0; }
+                            50% { opacity: 0.3; }
                         }
                     </style>
                     <script>
@@ -212,7 +212,7 @@ Last Updated: November 23, 2025
                        aria-label="Send email via Zoho Mail"
                        style="animation-delay: 0.2s"
                        data-tooltip="Contact">
-                        <img src="Assets/Images.icons/zohomail.png" alt="Zoho Mail" class="social-icon">
+                        <img id="zohoLogo" src="Assets/Images.icons/zohomail.png" alt="Zoho Mail" class="social-icon">
                     </a>
 
                     <!-- GitHub -->
@@ -422,6 +422,7 @@ Last Updated: November 23, 2025
                          rel="noopener noreferrer"
                          aria-label="View research details">
                     <span>View Research</span>
+                    <img src="Assets/Images.icons/pdf.png" alt="PDF" class="pdf-icon">
                 </a>
             </article>
         </section>
@@ -509,7 +510,8 @@ Last Updated: November 23, 2025
                    target="_blank"
                    rel="noopener noreferrer"
                    aria-label="View Resume PDF">
-                    View Resume PDF
+                    View Resume
+                    <img src="Assets/Images.icons/pdf.png" alt="PDF" class="pdf-icon">
                 </a>
             </div>
 

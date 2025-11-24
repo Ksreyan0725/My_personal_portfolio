@@ -69,6 +69,18 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
+        // Automatic Zoho Logo Switching
+        const zohoLogo = document.getElementById('zohoLogo');
+        if (zohoLogo) {
+            // Light mode -> Dark version (zoho-dark.png)
+            // Dark mode -> White version (zohomail.png)
+            if (effectiveTheme === 'light') {
+                zohoLogo.src = 'Assets/Images.icons/zoho-dark.png';
+            } else {
+                zohoLogo.src = 'Assets/Images.icons/zohomail.png';
+            }
+        }
+
         try {
             localStorage.setItem('theme', theme);
             currentTheme = theme;
