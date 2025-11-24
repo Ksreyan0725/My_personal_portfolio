@@ -156,8 +156,437 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /* ==================== Mobile Navigation ==================== */
-    /* Sidebar handling is now managed by MobileSidebarSwipe class below */
-    /* This provides both click and swipe functionality */
+    /* ==================== Sophisticated Sidebar Swipe Animation ==================== */
+
+    /**
+     * MobileSidebarSwipe - Gesture-based sidebar with Chrome DevTools-like swipe indicator
+     * 
+     * Features:
+     * - Circular arrow indicator that follows finger during swipe
+     * - Dynamic glow effects based on swipe velocity and progress
+     * - Physics-based easing for natural motion
+     * - High-performance transform + opacity only animations
+     * - Mobile-only (max-width: 768px)
+     * - Configurable options for colors, sensitivity, and effects
+     */
+    class MobileSidebarSwipe {
+        constructor(options = {}) {
+            // Configuration with defaults
+            this.config = {
+                // Swipe sensitivity (lower = more sensitive)
+                swipeThreshold: 50, // pixels to trigger open
+                velocityThreshold: 0.3, // velocity to trigger quick open
+
+                // Visual options
+                glowColor: options.glowColor || '#0ea5e9', // sky-blue
+                maxGlowIntensity: options.maxGlowIntensity || 0.6,
+                indicatorSize: 56, // pixels
+
+                // Animation durations (ms)
+                transitionDuration: 280,
+                indicatorFadeDuration: 200,
+
+                // Easing functions
+                easeOutCubic: (t) => 1 - Math.pow(1 - t, 3),
+                easeInOutCubic: (t) => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2,
+
+                // Mobile breakpoint
+                mobileMaxWidth: 768,
+
+                ...options
+            };
+
+            // DOM elements
+            this.sidebar = document.getElementById('sidebarMenu');
+            this.overlay = document.getElementById('sidebarOverlay');
+            this.menuIcon = document.getElementById('menuIcon');
+            this.closeBtn = document.getElementById('sidebarClose');
+
+            // State
+            this.isOpen = false;
+            this.isSwiping = false;
+            this.startX = 0;
+            this.startY = 0;
+            this.currentX = 0;
+            this.currentY = 0;
+            this.lastX = 0;
+            this.lastTime = 0;
+            this.velocity = 0;
+            this.sidebarWidth = 260;
+
+            // Swipe indicator element
+            this.indicator = null;
+
+            // Check if we're on mobile
+            this.isMobile = () => window.innerWidth <= this.config.mobileMaxWidth;
+
+            this.init();
+        }
+
+        init() {
+            if (!this.sidebar || !this.overlay) {
+                console.warn('Sidebar elements not found');
+                return;
+            }
+
+            // Create swipe indicator
+            this.createIndicator();
+
+            // Get sidebar width
+            this.updateSidebarWidth();
+
+            // Bind events
+            this.bindEvents();
+
+            // Handle window resize
+            window.addEventListener('resize', () => this.handleResize());
+        }
+
+        createIndicator() {
+            // Create circular arrow indicator
+            this.indicator = document.createElement('div');
+            this.indicator.className = 'swipe-indicator';
+            this.indicator.innerHTML = '<span class="arrow">→</span>';
+
+            // Apply custom color
+            this.indicator.style.background = this.config.glowColor;
+            this.indicator.style.boxShadow = `0 10px 24px ${this.hexToRgba(this.config.glowColor, 0.35)}`;
+
+            document.body.appendChild(this.indicator);
+        }
+
+        bindEvents() {
+            // Touch events for swipe gesture
+            document.addEventListener('touchstart', (e) => this.handleTouchStart(e), { passive: false });
+            document.addEventListener('touchmove', (e) => this.handleTouchMove(e), { passive: false });
+            document.addEventListener('touchend', (e) => this.handleTouchEnd(e), { passive: false });
+
+            // Click handlers
+            if (this.menuIcon) {
+                this.menuIcon.addEventListener('click', () => this.open());
+            }
+            if (this.closeBtn) {
+                this.closeBtn.addEventListener('click', () => this.close());
+            }
+            if (this.overlay) {
+                this.overlay.addEventListener('click', () => this.close());
+            }
+
+            // Close on navigation link click
+            const navLinks = this.sidebar?.querySelectorAll('a');
+            navLinks?.forEach(link => {
+                link.addEventListener('click', () => {
+                    setTimeout(() => this.close(), 150);
+                });
+            });
+        }
+
+        handleTouchStart(e) {
+            // Only handle on mobile
+            if (!this.isMobile()) return;
+
+            const touch = e.touches[0];
+            this.startX = touch.clientX;
+            this.startY = touch.clientY;
+            this.lastX = touch.clientX;
+            this.lastTime = Date.now();
+
+            // Only start swipe if touch starts near left edge (within 30px) or sidebar is open
+            const isEdgeSwipe = this.startX < 30;
+
+            if (isEdgeSwipe || this.isOpen) {
+                this.isSwiping = true;
+
+                // Disable transition for 1:1 tracking
+                if (this.sidebar) {
+                    this.sidebar.style.transition = 'none';
+                }
+
+                // Show indicator if starting from edge
+                if (isEdgeSwipe && !this.isOpen) {
+                    this.showIndicator();
+                }
+            }
+        }
+
+        handleTouchMove(e) {
+            if (!this.isSwiping || !this.isMobile()) return;
+
+            const touch = e.touches[0];
+            this.currentX = touch.clientX;
+            this.currentY = touch.clientY;
+
+            const deltaX = this.currentX - this.startX;
+            const deltaY = this.currentY - this.startY;
+
+            // Calculate velocity
+            const now = Date.now();
+            const timeDelta = now - this.lastTime;
+            if (timeDelta > 0) {
+                this.velocity = (this.currentX - this.lastX) / timeDelta;
+            }
+            this.lastX = this.currentX;
+            this.lastTime = now;
+
+            // Only handle horizontal swipes (prevent conflict with vertical scroll)
+            if (Math.abs(deltaX) > Math.abs(deltaY) * 1.5) {
+                e.preventDefault();
+
+                if (!this.isOpen && deltaX > 0) {
+                    // Opening swipe (right direction)
+                    const progress = Math.min(deltaX / this.sidebarWidth, 1);
+                    this.updateSwipeProgress(progress, deltaX);
+                } else if (this.isOpen && deltaX < 0) {
+                    // Closing swipe (left direction)
+                    const progress = Math.max(1 + (deltaX / this.sidebarWidth), 0);
+                    this.updateSwipeProgress(progress, deltaX);
+                }
+            }
+        }
+
+        handleTouchEnd(e) {
+            if (!this.isSwiping || !this.isMobile()) return;
+
+            // Re-enable transition for the snap animation
+            if (this.sidebar) {
+                this.sidebar.style.transition = '';
+            }
+
+            const deltaX = this.currentX - this.startX;
+            const deltaY = this.currentY - this.startY;
+
+            // Only process if it's a horizontal swipe
+            if (Math.abs(deltaX) > Math.abs(deltaY) * 1.5) {
+                const progress = !this.isOpen
+
+                    ? Math.min(deltaX / this.sidebarWidth, 1)
+                    : Math.max(1 + (deltaX / this.sidebarWidth), 0);
+
+                // Determine if we should open/close based on distance and velocity
+                const shouldToggle =
+                    progress > 0.4 || // More than 40% swiped
+                    Math.abs(this.velocity) > this.config.velocityThreshold; // Fast swipe
+
+                if (!this.isOpen && deltaX > this.config.swipeThreshold && shouldToggle) {
+                    this.open();
+                } else if (this.isOpen && deltaX < -this.config.swipeThreshold && shouldToggle) {
+                    this.close();
+                } else {
+                    // Reset to current state
+                    this.resetSwipe();
+                }
+            }
+
+            this.isSwiping = false;
+            this.hideIndicator();
+
+            // Reset transform
+            if (this.sidebar) {
+                this.sidebar.style.transform = '';
+                this.sidebar.style.boxShadow = '';
+            }
+        }
+
+        updateSwipeProgress(progress, deltaX) {
+            // Clamp progress
+            progress = Math.max(0, Math.min(1, progress));
+
+            // Calculate dynamic values based on progress and velocity
+            const absVelocity = Math.abs(this.velocity);
+            const velocityFactor = Math.min(absVelocity * 2, 1);
+
+            // Update sidebar position
+            if (this.sidebar) {
+                if (!this.isOpen) {
+                    // Opening: translate from -100% to 0%
+                    const translateX = -100 + (progress * 100);
+                    this.sidebar.style.transform = `translateX(${translateX}%)`;
+                } else {
+                    // Closing: translate from 0% based on drag
+                    const translateX = (deltaX / this.sidebarWidth) * 100;
+                    this.sidebar.style.transform = `translateX(${translateX}%)`;
+                }
+
+                // Dynamic glow effect based on progress and velocity
+                const glowIntensity = progress * this.config.maxGlowIntensity + (velocityFactor * 0.2);
+                const glowBlur = 10 + (progress * 15) + (velocityFactor * 10);
+                const glowColor = this.hexToRgba(this.config.glowColor, glowIntensity);
+
+                this.sidebar.style.borderRight = `2px solid ${glowColor}`;
+                this.sidebar.style.boxShadow = `0 0 ${glowBlur}px ${glowColor}`;
+            }
+
+            // Update overlay opacity
+            if (this.overlay) {
+                this.overlay.style.opacity = progress * 0.5;
+                this.overlay.style.pointerEvents = progress > 0 ? 'auto' : 'none';
+            }
+
+            // Update indicator position and effects
+            if (this.indicator && !this.isOpen) {
+                const indicatorX = Math.max(0, deltaX - this.config.indicatorSize / 2);
+                const scale = 0.9 + (progress * 0.3) + (velocityFactor * 0.2);
+                const glowSpread = 10 + (progress * 20) + (velocityFactor * 15);
+                const glowIntensity = 0.35 + (progress * 0.3) + (velocityFactor * 0.2);
+
+                this.indicator.style.left = `${indicatorX}px`;
+                this.indicator.style.transform = `translateY(-50%) scale(${scale})`;
+                this.indicator.style.boxShadow = `0 ${glowSpread}px ${glowSpread * 2}px ${this.hexToRgba(this.config.glowColor, glowIntensity)}`;
+            }
+        }
+
+        showIndicator() {
+            if (this.indicator) {
+                this.indicator.style.opacity = '0';
+                this.indicator.classList.remove('fade');
+                this.indicator.classList.add('active');
+
+                // Fade in
+                requestAnimationFrame(() => {
+                    this.indicator.style.opacity = '1';
+                });
+            }
+        }
+
+        hideIndicator() {
+            if (this.indicator) {
+                this.indicator.classList.add('fade');
+                this.indicator.classList.remove('active');
+
+                setTimeout(() => {
+                    this.indicator.style.opacity = '0';
+                    this.indicator.style.left = '0';
+                    this.indicator.style.transform = 'translateY(-50%) scale(0.9)';
+                }, this.config.indicatorFadeDuration);
+            }
+        }
+
+        open() {
+            if (this.isOpen) return;
+
+            this.isOpen = true;
+            this.sidebar?.classList.add('active');
+            this.overlay?.classList.add('active');
+            document.body.classList.add('sidebar-open');
+
+            // Animate with physics-based easing
+            this.animateOpen();
+        }
+
+        close() {
+            if (!this.isOpen) return;
+
+            this.isOpen = false;
+            this.sidebar?.classList.remove('active');
+            this.overlay?.classList.remove('active');
+            document.body.classList.remove('sidebar-open');
+
+            // Animate with physics-based easing
+            this.animateClose();
+        }
+
+        animateOpen() {
+            // CSS handles the animation with custom cubic-bezier
+            // Additional glow effect on open
+            if (this.sidebar) {
+                setTimeout(() => {
+                    const glowColor = this.hexToRgba(this.config.glowColor, this.config.maxGlowIntensity);
+                    this.sidebar.style.borderRight = `2px solid ${glowColor}`;
+                    this.sidebar.style.boxShadow = `0 0 25px ${glowColor}`;
+                }, 50);
+            }
+        }
+
+        animateClose() {
+            // Reset glow on close
+            if (this.sidebar) {
+                this.sidebar.style.borderRight = '1px solid transparent';
+                this.sidebar.style.boxShadow = '';
+            }
+        }
+
+        resetSwipe() {
+            // Animate back to current state
+            if (this.sidebar) {
+                this.sidebar.style.transition = 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+                this.sidebar.style.transform = this.isOpen ? 'translateX(0)' : 'translateX(-100%)';
+
+                setTimeout(() => {
+                    this.sidebar.style.transition = '';
+                }, 300);
+            }
+
+            if (this.overlay) {
+                this.overlay.style.opacity = this.isOpen ? '1' : '0';
+            }
+        }
+
+        updateSidebarWidth() {
+            if (this.sidebar) {
+                this.sidebarWidth = this.sidebar.offsetWidth || 260;
+            }
+        }
+
+        handleResize() {
+            this.updateSidebarWidth();
+
+            // Close sidebar if switching to desktop
+            if (!this.isMobile() && this.isOpen) {
+                this.close();
+            }
+        }
+
+        // Utility: Convert hex color to rgba
+        hexToRgba(hex, alpha = 1) {
+            // Remove # if present
+            hex = hex.replace('#', '');
+
+            // Parse hex to RGB
+            const r = parseInt(hex.substring(0, 2), 16);
+            const g = parseInt(hex.substring(2, 4), 16);
+            const b = parseInt(hex.substring(4, 6), 16);
+
+            return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+        }
+    }
+
+    // Initialize the mobile sidebar swipe system
+    // Only on mobile devices and after DOM is fully loaded
+    if (window.innerWidth <= 768) {
+        const sidebarSwipe = new MobileSidebarSwipe({
+            glowColor: '#0ea5e9', // Sky blue - matches accent
+            maxGlowIntensity: 0.6,
+            swipeThreshold: 50,
+            velocityThreshold: 0.3
+        });
+    } else {
+        // Desktop fallback: simple click handlers
+        const menuIcon = document.getElementById('menuIcon');
+        const sidebarMenu = document.getElementById('sidebarMenu');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+        const sidebarClose = document.getElementById('sidebarClose');
+
+        const openSidebar = () => {
+            sidebarMenu?.classList.add('active');
+            sidebarOverlay?.classList.add('active');
+            document.body.classList.add('sidebar-open');
+        };
+
+        const closeSidebar = () => {
+            sidebarMenu?.classList.remove('active');
+            sidebarOverlay?.classList.remove('active');
+            document.body.classList.remove('sidebar-open');
+        };
+
+        menuIcon?.addEventListener('click', openSidebar);
+        sidebarClose?.addEventListener('click', closeSidebar);
+        sidebarOverlay?.addEventListener('click', closeSidebar);
+
+        // Close on link click
+        sidebarMenu?.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => setTimeout(closeSidebar, 150));
+        });
+    }
 
     /* ==================== Search Modal Functionality ==================== */
     const mobileSearchIcon = document.getElementById('mobileSearchIcon');
@@ -1311,173 +1740,6 @@ document.addEventListener('DOMContentLoaded', () => {
             window.location.href = '404.html';
         }
     }, true); // capture phase to intercept early
-});
-
-/* ==================== Mobile Sidebar Swipe Functionality ==================== */
-class MobileSidebarSwipe {
-    constructor() {
-        this.touchStartX = 0;
-        this.touchStartY = 0;
-        this.touchEndX = 0;
-        this.touchEndY = 0;
-        this.touchStartTime = 0;
-        this.sidebarMenu = document.querySelector('.sidebar-menu');
-        this.threshold = 40; // minimum swipe distance (px)
-        this.velocityThreshold = 0.3; // minimum velocity (px/ms)
-        this.isOpen = false;
-        this.isAnimating = false;
-        this.init();
-    }
-
-    init() {
-        if (!this.sidebarMenu) {
-            console.error('Sidebar menu element not found');
-            return;
-        }
-
-        document.addEventListener('touchstart', (e) => this.handleTouchStart(e), { passive: true });
-        document.addEventListener('touchend', (e) => this.handleTouchEnd(e), { passive: true });
-        document.addEventListener('click', (e) => this.handleOutsideClick(e));
-
-        const sidebarLinks = document.querySelectorAll('.sidebar-links a');
-        sidebarLinks.forEach((link) => {
-            link.addEventListener('click', () => this.closeSidebar());
-        });
-
-        const menuIcon = document.querySelector('.menu-icon');
-        if (menuIcon) {
-            menuIcon.addEventListener('click', () => this.toggleSidebar());
-        }
-
-        const closeBtn = document.querySelector('.sidebar-close');
-        if (closeBtn) {
-            closeBtn.addEventListener('click', () => this.closeSidebar());
-        }
-
-        // Close sidebar when clicking overlay
-        const sidebarOverlay = document.getElementById('sidebarOverlay');
-        if (sidebarOverlay) {
-            sidebarOverlay.addEventListener('click', () => this.closeSidebar());
-        }
-
-        this.sidebarMenu.addEventListener('transitionend', () => {
-            this.isAnimating = false;
-        });
-
-        // Close on Escape key
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && this.isOpen) {
-                this.closeSidebar();
-            }
-        });
-
-        console.log('MobileSidebarSwipe initialized successfully');
-    }
-
-    handleTouchStart(e) {
-        this.touchStartX = e.changedTouches[0].screenX;
-        this.touchStartY = e.changedTouches[0].screenY;
-        this.touchStartTime = Date.now();
-        console.log('Touch START:', { x: this.touchStartX, y: this.touchStartY, time: this.touchStartTime });
-    }
-
-    handleTouchEnd(e) {
-        this.touchEndX = e.changedTouches[0].screenX;
-        this.touchEndY = e.changedTouches[0].screenY;
-        console.log('Touch END:', { x: this.touchEndX, y: this.touchEndY });
-        this.handleSwipe();
-    }
-
-    handleSwipe() {
-        // Ignore if already animating
-        if (this.isAnimating) {
-            console.log('Already animating, ignoring swipe');
-            return;
-        }
-
-        // Ignore mostly-vertical gestures
-        const verticalDistance = Math.abs(this.touchEndY - this.touchStartY);
-        if (verticalDistance > 80) {
-            console.log('Vertical gesture ignored:', verticalDistance);
-            return;
-        }
-
-        const horizontalDistance = this.touchEndX - this.touchStartX;
-        const duration = Date.now() - this.touchStartTime;
-        const velocity = Math.abs(horizontalDistance) / duration;
-
-        console.log('Swipe detected:', {
-            horizontalDistance,
-            duration,
-            velocity,
-            touchStartX: this.touchStartX,
-            isOpen: this.isOpen
-        });
-
-        // Swipe right (positive distance) to open
-        if (!this.isOpen && horizontalDistance > this.threshold) {
-            console.log('Opening sidebar via swipe (right swipe detected)');
-            this.openSidebar();
-            return;
-        }
-
-        // Swipe left (negative distance) to close when open
-        if (this.isOpen && horizontalDistance < -this.threshold) {
-            console.log('Closing sidebar via swipe (left swipe detected)');
-            this.closeSidebar();
-            return;
-        }
-    }
-
-    openSidebar() {
-        const sidebarOverlay = document.getElementById('sidebarOverlay');
-        const menuIcon = document.querySelector('.menu-icon');
-        if (!this.isOpen && this.sidebarMenu) {
-            this.isAnimating = true;
-            this.sidebarMenu.classList.add('active');
-            if (sidebarOverlay) sidebarOverlay.classList.add('active');
-            if (menuIcon) menuIcon.setAttribute('aria-expanded', 'true');
-            document.body.style.overflow = 'hidden';
-            this.isOpen = true;
-            console.log('Sidebar opened via swipe');
-        }
-    }
-
-    closeSidebar() {
-        const sidebarOverlay = document.getElementById('sidebarOverlay');
-        const menuIcon = document.querySelector('.menu-icon');
-        if (this.sidebarMenu) {
-            this.isAnimating = true;
-            this.sidebarMenu.classList.remove('active', 'open', 'closing');
-            if (sidebarOverlay) sidebarOverlay.classList.remove('active');
-            if (menuIcon) menuIcon.setAttribute('aria-expanded', 'false');
-            document.body.style.overflow = '';
-            this.isOpen = false;
-        }
-    }
-
-    toggleSidebar() {
-        if (this.isOpen) {
-            this.closeSidebar();
-        } else {
-            this.openSidebar();
-        }
-    }
-
-    handleOutsideClick(e) {
-        if (
-            this.sidebarMenu &&
-            this.isOpen &&
-            !this.sidebarMenu.contains(e.target) &&
-            !(document.querySelector('.menu-icon') && document.querySelector('.menu-icon').contains(e.target))
-        ) {
-            this.closeSidebar();
-        }
-    }
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    new MobileSidebarSwipe();
 });
 
 /* Mobile inline expandable search removed to prevent duplicate inputs.
