@@ -3874,10 +3874,39 @@ nav {
     white-space: nowrap;
   }
 
-  /* Hide mobile icons */
-  .mobile-search-icon,
+  /* Hide mobile icons by default above 601px, but we'll override for search below 889px */
   .menu-icon {
     display: none !important;
+  }
+
+  /* Search Visibility Logic around 889px */
+  @media (max-width: 889px) {
+    .desktop-search {
+      display: none !important;
+    }
+    .mobile-search-icon {
+      display: flex !important;
+      order: 3;
+      margin-left: auto;
+    }
+  }
+
+  @media (min-width: 890px) {
+    .desktop-search {
+      display: flex !important;
+    }
+    .mobile-search-icon {
+      display: none !important;
+    }
+  }
+
+  /* Ensure vertical alignment */
+  .nav-container {
+    align-items: center !important;
+  }
+  
+  .nav-links {
+    align-items: center !important;
   }
 
   /* Theme toggle with text - Desktop pill shape */
@@ -4661,90 +4690,8 @@ body.sidebar-open {
   #navbar .mobile-search-icon { display: none !important; }
 }
 
-/* ===========================================
-   SWIPE INDICATOR - Enhanced Chrome DevTools Style
-   =========================================== */
-.swipe-indicator {
-  position: fixed;
-  left: -100px; /* Start off-screen */
-  top: 50%;
-  transform: translateY(-50%) translateZ(0) scale(0.9);
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #0ea5e9 0%, #06b6d4 100%);
-  color: #ffffff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transition: opacity 200ms cubic-bezier(0.4, 0, 0.2, 1),
-              transform 200ms cubic-bezier(0.4, 0, 0.2, 1),
-              left 80ms cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 10px 24px rgba(14, 165, 233, 0.35),
-              0 4px 12px rgba(14, 165, 233, 0.25);
-  z-index: 1001;
-  pointer-events: none;
-  
-  /* Performance optimizations */
-  will-change: transform, opacity, left;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-/* Active state - visible and following finger */
-.swipe-indicator.active {
-  opacity: 1;
-  transition: opacity 150ms cubic-bezier(0.4, 0, 0.2, 1),
-              transform 80ms cubic-bezier(0.4, 0, 0.2, 1),
-              left 0ms; /* Remove transition for instant following */
-}
-
-/* Fade out state */
-.swipe-indicator.fade {
-  opacity: 0;
-  transition: opacity 250ms cubic-bezier(0.4, 0, 1, 1),
-              transform 250ms cubic-bezier(0.4, 0, 1, 1);
-  transform: translateY(-50%) translateZ(0) scale(0.85);
-}
-
-/* Arrow inside indicator */
-.swipe-indicator .arrow {
-  font-size: 26px;
-  line-height: 1;
-  font-weight: bold;
-  display: block;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  
-  /* Subtle pulse animation when idle */
-  animation: arrowPulse 1.5s ease-in-out infinite;
-}
-
-@keyframes arrowPulse {
-  0%, 100% {
-    transform: translateX(0) scale(1);
-    opacity: 1;
-  }
-  50% {
-    transform: translateX(3px) scale(1.1);
-    opacity: 0.9;
-  }
-}
-
-/* Remove pulse when actively swiping */
-.swipe-indicator.active .arrow {
-  animation: none;
-}
-
 /* Mobile-specific optimizations */
 @media (max-width: 768px) {
-  .swipe-indicator {
-    /* Ensure indicator is visible on mobile */
-    display: flex;
-  }
-  
   .nav-container {
     justify-content: space-between !important;
     padding: 0 15px !important;
@@ -4883,93 +4830,6 @@ body.sidebar-open {
   }
 }
 
-/* ===========================================
-   SWIPE INDICATOR - Enhanced Chrome DevTools Style
-   =========================================== */
-.swipe-indicator {
-  position: fixed;
-  left: -100px;
-  top: 50%;
-  transform: translateY(-50%) translateZ(0) scale(0.9);
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #0ea5e9 0%, #06b6d4 100%);
-  color: #ffffff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transition: opacity 200ms cubic-bezier(0.4, 0, 0.2, 1),
-              transform 200ms cubic-bezier(0.4, 0, 0.2, 1),
-              left 80ms cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 10px 24px rgba(14, 165, 233, 0.35),
-              0 4px 12px rgba(14, 165, 233, 0.25);
-  z-index: 1001;
-  pointer-events: none;
-  will-change: transform, opacity, left;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-.swipe-indicator.active {
-  opacity: 1;
-  transition: opacity 150ms cubic-bezier(0.4, 0, 0.2, 1),
-              transform 80ms cubic-bezier(0.4, 0, 0.2, 1),
-              left 0ms;
-}
-
-.swipe-indicator.fade {
-  opacity: 0;
-  transition: opacity 250ms cubic-bezier(0.4, 0, 1, 1),
-              transform 250ms cubic-bezier(0.4, 0, 1, 1);
-  transform: translateY(-50%) translateZ(0) scale(0.85);
-}
-
-.swipe-indicator .arrow {
-  font-size: 26px;
-  line-height: 1;
-  font-weight: bold;
-  display: block;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  animation: arrowPulse 1.5s ease-in-out infinite;
-}
-
-@keyframes arrowPulse {
-  0%, 100% {
-    transform: translateX(0) scale(1);
-    opacity: 1;
-  }
-  50% {
-    transform: translateX(3px) scale(1.1);
-    opacity: 0.9;
-  }
-}
-
-.swipe-indicator.active .arrow {
-  animation: none;
-}
-
-@media (max-width: 768px) {
-  .swipe-indicator {
-    display: flex;
-  }
-}
-
-@media (min-width: 769px) {
-  .swipe-indicator {
-    display: none !important;
-  }
-}
-
-/* ==================== Back Navigation Swipe Styles ==================== */
-/* Swipe indicator for back navigation - arrow points left */
-.swipe-indicator.back-mode .arrow {
-  /* Arrow already points left (←), no rotation needed */
-  font-size: 28px;
-}
 
 /* Page slide animation for back navigation */
 @keyframes pageSlideOut {

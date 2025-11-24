@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello World</title>
+    <style>
+        .settings-btn {
+            margin: 15px;
+            padding: 18px 20px;
+            cursor: pointer;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.2s;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-weight: 600;
+            color: #fff;
+            background-color: rgba(99, 102, 241, 0.1);
+            border-radius: 12px;
+            border: 1px solid rgba(99, 102, 241, 0.3);
+        }
+
+        .settings-btn:active {
+            transform: scale(0.98);
+            background-color: rgba(99, 102, 241, 0.2);
+        }
+
+        /* Settings Panel */
+        .settings-panel {
+            position: fixed;
+            bottom: -100%;
+            left: 0;
+            right: 0;
+            background-color: var(--bg-color);
+            border-top: 1px solid var(--border-color);
+            border-radius: 20px 20px 0 0;
+            z-index: 1001;
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
+            transition: bottom 0.3s ease;
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+
+        .settings-panel.active {
+            bottom: 0;
+        }
+
+        .settings-header {
+            position: sticky;
+            top: 0;
+            background-color: var(--bg-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px 25px 20px 25px;
+            border-bottom: 1px solid var(--border-color);
+            z-index: 10;
+        }
+
+        .settings-title {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .close-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: var(--sidebar-hover);
+            border: none;
+            cursor: pointer;
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-color);
+        }
+
+        .settings-content {
+            padding: 20px 25px 40px 25px;
+        }
+
+        .setting-group {
+            margin-bottom: 30px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .setting-group:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .setting-label {
+            font-weight: 700;
+            margin-bottom: 8px;
+            font-size: 18px;
+        }
+
+        .setting-description {
+            font-size: 14px;
+            color: var(--secondary-text);
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .theme-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .theme-btn {
+            padding: 16px;
+            border: 2px solid var(--border-color);
+            background-color: var(--sidebar-bg);
+            color: var(--text-color);
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.2s;
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .theme-btn-title {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .theme-btn-desc {
+            font-size: 13px;
+            color: var(--secondary-text);
+            font-weight: 400;
+        }
+
+        .theme-btn.active {
+            background-color: #007bff;
+            color: white;
+            border-color: #007bff;
+        }
+
+        .theme-btn.active .theme-btn-desc {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .theme-btn:active:not(.active) {
+            transform: scale(0.98);
+        }
+
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px;
+            background-color: var(--sidebar-bg);
+            border-radius: 12px;
+            border: 2px solid var(--border-color);
+        }
+
+        .toggle-info {
+            flex: 1;
+            padding-right: 15px;
+        }
+
+        .toggle-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .toggle-desc {
+            font-size: 13px;
+            color: var(--secondary-text);
+            line-height: 1.4;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 60px;
+            height: 32px;
+            background-color: #ccc;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            flex-shrink: 0;
+        }
+
+        .toggle-switch.active {
+            background-color: #007bff;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            width: 24px;
+            height: 24px;
+            background-color: white;
+            border-radius: 50%;
+            transition: transform 0.3s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .toggle-switch.active .toggle-slider {
+            transform: translateX(28px);
+        }
+
+        .option-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option-item {
+            padding: 16px;
+            background-color: var(--sidebar-bg);
+            border-radius: 12px;
+            border: 2px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .option-item:active {
+            transform: scale(0.98);
+        }
+
+        .option-info {
+            flex: 1;
+        }
+
+        .option-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .option-desc {
+            font-size: 13px;
+            color: var(--secondary-text);
+            line-height: 1.4;
+        }
+
+        .option-arrow {
+            font-size: 20px;
+            color: var(--secondary-text);
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+            z-index: 998;
+        }
+
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .main-content {
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        h1 {
+            font-size: 42px;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .version-info {
+            text-align: center;
+            padding: 20px;
+            color: var(--secondary-text);
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+ 
+    <!-- Overlay -->
+    <div class="overlay" id="overlay" onclick="closeAll()"></div>
+
+        <div class="settings-btn" onclick="openSettings()">
+            <span style="font-size: 24px;"></span>
+            <span>Settings</span>
+        </div>
+    </div>
+
+    <!-- Settings Panel -->
+    <div class="settings-panel" id="settingsPanel">
+        <div class="settings-header">
+            <div class="settings-title"> Settings</div>
+            <button class="close-btn" onclick="closeSettings()">×</button>
+        </div>
+        
+        <div class="settings-content">
+            <!-- Appearance Section -->
+            <div class="setting-group">
+                <div class="setting-label">🎨 Appearance</div>
+                <div class="setting-description">Customize how the app looks on your device</div>
+                
+                <div class="theme-buttons">
+                    <button class="theme-btn active" onclick="setTheme('system', event)">
+                        <div class="theme-btn-title">🖥️ System Default</div>
+                        <div class="theme-btn-desc">Automatically match your device's theme settings</div>
+                    </button>
+                    <button class="theme-btn" onclick="setTheme('light', event)">
+                        <div class="theme-btn-title">☀️ Light Mode</div>
+                        <div class="theme-btn-desc">Bright and clear interface for daytime use</div>
+                    </button>
+                    <button class="theme-btn" onclick="setTheme('dark', event)">
+                        <div class="theme-btn-title">🌙 Dark Mode</div>
+                        <div class="theme-btn-desc">Easy on the eyes with dark backgrounds</div>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Display Section -->
+            <div class="setting-group">
+                <div class="setting-label">💡 Display</div>
+                <div class="setting-description">Adjust screen settings for comfortable viewing</div>
+                
+                <div class="toggle-container">
+                    <div class="toggle-info">
+                        <div class="toggle-title">Night Light</div>
+                        <div class="toggle-desc">Reduce blue light by adding a warm color filter to help you sleep better</div>
+                    </div>
+                    <div class="toggle-switch" id="nightLightToggle" onclick="toggleNightLight()">
+                        <div class="toggle-slider"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Accessibility Section -->
+            <div class="setting-group">
+                <div class="setting-label">♿ Accessibility</div>
+                <div class="setting-description">Make the app easier to use for everyone</div>
+                
+                <div class="option-list">
+                    <div class="option-item" onclick="alert('Font size settings')">
+                        <div class="option-info">
+                            <div class="option-title">Font Size</div>
+                            <div class="option-desc">Adjust text size for better readability</div>
+                        </div>
+                        <div class="option-arrow">›</div>
+                    </div>
+                    
+                    <div class="option-item" onclick="alert('High contrast settings')">
+                        <div class="option-info">
+                            <div class="option-title">High Contrast</div>
+                            <div class="option-desc">Increase contrast for improved visibility</div>
+                        </div>
+                        <div class="option-arrow">›</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Notifications Section -->
+            <div class="setting-group">
+                <div class="setting-label">🔔 Notifications</div>
+                <div class="setting-description">Control how you receive updates and alerts</div>
+                
+                <div class="toggle-container" style="margin-bottom: 12px;">
+                    <div class="toggle-info">
+                        <div class="toggle-title">Push Notifications</div>
+                        <div class="toggle-desc">Receive real-time updates and alerts</div>
+                    </div>
+                    <div class="toggle-switch" id="pushToggle" onclick="togglePush()">
+                        <div class="toggle-slider"></div>
+                    </div>
+                </div>
+
+                <div class="toggle-container">
+                    <div class="toggle-info">
+                        <div class="toggle-title">Sound & Vibration</div>
+                        <div class="toggle-desc">Play sounds and vibrate for notifications</div>
+                    </div>
+                    <div class="toggle-switch" id="soundToggle" onclick="toggleSound()">
+                        <div class="toggle-slider"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Privacy & Security Section -->
+            <div class="setting-group">
+                <div class="setting-label">🔒 Privacy & Security</div>
+                <div class="setting-description">Manage your data and security preferences</div>
+                
+                <div class="option-list">
+                    <div class="option-item" onclick="alert('Privacy policy')">
+                        <div class="option-info">
+                            <div class="option-title">Privacy Policy</div>
+                            <div class="option-desc">Read how we protect your information</div>
+                        </div>
+                        <div class="option-arrow">›</div>
+                    </div>
+                    
+                    <div class="option-item" onclick="alert('Clear data')">
+                        <div class="option-info">
+                            <div class="option-title">Clear App Data</div>
+                            <div class="option-desc">Remove all stored data and reset settings</div>
+                        </div>
+                        <div class="option-arrow">›</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- About Section -->
+            <div class="setting-group">
+                <div class="setting-label">ℹ️ About</div>
+                <div class="setting-description">App information and support</div>
+                
+                <div class="option-list">
+                    <div class="option-item" onclick="alert('Version 1.0.0')">
+                        <div class="option-info">
+                            <div class="option-title">Version</div>
+                            <div class="option-desc">Current app version: 1.0.0</div>
+                        </div>
+                        <div class="option-arrow">›</div>
+                    </div>
+                    
+                    <div class="option-item" onclick="alert('Help & Support')">
+                        <div class="option-info">
+                            <div class="option-title">Help & Support</div>
+                            <div class="option-desc">Get help or report issues</div>
+                        </div>
+                        <div class="option-arrow">›</div>
+                    </div>
+
+                    <div class="option-item" onclick="alert('Rate this app')">
+                        <div class="option-info">
+                            <div class="option-title">Rate This App</div>
+                            <div class="option-desc">Share your feedback on the app store</div>
+                        </div>
+                        <div class="option-arrow">›</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="version-info">
+                Made with ❤️ | © 2024 All Rights Reserved
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <h1>Hello World</h1>
+    </div>
+
+    <script>
+        let currentTheme = 'system';
+        let nightLightEnabled = false;
+        let pushEnabled = false;
+        let soundEnabled = false;
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+            const menuBtn = document.getElementById('menuBtn');
+            
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+            menuBtn.classList.toggle('active');
+        }
+
+        function closeSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+            const menuBtn = document.getElementById('menuBtn');
+            
+            sidebar.classList.remove('active');
+            overlay.classList.remove('active');
+            menuBtn.classList.remove('active');
+        }
+
+        function closeAll() {
+            closeSidebar();
+            closeSettings();
+        }
+
+        function navigateTo(page) {
+            console.log('Navigate to:', page);
+            closeSidebar();
+        }
+
+        function openSettings() {
+            const settingsPanel = document.getElementById('settingsPanel');
+            const overlay = document.getElementById('overlay');
+            settingsPanel.classList.add('active');
+            overlay.classList.add('active');
+            closeSidebar();
+        }
+
+        function closeSettings() {
+            const settingsPanel = document.getElementById('settingsPanel');
+            const overlay = document.getElementById('overlay');
+            settingsPanel.classList.remove('active');
+            overlay.classList.remove('active');
+        }
+
+        function setTheme(theme, event) {
+            currentTheme = theme;
+            
+            document.querySelectorAll('.theme-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.closest('.theme-btn').classList.add('active');
+
+            if (theme === 'system') {
+                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                document.body.classList.toggle('dark', prefersDark);
+            } else if (theme === 'light') {
+                document.body.classList.remove('dark');
+            } else if (theme === 'dark') {
+                document.body.classList.add('dark');
+            }
+        }
+
+        function toggleNightLight() {
+            nightLightEnabled = !nightLightEnabled;
+            const toggle = document.getElementById('nightLightToggle');
+            toggle.classList.toggle('active');
+            
+            if (nightLightEnabled) {
+                document.body.style.filter = 'sepia(0.3) hue-rotate(-20deg)';
+            } else {
+                document.body.style.filter = 'none';
+            }
+        }
+
+        function togglePush() {
+            pushEnabled = !pushEnabled;
+            const toggle = document.getElementById('pushToggle');
+            toggle.classList.toggle('active');
+        }
+
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            const toggle = document.getElementById('soundToggle');
+            toggle.classList.toggle('active');
+        }
+
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+            if (currentTheme === 'system') {
+                document.body.classList.toggle('dark', e.matches);
+            }
+        });
+
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        document.body.classList.toggle('dark', prefersDark);
+    </script>
+</body>
+</html>
