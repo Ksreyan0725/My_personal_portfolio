@@ -1625,50 +1625,8 @@ document.addEventListener('DOMContentLoaded', () => {
     prefersReducedMotion.addEventListener?.('change', applyMotionPreference);
 
     /* ==================== Contact Form ==================== */
-    const contactForm = document.getElementById('contactForm');
-    if (contactForm) {
-        contactForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
+    // Contact form logic is handled in contact.html specific script
 
-            const submitButton = contactForm.querySelector('.submit-button');
-            const formStatus = document.getElementById('form-status');
-            const originalText = submitButton.textContent;
-
-            submitButton.textContent = 'Sending...';
-            submitButton.disabled = true;
-            formStatus.textContent = '';
-            formStatus.style.color = '';
-
-            try {
-                const response = await fetch(contactForm.action, {
-                    method: contactForm.method,
-                    body: new FormData(contactForm),
-                    headers: {
-                        'Accept': 'application/json'
-                    }
-                });
-
-                if (response.ok) {
-                    formStatus.textContent = '✓ Thank you for your message! I will get back to you soon.';
-                    formStatus.style.color = '#10b981';
-                    contactForm.reset();
-                } else {
-                    const data = await response.json();
-                    formStatus.textContent = '✗ ' + (data.errors ?
-                        data.errors.map(error => error.message).join(', ') :
-                        'Oops! There was a problem submitting your form.');
-                    formStatus.style.color = '#ef4444';
-                }
-            } catch (error) {
-                formStatus.textContent = '✗ Oops! There was a problem submitting your form. Please try again.';
-                formStatus.style.color = '#ef4444';
-                console.error('Form submission error:', error);
-            } finally {
-                submitButton.textContent = originalText;
-                submitButton.disabled = false;
-            }
-        });
-    }
 
     /* ==================== Apply Ripple Effects ==================== */
     document.querySelectorAll('.ripple-effect').forEach(button => {

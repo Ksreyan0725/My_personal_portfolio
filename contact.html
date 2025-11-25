@@ -258,6 +258,33 @@
                 placeholder="Enter your email address..."
               />
             </div>
+            
+            <!-- Phone Number Field -->
+            <div class="form-group">
+              <label for="phone">Phone Number</label>
+              <input 
+                type="tel" 
+                id="phone" 
+                name="phone" 
+                placeholder="+1 (555) 000-0000"
+              />
+            </div>
+
+            <!-- Subject Dropdown -->
+            <div class="form-group">
+              <label for="subject">Subject *</label>
+              <select id="subject" name="subject" required>
+                  <option value="">Select a subject</option>
+                  <option value="general">General Inquiry</option>
+                  <option value="support">Technical Support</option>
+                  <option value="sales">Sales</option>
+                  <option value="feedback">Feedback</option>
+              </select>
+            </div>
+
+            <!-- Honeypot for Spam Protection -->
+            <input type="text" name="_gotcha" style="display:none" />
+
             <div class="form-group">
               <label for="message">Message </label>
               <textarea
@@ -716,20 +743,32 @@
       }
 
       .form-group input,
-      .form-group textarea {
+      .form-group textarea,
+      .form-group select {
         width: 100%;
-        padding: 15px;
+        padding: 12px 16px; /* Matched to reference */
         background: var(--bg-secondary);
         border: 2px solid var(--border);
-        border-radius: 12px;
+        border-radius: 8px; /* Matched to reference */
         color: var(--text-primary);
-        font-size: 1rem;
+        font-size: 14px; /* Matched to reference */
         transition: all 0.3s ease;
         font-family: inherit;
       }
 
+      .form-group select {
+        appearance: auto; /* Ensure dropdown arrow is visible */
+        cursor: pointer;
+      }
+
+      .form-group option {
+        background-color: var(--bg-secondary);
+        color: var(--text-primary);
+      }
+
       .form-group input:focus,
-      .form-group textarea:focus {
+      .form-group textarea:focus,
+      .form-group select:focus {
         outline: none;
         border-color: var(--accent);
         box-shadow: 0 0 0 3px var(--accent-glow);
@@ -1045,7 +1084,8 @@
         }
 
         .form-group input,
-        .form-group textarea {
+        .form-group textarea,
+        .form-group select {
           padding: 10px;
           font-size: 0.9rem;
         }
@@ -1165,7 +1205,8 @@
         }
 
         .form-group input,
-        .form-group textarea {
+        .form-group textarea,
+        .form-group select {
           padding: 9px;
           font-size: 0.85rem;
         }
@@ -1426,26 +1467,91 @@
       const form = document.getElementById("contactForm");
       const successTick = document.getElementById("successTick");
       const toast = document.getElementById("contactToast");
-      function showToast(message) {
+      
+      function showToast(message, isError = false) {
         if (!toast) return;
         toast.textContent = message;
+        toast.style.background = isError ? 'rgba(239, 68, 68, 0.95)' : 'rgba(16, 185, 129, 0.95)';
         toast.classList.add("show");
         setTimeout(() => {
           toast.classList.remove("show");
-        }, 2500);
+        }, 3000);
       }
-      form.addEventListener("submit", (e) => {
+
+      form.addEventListener("submit", async (e) => {
         e.preventDefault();
+        
+        // Honeypot check
+        const honeypot = form.querySelector('input[name="_gotcha"]');
+        if (honeypot && honeypot.value) {
+            form.reset();
+            return;
+        }
+
         const emailInput = document.getElementById("email");
+        const phoneInput = document.getElementById("phone");
+        const subjectInput = document.getElementById("subject");
+        
+        // Email validation
         const emailVal = (emailInput && emailInput.value || "").trim();
         if (!emailVal.includes("@")) {
-          showToast("Please enter a valid email address containing @");
+          showToast("Please enter a valid email address", true);
           return;
         }
-        successTick.classList.add("show");
-        setTimeout(() => {
-          window.location.href = "thank-you.html";
-        }, 1200);
+
+        // Phone validation
+        if (phoneInput && phoneInput.value) {
+            const phoneRegex = /^\+?[\d\s\-\(\)]{10,20}$/;
+            if (!phoneRegex.test(phoneInput.value)) {
+                showToast("Please enter a valid phone number", true);
+                return;
+            }
+        }
+
+        // Subject validation
+        if (subjectInput && !subjectInput.value) {
+            showToast("Please select a subject", true);
+            return;
+        }
+
+        // Update _subject
+        const subjectHidden = form.querySelector('input[name="_subject"]');
+        if (subjectHidden && subjectInput) {
+            subjectHidden.value = `New submission: ${subjectInput.value}`;
+        }
+
+        const submitBtn = form.querySelector('.submit-button');
+        const originalText = submitBtn.textContent;
+        submitBtn.textContent = 'Sending...';
+        submitBtn.disabled = true;
+
+        try {
+            const response = await fetch(form.action, {
+                method: form.method,
+                body: new FormData(form),
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+
+            if (response.ok) {
+                successTick.classList.add("show");
+                form.reset();
+                setTimeout(() => {
+                    successTick.classList.remove("show");
+                    showToast("Message sent successfully!");
+                }, 2000);
+            } else {
+                const data = await response.json();
+                const errorMsg = data.errors ? data.errors.map(e => e.message).join(', ') : 'Oops! There was a problem.';
+                showToast(errorMsg, true);
+            }
+        } catch (error) {
+            showToast("Network error. Please try again.", true);
+        } finally {
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+        }
       });
     </script>
 

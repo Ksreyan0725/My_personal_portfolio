@@ -4572,6 +4572,10 @@ body.sidebar-open {
     margin-left: auto !important;
   }
   #navbar .search-container {
+    max-width: 100%;
+  }
+}
+
 .sidebar-close:active {
   transform: none;
   background: rgba(99, 102, 241, 0.1);
@@ -4923,8 +4927,7 @@ body.sidebar-open {
   filter: brightness(1);
   transform: scale(1.1);
 }
-  }
-}
+
 
 
 /* Page slide animation for back navigation */
