@@ -350,8 +350,8 @@ document.addEventListener('DOMContentLoaded', () => {
             this.lastTime = now;
 
             // Only handle horizontal swipes (prevent conflict with vertical scroll)
-            // More forgiving: allow swipes that are at least 60% horizontal
-            const isHorizontalEnough = Math.abs(deltaX) > Math.abs(deltaY) * 0.6;
+            // Stricter check: require swipe to be clearly horizontal (more X than Y)
+            const isHorizontalEnough = Math.abs(deltaX) > Math.abs(deltaY) * 1.2;
 
             if (isHorizontalEnough) {
                 console.log('[TOUCH] Horizontal swipe detected, preventing default');
@@ -387,7 +387,7 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log('[TOUCH] Touch end:', { deltaX: deltaX.toFixed(0), deltaY: deltaY.toFixed(0) });
 
             // Only process if it's horizontal enough (same check as touchmove)
-            const isHorizontalEnough = Math.abs(deltaX) > Math.abs(deltaY) * 0.6;
+            const isHorizontalEnough = Math.abs(deltaX) > Math.abs(deltaY) * 1.2;
 
             if (isHorizontalEnough) {
                 const progress = !this.isOpen
@@ -2157,11 +2157,18 @@ document.addEventListener('DOMContentLoaded', () => {
         nightLightToggle.classList.toggle('active');
         const isEnabled = nightLightToggle.classList.contains('active');
 
+        let overlay = document.getElementById('night-light-overlay');
+        if (!overlay) {
+            overlay = document.createElement('div');
+            overlay.id = 'night-light-overlay';
+            document.body.appendChild(overlay);
+        }
+
         if (isEnabled) {
-            document.body.style.filter = 'sepia(0.3) hue-rotate(-20deg)';
+            overlay.classList.add('active');
             localStorage.setItem('nightLight', 'true');
         } else {
-            document.body.style.filter = 'none';
+            overlay.classList.remove('active');
             localStorage.setItem('nightLight', 'false');
         }
     }
@@ -2185,9 +2192,16 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Initialize Night Light from storage
+    // Initialize Night Light from storage
     if (localStorage.getItem('nightLight') === 'true') {
         if (nightLightToggle) nightLightToggle.classList.add('active');
-        document.body.style.filter = 'sepia(0.3) hue-rotate(-20deg)';
+        let overlay = document.getElementById('night-light-overlay');
+        if (!overlay) {
+            overlay = document.createElement('div');
+            overlay.id = 'night-light-overlay';
+            document.body.appendChild(overlay);
+        }
+        overlay.classList.add('active');
     }
 
     // Notifications Logic
