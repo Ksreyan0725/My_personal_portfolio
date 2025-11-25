@@ -1372,7 +1372,7 @@ nav.scrolled {
   left: 0;
   right: 0;
   background: linear-gradient(135deg, var(--accent), #8b5cf6);
-  color: #ffffff;
+  color: #5f0202; /* Soft medium red */
   z-index: 998;
   overflow: hidden;
   height: 35px;
@@ -1382,13 +1382,13 @@ nav.scrolled {
 }
 
 [data-theme="dark"] .notice-banner {
-  background: linear-gradient(135deg, #6366f1, #7c3aed);
-  color: #ffffff;
+  background: linear-gradient(135deg, #6366f1, #9d87c2);
+  color: #5f0202;
 }
 
 [data-theme="light"] .notice-banner {
-  background: linear-gradient(135deg, #4f46e5, #8b5cf6);
-  color: #ffffff;
+  background: linear-gradient(135deg, #6366f1, #9d87c2);
+  color: #5f0202;
 }
 
 .ticker-wrapper {
@@ -1405,8 +1405,8 @@ nav.scrolled {
 
 .ticker-text {
   display: inline-block;
-  font-size: 0.95rem;
-  font-weight: 500;
+  font-size: 1rem;
+  font-weight: 1000px;
   letter-spacing: 0.5px;
 }
 
@@ -4166,10 +4166,17 @@ nav {
 
 .sidebar-menu.active {
   transform: translateX(0);
-  box-shadow: 2px 0 20px rgba(0, 0, 0, 0.18);
-  background: rgba(var(--bg-secondary-rgb), 0.75);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1); /* Softer shadow */
+  background: linear-gradient(
+    to bottom,
+    rgba(var(--bg-secondary-rgb), 0.75) 0px,
+    rgba(var(--bg-secondary-rgb), 0.75) 44px,
+    rgba(var(--bg-secondary-rgb), 0) 44px, /* Fully transparent */
+    rgba(var(--bg-secondary-rgb), 0) 72px, /* Fully transparent */
+    rgba(var(--bg-secondary-rgb), 0.75) 72px
+  );
+  backdrop-filter: blur(4px); /* Reduced blur for readability */
+  -webkit-backdrop-filter: blur(4px);
 }
 
 /* Overlay */
@@ -4201,7 +4208,7 @@ nav {
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid var(--border);
-  background: var(--bg-secondary) !important;
+  background: transparent !important;
 }
 
 /* CLOSE BUTTON */
@@ -4779,17 +4786,18 @@ body.sidebar-open {
 
 /* Full Search Bar (900px - 1024px) */
 @media (min-width: 900px) and (max-width: 1024px) {
-  #navbar .desktop-search { max-width: 280px; }
-  #navbar .search-container { max-width: 280px; }
-  #navbar .search-container:focus-within { max-width: 320px; }
-  
+  #navbar .desktop-search { 
+    width: auto;
+    max-width: 280px;
+    flex: 0 1 280px; /* Shrinkable */
+    min-width: 140px; /* Prevent hiding placeholder */
+  }
   #navbar .search-input { 
     display: block !important;
     height: 36px !important; 
     padding: 6px 38px 6px 12px; 
     border-width: 2px !important; 
   }
-  
   #navbar .desktop-search .search-icon-button {
     display: none !important;
   }
