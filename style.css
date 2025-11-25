@@ -112,7 +112,7 @@
 /* Base Theme Variables */
 :root {
   /* Dark theme (default) */
-  --bg-primary: #0a0a0a;
+  --bg-primary: #000000;
   --bg-secondary: #1a1a1a;
   --bg-secondary-rgb: 26, 26, 26;
   --text-primary: #ffffff;
@@ -5024,5 +5024,326 @@ body {
 
   [data-theme="light"] [data-tooltip]::after {
     border-color: rgba(255, 255, 255, 0.95) transparent transparent transparent;
+  }
+}
+
+/* ===========================================
+   SETTINGS PANEL & BUTTON (Mobile Only)
+   =========================================== */
+
+/* Ensure sidebar is a flex column for bottom positioning */
+.sidebar-menu {
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+/* Settings Button in Sidebar */
+.settings-btn-container {
+  padding: 0;
+  margin-top: auto; /* Push to bottom */
+  width: 100%;
+}
+
+.settings-btn {
+  width: 100%;
+  padding: 20px 25px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Text left, icon right */
+  gap: 12px;
+  font-weight: 600;
+  color: var(--text-primary);
+  background-color: rgba(0, 0, 0, 0.2); /* Darker shade */
+  border: none;
+  border-top: 1px solid var(--border);
+  border-radius: 0;
+  text-align: left;
+}
+
+.settings-btn:active {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.settings-icon {
+  font-size: 1.2rem;
+}
+
+/* Settings Panel Overlay */
+.settings-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 2000; /* Above everything */
+  backdrop-filter: blur(4px);
+}
+
+.settings-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Settings Panel */
+.settings-panel {
+  position: fixed;
+  bottom: -100%;
+  left: 0;
+  right: 0;
+  background-color: var(--card-bg);
+  border-top: 1px solid var(--border);
+  border-radius: 20px 20px 0 0;
+  z-index: 2001;
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.2);
+  transition: bottom 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  max-height: 85vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.settings-panel.active {
+  bottom: 0;
+}
+
+.settings-header {
+  position: sticky;
+  top: 0;
+  background-color: var(--card-bg);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 25px;
+  border-bottom: 1px solid var(--border);
+  z-index: 10;
+}
+
+.settings-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.settings-close-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-primary);
+  transition: all 0.2s;
+}
+
+.settings-close-btn:hover {
+  background-color: var(--border);
+}
+
+.settings-content {
+  padding: 20px 25px 40px 25px;
+  overflow-y: auto;
+}
+
+.setting-group {
+  margin-bottom: 25px;
+  padding-bottom: 25px;
+  border-bottom: 1px solid var(--border);
+}
+
+.setting-group:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.setting-label {
+  font-weight: 700;
+  margin-bottom: 6px;
+  font-size: 1rem;
+  color: var(--text-primary);
+}
+
+.setting-description {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-bottom: 15px;
+  line-height: 1.4;
+}
+
+/* Theme Buttons */
+.theme-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.theme-btn {
+  padding: 14px;
+  border: 2px solid var(--border);
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: all 0.2s;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.theme-btn-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.theme-btn-desc {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  font-weight: 400;
+}
+
+.theme-btn.active {
+  background-color: var(--accent);
+  color: white;
+  border-color: var(--accent);
+}
+
+.theme-btn.active .theme-btn-desc {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.theme-btn:active:not(.active) {
+  transform: scale(0.98);
+}
+
+/* Toggle Switch */
+.toggle-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px;
+  background-color: var(--bg-secondary);
+  border-radius: 12px;
+  border: 2px solid var(--border);
+}
+
+.toggle-info {
+  flex: 1;
+  padding-right: 15px;
+}
+
+.toggle-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+  color: var(--text-primary);
+}
+
+.toggle-desc {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  line-height: 1.3;
+}
+
+.toggle-switch {
+  position: relative;
+  width: 52px;
+  height: 28px;
+  background-color: var(--border);
+  border-radius: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  flex-shrink: 0;
+}
+
+.toggle-switch.active {
+  background-color: var(--accent);
+}
+
+.toggle-slider {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 22px;
+  height: 22px;
+  background-color: white;
+  border-radius: 50%;
+  transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.toggle-switch.active .toggle-slider {
+  transform: translateX(24px);
+}
+
+/* Option List (Accessibility, etc.) */
+.option-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.option-item {
+  padding: 14px;
+  background-color: var(--bg-secondary);
+  border-radius: 12px;
+  border: 2px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.option-item:active {
+  transform: scale(0.98);
+}
+
+.option-info {
+  flex: 1;
+}
+
+.option-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+  color: var(--text-primary);
+}
+
+.option-desc {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  line-height: 1.3;
+}
+
+.option-arrow {
+  font-size: 1.2rem;
+  color: var(--text-secondary);
+}
+
+.version-info {
+  text-align: center;
+  padding: 20px 0 0;
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  opacity: 0.7;
+}
+
+/* Hide settings on desktop */
+@media (min-width: 769px) {
+  .settings-btn-container,
+  .settings-overlay,
+  .settings-panel {
+    display: none !important;
   }
 }

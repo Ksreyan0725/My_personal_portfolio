@@ -2152,4 +2152,111 @@ document.addEventListener('DOMContentLoaded', () => {
             velocityThreshold: 0.3
         });
     }
+
+    /* ==================== Settings Panel Logic ==================== */
+    const settingsPanel = document.getElementById('settingsPanel');
+    const settingsOverlay = document.getElementById('settingsOverlay');
+    const openSettingsBtn = document.getElementById('openSettingsBtn');
+    const settingsCloseBtn = document.getElementById('settingsCloseBtn');
+    const nightLightToggle = document.getElementById('nightLightToggle');
+    const themeBtns = document.querySelectorAll('.theme-btn');
+
+    function openSettings() {
+        if (!settingsPanel) return;
+        settingsPanel.classList.add('active');
+        settingsOverlay.classList.add('active');
+
+        // Close sidebar if open
+        // We can trigger the sidebar overlay click to close it cleanly using the existing logic
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+        if (sidebarOverlay && getComputedStyle(sidebarOverlay).opacity !== '0') {
+            sidebarOverlay.click();
+        }
+
+        // Update active theme button
+        const currentTheme = localStorage.getItem('theme') || 'system';
+        updateActiveThemeBtn(currentTheme);
+    }
+
+    function closeSettings() {
+        if (!settingsPanel) return;
+        settingsPanel.classList.remove('active');
+        settingsOverlay.classList.remove('active');
+    }
+
+    function updateActiveThemeBtn(theme) {
+        themeBtns.forEach(btn => {
+            if (btn.dataset.theme === theme) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
+    }
+
+    function toggleNightLight() {
+        if (!nightLightToggle) return;
+        nightLightToggle.classList.toggle('active');
+        const isEnabled = nightLightToggle.classList.contains('active');
+
+        if (isEnabled) {
+            document.body.style.filter = 'sepia(0.3) hue-rotate(-20deg)';
+            localStorage.setItem('nightLight', 'true');
+        } else {
+            document.body.style.filter = 'none';
+            localStorage.setItem('nightLight', 'false');
+        }
+    }
+
+    // Event Listeners
+    if (openSettingsBtn) openSettingsBtn.addEventListener('click', openSettings);
+    if (settingsCloseBtn) settingsCloseBtn.addEventListener('click', closeSettings);
+    if (settingsOverlay) settingsOverlay.addEventListener('click', closeSettings);
+
+    if (nightLightToggle) nightLightToggle.addEventListener('click', toggleNightLight);
+
+    themeBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const theme = btn.dataset.theme;
+            // applyTheme is defined in the parent scope (DOMContentLoaded)
+            if (typeof applyTheme === 'function') {
+                applyTheme(theme, true);
+            }
+            updateActiveThemeBtn(theme);
+        });
+    });
+
+    // Initialize Night Light from storage
+    if (localStorage.getItem('nightLight') === 'true') {
+        if (nightLightToggle) nightLightToggle.classList.add('active');
+        document.body.style.filter = 'sepia(0.3) hue-rotate(-20deg)';
+    }
+
+    // Notifications Logic
+    const pushToggle = document.getElementById('pushToggle');
+    const soundToggle = document.getElementById('soundToggle');
+
+    function togglePush() {
+        if (!pushToggle) return;
+        pushToggle.classList.toggle('active');
+        localStorage.setItem('pushEnabled', pushToggle.classList.contains('active'));
+    }
+
+    function toggleSound() {
+        if (!soundToggle) return;
+        soundToggle.classList.toggle('active');
+        localStorage.setItem('soundEnabled', soundToggle.classList.contains('active'));
+    }
+
+    if (pushToggle) pushToggle.addEventListener('click', togglePush);
+    if (soundToggle) soundToggle.addEventListener('click', toggleSound);
+
+    // Initialize from storage
+    if (localStorage.getItem('pushEnabled') === 'true' && pushToggle) {
+        pushToggle.classList.add('active');
+    }
+    if (localStorage.getItem('soundEnabled') === 'true' && soundToggle) {
+        soundToggle.classList.add('active');
+    }
+
 });

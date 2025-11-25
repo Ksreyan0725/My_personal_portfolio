@@ -130,6 +130,14 @@ Last Updated: November 25, 2025
             <li role="none"><a href="#skills" role="menuitem"><img src="Assets/Images.icons/skills.png" alt="Skills" class="sidebar-icon"> Skills</a></li>
             <li role="none"><a href="contact.html" role="menuitem"><img src="Assets/Images.icons/Phone.png" alt="Contact" class="sidebar-icon"> Contact</a></li>
         </ul>
+        
+        <!-- Settings Button (Mobile Only) -->
+        <div class="settings-btn-container">
+            <button class="settings-btn" id="openSettingsBtn">
+                <span>Settings</span>
+                <span class="settings-icon">⚙️</span>
+            </button>
+        </div>
     </div>
 
     <!-- Sidebar Overlay -->
@@ -525,6 +533,102 @@ Last Updated: November 25, 2025
             All Rights Reserved | Made with ❤️
         </p>
     </footer>
+
+    <!-- Settings Panel Overlay -->
+    <div class="settings-overlay" id="settingsOverlay"></div>
+
+    <!-- Settings Panel -->
+    <div class="settings-panel" id="settingsPanel">
+        <div class="settings-header">
+            <div class="settings-title">Settings</div>
+            <button class="settings-close-btn" id="settingsCloseBtn">×</button>
+        </div>
+        
+        <div class="settings-content">
+            <!-- Appearance Section -->
+            <div class="setting-group">
+                <div class="setting-label">🎨 Appearance</div>
+                <div class="setting-description">Customize how the app looks on your device</div>
+                
+                <div class="theme-buttons">
+                    <button class="theme-btn" data-theme="system">
+                        <div class="theme-btn-title">System Default ⚙️</div>
+                        <div class="theme-btn-desc">Automatically match your device's theme settings</div>
+                    </button>
+                    <button class="theme-btn" data-theme="light">
+                        <div class="theme-btn-title">Light Mode ☀️</div>
+                        <div class="theme-btn-desc">Bright and clear interface for daytime use</div>
+                    </button>
+                    <button class="theme-btn" data-theme="dark">
+                        <div class="theme-btn-title">Dark Mode 🌙</div>
+                        <div class="theme-btn-desc">Easy on the eyes with dark backgrounds</div>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Display Section -->
+            <div class="setting-group">
+                <div class="setting-label">💡 Display</div>
+                <div class="setting-description">Adjust screen settings for comfortable viewing</div>
+                
+                <div class="toggle-container">
+                    <div class="toggle-info">
+                        <div class="toggle-title">Night Light</div>
+                        <div class="toggle-desc">Reduce blue light by adding a warm color filter</div>
+                    </div>
+                    <div class="toggle-switch" id="nightLightToggle">
+                        <div class="toggle-slider"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Accessibility Section -->
+            <div class="setting-group">
+                <div class="setting-label">♿ Accessibility</div>
+                <div class="setting-description">Make the app easier to use for everyone</div>
+                
+                <div class="option-list">
+                    <div class="option-item" id="highContrastOption" onclick="alert('High contrast settings coming soon!')">
+                        <div class="option-info">
+                            <div class="option-title">High Contrast</div>
+                            <div class="option-desc">Increase contrast for improved visibility</div>
+                        </div>
+                        <div class="option-arrow">›</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Notifications Section -->
+            <div class="setting-group">
+                <div class="setting-label">🔔 Notifications</div>
+                <div class="setting-description">Control how you receive updates and alerts</div>
+                
+                <div class="toggle-container" style="margin-bottom: 12px;">
+                    <div class="toggle-info">
+                        <div class="toggle-title">Push Notifications</div>
+                        <div class="toggle-desc">Receive real-time updates and alerts</div>
+                    </div>
+                    <div class="toggle-switch" id="pushToggle">
+                        <div class="toggle-slider"></div>
+                    </div>
+                </div>
+
+                <div class="toggle-container">
+                    <div class="toggle-info">
+                        <div class="toggle-title">Sound & Vibration</div>
+                        <div class="toggle-desc">Play sounds and vibrate for notifications</div>
+                    </div>
+                    <div class="toggle-switch" id="soundToggle">
+                        <div class="toggle-slider"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="version-info">
+                Made with ❤️ | © 2025 All Rights Reserved
+            </div>
+        </div>
+    </div>
 
     </div>
 </body>
