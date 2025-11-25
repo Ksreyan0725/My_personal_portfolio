@@ -748,11 +748,12 @@ nav.scrolled {
   margin: 0 auto;
   display: flex;
   justify-content: flex-start; /* left pack logo + links */
-  align-items: center;
-  padding: 0 20px; /* Reverted to standard 20px */
-  gap: 10px; /* Kept reduced spacing */
-  flex-wrap: nowrap;
+  align-items: center; /* vertically center all items */
+  padding: 0 20px;
+  gap: 10px;
+  flex-wrap: nowrap; /* prevent wrapping that causes upward movement */
   height: 100%;
+  overflow: hidden; /* prevent horizontal scroll */
 }
 
 .nav-logo {
@@ -779,9 +780,12 @@ nav.scrolled {
 
 /* Desktop search goes to the right */
 .desktop-search {
+  display: flex; /* Always visible, JS controls icon-mode */
   order: 3;
-  margin-left: auto; /* push to right - this keeps it far right */
-  flex-shrink: 0;
+  margin-left: auto; /* push to right */
+  flex-shrink: 1; /* allow shrinking when space is tight */
+  min-width: 36px; /* minimum width when in icon mode */
+  align-items: center;
 }
 
 /* Theme toggle comes after search */
@@ -933,12 +937,59 @@ nav.scrolled {
 }
 
 .menu-icon {
-  order: 1; /* Leftmost on mobile */
+  order: 5; /* After theme toggle */
+  background: var(--card-bg);
+  border: 2px solid var(--border);
+  border-radius: 50%; /* Full circle */
+  cursor: pointer;
+  padding: 0; /* Remove padding to center with flex */
+  display: none; /* Hidden on desktop, shown on mobile */
+  align-items: center;
+  justify-content: center;
+  width: 40px; /* Increased size */
+  height: 40px; /* Increased size */
+  min-width: 40px;
+  min-height: 40px;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  flex-shrink: 0;
 }
 
-/* Ensure hamburger glyph is centered and sized nicely */
+@media (hover: hover) {
+  .menu-icon:hover {
+    border-color: var(--accent);
+    background: var(--accent-glow);
+    transform: scale(1.05);
+  }
+  .menu-icon:hover .menu-icon-img {
+    transform: scale(1.1);
+  }
+}
+
+.menu-icon:active {
+  transform: scale(0.95);
+}
+
+.menu-icon:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--accent-glow);
+}
+
+/* Menu icon image */
+.menu-icon-img {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+  filter: var(--icon-filter);
+  transition: transform 0.3s ease;
+}
+
+
+
+/* Legacy text icon support (if image fails to load) */
 .menu-icon-text {
-  font-size: 16px;
+  font-size: 20px;
   line-height: 1;
   display: inline-block;
 }
@@ -3043,6 +3094,20 @@ nav {
     flex-shrink: 0 !important;
   }
 
+  .mobile-search-icon {
+    width: 28px !important;
+    height: 28px !important;
+    min-width: 28px !important;
+    min-height: 28px !important;
+    padding: 4px !important;
+    margin-right: 6px !important; /* Reduced margin */
+  }
+  
+  .mobile-search-icon-img {
+    width: 14px !important;
+    height: 14px !important;
+  }
+
   .theme-text {
     display: none !important;
   }
@@ -3874,20 +3939,37 @@ nav {
     white-space: nowrap;
   }
 
-  /* Hide mobile icons by default above 601px, but we'll override for search below 889px */
-  .menu-icon {
+  /* Hide mobile icons on desktop */
+  .menu-icon,
+  .mobile-search-icon {
     display: none !important;
   }
 
-  /* Search Visibility Logic around 889px */
+  /* Search Visibility Logic - Switch at 889px */
   @media (max-width: 889px) {
     .desktop-search {
       display: none !important;
     }
+    
     .mobile-search-icon {
       display: flex !important;
       order: 3;
       margin-left: auto;
+      margin-right: 8px;
+    }
+
+    .menu-icon {
+      display: flex !important;
+      order: 1; /* Left side */
+      margin-right: 10px;
+    }
+    
+    .nav-logo {
+      order: 2;
+    }
+    
+    .theme-toggle {
+      order: 4;
     }
   }
 
@@ -3898,11 +3980,15 @@ nav {
     .mobile-search-icon {
       display: none !important;
     }
+    .menu-icon {
+      display: none !important;
+    }
   }
 
-  /* Ensure vertical alignment */
+  /* Ensure vertical alignment - prevent items from moving up */
   .nav-container {
     align-items: center !important;
+    flex-wrap: nowrap !important;
   }
   
   .nav-links {
@@ -4353,6 +4439,16 @@ nav {
   color: var(--accent);
   background: rgba(var(--accent-rgb), 0.1);
   border-left-color: var(--accent);
+}
+
+/* Sidebar icon styling - make icons proportional to text */
+.sidebar-links a img.sidebar-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 12px;
+  vertical-align: middle;
+  object-fit: contain;
+  display: inline-block;
 }
 
 .sidebar-links a::before {

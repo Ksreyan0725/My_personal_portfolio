@@ -1,9 +1,9 @@
 // Modern Portfolio JavaScript
-
+console.log("******************************JAVASCRIPT_ACTIVATED************************************************************************");
 // Detect touch devices
 const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
-// Early theme initialization (moved from inline <head> script)
+// Early theme initialization (moved from inline <head> script) 
 // Sets `data-theme` immediately and toggles `body.darkmode` as soon as possible
 (function () {
     try {
@@ -257,13 +257,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Click handlers
             if (this.menuIcon) {
+                console.log('[SIDEBAR] Menu icon found, adding click handler');
                 this.menuIcon.addEventListener('click', () => {
+                    console.log('[SIDEBAR] Menu icon clicked! Current state:', this.isOpen ? 'OPEN' : 'CLOSED');
                     if (this.isOpen) {
+                        console.log('[SIDEBAR] Closing sidebar...');
                         this.close();
                     } else {
+                        console.log('[SIDEBAR] Opening sidebar...');
                         this.open();
                     }
                 });
+            } else {
+                console.warn('[SIDEBAR] Menu icon NOT found! Element with id="menuIcon" is missing.');
             }
             if (this.closeBtn) {
                 this.closeBtn.addEventListener('click', () => this.close());
@@ -579,6 +585,15 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentResultIndex = -1; // for keyboard navigation
     const RECENT_SEARCHES_KEY = 'recentSearchesV1';
 
+
+
+    // Event listeners for search modal
+    if (mobileSearchIcon) {
+        mobileSearchIcon.addEventListener('click', () => {
+            openSearchModal();
+        });
+    }
+
     // Searchable content from the page
     let searchableContent = [
         { title: 'Home', description: 'Main page with profile and introduction', link: '#home' },
@@ -823,12 +838,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Event listeners for search modal
-    // Mobile search icon opens modal on mobile/tablet (below 1025px)
-    if (mobileSearchIcon) {
-        mobileSearchIcon.addEventListener('click', () => {
-            openSearchModal();
-        });
-    }
+    // Mobile search icon removed - desktop-search handles icon mode now
 
     // Desktop search button handled below per breakpoint
 
@@ -1231,18 +1241,38 @@ document.addEventListener('DOMContentLoaded', () => {
             const navContainer = container.closest('.nav-container');
             if (!navContainer) return;
 
-            // Check if navbar items are overflowing
+            // Get all navbar children to calculate available space
+            const navChildren = Array.from(navContainer.children);
             const navWidth = navContainer.offsetWidth;
-            const navScrollWidth = navContainer.scrollWidth;
-            const isOverflowing = navScrollWidth > navWidth;
 
-            // Also check viewport width for responsive breakpoints
-            const viewportWidth = window.innerWidth;
+            // Calculate total width of all elements except search
+            let otherElementsWidth = 0;
+            navChildren.forEach(child => {
+                if (!child.classList.contains('desktop-search')) {
+                    otherElementsWidth += child.offsetWidth;
+                }
+            });
 
-            // Switch to icon mode if:
-            // 1. Navbar is overflowing, OR
-            // 2. Viewport is below 850px (medium-small screens)
-            const shouldUseIconMode = isOverflowing || viewportWidth < 850;
+            // Add padding and gaps
+            const computedStyle = window.getComputedStyle(navContainer);
+            const paddingLeft = parseFloat(computedStyle.paddingLeft) || 0;
+            const paddingRight = parseFloat(computedStyle.paddingRight) || 0;
+            const gap = parseFloat(computedStyle.gap) || 10;
+            const totalGaps = gap * (navChildren.length - 1);
+
+            const usedSpace = otherElementsWidth + paddingLeft + paddingRight + totalGaps;
+            const availableSpace = navWidth - usedSpace;
+
+            // Minimum space needed for full search box (with some buffer)
+            const minSearchBoxWidth = 180;
+            // Icon mode only needs ~40px
+            const iconWidth = 40;
+
+            // Check if navbar is actually overflowing
+            const isOverflowing = navContainer.scrollWidth > navContainer.offsetWidth;
+
+            // Decide mode based on available space
+            const shouldUseIconMode = isOverflowing || availableSpace < minSearchBoxWidth;
 
             if (shouldUseIconMode) {
                 container.classList.add('icon-mode');
