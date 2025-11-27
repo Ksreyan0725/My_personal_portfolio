@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Default to 'system' if no preference is saved
     let currentTheme = localStorage.getItem('theme') || 'system';
     // Allowed mailto recipients (enforced site-wide)
-    const ALLOWED_MAILTO = new Set(['sreyanpattanayak@zohomail.com']);
+    const ALLOWED_MAILTO = new Set(['sreyanpattanayak@zohomail.com', 'sreyanpattanayak246@gmail.com']);
 
     // Add touch device class if needed
     if (isTouchDevice) {
@@ -106,6 +106,21 @@ document.addEventListener('DOMContentLoaded', () => {
             const currentIndex = themes.indexOf(currentTheme);
             const nextTheme = themes[(currentIndex + 1) % themes.length];
             applyTheme(nextTheme, true);
+        });
+    }
+
+    // Logo click animation (Desktop only)
+    const navLogo = document.querySelector('.nav-logo');
+    if (navLogo) {
+        navLogo.addEventListener('click', () => {
+            if (window.matchMedia('(min-width: 1024px)').matches) {
+                navLogo.classList.remove('clicked'); // Reset to allow re-trigger
+                void navLogo.offsetWidth; // Trigger reflow
+                navLogo.classList.add('clicked');
+                setTimeout(() => {
+                    navLogo.classList.remove('clicked');
+                }, 300); // Match animation duration
+            }
         });
     }
 
@@ -210,6 +225,9 @@ document.addEventListener('DOMContentLoaded', () => {
             this.overlay = document.getElementById('sidebarOverlay');
             this.menuIcon = document.getElementById('menuIcon');
             this.closeBtn = document.getElementById('sidebarClose');
+            this.pageWrapper = document.getElementById('pageWrapper');
+            this.navbar = document.getElementById('navbar');
+            this.noticeBanner = document.querySelector('.notice-banner');
 
             // State
             this.isOpen = false;
@@ -257,19 +275,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Click handlers
             if (this.menuIcon) {
-                console.log('[SIDEBAR] Menu icon found, adding click handler');
                 this.menuIcon.addEventListener('click', () => {
-                    console.log('[SIDEBAR] Menu icon clicked! Current state:', this.isOpen ? 'OPEN' : 'CLOSED');
                     if (this.isOpen) {
-                        console.log('[SIDEBAR] Closing sidebar...');
                         this.close();
                     } else {
-                        console.log('[SIDEBAR] Opening sidebar...');
                         this.open();
                     }
                 });
-            } else {
-                console.warn('[SIDEBAR] Menu icon NOT found! Element with id="menuIcon" is missing.');
             }
             if (this.closeBtn) {
                 this.closeBtn.addEventListener('click', () => this.close());
@@ -288,17 +300,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         handleTouchStart(e) {
-            console.log('[TOUCH] touchstart event fired', {
-                windowWidth: window.innerWidth,
-                isMobile: this.isMobile(),
-                touchX: e.touches[0]?.clientX
-            });
-
             // Only handle on mobile
-            if (!this.isMobile()) {
-                console.log('[TOUCH] Ignoring - not mobile');
-                return;
-            }
+            if (!this.isMobile()) return;
 
             const touch = e.touches[0];
             this.startX = touch.clientX;
@@ -308,19 +311,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Allow swipe from anywhere on screen (like social media apps)
             // Start tracking immediately
-            console.log('[TOUCH] Touch start:', {
-                startX: this.startX,
-                isOpen: this.isOpen,
-                willStartSwiping: true
-            });
-
             this.isSwiping = true;
-            console.log('[TOUCH] Started swipe tracking');
 
             // Disable transition for 1:1 tracking
             if (this.sidebar) {
                 this.sidebar.style.transition = 'none';
             }
+            if (this.pageWrapper) this.pageWrapper.style.transition = 'none';
+            if (this.navbar) this.navbar.style.transition = 'none';
+            if (this.noticeBanner) this.noticeBanner.style.transition = 'none';
         }
 
         handleTouchMove(e) {
@@ -332,13 +331,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const deltaX = this.currentX - this.startX;
             const deltaY = this.currentY - this.startY;
-
-            console.log('[TOUCH] Move detected:', {
-                deltaX: deltaX.toFixed(0),
-                deltaY: deltaY.toFixed(0),
-                absX: Math.abs(deltaX).toFixed(0),
-                absY: Math.abs(deltaY).toFixed(0)
-            });
 
             // Calculate velocity
             const now = Date.now();
@@ -354,7 +346,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const isHorizontalEnough = Math.abs(deltaX) > Math.abs(deltaY) * 1.2;
 
             if (isHorizontalEnough) {
-                console.log('[TOUCH] Horizontal swipe detected, preventing default');
                 e.preventDefault();
 
                 if (!this.isOpen && deltaX > 0) {
@@ -366,25 +357,22 @@ document.addEventListener('DOMContentLoaded', () => {
                     const progress = Math.max(1 + (deltaX / this.sidebarWidth), 0);
                     this.updateSwipeProgress(progress, deltaX);
                 }
-            } else {
-                console.log('[TOUCH] Too vertical, allowing default scroll');
             }
         }
 
         handleTouchEnd(e) {
-            console.log('[TOUCH] touchend event fired', { isSwiping: this.isSwiping });
-
             if (!this.isSwiping || !this.isMobile()) return;
 
             // Re-enable transition for the snap animation
             if (this.sidebar) {
                 this.sidebar.style.transition = '';
             }
+            if (this.pageWrapper) this.pageWrapper.style.transition = '';
+            if (this.navbar) this.navbar.style.transition = '';
+            if (this.noticeBanner) this.noticeBanner.style.transition = '';
 
             const deltaX = this.currentX - this.startX;
             const deltaY = this.currentY - this.startY;
-
-            console.log('[TOUCH] Touch end:', { deltaX: deltaX.toFixed(0), deltaY: deltaY.toFixed(0) });
 
             // Only process if it's horizontal enough (same check as touchmove)
             const isHorizontalEnough = Math.abs(deltaX) > Math.abs(deltaY) * 1.2;
@@ -399,27 +387,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     progress > 0.25 || // More than 25% swiped (easier to trigger)
                     Math.abs(this.velocity) > this.config.velocityThreshold; // Fast swipe
 
-                console.log('[TOUCH] Decision:', {
-                    progress: progress.toFixed(2),
-                    shouldToggle,
-                    threshold: this.config.swipeThreshold,
-                    deltaX: deltaX.toFixed(0),
-                    isOpen: this.isOpen
-                });
-
                 if (!this.isOpen && deltaX > this.config.swipeThreshold && shouldToggle) {
-                    console.log('[TOUCH] Opening sidebar');
                     this.open();
                 } else if (this.isOpen && deltaX < -this.config.swipeThreshold && shouldToggle) {
-                    console.log('[TOUCH] Closing sidebar');
                     this.close();
                 } else {
-                    console.log('[TOUCH] Resetting swipe - not enough distance or velocity');
                     // Reset to current state
                     this.resetSwipe();
                 }
-            } else {
-                console.log('[TOUCH] Touch end - too vertical, ignoring');
             }
 
             this.isSwiping = false;
@@ -429,6 +404,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 this.sidebar.style.transform = '';
                 this.sidebar.style.boxShadow = '';
             }
+            if (this.pageWrapper) this.pageWrapper.style.transform = '';
+            if (this.navbar) this.navbar.style.transform = '';
+            if (this.noticeBanner) this.noticeBanner.style.transform = '';
         }
 
         updateSwipeProgress(progress, deltaX) {
@@ -460,6 +438,24 @@ document.addEventListener('DOMContentLoaded', () => {
                 this.sidebar.style.boxShadow = `0 0 ${glowBlur}px ${glowColor}`;
             }
 
+            // Update pageWrapper, navbar, and banner position - slide right in sync with sidebar
+            const updateTransform = (element) => {
+                if (!element) return;
+                if (!this.isOpen) {
+                    // Opening: slide right from 0 to sidebarWidth
+                    const translateX = progress * this.sidebarWidth;
+                    element.style.transform = `translateX(${translateX}px)`;
+                } else {
+                    // Closing: slide left back to 0
+                    const translateX = this.sidebarWidth + deltaX;
+                    element.style.transform = `translateX(${translateX}px)`;
+                }
+            };
+
+            updateTransform(this.pageWrapper);
+            updateTransform(this.navbar);
+            updateTransform(this.noticeBanner);
+
             // Update overlay opacity
             if (this.overlay) {
                 this.overlay.style.opacity = progress * 0.5;
@@ -474,7 +470,6 @@ document.addEventListener('DOMContentLoaded', () => {
         open() {
             if (this.isOpen) return;
 
-            console.log('Side menu opened');
             this.isOpen = true;
             this.sidebar?.classList.add('active');
             this.overlay?.classList.add('active');
@@ -487,7 +482,6 @@ document.addEventListener('DOMContentLoaded', () => {
         close() {
             if (!this.isOpen) return;
 
-            console.log('Side menu closed');
             this.isOpen = false;
             this.sidebar?.classList.remove('active');
             this.overlay?.classList.remove('active');
@@ -528,6 +522,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 }, 300);
             }
 
+            const resetTransform = (element) => {
+                if (!element) return;
+                element.style.transition = 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+                element.style.transform = this.isOpen ? `translateX(${this.sidebarWidth}px)` : 'translateX(0)';
+                setTimeout(() => {
+                    element.style.transition = '';
+                }, 300);
+            };
+
+            resetTransform(this.pageWrapper);
+            resetTransform(this.navbar);
+            resetTransform(this.noticeBanner);
+
             if (this.overlay) {
                 this.overlay.style.opacity = this.isOpen ? '1' : '0';
             }
@@ -536,6 +543,8 @@ document.addEventListener('DOMContentLoaded', () => {
         updateSidebarWidth() {
             if (this.sidebar) {
                 this.sidebarWidth = this.sidebar.offsetWidth || 260;
+                // Set CSS variable for use in CSS transitions
+                document.documentElement.style.setProperty('--sidebar-width', `${this.sidebarWidth}px`);
             }
         }
 
@@ -590,6 +599,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // Event listeners for search modal
     if (mobileSearchIcon) {
         mobileSearchIcon.addEventListener('click', () => {
+            openSearchModal();
+        });
+    }
+
+    // Tablet Search Button Handler
+    const tabletSearchBtn = document.getElementById('tabletSearchBtn');
+    if (tabletSearchBtn) {
+        tabletSearchBtn.addEventListener('click', () => {
             openSearchModal();
         });
     }
@@ -818,7 +835,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (link.includes('.pdf') && !link.toLowerCase().includes('download')) {
                     // Open PDF in the site viewer (pass file path via query param)
                     // Open in a new tab to avoid losing the current page
-                    window.open('pdf-viewer.html?file=' + encodeURIComponent(link), '_blank', 'noopener');
+                    window.open('Others-pages/pdf-viewer.html?file=' + encodeURIComponent('../' + link), '_blank', 'noopener');
                 } else if (link.includes('download')) {
                     // For explicit download links, create a temporary anchor element
                     const tempLink = document.createElement('a');
@@ -880,7 +897,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (link.includes('.pdf') && !link.toLowerCase().includes('download')) {
                         // Open PDF in the site viewer (pass file path via query param)
                         // Open in a new tab to avoid losing the current page
-                        window.open('pdf-viewer.html?file=' + encodeURIComponent(link), '_blank', 'noopener');
+                        window.open('Others-pages/pdf-viewer.html?file=' + encodeURIComponent('../' + link), '_blank', 'noopener');
                     } else if (link.includes('download')) {
                         // For explicit download links, create a temporary anchor element
                         const tempLink = document.createElement('a');
@@ -914,7 +931,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Make closeSearchModal available globally for onclick handlers
+    // Make closeSearchModal available globally for onclick handlers
     window.closeSearchModal = closeSearchModal;
+
+
 
     // Function to show inline validation messages for desktop search
     function showDesktopSearchMessage(input, message, isError = false) {
@@ -963,7 +983,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentDesktopResultIndex = -1;
 
     // Desktop gating (Laptop and larger only)
-    const desktopMql = window.matchMedia('(min-width: 1025px)');
+    const desktopMql = window.matchMedia('(min-width: 1024px)');
     let isDesktop = desktopMql.matches;
 
     function hideAllDesktopDropdowns() {
@@ -973,16 +993,48 @@ document.addEventListener('DOMContentLoaded', () => {
 
     desktopMql.addEventListener('change', (e) => {
         isDesktop = e.matches;
-        if (!isDesktop) hideAllDesktopDropdowns();
+        if (!isDesktop) {
+            hideAllDesktopDropdowns();
+        } else {
+            // If switching to desktop, close the mobile/tablet modal
+            closeSearchModal();
+        }
     });
 
     // Helper function to show search results in dropdown
     function showDesktopSearchResults(query, container) {
         if (!container) return;
 
-        if (query.length < 2) {
+        if (query.length < 1) {
             container.classList.remove('active');
             container.innerHTML = '';
+            return;
+        }
+
+        // Show helpful message for short queries (less than 3 chars)
+        if (query.length < 3) {
+            const headerHtml = `
+                <div class="desktop-search-results-header">
+                    <div class="desktop-search-results-title">Keep typing...</div>
+                </div>
+            `;
+            const bodyHtml = `
+                <div class="desktop-search-no-results">Type at least 3 characters for better results</div>
+            `;
+            container.innerHTML = headerHtml + `<div class="desktop-search-results-body">${bodyHtml}</div>`;
+            container.classList.add('active');
+
+            // Wire suggestion chips
+            const parentSearch = container.closest('.desktop-search');
+            const parentInput = parentSearch ? parentSearch.querySelector('.search-input') : null;
+            container.querySelectorAll('.suggestion-chip').forEach(chip => {
+                chip.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const q = chip.getAttribute('data-q') || '';
+                    if (parentInput) parentInput.value = q;
+                    showDesktopSearchResults(q, container);
+                });
+            });
             return;
         }
 
@@ -1011,12 +1063,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         let bodyHtml = '';
         if (totalCount === 0) {
-            const suggestions = ['Projects', 'Skills', 'Education', 'Certifications', 'Contact'];
             bodyHtml = `
                 <div class="desktop-search-no-results">No results found</div>
-                <div class="desktop-search-suggestions" aria-label="Try searching">
-                    ${suggestions.map(s => `<button type=\"button\" class=\"suggestion-chip\" data-q=\"${s}\">${s}</button>`).join('')}
-                </div>
             `;
         } else {
             currentDesktopResultIndex = -1;
@@ -1065,7 +1113,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Helper function to navigate to different link types
     function navigateToLink(link) {
         if (link.includes('.pdf') && !link.toLowerCase().includes('download')) {
-            window.open('pdf-viewer.html?file=' + encodeURIComponent(link), '_blank', 'noopener');
+            window.open('Others-pages/pdf-viewer.html?file=' + encodeURIComponent('../' + link), '_blank', 'noopener');
         } else if (link.includes('download')) {
             const tempLink = document.createElement('a');
             tempLink.href = link;
@@ -1103,7 +1151,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 resultsContainer?.classList.remove('active');
                 return;
             }
-            if (query.length >= 2) {
+            if (query.length >= 1) {
+                // Show dropdown with 1+ characters (shows "Keep typing..." for 1 char)
                 debouncedDesktopSearch(query, resultsContainer);
             } else {
                 resultsContainer?.classList.remove('active');
@@ -1195,24 +1244,14 @@ document.addEventListener('DOMContentLoaded', () => {
             if (isDesktop && resultsContainer) {
                 showDesktopSearchResults(query, resultsContainer);
             } else {
-                const lowerQuery = query.toLowerCase().trim();
-                const tokens = lowerQuery.split(/\s+/).filter(Boolean);
-                const ranked = searchableContent
-                    .map(item => {
-                        const hay = (item.title + ' ' + item.description).toLowerCase();
-                        const score = tokens.reduce((s, t) => s + (hay.includes(t) ? 1 : 0), 0) +
-                            (item.title.toLowerCase().startsWith(lowerQuery) ? 2 : 0) +
-                            (item.title.toLowerCase().includes(lowerQuery) ? 1 : 0);
-                        return { item, score };
-                    })
-                    .filter(x => x.score > 0)
-                    .sort((a, b) => b.score - a.score);
-                if (ranked.length > 0) {
-                    addRecentSearch(query);
-                    navigateToLink(ranked[0].item.link);
-                } else {
-                    showDesktopSearchMessage(input, 'No results found', true);
-                }
+                // On Tablet (non-desktop), open the modal with results
+                openSearchModal();
+                setTimeout(() => {
+                    if (searchModalInput) {
+                        searchModalInput.value = query;
+                        doSearch(query);
+                    }
+                }, 150);
             }
         });
     });
@@ -1233,13 +1272,14 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Progressive Responsive Search - Auto-detect overflow and switch modes
+    // Progressive Responsive Search - Smart mode detection based on placeholder visibility
     function updateSearchMode() {
         const desktopSearchContainers = document.querySelectorAll('.desktop-search');
 
         desktopSearchContainers.forEach(container => {
             const navContainer = container.closest('.nav-container');
-            if (!navContainer) return;
+            const searchInput = container.querySelector('.search-input');
+            if (!navContainer || !searchInput) return;
 
             // Get all navbar children to calculate available space
             const navChildren = Array.from(navContainer.children);
@@ -1263,21 +1303,32 @@ document.addEventListener('DOMContentLoaded', () => {
             const usedSpace = otherElementsWidth + paddingLeft + paddingRight + totalGaps;
             const availableSpace = navWidth - usedSpace;
 
-            // Minimum space needed for full search box (with some buffer)
-            const minSearchBoxWidth = 180;
+            // Minimum space needed to show placeholder text comfortably
+            // "Search..." = ~60-70px + padding + icon space = ~120px minimum
+            const minWidthForPlaceholder = 120;
+
             // Icon mode only needs ~40px
             const iconWidth = 40;
 
             // Check if navbar is actually overflowing
             const isOverflowing = navContainer.scrollWidth > navContainer.offsetWidth;
 
-            // Decide mode based on available space
-            const shouldUseIconMode = isOverflowing || availableSpace < minSearchBoxWidth;
+            // Smart decision:
+            // 1. If available space < 120px OR overflowing → icon mode
+            // 2. If available space >= 120px → show search box (will shrink via CSS)
+            const shouldUseIconMode = isOverflowing || availableSpace < minWidthForPlaceholder;
 
             if (shouldUseIconMode) {
                 container.classList.add('icon-mode');
             } else {
                 container.classList.remove('icon-mode');
+
+                // Set dynamic max-width based on available space
+                // Allow search to take remaining space but cap at 280px
+                const maxSearchWidth = Math.min(availableSpace - 20, 280);
+                if (maxSearchWidth >= minWidthForPlaceholder) {
+                    container.style.maxWidth = `${maxSearchWidth}px`;
+                }
             }
         });
     }
@@ -1656,7 +1707,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Redirect broken placeholder links to 404
         if (rawHref === '#') {
             e.preventDefault();
-            window.location.href = '404.html';
+            window.location.href = 'Others-pages/404.html';
             return;
         }
 
@@ -1673,11 +1724,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Must be a syntactically valid email AND on the allowlist
                 if (!isValidEmail(decoded) || !ALLOWED_MAILTO.has(decoded)) {
                     e.preventDefault();
-                    window.location.href = '404.html';
+                    window.location.href = 'Others-pages/404.html';
                 }
             } catch (_) {
                 e.preventDefault();
-                window.location.href = '404.html';
+                window.location.href = 'Others-pages/404.html';
             }
             return;
         }
@@ -1700,12 +1751,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Some servers may not support HEAD; allow through on 405/501
                 if (res.status === 405 || res.status === 501) return;
                 e.preventDefault();
-                window.location.href = '404.html';
+                window.location.href = 'Others-pages/404.html';
             }
         } catch (err) {
             // Network or fetch error -> route to 404
             e.preventDefault();
-            window.location.href = '404.html';
+            window.location.href = 'Others-pages/404.html';
         }
     }, true); // capture phase to intercept early
 });
@@ -2230,5 +2281,101 @@ document.addEventListener('DOMContentLoaded', () => {
     if (localStorage.getItem('soundEnabled') === 'true' && soundToggle) {
         soundToggle.classList.add('active');
     }
+
+    /* ==================== Night Light Extension (Mobile & Notification) ==================== */
+    const mobileNightLightBtn = document.getElementById('mobileNightLightBtn');
+    const notificationBanner = document.getElementById('nightLightNotification');
+    const notificationMessage = document.getElementById('notificationMessage');
+    let notificationTimeout;
+
+    function showNotification(message) {
+        if (!notificationBanner || !notificationMessage) return;
+        notificationMessage.textContent = message;
+        notificationBanner.classList.add('active');
+
+        clearTimeout(notificationTimeout);
+        notificationTimeout = setTimeout(() => {
+            notificationBanner.classList.remove('active');
+        }, 3500);
+    }
+
+    // Swipe to dismiss notification
+    let touchStartX = 0;
+    if (notificationBanner) {
+        notificationBanner.addEventListener('touchstart', e => {
+            touchStartX = e.touches[0].clientX;
+        }, { passive: true });
+
+        notificationBanner.addEventListener('touchend', e => {
+            const touchEndX = e.changedTouches[0].clientX;
+            if (Math.abs(touchEndX - touchStartX) > 50) { // Swipe threshold
+                notificationBanner.classList.remove('active');
+            }
+        }, { passive: true });
+    }
+
+    function updateMobileNightLightBtn() {
+        if (!mobileNightLightBtn) return;
+        const isEnabled = localStorage.getItem('nightLight') === 'true';
+        if (isEnabled) {
+            mobileNightLightBtn.classList.add('active');
+        } else {
+            mobileNightLightBtn.classList.remove('active');
+        }
+    }
+
+    function checkThemeForNightLight() {
+        if (!mobileNightLightBtn) return;
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const icon = document.getElementById('nightLightIcon');
+
+        // Night Light is now allowed in both themes
+        mobileNightLightBtn.classList.remove('disabled');
+
+        if (currentTheme === 'light') {
+            if (icon) icon.src = 'Assets/Images.icons/nightlight-dark.png';
+        } else {
+            if (icon) icon.src = 'Assets/Images.icons/nightlight-light.png';
+        }
+    }
+
+    // Sync with existing toggle and handle notification
+    if (nightLightToggle) {
+        // Add a secondary listener to the existing toggle
+        nightLightToggle.addEventListener('click', () => {
+            // Small delay to ensure state is updated
+            setTimeout(() => {
+                updateMobileNightLightBtn();
+                const isEnabled = nightLightToggle.classList.contains('active');
+                showNotification(isEnabled ? 'Night Light turned ON' : 'Night Light turned OFF');
+            }, 50);
+        });
+    }
+
+    // Handle Mobile Button Click
+    if (mobileNightLightBtn) {
+        mobileNightLightBtn.addEventListener('click', () => {
+            if (mobileNightLightBtn.classList.contains('disabled')) return;
+            // Trigger the existing toggle logic
+            if (nightLightToggle) {
+                nightLightToggle.click();
+            }
+        });
+    }
+
+    // Monitor Theme Changes
+    const themeObserver = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+            if (mutation.type === 'attributes' && mutation.attributeName === 'data-theme') {
+                checkThemeForNightLight();
+            }
+        });
+    });
+
+    themeObserver.observe(document.documentElement, { attributes: true });
+
+    // Initial checks
+    checkThemeForNightLight();
+    updateMobileNightLightBtn();
 
 });

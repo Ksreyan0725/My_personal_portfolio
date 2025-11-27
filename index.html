@@ -5,7 +5,7 @@ Purpose: Main landing page for Kumar Sreyan Pattanayak's personal portfolio
 Description: Showcases education, projects, certifications, and skills with
              responsive design, dark/light theme support, and smooth animations
 Author: Kumar Sreyan Pattanayak
-Last Updated: November 25, 2025
+Last Updated: November 27, 2025
 =============================================================================
 --> 
 
@@ -30,8 +30,8 @@ Last Updated: November 25, 2025
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
     
     <!-- ==================== Stylesheets & Scripts ==================== -->
-    <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="responsive.css" />
+    <link rel="stylesheet" href="Assets/Css/style.css" />
+    <link rel="stylesheet" href="Assets/Css/responsive.css" />
     <script src="script.js" defer></script>
 
     <!-- ==================== Maintenance Mode (Currently Disabled) ==================== -->
@@ -41,7 +41,14 @@ Last Updated: November 25, 2025
 </head>
 
 <body>
-    <div class="page-frame">
+    <!-- ==================== Night Light Notification Banner ==================== -->
+    <div id="nightLightNotification" class="notification-banner">
+        <div class="notification-content">
+            <span id="notificationMessage">Night Light turned ON</span>
+            <img src="Assets/Images.icons/nightlight-notification.png" alt="nightlight-icon" class="notification-icon">
+        </div>
+    </div>
+
     <!-- ==================== Navigation Bar ==================== -->
     <!-- Fixed top navigation with responsive menu and theme toggle -->
     <nav id="navbar" role="navigation" aria-label="Main navigation">
@@ -74,6 +81,11 @@ Last Updated: November 25, 2025
                 <button class="search-clear" aria-label="Clear search" hidden>✕</button>
                 <button class="search-button" aria-label="Search">
                     <img src="Assets/Images.icons/search.png" alt="Search" class="search-icon-img" />
+                </button>
+                <!-- Tablet Search Button (Hidden on Desktop/Mobile) -->
+                <button class="tablet-search-button" id="tabletSearchBtn" aria-label="Open search">
+                    <span>Search</span>
+                    <img src="Assets/Images.icons/search.png" alt="" class="search-icon-img">
                 </button>
                 <!-- Desktop Search Dropdown Results -->
                 <div class="desktop-search-results" id="desktopSearchResults"></div>
@@ -134,6 +146,12 @@ Last Updated: November 25, 2025
         
         <!-- Settings Button (Mobile Only) -->
         <div class="settings-btn-container">
+            <!-- Night Light Button (Mobile Only) -->
+            <button class="mobile-night-light-btn" id="mobileNightLightBtn">
+                <span>Night Light</span>
+                <img src="Assets/Images.icons/nightlight-dark.png" alt="Night Light" class="night-light-icon" id="nightLightIcon">
+            </button>
+
             <button class="settings-btn" id="openSettingsBtn">
                 <span>Settings</span>
                 <span class="settings-icon">⚙️</span>
@@ -153,6 +171,10 @@ Last Updated: November 25, 2025
             </div>
         </div>
     </div>
+
+    <div class="page-frame">
+    <!-- ==================== Page Wrapper for Sidebar Slide Effect ==================== -->
+    <div id="pageWrapper">
      
     <!-- ==================== Hero Section ==================== -->
     <!-- Main header with profile photo, name, and social links -->
@@ -206,23 +228,6 @@ Last Updated: November 25, 2025
 
                 <!-- Social Media Links -->
                 <div class="contact-links social-animated" role="navigation" aria-label="Social media links">
-                    <!-- Gmail -->
-                    <a href="mailto:sreyanpattanayak246@gmail.com" 
-                       class="ripple-effect social-link-animated" 
-                       aria-label="Send email via Gmail"
-                       style="animation-delay: 0.1s"
-                       data-tooltip="Email Me">
-                        <img src="Assets/Images.icons/gmail.png" alt="Gmail" class="social-icon">
-                    </a>
-
-                    <!-- Zoho Mail -->
-                    <a href="mailto:sreyanpattanayak@zohomail.com" 
-                       class="ripple-effect social-link-animated" 
-                       aria-label="Send email via Zoho Mail"
-                       style="animation-delay: 0.2s"
-                       data-tooltip="Contact">
-                        <img id="zohoLogo" src="Assets/Images.icons/zohomail.png" alt="Zoho Mail" class="social-icon">
-                    </a>
 
                     <!-- GitHub -->
                     <a href="https://github.com/Ksreyan0725" 
@@ -232,6 +237,7 @@ Last Updated: November 25, 2025
                        aria-label="Visit GitHub profile"
                        style="animation-delay: 0.3s"
                        data-tooltip="View GitHub Profile">
+                        <span>GitHub</span>
                         <img src="Assets/Images.icons/github.png" alt="GitHub" class="social-icon">
                     </a>
 
@@ -243,58 +249,9 @@ Last Updated: November 25, 2025
                        aria-label="Visit LinkedIn profile"
                        style="animation-delay: 0.4s"
                        data-tooltip="Connect on LinkedIn">
+                        <span>LinkedIn</span>
                         <img src="Assets/Images.icons/linkedin.png" alt="LinkedIn" class="social-icon">
                     </a>
-
-                    <!-- Microsoft Teams -->
-                    <a href="https://teams.microsoft.com/l/chat/0/0?users=opener" 
-                       class="ripple-effect social-link-animated" 
-                       target="_blank" 
-                       rel="noopener noreferrer"
-                       aria-label="Connect on Microsoft Teams"
-                       style="animation-delay: 0.5s"
-                       data-tooltip="Microsoft Teams">
-                        <img src="Assets/Images.icons/teams.png" alt="Microsoft Teams" class="social-icon">
-                    </a>
-                    <!-- X (formerly Twitter) -->
-                    <!-- <a href="https://x.com/SreyanPattanay5?t=oXoHwnGs9M9e37zh_Vsd5A&s=09" 
-                       class="ripple-effect social-link-animated" 
-                       target="_blank" 
-                       rel="noopener noreferrer"
-                       aria-label="Visit X profile"
-                       style="animation-delay: 0.6s">
-                        <img src="Assets/Images.icons/X.png" alt="X" class="social-icon">
-                    </a> -->
-
-                    <!-- Facebook
-                    <a href="https://www.facebook.com/share/1Cj1miKofw/" 
-                       class="ripple-effect social-link-animated" 
-                       target="_blank" 
-                       rel="noopener noreferrer"
-                       aria-label="Visit Facebook profile"
-                       style="animation-delay: 0.7s">
-                        <img src="Assets/Images.icons/facebook.png" alt="Facebook" class="social-icon">
-                    </a>
-
-                    Telegram
-                    <a href="https://t.me/SreyanPattanayak" 
-                       class="ripple-effect social-link-animated" 
-                       target="_blank" 
-                       rel="noopener noreferrer"
-                       aria-label="Message on Telegram"
-                       style="animation-delay: 0.8s">
-                        <img src="Assets/Images.icons/telegram.png" alt="Telegram" class="social-icon">
-                    </a>
-
-                    Instagram -->
-                    <!-- <a href="https://www.instagram.com/p_a_p_u_n01_?igsh=aWwyZnhicTRuaTI3" 
-                       class="ripple-effect social-link-animated" 
-                       target="_blank" 
-                       rel="noopener noreferrer"
-                       aria-label="Visit Instagram profile"
-                       style="animation-delay: 0.9s">
-                        <img src="Assets/Images.icons/instagram.png" alt="Instagram" class="social-icon">
-                    </a> -->
                 </div>
             </div>
 
@@ -331,7 +288,7 @@ Last Updated: November 25, 2025
             </article>
 
             <!-- Class 12 -->
-            <article class="card">
+            <article class="card card-right">
                 <h3>Class 12 - Grade B</h3>
                 <p class="date">2022 – 2023</p>
                 <p><strong>Board of Secondary Education, Odisha (BSE Odisha)</strong></p>
@@ -425,7 +382,7 @@ Last Updated: November 25, 2025
                     Authored comprehensive research paper analyzing corruption, education, and judicial inefficiency 
                     in India using AI tools and government data (June 2023 - Present).
                 </p>
-                     <a href="pdf-viewer.html?file=Assets/Docs/SYSTEMIC%20FAILURES%20IN%20INDIA%20%28copy%29.pdf" 
+                     <a href="Others-pages/pdf-viewer.html?file=../Assets/Docs/SYSTEMIC%20FAILURES%20IN%20INDIA%20%28copy%29.pdf" 
                          class="course-button ripple-effect"
                          target="_blank"
                          rel="noopener noreferrer"
@@ -489,8 +446,8 @@ Last Updated: November 25, 2025
             </div>
 
             <h3 class="section-subtitle" style="margin-top: 24px;">Soft Skills</h3>
-            <!-- <div class="skills-container">
-                <div class="skill-item">
+            <div class="skills-container">
+                <!-- <div class="skill-item">
                     <div class="skill-header">
                         <span class="skill-name">Management</span>
                         <span class="skill-rating">0/10</span>
@@ -514,7 +471,7 @@ Last Updated: November 25, 2025
             <!-- Resume Download Section -->
             <div class="resume-section">
                 <h3 class="resume-heading">View My Resume</h3>
-                <a href="pdf-viewer.html?file=Assets/Docs/Kumar_Sreyan_Pattanayak_Resume.pdf" 
+                <a href="Others-pages/pdf-viewer.html?file=../Assets/Docs/Kumar_Sreyan_Pattanayak_Resume.pdf" 
                    class="resume-btn" 
                    target="_blank"
                    rel="noopener noreferrer"
@@ -534,6 +491,7 @@ Last Updated: November 25, 2025
             All Rights Reserved | Made with ❤️
         </p>
     </footer>
+    </div> <!-- End of #pageWrapper -->
 
     <!-- Settings Panel Overlay -->
     <div class="settings-overlay" id="settingsOverlay"></div>
@@ -633,8 +591,6 @@ Last Updated: November 25, 2025
             </p>
             </div>
         </div>
-    </div>
-
     </div>
 </body>
 </html>

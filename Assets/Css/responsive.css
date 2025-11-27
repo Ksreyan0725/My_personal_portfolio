@@ -1,0 +1,1987 @@
+
+/* ==================================================================================
+   RESPONSIVE MEDIA QUERIES
+   ================================================================================== */
+
+/* ==================================================================================
+   MOBILE-FIRST RESPONSIVE DESIGN
+   Base styles above are optimized for mobile (0-600px)
+   ==================================================================================
+   
+   Breakpoints:
+   - Base: 0-600px (Mobile) - defined above
+   - Tablet: 601px-1024px
+   - Laptop: 1024px-1440px  
+   - Large Screen: 1441px+
+   ================================================================================== */
+
+/* ===========================================
+   EXTRA SMALL MOBILE: Below 388px
+   Ultra-compact for very small screens
+   =========================================== */
+
+
+@media (max-width: 412px) {
+  :root {
+    --nav-height: 46px;
+    --banner-height: 26px;
+  }
+
+  /* Navigation - ultra compact */
+  nav {
+    height: var(--nav-height);
+    padding: 3px 0;
+  }
+
+  .nav-container {
+    gap: 6px;
+    padding: 0 10px;
+  }
+
+  .menu-icon {
+    width: 28px !important;
+    height: 28px !important;
+    min-width: 28px !important;
+    min-height: 28px !important;
+    padding: 0 !important;
+    border-radius: 10px !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Ultra-compact search bar */
+  .desktop-search {
+    max-width: 120px !important;
+    min-width: 80px !important;
+    margin-right: 4px !important;
+  }
+
+  .search-input {
+    font-size: 0.75rem !important;
+    height: 28px !important;
+    padding: 4px 30px 4px 6px !important;
+  }
+
+  .search-icon-img {
+    width: 12px !important;
+    height: 12px !important;
+  }
+  .nav-right, .theme-selector {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    /* IMPORTANT */
+    flex-shrink: 0;
+}
+
+  .mobile-search-icon {
+    width: 28px !important;
+    height: 28px !important;
+    min-width: 28px !important;
+    min-height: 28px !important;
+    padding: 4px !important;
+    border-radius: 10px !important;
+    margin-right: 6px !important;
+    box-sizing: border-box !important;
+  }
+
+  .theme-toggle {
+    background: var(--card-bg);
+    border: 2px solid var(--border);
+    width: 28px !important;
+    height: 28px !important;
+    min-width: 28px !important;
+    min-height: 28px !important;
+    max-width: 28px !important;
+    padding: 4px !important;
+    border-radius: 10px !important;
+    backdrop-filter: blur(10px);
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    aspect-ratio: 1 / 1;
+    box-sizing: border-box !important;
+    flex-shrink: 0 !important;
+  }
+
+
+  .mobile-search-icon-img {
+    width: 14px !important;
+    height: 14px !important;
+  }
+
+  .theme-text {
+    display: none !important;
+  }
+
+  .theme-icon {
+    font-size: 14px;
+    line-height: 1;
+  }
+
+  /* Banner - extra compact */
+  .notice-banner {
+    top: var(--nav-height);
+    height: var(--banner-height);
+  }
+
+  }
+
+  /* Profile photo - smaller */
+  .profile-photo {
+    width: 120px;
+    height: 120px;
+    font-size: 2.5rem;
+    border: 3px solid var(--accent);
+  }
+
+  /* Name and tagline - extra small */
+  .name {
+    font-size: 1.6rem;
+    letter-spacing: -0.03em;
+    margin-bottom: 5px;
+  }
+
+  .tagline {
+    font-size: 0.85rem;
+    margin-top: 6px;
+    margin-bottom: 14px;
+  }
+
+  /* Social links - extra compact */
+  .contact-links {
+    gap: 8px;
+    margin-top: 10px;
+    margin-bottom: 12px; /* spacing to separate from following content */
+  }
+
+  .contact-links a {
+    width: 42px;
+    height: 42px;
+    padding: 9px;
+  }
+
+  .social-icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  /* Container - minimal padding */
+  .container {
+    padding: 35px 12px;
+  }
+
+  header {
+    padding: 0;
+  }
+
+  /* Section titles - smaller */
+  .section-title {
+    font-size: 1.6rem;
+    margin-bottom: 20px;
+  }
+
+  .section-subtitle {
+    font-size: 1.1rem;
+    margin-bottom: 14px;
+  }
+
+  /* Cards - ultra compact */
+  .card {
+    padding: 18px;
+    margin: 14px 0;
+    border-radius: 18px;
+  }
+
+  .card h3 {
+    font-size: 1.1rem;
+    margin-bottom: 6px;
+  }
+
+  .card p {
+    font-size: 0.85rem;
+    line-height: 1.5;
+  }
+
+  .card .date {
+    font-size: 0.75rem;
+    margin-bottom: 8px;
+  }
+
+  /* Buttons - extra small */
+  .cta-button,
+  .course-button,
+  .resume-btn {
+    padding: 9px 18px;
+    font-size: 0.85rem;
+    min-width: 140px;
+    gap: 5px;
+  }
+
+  .pdf-icon {
+    width: 14px;
+    height: 14px;
+  }
+
+  /* Skills section */
+  .skill-item {
+    margin-bottom: 14px;
+  }
+
+  .skill-name {
+    font-size: 0.85rem;
+  }
+
+  .skill-rating {
+    font-size: 0.8rem;
+  }
+
+  .skill-bar-container {
+    height: 18px;
+  }
+
+  /* Footer */
+  footer {
+    padding: 18px 12px;
+    font-size: 0.8rem;
+  }
+
+  footer p {
+    line-height: 1.4;
+  }
+
+  .search-modal-icon-img {
+    width: 14px;
+    height: 14px;
+  }
+
+  .search-results {
+    max-height: 220px;
+  }
+
+  .search-result-item {
+    padding: 10px;
+  }
+
+  .search-result-title {
+    font-size: 0.9rem;
+  }
+
+  .search-result-description {
+    font-size: 0.8rem;
+  }
+
+  /* Sidebar menu - extra narrow */
+  .sidebar-menu {
+    width: 240px;
+    left: -240px;
+  }
+
+  .sidebar-header {
+    padding: 14px;
+  }
+
+  .sidebar-logo {
+    font-size: 1.1rem;
+  }
+
+  .sidebar-close {
+    font-size: 1.5rem;
+  }
+
+  .sidebar-links a {
+    padding: 11px 14px;
+    font-size: 0.9rem;
+  }
+
+  /* About text */
+  .about-text {
+    font-size: 0.9rem;
+    line-height: 1.55;
+    padding: 0 2px;
+  }
+
+  /* Education section */
+  #education .card {
+    padding: 16px;
+  }
+
+  /* Resume section */
+  .resume-section {
+    padding: 20px 12px;
+    margin-top: 20px;
+  }
+
+  .resume-heading {
+    font-size: 1rem;
+    margin-bottom: 10px;
+  }
+
+  /* Skills category cards */
+  .skills-category {
+    padding: 18px;
+  }
+
+  .skills-category h3 {
+    font-size: 1.2rem;
+    margin-bottom: 14px;
+  }
+
+  /* Section padding adjustments */
+  .section {
+    margin: 16px 0;
+    padding-bottom: 30px;
+  }
+
+  /* Certifications section */
+  #certifications .card {
+    padding: 16px;
+  }
+
+  #certifications .card h3 {
+    font-size: 1.05rem;
+  }
+
+  #certifications .card h4 {
+    font-size: 0.95rem;
+  }
+
+  /* Projects section */
+  #projects .card {
+    padding: 16px;
+  }
+
+  #projects .card h3 {
+    font-size: 1.05rem;
+  }
+
+
+/* ===========================================
+   SMALL MOBILE: Below 525px
+   Extra optimization for small screens
+   =========================================== */
+@media (max-width: 525px) {
+  :root {
+    --nav-height: 44px;
+    --banner-height: 28px;
+  }
+
+  /* Navigation - more compact */
+  nav {
+    height: var(--nav-height);
+    padding: 4px 0;
+  }
+
+  .nav-container {
+    gap: 8px;
+    padding: 0 12px;
+  }
+
+  .menu-icon {
+    width: 30px !important;
+    height: 30px !important;
+    min-width: 30px !important;
+    min-height: 30px !important;
+    padding: 0 !important;
+    border-radius: 10px !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Adjust search bar for smaller screens */
+  .desktop-search {
+    max-width: 140px !important;
+    min-width: 90px !important;
+    margin-right: 6px !important;
+  }
+
+  .search-input {
+    font-size: 0.8rem !important;
+    height: 30px !important;
+    padding: 5px 32px 5px 8px !important;
+  }
+
+  .search-icon-img {
+    width: 13px !important;
+    height: 13px !important;
+  }
+
+  .mobile-search-icon {
+    width: 30px !important;
+    height: 30px !important;
+    min-width: 30px !important;
+    min-height: 30px !important;
+    padding: 5px !important;
+    border-radius: 10px !important;
+    box-sizing: border-box !important;
+  }
+
+  .mobile-search-icon-img {
+    width: 18px;
+    height: 18px;
+  }
+
+  .theme-toggle {
+    background: var(--card-bg);
+    border: 2px solid var(--border);
+    width: 30px !important;
+    height: 30px !important;
+    min-width: 30px !important;
+    max-width: 30px !important;
+    min-height: 30px !important;
+    padding: 5px !important;
+    border-radius: 10px !important;
+    backdrop-filter: blur(10px);
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    aspect-ratio: 1 / 1;
+    box-sizing: border-box !important;
+    flex-shrink: 0;
+  }
+
+  .theme-text {
+    display: none !important;
+  }
+
+  .theme-icon {
+    font-size: 15px;
+    line-height: 1;
+  }
+
+  /* Banner - smaller */
+  .notice-banner {
+    top: var(--nav-height);
+    height: var(--banner-height);
+  }
+
+
+  /* Name and tagline - smaller */
+  .name {
+    font-size: 1.8rem;
+    letter-spacing: -0.02em;
+    margin-bottom: 6px;
+  }
+
+  .tagline {
+    font-size: 0.9rem;
+    margin-top: 8px;
+    margin-bottom: 16px;
+  }
+
+  /* Social links - compact */
+  .contact-links {
+    gap: 10px;
+    margin-top: 12px;
+    margin-bottom: 10px; /* ensure spacing below icons to avoid overlap */
+  }
+
+  .contact-links a {
+    width: 44px;
+    height: 44px;
+    padding: 10px;
+  }
+
+  .social-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  /* Container - tighter */
+  .container {
+    padding: 40px 14px;
+  }
+
+  header {
+    padding: 0;
+  }
+
+  /* Section titles - smaller */
+  .section-title {
+    font-size: 1.8rem;
+    margin-bottom: 24px;
+  }
+
+  .section-subtitle {
+    font-size: 1.2rem;
+    margin-bottom: 16px;
+  }
+
+  /* Cards - more compact */
+  .card {
+    padding: 20px;
+    margin: 16px 0;
+    border-radius: 20px;
+  }
+
+  .card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+  }
+
+  .card p {
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  .card .date {
+    font-size: 0.8rem;
+    margin-bottom: 10px;
+  }
+
+  /* Buttons - smaller */
+  .cta-button,
+  .course-button,
+  .resume-btn {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    min-width: 150px;
+    gap: 6px;
+  }
+
+  .pdf-icon {
+    width: 16px;
+    height: 16px;
+  }
+
+  /* Skills section */
+  .skills-container {
+    gap: var(--space-md);
+  }
+
+  .skill-item {
+    margin-bottom: 16px;
+  }
+
+  .skill-name {
+    font-size: 0.9rem;
+  }
+
+  .skill-rating {
+    font-size: 0.85rem;
+  }
+
+  .skill-bar-container {
+    height: 20px;
+  }
+
+  /* Footer */
+  footer {
+    padding: 20px 14px;
+    font-size: 0.85rem;
+  }
+
+  /* Search modal - adjust for small screens */
+  .search-modal {
+    width: 95%;
+    max-width: 380px;
+    border-radius: 16px;
+  }
+
+  .search-modal.active {
+    top: 85px; /* Below navbar (44px) + banner (28px) + spacing (13px) */
+  }
+
+  .search-modal-input {
+    padding: 10px 45px 10px 12px;
+    font-size: 0.9rem;
+  }
+
+  .search-modal-button {
+    right: 5px;
+    padding: 10px;
+    width: 38px;
+    height: 38px;
+  }
+
+  .search-modal-icon-img {
+    width: 16px;
+    height: 16px;
+  }
+
+  /* Sidebar menu - narrower */
+  .sidebar-menu {
+    width: 260px;
+    left: -260px;
+  }
+
+  .sidebar-header {
+    padding: 16px;
+  }
+
+  .sidebar-logo {
+    font-size: 1.2rem;
+  }
+
+  .sidebar-links a {
+    padding: 12px 16px;
+    font-size: 0.95rem;
+  }
+
+  /* About text */
+  .about-text {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    padding: 0 4px;
+  }
+
+  /* Education section adjustments */
+  #education .card {
+    padding: 18px;
+  }
+
+  /* Resume section */
+  .resume-section {
+    padding: 24px 16px;
+    margin-top: 24px;
+  }
+
+  .resume-heading {
+    font-size: 1.1rem;
+    margin-bottom: 12px;
+  }
+
+
+  /* Cards - more compact */
+  .card {
+    padding: 20px;
+    margin: 16px 0;
+    border-radius: 20px;
+  }
+
+  .card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+  }
+
+  .card p {
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  .card .date {
+    font-size: 0.8rem;
+    margin-bottom: 10px;
+  }
+
+  /* Buttons - smaller */
+  .cta-button,
+  .course-button,
+  .resume-btn {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    min-width: 150px;
+    gap: 6px;
+  }
+
+  .pdf-icon {
+    width: 16px;
+    height: 16px;
+  }
+
+  /* Skills section */
+  .skills-container {
+    gap: var(--space-md);
+  }
+
+  .skill-item {
+    margin-bottom: 16px;
+  }
+
+  .skill-name {
+    font-size: 0.9rem;
+  }
+
+  .skill-rating {
+    font-size: 0.85rem;
+  }
+
+  .skill-bar-container {
+    height: 20px;
+  }
+
+  /* Footer */
+  footer {
+    padding: 20px 14px;
+    font-size: 0.85rem;
+  }
+
+  /* Search modal - adjust for small screens */
+  .search-modal {
+    width: 95%;
+    max-width: 380px;
+    border-radius: 16px;
+  }
+
+  .search-modal.active {
+    top: 85px; /* Below navbar (44px) + banner (28px) + spacing (13px) */
+  }
+
+  .search-modal-input {
+    padding: 10px 45px 10px 12px;
+    font-size: 0.9rem;
+  }
+
+  .search-modal-button {
+    right: 5px;
+    padding: 10px;
+    width: 38px;
+    height: 38px;
+  }
+
+  .search-modal-icon-img {
+    width: 16px;
+    height: 16px;
+  }
+
+  /* Sidebar menu - narrower */
+  .sidebar-menu {
+    width: 260px;
+    left: -260px;
+  }
+
+  .sidebar-header {
+    padding: 16px;
+  }
+
+  .sidebar-logo {
+    font-size: 1.2rem;
+  }
+
+  .sidebar-links a {
+    padding: 12px 16px;
+    font-size: 0.95rem;
+  }
+
+  /* About text */
+  .about-text {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    padding: 0 4px;
+  }
+
+  /* Education section adjustments */
+  #education .card {
+    padding: 18px;
+  }
+
+  /* Resume section */
+  .resume-section {
+    padding: 24px 16px;
+    margin-top: 24px;
+  }
+
+  .resume-heading {
+    font-size: 1.1rem;
+    margin-bottom: 12px;
+  }
+}
+
+/* ===========================================
+   TABLET: 601px - 1024px
+   2-column layouts, show more navigation
+   =========================================== */
+@media (min-width: 601px) {
+  :root {
+    --nav-height: 56px;
+    --banner-height: 36px;
+  }
+
+  /* Navigation */
+  nav {
+    height: var(--nav-height);
+  }
+
+  .nav-container {
+    gap: 16px;
+    padding: 0 24px;
+  }
+
+  .nav-logo {
+    display: block !important;
+    font-size: 1.35rem;
+    order: 1;
+  }
+
+  /* Show desktop navigation on tablet */
+  /* Desktop navigation hidden on tablet, shown at 769px+ */
+  #navbar .desktop-search { order: 3; margin-left: auto; }
+  #navbar .theme-toggle { order: 4; }
+
+  .nav-links a {
+    font-size: 0.9rem;
+    padding: 6px 10px;
+  }
+
+  /* Show desktop search */
+  .desktop-search {
+    display: flex !important;
+    order: 3;
+    margin-left: auto;
+    max-width: 160px;
+  }
+  
+  /* Progressive search box sizing - gradually shrink as screen gets smaller */
+  @media (min-width: 1200px) {
+    .desktop-search .search-container {
+      max-width: 280px;
+    }
+    .desktop-search .search-input::placeholder {
+      opacity: 0.7 !important;
+    }
+  }
+  
+  @media (min-width: 1100px) and (max-width: 1199px) {
+    .desktop-search .search-container {
+      max-width: 240px;
+    }
+    .desktop-search .search-input::placeholder {
+      opacity: 0.7 !important;
+    }
+  }
+  
+  @media (min-width: 1000px) and (max-width: 1099px) {
+    .desktop-search .search-container {
+      max-width: 200px;
+    }
+    .desktop-search .search-input::placeholder {
+      opacity: 0.7 !important;
+    }
+  }
+  
+  @media (min-width: 900px) and (max-width: 999px) {
+    .desktop-search .search-container {
+      max-width: 180px;
+    }
+    .desktop-search .search-input::placeholder {
+      opacity: 0.7 !important;
+    }
+  }
+
+  .search-input {
+    padding: 6px 32px 6px 10px;
+    font-size: 0.85rem;
+    height: 36px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  /* Hide mobile icons on tablet and above */
+  .menu-icon,
+  .mobile-search-icon {
+    display: none !important;
+  }
+
+  /* Show desktop search on tablet and above */
+  .desktop-search {
+    display: flex !important;
+  }
+
+  /* Search Visibility Logic - Standard 767px breakpoint */
+  @media (max-width: 767px) {
+    .desktop-search {
+      display: none !important;
+    }
+    
+    .mobile-search-icon {
+      display: flex !important;
+      order: 3;
+      margin-left: auto;
+      margin-right: 8px;
+    }
+
+    .menu-icon {
+      display: flex !important;
+      order: 1; /* Left side */
+      margin-right: 10px;
+    }
+    
+    .nav-logo {
+      order: 2;
+    }
+    
+    .theme-toggle {
+      order: 4;
+    }
+    
+    /* Hide theme text on mobile */
+    .theme-text { display: none !important; }
+  }
+
+  /* CONSOLIDATED: Moved to main 769px query at end of file */
+
+  /* Ensure vertical alignment - prevent items from moving up */
+  .nav-container {
+    align-items: center !important;
+    flex-wrap: nowrap !important;
+  }
+  
+  .nav-links {
+    align-items: center !important;
+  }
+
+  /* Theme toggle with text - Desktop pill shape */
+  .theme-selector {
+    order: 4;
+    margin-left: 10px;
+  }
+
+  .theme-toggle {
+    padding: 8px 16px !important;
+    height: 40px !important;
+    border-radius: 50px !important;
+    width: auto !important;
+    min-width: auto !important;
+    max-width: none !important;
+    aspect-ratio: auto !important;
+    gap: 6px;
+    font-weight: 500;
+    font-size: 13px;
+    color: var(--text-primary);
+    white-space: nowrap;
+  }
+
+  .theme-text {
+    display: inline !important;
+  }
+
+  .theme-icon {
+    font-size: 15px !important;
+  }
+
+  /* Banner */
+  .notice-banner {
+    top: var(--nav-height);
+    height: var(--banner-height);
+  }
+
+  .profile-photo {
+    width: 200px;
+    height: 200px;
+  }
+
+  .name {
+    font-size: 2.8rem;
+  }
+
+  .tagline {
+    font-size: 1.3rem;
+  }
+
+  /* Container */
+  .container {
+    max-width: 1400px;
+    padding: 80px 65px;
+  }
+
+  .section-title {
+    font-size: 2.8rem;
+    margin-bottom: 56px;
+  }
+
+  .card {
+    padding: 35px;
+  }
+
+  /* Explicit Gap Logic for Tablet */
+  :root {
+    --header-height: calc(56px + 36px);
+  }
+
+  #home .home-grid {
+    padding: calc(var(--header-height) + 40px) 32px 55px; /* 40px buffer */
+  }
+
+  #home .profile-section {
+    position: sticky;
+    top: calc(var(--header-height) + 40px);
+  }
+}
+
+/* ===========================================
+   MOBILE RESPONSIVE RULES
+   =========================================== */
+@media (max-width: 768px) {
+  .sidebar-menu {
+    width: 75vw;
+    max-width: 280px;
+  }
+}
+
+@media (max-width: 480px) {
+  .sidebar-menu {
+    width: 85vw;
+    max-width: 240px;
+  }
+}
+
+@media (max-width: 360px) {
+  .sidebar-header {
+    min-height: 44px;
+  }
+}
+
+/* Hide sidebar on desktop */
+/* CONSOLIDATED: Moved to main 769px query at end of file */
+
+/* ===========================================
+   PRINT
+   =========================================== */
+@media print {
+  nav, .theme-selector, .search-container, .notice-banner,
+  .menu-icon, .mobile-search-icon, .sidebar-menu, .search-modal {
+    display: none !important;
+  }
+}
+
+/* ===========================================
+   THEME TOGGLE RESPONSIVE (STANDALONE)
+   =========================================== */
+/* Progressive theme toggle - smooth transition */
+/* Add transitions to base elements (scoped here for safety) */
+@media (max-width: 1150px) {
+  .theme-text {
+    max-width: 0 !important;
+    opacity: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  .theme-toggle {
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    min-height: 40px !important;
+    padding: 0 !important;
+    border: 2px solid var(--border) !important;
+    border-width: 2px !important;
+    border-radius: 10px !important;
+    justify-content: center !important;
+    display: inline-flex !important;
+    align-items: center !important;
+  }
+  .theme-icon {
+    font-size: 18px !important;
+    margin: 0 !important;
+    display: block !important;
+    line-height: 1 !important;
+  }
+}
+
+/* ===========================================
+   BASE HOME SECTION STYLES
+   =========================================== */
+/* Base styles for profile section - overridden by media queries */
+#home .profile-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* ===========================================
+   SEARCH VISIBILITY OVERRIDES (FINAL)
+   =========================================== */
+/* Laptop ≥1025px: Full Search Input + Icon */
+/* Laptop ≥1024.1px: Full Search Input + Icon */
+@media (min-width: 1024.1px) {
+  #navbar .desktop-search { 
+    display: flex !important;
+    order: 3;
+    margin-left: auto !important;
+    max-width: 240px !important;
+    flex: 0 1 auto !important;
+  }
+  #navbar .search-container {
+    max-width: 200px !important;
+    min-width: 120px !important;
+    flex-shrink: 1 !important;
+    transition: max-width 0.3s ease !important;
+  }
+  #navbar .search-container:focus-within {
+    max-width: 200px !important;
+    flex-shrink: 0 !important;
+  }
+  #navbar .search-input {
+    display: block !important;
+    height: 40px !important;
+    padding: 8px 40px 8px 14px !important;
+    border-width: 2px !important;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+  /* Hide tablet button and mobile icon */
+  .tablet-search-button { display: none !important; }
+  
+  /* Ensure theme toggle doesn't shrink */
+  .theme-toggle {
+    flex-shrink: 0 !important;
+    min-width: max-content !important;
+  }
+
+  #navbar .mobile-search-icon { display: none !important; }
+
+  /* Theme toggle text visible */
+  .theme-text { display: inline !important; }
+
+  /* Explicit Gap Logic for Laptop */
+  :root {
+    --header-height: calc(58px + 38px);
+  }
+
+  #home .home-grid {
+    padding: calc(var(--header-height) + 50px) 80px 75px;
+  }
+
+  #home .profile-section {
+    position: sticky;
+    top: 20px; /* Breathing room from viewport top */
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+    align-self: start !important;
+  }
+
+  #home .content-section {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+    align-self: start !important;
+  }
+
+  /* Force internal elements to start at top */
+  #home .content-section .section-title {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+    line-height: 1.2 !important; /* Ensure line-height doesn't add too much space */
+  }
+  
+  /* Adjust profile container to align image top with text top */
+  #home .profile-section .profile-container {
+    margin-top: -8px !important; /* Pull image up to compensate for text line-height */
+    padding-top: 0 !important;
+  }
+  
+  #home .profile-section .profile-photo {
+    margin-top: 0 !important;
+    display: block; /* Remove inline gap */
+  }
+
+  /* Logo Click Animation */
+  .nav-logo.clicked {
+    animation: logoClick 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
+
+@keyframes logoClick {
+  0% { transform: scale(1); }
+  50% { transform: scale(0.9); opacity: 0.8; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* Tight spacing for 768px-1024px to prevent navbar wrapping and duplicates */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .nav-container {
+    gap: 8px !important; /* Reduce gap between all items */
+    padding: 0 15px !important;
+  }
+  
+  .nav-links {
+    gap: 10px !important; /* Tighter spacing between nav links */
+  }
+  
+  .nav-links a {
+    font-size: 0.9rem !important; /* Slightly smaller text */
+    padding: 6px 10px !important;
+  }
+  
+  /* Show desktop search container but hide all its children except tablet button */
+  #navbar .desktop-search {
+    display: flex !important;
+    margin-left: auto;
+  }
+  
+  /* Hide specific desktop search elements (not the tablet button) */
+  #navbar .desktop-search .search-icon-button,
+  #navbar .desktop-search .search-input,
+  #navbar .desktop-search .search-button,
+  #navbar .desktop-search .search-clear,
+  #navbar .desktop-search .desktop-search-results,
+  .desktop-search.icon-mode .search-icon-button {
+    display: none !important;
+    visibility: hidden !important;
+  }
+  
+  /* Show and style tablet search button */
+  .tablet-search-button {
+    display: flex !important;
+    align-items: center;
+    justify-content: center !important;
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    padding: 0 !important;
+    background: var(--card-bg);
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+  
+  .tablet-search-button:hover {
+    border-color: var(--accent);
+    background: var(--accent-glow);
+    box-shadow: 0 0 20px var(--accent-glow);
+    transform: translateY(-1px);
+  }
+
+  .tablet-search-button img {
+    width: 18px;
+    height: 18px;
+    filter: brightness(0.9);
+  }
+  
+  .tablet-search-button span {
+    display: none !important;
+  }
+
+  /* Hide mobile search icon */
+  #navbar .mobile-search-icon {
+    display: none !important;
+  }
+
+  /* Theme Toggle - Icon Only */
+  .theme-text {
+    display: none !important;
+  }
+  .theme-toggle {
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    padding: 0 !important;
+    justify-content: center !important;
+    background: var(--card-bg) !important;
+    border: 2px solid var(--border) !important;
+    border-radius: 10px !important;
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+    transition: all 0.3s ease !important;
+  }
+  .theme-toggle:hover {
+    border-color: var(--accent) !important;
+    background: var(--accent-glow) !important;
+    box-shadow: 0 0 20px var(--accent-glow) !important;
+    transform: translateY(-1px) !important;
+  }
+  .theme-icon {
+    margin: 0 !important;
+    font-size: 18px !important;
+  }
+}
+
+/* Mobile and smaller screens - Ensure logo is visible per new requirement */
+@media (max-width: 759px) {
+  .nav-logo {
+    display: block !important;
+    font-size: 1.2rem; /* Slightly smaller for mobile */
+  }
+}
+
+/* Note: 760-899px now uses unified tablet layout above */
+/* Small 481–600px: keep a narrow search bar */
+/* ==================== CRITICAL: HIDE DESKTOP NAV ON MOBILE ==================== */
+/* Hide desktop navigation links on all screens below 768px */
+@media (max-width: 767px) {
+  /* HIDE DESKTOP NAVIGATION LINKS - Users access via hamburger menu */
+  .desktop-nav,
+  .nav-links {
+    display: none !important;
+  }
+  
+  /* Show mobile menu icon */
+  .menu-icon {
+    display: flex !important;
+  }
+  
+  /* ==================== MOBILE CENTERING & ALIGNMENT FIXES ==================== */
+  
+  /* Navigation Container */
+  .nav-container {
+    justify-content: space-between !important;
+    padding: 0 15px !important;
+    align-items: center !important;
+  }
+  
+  /* Hide desktop search, show mobile icon that opens modal */
+  #navbar .desktop-search { 
+    display: none !important; 
+  }
+  
+  #navbar .mobile-search-icon { 
+    display: inline-flex !important; 
+    align-items: center; 
+    justify-content: center; 
+    width: 36px; 
+    height: 36px; 
+    min-width: 36px; 
+    border: 2px solid var(--border); 
+    border-radius: 10px; 
+    background: var(--card-bg); 
+    color: var(--text-secondary); 
+    transition: background 0.3s ease, border-color 0.3s ease, transform 0.2s ease; 
+    backdrop-filter: blur(8px); 
+    -webkit-backdrop-filter: blur(8px); 
+    margin-left: auto;
+    order: 3;
+  }
+  
+  #navbar .mobile-search-icon:hover { 
+    border-color: var(--accent); 
+  }
+  
+  #navbar .mobile-search-icon:focus-visible { 
+    outline: none; 
+    box-shadow: 0 0 0 3px var(--accent-glow); 
+  }
+  
+  #navbar .mobile-search-icon-img { 
+    width: 16px; 
+    height: 16px; 
+  }
+  #navbar .theme-toggle { 
+    width: 36px !important; 
+    height: 36px !important; 
+    min-width: 36px !important; 
+    min-height: 36px !important; 
+    border: 2px solid var(--border) !important; 
+    border-radius: 10px !important; 
+    background: var(--card-bg) !important; 
+    display: inline-flex !important; 
+    align-items: center !important; 
+    justify-content: center !important; 
+    backdrop-filter: blur(8px); 
+    -webkit-backdrop-filter: blur(8px); 
+    transition: background 0.3s ease, border-color 0.3s ease, transform 0.2s ease; 
+    margin-left: 8px; /* Gap between search and theme */
+    order: 4;
+  }
+  #navbar .theme-toggle:hover { border-color: var(--accent); }
+  #navbar .theme-toggle:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--accent-glow); }
+  #navbar .theme-icon { font-size: 18px; }
+  
+  /* ==================== MOBILE CONTENT CENTERING ==================== */
+  
+  /* Home Section - Center Everything */
+  #home {
+    text-align: center;
+  }
+}
+
+/* Horizontal layout for TABLET (768px - 1024px) */
+/* Photo on LEFT, Content on RIGHT (Grid Layout) */
+/* NOT applied on mobile screens (767px and below) */
+@media (min-width: 768px) and (max-width: 1024px) {
+
+
+  #home .home-grid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 20px 40px;
+    gap: 30px;
+  }
+  
+  /* Profile Section - Grid layout: Photo LEFT | Content RIGHT */
+  #home .profile-section {
+    width: 100%;
+    max-width: 750px;
+    display: grid;
+    grid-template-columns: 150px 1fr; /* Left: Photo (fixed) | Right: Content (flexible) */
+    grid-template-rows: min-content min-content min-content; /* Pack rows tightly */
+    align-content: center; /* Center the packed content vertically relative to photo */
+    gap: 0 40px; /* Balanced gap between photo and text */
+    align-items: center; /* Vertically center items */
+    position: relative;
+    top: auto;
+    order: 1;
+    padding: 0 40px; /* Equal horizontal padding */
+    margin: 0 auto;
+  }
+  
+  /* Profile photo container - LEFT column, spans all 3 rows */
+  #home .profile-section .profile-container {
+    grid-column: 1; /* ✅ Photo in Column 1 */
+    grid-row: 1 / 4;
+    margin-bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+  }
+  
+  /* Profile photo - Fixed size */
+  #home .profile-section .profile-photo {
+    width: 150px;
+    height: 180px;
+    margin: 0;
+    object-fit: cover;
+  }
+  
+  /* Name - RIGHT column, Row 1 */
+  #home .profile-section .name {
+    grid-column: 2; /* ✅ Content in Column 2 */
+    grid-row: 1;
+    text-align: center; /* Center text horizontally */
+    margin: 0 0 10px 0;
+    font-size: 1.8rem;
+    white-space: normal;
+    align-self: center; /* Center vertically */
+  }
+  
+  /* Tagline - RIGHT column, Row 2 */
+  #home .profile-section .tagline {
+    grid-column: 2; /* ✅ Content in Column 2 */
+    grid-row: 2;
+    text-align: center;
+    margin: 0 0 15px 0;
+    font-size: 1rem;
+    white-space: normal;
+    align-self: center; /* Center vertically */
+  }
+  
+  /* Social links - RIGHT column, Row 3 */
+  #home .profile-section .contact-links {
+    grid-column: 2; /* ✅ Content in Column 2 */
+    grid-row: 3;
+    justify-content: center;
+    margin: 0;
+    gap: 15px; /* Increased gap to prevent overlap */
+    flex-wrap: wrap;
+    display: flex;
+    align-self: center; /* Center vertically */
+  }
+  
+  #home .profile-section .contact-links a {
+    min-width: auto;
+    padding: 8px 16px;
+    font-size: 0.85rem;
+    height: auto; /* Allow height to adapt */
+    min-height: 36px; /* Minimum height for touch */
+    margin-bottom: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px; /* Space between icon and text */
+    white-space: nowrap; /* Prevent text wrapping inside button */
+    width: auto; /* Allow width to grow */
+    max-width: 100%; /* Prevent overflowing screen */
+  }
+  
+  #home .profile-section .contact-links .social-icon {
+    width: 16px;
+    height: 16px;
+  }
+  
+  /* Content Section - Contains About Me */
+  #home .content-section {
+    width: 100%;
+    max-width: 700px;
+    order: 2;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* Target the inner div explicitly */
+  #home .content-section > div {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #home .content-section .section-title {
+    text-align: center;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  #home .content-section .about-text {
+    text-align: center;
+  }
+  
+  #home .content-section .cta-button {
+    margin: 20px auto 0;
+  }
+}
+
+/* Continue with other mobile centering styles for 767px and below */
+@media (max-width: 767px) {
+  #home {
+    text-align: center;
+  }
+  
+  /* Stack Home Grid Vertically on Mobile */
+  #home .home-grid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    gap: 40px;
+  }
+  
+  /* Profile Section - Center Profile Photo and Content */
+  #home .profile-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+    max-width: 100%;
+    order: 1; /* Force Profile to be first */
+    position: relative; /* Disable sticky */
+    top: auto;
+    margin-bottom: 20px;
+  }
+  
+  #home .content-section {
+    order: 2; /* Force Content to be second */
+  }
+  
+  .profile-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  .profile-photo {
+    margin: 0 auto;
+  }
+  
+  /* Name and Tagline - Centered */
+  .name {
+    text-align: center;
+    width: 100%;
+    margin: 0 auto 10px;
+  }
+  
+  .tagline {
+    text-align: center;
+    width: 100%;
+    margin: 10px auto 20px;
+  }
+  
+  /* Social Links - Centered */
+  .contact-links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    width: 100%;
+    margin: 20px auto;
+  }
+  
+  /* Content Section - Center About Card */
+  #home .content-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+  }
+
+  /* Target inner div on mobile too */
+  #home .content-section > div {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  #home .content-section .section-title {
+    text-align: center;
+    width: 100%;
+  }
+  
+  .about-card {
+    text-align: center;
+    width: 100%;
+    max-width: 100%;
+  }
+  
+  .about-text {
+    text-align: center !important;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .about-text p {
+    text-align: center !important;
+    width: 100%;
+  }
+  
+  /* CTA Button - Centered */
+  .cta-button {
+    margin: 20px auto 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Container - Center All Content */
+  .container {
+    text-align: center;
+    padding: 40px 20px;
+    margin: 0 auto;
+  }
+  
+  /* Section Titles - Centered */
+  .section-title {
+    text-align: center;
+    width: 100%;
+    margin: 0 auto 30px;
+  }
+  
+  .section-subtitle {
+    text-align: center;
+    width: 100%;
+    margin: 0 auto 20px;
+  }
+  
+  /* Cards - Centered */
+  .card {
+    text-align: center;
+    margin: 20px auto;
+    width: 100%;
+    max-width: 100%;
+  }
+  
+  /* Skills Section - Centered */
+  .skills-container {
+    width: 100%;
+    margin: 0 auto;
+  }
+  
+  .skill-item {
+    text-align: left; /* Keep skill bars left-aligned for readability */
+    width: 100%;
+  }
+  
+  /* Resume Section - Centered */
+  .resume-section {
+    text-align: center;
+    width: 100%;
+    margin: 30px auto;
+  }
+  
+  .resume-heading {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .resume-btn {
+    margin: 0 auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Footer - Centered */
+  footer {
+    text-align: center;
+    width: 100%;
+    margin: 0 auto;
+  }
+  
+  /* Projects grid - stack on mobile (moved from style.css) */
+  #projects {
+    grid-template-columns: 1fr;
+    gap: 25px;
+  }
+
+  #projects .card {
+    padding: 20px;
+  }
+}
+
+/* CONSOLIDATED: Moved to main 769px query at end of file */
+
+@media (max-width: 590px) {
+  nav { height: 54px !important; }
+  #navbar .desktop-search { display: none !important; }
+  #navbar .mobile-search-icon { 
+    display: inline-flex !important; 
+    order: 3; 
+    margin-left: auto; 
+    margin-right: 8px;
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    min-height: 40px !important;
+    padding: 6px !important;
+    border-radius: 10px !important;
+    box-sizing: border-box !important;
+  }
+  #navbar .theme-toggle { 
+    order: 4;
+    background: var(--card-bg) !important;
+    border: 2px solid var(--border) !important;
+    border-radius: 10px !important;
+    cursor: pointer;
+    padding: 6px !important;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    margin-left: 8px;
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    min-height: 40px !important;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    box-sizing: border-box !important;
+  }
+  #navbar .menu-icon {
+    order: 1 !important;
+    margin-right: auto !important;
+    margin-left: 0 !important;
+    background: transparent !important;
+    border: none !important;
+    border-radius: 10px !important;
+    cursor: pointer;
+    padding: 0 !important;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    min-height: 40px !important;
+    transition: all 0.3s ease;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    box-sizing: border-box !important;
+  }
+}
+@media (min-width: 769px) and (max-width: 1024px) {
+  #navbar .mobile-search-icon { display: none !important; }
+  
+  #navbar .theme-toggle { 
+    width: 40px !important; 
+    height: 40px !important; 
+    min-width: 40px !important; 
+    min-height: 40px !important; 
+    border: 2px solid var(--border) !important; 
+    border-radius: 10px !important; 
+    background: var(--card-bg) !important; 
+    backdrop-filter: blur(8px); 
+    -webkit-backdrop-filter: blur(8px); 
+    transition: background 0.3s ease, border-color 0.3s ease, transform 0.2s ease; 
+    margin-left: 8px;
+    order: 4;
+  }
+
+  /* Base desktop search positioning */
+  #navbar .desktop-search { 
+    display: flex !important; 
+    order: 3; 
+    margin-left: auto; 
+    margin-right: 10px;
+  }
+}
+
+/* Full Search Bar (900px - 1024px) */
+@media (min-width: 900px) and (max-width: 1024px) {
+  #navbar .desktop-search { 
+    width: auto;
+    max-width: 280px;
+    flex: 0 1 280px; /* Shrinkable */
+    min-width: 140px; /* Prevent hiding placeholder */
+  }
+  #navbar .search-input { 
+    display: block !important;
+    height: 40px !important; 
+    padding: 6px 38px 6px 12px; 
+    border-width: 2px !important; 
+  }
+  #navbar .desktop-search .search-icon-button {
+    display: none !important;
+  }
+}
+
+/* Icon Only (769px - 899px) */
+@media (min-width: 769px) and (max-width: 899px) {
+  #navbar .desktop-search { width: auto; }
+  #navbar .search-input { display: none !important; }
+  
+  #navbar .desktop-search .search-icon-button { 
+    display: flex !important; 
+    width: 40px;
+    height: 40px;
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    background: var(--card-bg);
+    padding: 0;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  
+  #navbar .desktop-search .search-icon-button img {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+/* Removed useless 591px-600px range (only 10px wide) - covered by other breakpoints */
+
+/* ==================== Tooltips (Large Screens Only) ==================== */
+@media (min-width: 1024px) {
+  [data-tooltip] {
+    position: relative;
+  }
+
+  [data-tooltip]::before,
+  [data-tooltip]::after {
+    position: absolute;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease;
+    transition-delay: 0s; /* Remove delay for instant feedback */
+    pointer-events: none;
+    z-index: 9999; /* Max z-index */
+  }
+
+  /* Ensure parents don't clip tooltips */
+  .contact-links, 
+  .contact-links a {
+    overflow: visible !important;
+  }
+  
+  /* Boost profile section z-index to ensure tooltips sit on top of other sections */
+  #home .profile-section {
+    z-index: 10;
+    position: relative; /* Ensure z-index works */
+  }
+
+  /* Tooltip Text */
+  [data-tooltip]::before {
+    content: attr(data-tooltip);
+    background: rgba(15, 23, 42, 0.95);
+    color: #fff;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    font-weight: 500;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    
+    /* Positioning - Default (Top) */
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    margin-bottom: 10px;
+  }
+
+  /* Tooltip Arrow */
+  [data-tooltip]::after {
+    content: '';
+    border-width: 6px;
+    border-style: solid;
+    border-color: rgba(15, 23, 42, 0.95) transparent transparent transparent;
+    
+    /* Positioning - Default (Top) */
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    margin-bottom: -2px; /* Connects arrow to bubble */
+  }
+
+  /* Hover State */
+  [data-tooltip]:hover::before,
+  [data-tooltip]:hover::after {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  /* Light Theme Adjustments */
+  [data-theme="light"] [data-tooltip]::before {
+    background: rgba(255, 255, 255, 0.95);
+    color: var(--text-primary);
+    border-color: rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  [data-theme="light"] [data-tooltip]::after {
+    border-color: rgba(255, 255, 255, 0.95) transparent transparent transparent;
+  }
+}
+
+/* ==================== CONSOLIDATED DESKTOP QUERY (≥769px) ==================== */
+/* All desktop-specific styles consolidated here for easier maintenance */
+@media (min-width: 900px) {
+  /* Hide mobile-only elements */
+  .mobile-night-light-btn,
+  .sidebar-menu,
+  .sidebar-overlay,
+  .menu-icon,
+  .mobile-search-icon,
+  .swipe-indicator,
+  .settings-btn-container,
+  .settings-overlay,
+  .settings-panel {
+    display: none !important;
+  }
+
+  /* Show desktop navigation */
+  .desktop-search {
+    display: flex !important;
+  }
+
+  .nav-container {
+    gap: 30px !important; /* Gap between Logo and Links */
+  }
+
+  .desktop-nav {
+    display: flex !important;
+    order: 2;
+    gap: 24px; /* Gap between links */
+    flex: 1 1 auto;
+  }
+  
+  /* Ensure desktop search is visible */
+  #navbar .desktop-search {
+    display: flex !important;
+  }
+}
+
+
+
+/* Desktop-only visibility for dropdown (Moved from style.css) */
+@media (max-width: 1024px) {
+  .desktop-search-results {
+    display: none !important;
+  }
+}
+
+
