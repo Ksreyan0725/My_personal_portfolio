@@ -52,9 +52,10 @@ const initApp = () => {
 
     // Update active state of theme buttons in settings panel
     function updateActiveThemeBtn(theme) {
-        if (!themeBtns) return;
+        const btns = document.querySelectorAll('.theme-btn');
+        if (!btns) return;
 
-        themeBtns.forEach(btn => {
+        btns.forEach(btn => {
             if (btn.dataset.theme === theme) {
                 btn.classList.add('active');
             } else {
@@ -2263,6 +2264,9 @@ const initPart2 = () => {
             overlay.classList.remove('active');
             localStorage.setItem('nightLight', 'false');
         }
+
+        // Update mobile button state to reflect the change
+        updateMobileNightLightBtn();
     }
 
     // Event Listeners
@@ -2378,17 +2382,8 @@ const initPart2 = () => {
 
     function checkThemeForNightLight() {
         if (!mobileNightLightBtn) return;
-        const currentTheme = document.documentElement.getAttribute('data-theme');
-        const icon = document.getElementById('nightLightIcon');
-
         // Night Light is now allowed in both themes
         mobileNightLightBtn.classList.remove('disabled');
-
-        if (currentTheme === 'light') {
-            if (icon) icon.src = 'Assets/Images.icons/nightlight-dark.png';
-        } else {
-            if (icon) icon.src = 'Assets/Images.icons/nightlight-light.png';
-        }
     }
 
     // Sync with existing toggle and handle notification

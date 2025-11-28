@@ -35,6 +35,12 @@
   .nav-container {
     gap: 6px;
     padding: 0 10px;
+    justify-content: flex-start !important;
+  }
+
+  .nav-links,
+  .desktop-search {
+    display: none !important;
   }
 
   .menu-icon {
@@ -48,14 +54,12 @@
     display: flex !important;
     align-items: center;
     justify-content: center;
+    order: 1 !important;
+    margin-right: 0 !important;
   }
 
   /* Ultra-compact search bar */
-  .desktop-search {
-    max-width: 120px !important;
-    min-width: 80px !important;
-    margin-right: 4px !important;
-  }
+  /* .desktop-search styles removed as it is hidden */
 
   .search-input {
     font-size: 0.75rem !important;
@@ -74,7 +78,7 @@
 
     /* IMPORTANT */
     flex-shrink: 0;
-}
+  }
 
   .mobile-search-icon {
     width: 28px !important;
@@ -85,6 +89,8 @@
     border-radius: 10px !important;
     margin-right: 6px !important;
     box-sizing: border-box !important;
+    order: 3 !important;
+    margin-left: auto;
   }
 
   .theme-toggle {
@@ -104,6 +110,7 @@
     aspect-ratio: 1 / 1;
     box-sizing: border-box !important;
     flex-shrink: 0 !important;
+    order: 4 !important;
   }
 
 
@@ -119,6 +126,13 @@
   .theme-icon {
     width: 20px !important;
     height: 20px !important;
+  }
+  
+  .nav-logo {
+    order: 2 !important;
+    margin-left: 0 !important;
+    margin-right: auto !important;
+    flex-grow: 0 !important;
   }
 
   .notice-banner {
@@ -179,6 +193,12 @@
 
     .nav-container {
         padding: 0 15px;
+        justify-content: flex-start !important; /* Force items to pack left */
+    }
+
+    .nav-links,
+    .desktop-search {
+        display: none !important;
     }
 
     .home-grid {
@@ -217,6 +237,32 @@
     
     .cta-buttons {
         justify-content: center;
+    }
+
+    /* Enforce Mobile Nav Order for this range */
+    .menu-icon {
+      display: flex !important;
+      order: 1 !important; /* Left side - first */
+      margin-right: 0 !important;
+    }
+    
+    .nav-logo {
+      order: 2 !important; /* Left side - second */
+      margin-left: 0 !important;
+      margin-right: auto !important; /* Push everything else to the right */
+      flex-grow: 0 !important;
+    }
+
+    .mobile-search-icon {
+      display: flex !important;
+      order: 3 !important;
+      margin-left: auto;
+      margin-right: 8px;
+    }
+
+    .theme-toggle {
+      display: flex !important;
+      order: 4 !important;
     }
 }
 
@@ -367,7 +413,7 @@
   /* Sidebar menu - extra narrow */
   .sidebar-menu {
     width: 240px;
-    left: -240px;
+    left: 0 !important;
   }
 
   .sidebar-header {
@@ -694,7 +740,7 @@
   /* Sidebar menu - narrower */
   .sidebar-menu {
     width: 260px;
-    left: -260px;
+    left: 0 !important;
   }
 
   .sidebar-header {
@@ -972,29 +1018,38 @@
 
   /* Search Visibility Logic - Standard 767px breakpoint */
   @media (max-width: 767px) {
-    .desktop-search {
+    .nav-container {
+        justify-content: flex-start !important; /* Force items to pack left */
+    }
+
+    .desktop-search,
+    .nav-links {
       display: none !important;
     }
     
     .mobile-search-icon {
       display: flex !important;
-      order: 3;
-      margin-left: auto;
+      order: 3 !important;
+      margin-left: auto; /* Keep this as backup or remove if logo pushes it */
       margin-right: 8px;
     }
 
     .menu-icon {
       display: flex !important;
-      order: 1; /* Left side */
-      margin-right: 10px;
+      order: 1 !important; /* Left side - first */
+      margin-right: 0 !important; /* Remove gap */
     }
     
     .nav-logo {
-      order: 2;
+      order: 2 !important; /* Left side - second, after menu */
+      margin-left: 0 !important;
+      margin-right: auto !important; /* Push everything else to the right */
+      flex-grow: 0 !important;
     }
     
     .theme-toggle {
-      order: 4;
+      order: 4 !important;
+      display: flex !important;
     }
     
     /* Hide theme text on mobile */

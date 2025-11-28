@@ -146,7 +146,7 @@
 
   /* Header Heights */
   --nav-height: 48px;
-  --banner-height: 35px;
+  --banner-height: 45px;
   --header-height: calc(var(--nav-height) + var(--banner-height));
 
   /* Ensure smooth animations */
@@ -2658,36 +2658,40 @@ footer {
 .sidebar-menu {
   position: fixed;
   top: 0;
-  left: -100%; /* Hidden off-screen by default */
+  left: 0; /* Always docked at left edge */
   width: 280px;
   height: 100%;
   background: var(--bg-secondary);
   z-index: 2000;
-  transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.3s step-end;
+  transform: translateX(-100%); /* Hidden via transform - hardware accelerated */
+  transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform; /* Hint browser for optimization */
   display: flex;
   flex-direction: column;
   box-shadow: 2px 0 20px rgba(0,0,0,0.2);
-  visibility: hidden; /* Hide visibility when closed */
+  /* visibility removed - sidebar always rendered */
 }
 
 .sidebar-menu.active {
-  left: 0;
-  visibility: visible;
-  transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1), visibility 0s step-start;
+  transform: translateX(0); /* Slide in */
+  transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .sidebar-header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  padding: 20px;
+  align-items: flex-start; /* Align items to top */
+  padding: 16px 20px;
   border-bottom: 1px solid var(--border);
+  height: calc(var(--nav-height, 48px) + var(--banner-height, 35px)); /* Combined height of navbar + banner */
+  box-sizing: border-box;
 }
 
 .sidebar-logo {
   font-size: 1.5rem;
   font-weight: 700;
   color: var(--text-primary);
+  padding-top: 0; /* Align to top */
 }
 
 .sidebar-close {
@@ -2696,7 +2700,8 @@ footer {
   font-size: 1.5rem;
   color: var(--text-secondary);
   cursor: pointer;
-  padding: 5px;
+  padding: 0; /* Remove padding for precise positioning */
+  margin-top: 0; /* Align to top */
 }
 
 .sidebar-links {
@@ -2844,53 +2849,7 @@ footer {
   background: transparent;
 }
 
-.sidebar-menu {
-  /* Flex layout for bottom-anchored settings button */
-  display: flex !important;
-  flex-direction: column !important;
-  
-  /* Positioning and dimensions */
-  position: fixed;
-  top: 0;
-  left: -100%;
-  width: 280px;
-  height: 100%;
-  
-  /* Background with transparent hole for notice banner (48px to 83px) */
-  background: linear-gradient(
-    to bottom,
-    var(--bg-secondary) 0px,
-    var(--bg-secondary) 48px,
-    transparent 48px,
-    transparent 83px,
-    var(--bg-secondary) 83px
-  );
-  
-  z-index: 1001;
-  
-  /* Animation */
-  transition: left 0.28s cubic-bezier(0.4, 0, 0.2, 1);
-  
-  /* Scrolling */
-  overflow-y: auto;
-  overflow-x: hidden;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
 
-.sidebar-menu.active {
-  left: 0;
-}
-
-.sidebar-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 16px 20px;
-  border-bottom: 1px solid var(--border);
-  background: transparent !important; /* Transparent to show notice banner */
-  flex-shrink: 0;
-}
 
 .sidebar-logo {
   font-size: 1.5rem;
@@ -2900,20 +2859,21 @@ footer {
   -webkit-text-fill-color: transparent;
   background-clip: text;
   cursor: pointer;
+  padding-top: 0; /* Align to top */
 }
 
 .sidebar-close {
   background: var(--card-bg);
   border: 1px solid var(--border);
-  font-size: 1.5rem; /* Reduced to match logo size */
+  font-size: 1.5rem;
   color: var(--text-primary);
   cursor: pointer;
-  padding: 6px 10px; /* Adjusted padding for ~38px total height */
+  padding: 6px 10px;
   border-radius: 6px;
   transition: all 0.3s ease;
   line-height: 1;
   outline: none;
-  margin-top: 15px; /* Move down to overlap notice banner */
+  margin-top: 0; /* Align to top, removed overlap offset */
 }
 
 .sidebar-close:hover {
@@ -3397,6 +3357,9 @@ body.no-scroll {
     transition: all 0.2s ease;
     width: 100%;
     text-align: left;
+    pointer-events: auto; /* Ensure clickable */
+    position: relative;
+    z-index: 1;
 }
 
 .theme-btn:hover {
@@ -3568,7 +3531,51 @@ body.no-scroll {
 }
 
 
-/* Conflicting notification banner styles removed */
+/* ==================== Notification Banner ==================== */
+.notification-banner {
+    position: fixed !important;
+    top: -100px !important;
+    bottom: auto !important; /* Override potential bottom positioning */
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    background: var(--card-bg);
+    padding: 12px 24px;
+    border-radius: 50px !important; /* Override potential circular shape */
+    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+    z-index: 10000;
+    transition: top 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    width: auto !important; /* Prevent full width */
+    height: auto !important; /* Prevent fixed height */
+}
+
+.notification-banner.active {
+    top: 20px !important;
+    bottom: auto !important;
+}
+
+.notification-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.notification-icon {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
+
+#notificationMessage {
+    font-weight: 600;
+    color: var(--text-primary);
+    font-size: 0.95rem;
+}
 
 .mobile-night-light-btn {
     width: 100%;
@@ -3597,9 +3604,29 @@ body.no-scroll {
 }
 
 .mobile-night-light-btn.active {
-    background: rgba(255, 160, 0, 0.1);
-    border-color: #ffa000;
-    color: #ffa000;
+    background: rgba(255, 160, 0, 0.15) !important;
+    border-color: #ffa000 !important;
+    color: #ffa000 !important;
+    box-shadow: 0 0 15px rgba(255, 160, 0, 0.25); /* Soft yellow glow */
+}
+
+/* Active Icon - Soft Yellow/Orange Glow */
+/* Active Icon - Soft Yellow/Orange Glow */
+.mobile-night-light-btn.active .night-light-icon {
+    /* White -> Orange/Yellow + Glow */
+    filter: sepia(1) saturate(3000%) hue-rotate(-50deg) drop-shadow(0 0 8px #ffa000) !important;
+    transform: scale(1.1);
+    transition: all 0.3s ease;
+}
+
+/* Light Mode: Invert White Icon to Black */
+[data-theme="light"] .night-light-icon {
+    filter: invert(1);
+}
+
+/* Light Mode Active: Un-invert to White then Colorize */
+[data-theme="light"] .mobile-night-light-btn.active .night-light-icon {
+    filter: sepia(1) saturate(3000%) hue-rotate(-50deg) drop-shadow(0 0 8px #ffa000) !important;
 }
 
 .mobile-night-light-btn.disabled {
@@ -3615,6 +3642,13 @@ body.no-scroll {
     height: 20px;
     object-fit: contain;
     flex-shrink: 0;
+    transition: all 0.3s ease;
+    /* Default: White (for Dark Mode) */
+}
+
+/* Dark Mode: No filter needed for white icon */
+[data-theme="dark"] .night-light-icon {
+    filter: none;
 }
 
 /* Hide on desktop */
