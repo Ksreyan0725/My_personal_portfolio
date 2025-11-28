@@ -767,6 +767,11 @@ body {
   overflow-x: hidden;
 }
 
+/* Copilot-style page slide effect - when sidebar is open, shift entire page right */
+body.sidebar-open #pageWrapper {
+  transform: translateX(var(--sidebar-width, 280px));
+}
+
 /* Spacer removed */
 
 /* ==================== Notification Banner (Fixed Position) ==================== */
@@ -853,8 +858,14 @@ nav {
   border-bottom: 2px solid var(--border);
   z-index: 1000;
   padding: 6px 0;
-  transition: all 0.3s ease;
+  transition: all 0.3s ease, transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
   height: 48px; /* compact desktop */
+  will-change: transform;
+}
+
+/* Slide navbar right when sidebar is open */
+body.sidebar-open nav {
+  transform: translateX(var(--sidebar-width, 280px));
 }
 
 nav.scrolled {
@@ -1014,8 +1025,9 @@ nav.scrolled {
 }
 
 .theme-icon {
-  font-size: 16px;
-  line-height: 1;
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
   transition: transform 0.3s ease;
 }
 
@@ -1042,6 +1054,13 @@ nav.scrolled {
   display: flex;
   align-items: center;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+
+/* Slide notice banner right when sidebar is open */
+body.sidebar-open .notice-banner {
+  transform: translateX(var(--sidebar-width, 280px));
 }
 
 [data-theme="dark"] .notice-banner {
@@ -2732,8 +2751,8 @@ footer {
 }
 
 .mobile-search-icon-img {
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
   object-fit: contain;
   filter: var(--icon-filter);
   transition: transform 0.3s ease;
@@ -3028,7 +3047,9 @@ footer {
 }
 
 .settings-icon {
-  font-size: 1.3rem;
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
   flex-shrink: 0;
 }
 
@@ -3303,13 +3324,33 @@ footer {
 }
 
 .settings-close-btn {
-    background: none;
-    border: none;
-    font-size: 2rem;
-    color: var(--text-secondary);
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    font-size: 1.5rem;
+    color: var(--text-primary);
     cursor: pointer;
+    padding: 0;
+    border-radius: 50%;
     line-height: 1;
-    padding: 0 8px;
+    transition: all 0.3s ease;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.settings-close-btn:hover {
+    opacity: 1;
+    color: var(--accent);
+    background: rgba(99, 102, 241, 0.1);
+    border-color: var(--accent);
+}
+
+/* Disable scrolling when sidebar or settings are open */
+body.sidebar-open,
+body.no-scroll {
+    overflow: hidden !important;
 }
 
 .settings-content {
@@ -3429,10 +3470,30 @@ footer {
     left: 2px;
     transition: transform 0.3s ease;
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* '×' icon in OFF state */
+.toggle-slider::before {
+    content: '×';
+    font-size: 18px;
+    font-weight: 600;
+    color: #666;
+    line-height: 1;
+    opacity: 1;
+    transition: opacity 0.2s ease;
+    margin-top: 1px;
 }
 
 .toggle-switch.active .toggle-slider {
     transform: translateX(22px);
+}
+
+/* Hide '×' icon in ON state */
+.toggle-switch.active .toggle-slider::before {
+    opacity: 0;
 }
 
 /* Option List */
@@ -3510,26 +3571,29 @@ footer {
 /* Conflicting notification banner styles removed */
 
 .mobile-night-light-btn {
+    width: 100%;
+    padding: 18px 25px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 1rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 100%;
-    padding: 12px 16px;
-    background: var(--card-bg);
-    border: 1px solid var(--border);
-    border-radius: 12px;
+    gap: 8px; /* Reduced from 12px for closer icon-text spacing */
+    background: var(--bg-secondary);
     color: var(--text-primary);
-    font-size: 0.95rem;
+    border: none;
+    border-top: 1px solid var(--border);
+    border-radius: 0;
+    text-align: left;
     font-weight: 500;
-    cursor: pointer;
-    margin-bottom: 10px; /* Spacing below since it's now above settings */
-    margin-top: 0;
-    transition: all 0.2s ease;
+    min-height: 56px;
+    box-sizing: border-box;
 }
 
 .mobile-night-light-btn:hover {
-    border-color: var(--accent);
-    background: var(--bg-secondary);
+    background: var(--card-bg);
+    color: var(--accent);
 }
 
 .mobile-night-light-btn.active {
@@ -3550,6 +3614,7 @@ footer {
     width: 20px;
     height: 20px;
     object-fit: contain;
+    flex-shrink: 0;
 }
 
 /* Hide on desktop */

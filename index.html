@@ -91,7 +91,7 @@ Last Updated: November 27, 2025
                 <div class="desktop-search-results" id="desktopSearchResults"></div>
             </div>
             <button class="theme-toggle" id="themeToggle">
-                <span class="theme-icon">⚙️</span>
+                <img src="Assets/Images.icons/system-theme.png" alt="Theme" class="theme-icon">
                 <span class="theme-text">System</span>
             </button>
 
@@ -147,14 +147,14 @@ Last Updated: November 27, 2025
         <!-- Settings Button (Mobile Only) -->
         <div class="settings-btn-container">
             <!-- Night Light Button (Mobile Only) -->
-            <button class="mobile-night-light-btn" id="mobileNightLightBtn">
+            <button class="mobile-night-light-btn" id="mobileNightLightBtn" onclick="handleMobileNightLight()">
                 <span>Night Light</span>
                 <img src="Assets/Images.icons/nightlight-dark.png" alt="Night Light" class="night-light-icon" id="nightLightIcon">
             </button>
 
-            <button class="settings-btn" id="openSettingsBtn">
+            <button class="settings-btn" id="openSettingsBtn" onclick="openSettings()">
                 <span>Settings</span>
-                <span class="settings-icon">⚙️</span>
+                <img src="Assets/Images.icons/Setting-button.png" alt="Settings" class="settings-icon">
             </button>
         </div>
     </div>
@@ -489,6 +489,8 @@ Last Updated: November 27, 2025
             <strong>Copyright © 2025</strong> Kumar Sreyan Pattanayak
             <br>
             All Rights Reserved | Made with ❤️
+            <br>
+            Hosted on GitHub Pages | <a href="https://docs.github.com/en/site-policy/github-terms/github-terms-of-service" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;">GitHub Terms of Service</a>
         </p>
     </footer>
     </div> <!-- End of #pageWrapper -->

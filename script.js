@@ -24,7 +24,8 @@ const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
         console.warn('Early theme init failed:', e && e.message);
     }
 })();
-document.addEventListener('DOMContentLoaded', () => {
+const initApp = () => {
+    console.log('App Initializing...');
     const htmlElement = document.documentElement;
     const body = document.body;
     // Default to 'system' if no preference is saved
@@ -40,6 +41,53 @@ document.addEventListener('DOMContentLoaded', () => {
     /* ==================== Theme Management ==================== */
     const themeToggle = document.getElementById('themeToggle');
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+
+    // Settings Panel Elements (Moved up for availability)
+    const settingsPanel = document.getElementById('settingsPanel');
+    const settingsOverlay = document.getElementById('settingsOverlay');
+    const openSettingsBtn = document.getElementById('openSettingsBtn');
+    const settingsCloseBtn = document.getElementById('settingsCloseBtn');
+    const nightLightToggle = document.getElementById('nightLightToggle');
+    const themeBtns = document.querySelectorAll('.theme-btn');
+
+    // Update active state of theme buttons in settings panel
+    function updateActiveThemeBtn(theme) {
+        if (!themeBtns) return;
+
+        themeBtns.forEach(btn => {
+            if (btn.dataset.theme === theme) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
+    }
+
+    function openSettings() {
+        if (!settingsPanel) return;
+        settingsPanel.classList.add('active');
+        settingsOverlay.classList.add('active');
+        document.body.classList.add('no-scroll');
+
+        // Close sidebar if open
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+        if (sidebarOverlay && getComputedStyle(sidebarOverlay).opacity !== '0') {
+            sidebarOverlay.click();
+        }
+
+        // Update active theme button
+        const currentTheme = localStorage.getItem('theme') || 'system';
+        updateActiveThemeBtn(currentTheme);
+    }
+    window.openSettings = openSettings; // Expose immediately
+
+    function closeSettings() {
+        if (!settingsPanel) return;
+        settingsPanel.classList.remove('active');
+        settingsOverlay.classList.remove('active');
+        document.body.classList.remove('no-scroll');
+    }
+    window.closeSettings = closeSettings; // Expose immediately
 
     // Theme application function
     function applyTheme(theme, animate = false) {
@@ -57,14 +105,36 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Update button text if it exists
         if (themeToggle) {
-            const themeIcon = themeToggle.querySelector('.theme-icon');
+            let themeIcon = themeToggle.querySelector('.theme-icon');
             const themeText = themeToggle.querySelector('.theme-text');
 
-            if (themeIcon && themeText) {
-                // Show gear icon for System mode, sun/moon for explicit Light/Dark
-                themeIcon.textContent = theme === 'system' ? '⚙️' :
-                    theme === 'dark' ? '🌙' : '☀️';
-                // Keep the label as the selected mode (System/Light/Dark)
+            // Always update icon
+            if (themeIcon) {
+                themeIcon.remove();
+            }
+
+            // Create img element for all modes with appropriate PNG icon
+            const imgElement = document.createElement('img');
+            imgElement.className = 'theme-icon';
+            imgElement.alt = 'Theme';
+
+            // Set the appropriate icon based on theme
+            const timestamp = new Date().getTime();
+            if (theme === 'system') {
+                imgElement.src = `Assets/Images.icons/system-theme.png?v=${timestamp}`;
+                imgElement.alt = 'System Theme';
+            } else if (theme === 'light') {
+                imgElement.src = `Assets/Images.icons/light-mode.png?v=${timestamp}`;
+                imgElement.alt = 'Light Mode';
+            } else { // dark
+                imgElement.src = `Assets/Images.icons/dark-mode.png?v=${timestamp}`;
+                imgElement.alt = 'Dark Mode';
+            }
+
+            themeToggle.prepend(imgElement); // Add as first child
+
+            // Update text if it exists
+            if (themeText) {
                 themeText.textContent = theme.charAt(0).toUpperCase() + theme.slice(1);
             }
         }
@@ -80,6 +150,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 zohoLogo.src = 'Assets/Images.icons/zohomail.png';
             }
         }
+
+        // Sync settings panel buttons
+        updateActiveThemeBtn(theme);
 
         try {
             localStorage.setItem('theme', theme);
@@ -302,6 +375,9 @@ document.addEventListener('DOMContentLoaded', () => {
         handleTouchStart(e) {
             // Only handle on mobile
             if (!this.isMobile()) return;
+
+            // Disable swipe if settings panel is open (no-scroll class)
+            if (document.body.classList.contains('no-scroll')) return;
 
             const touch = e.touches[0];
             this.startX = touch.clientX;
@@ -1759,7 +1835,7 @@ document.addEventListener('DOMContentLoaded', () => {
             window.location.href = 'Others-pages/404.html';
         }
     }, true); // capture phase to intercept early
-});
+};
 
 /* Mobile inline expandable search removed to prevent duplicate inputs.
    Mobile icon will open the modal via existing click handler (openSearchModal).
@@ -1770,7 +1846,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 // Logo Click Animation & Reload Logic
-document.addEventListener('DOMContentLoaded', () => {
+const initPart2 = () => {
     // Restore scroll position if saved
     const savedScroll = sessionStorage.getItem('restoreScrollPosition');
     if (savedScroll) {
@@ -2006,6 +2082,9 @@ document.addEventListener('DOMContentLoaded', () => {
             // Only handle on mobile
             if (!this.isMobile()) return;
 
+            // Disable swipe if sidebar or settings panel is open
+            if (document.body.classList.contains('sidebar-open') || document.body.classList.contains('no-scroll')) return;
+
             const touch = e.touches[0];
             this.startX = touch.clientX;
             this.startY = touch.clientY;
@@ -2163,45 +2242,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /* ==================== Settings Panel Logic ==================== */
-    const settingsPanel = document.getElementById('settingsPanel');
-    const settingsOverlay = document.getElementById('settingsOverlay');
-    const openSettingsBtn = document.getElementById('openSettingsBtn');
-    const settingsCloseBtn = document.getElementById('settingsCloseBtn');
-    const nightLightToggle = document.getElementById('nightLightToggle');
-    const themeBtns = document.querySelectorAll('.theme-btn');
-
-    function openSettings() {
-        if (!settingsPanel) return;
-        settingsPanel.classList.add('active');
-        settingsOverlay.classList.add('active');
-
-        // Close sidebar if open
-        // We can trigger the sidebar overlay click to close it cleanly using the existing logic
-        const sidebarOverlay = document.getElementById('sidebarOverlay');
-        if (sidebarOverlay && getComputedStyle(sidebarOverlay).opacity !== '0') {
-            sidebarOverlay.click();
-        }
-
-        // Update active theme button
-        const currentTheme = localStorage.getItem('theme') || 'system';
-        updateActiveThemeBtn(currentTheme);
-    }
-
-    function closeSettings() {
-        if (!settingsPanel) return;
-        settingsPanel.classList.remove('active');
-        settingsOverlay.classList.remove('active');
-    }
-
-    function updateActiveThemeBtn(theme) {
-        themeBtns.forEach(btn => {
-            if (btn.dataset.theme === theme) {
-                btn.classList.add('active');
-            } else {
-                btn.classList.remove('active');
-            }
-        });
-    }
+    // Variables and functions moved to top of file for scope availability
 
     function toggleNightLight() {
         if (!nightLightToggle) return;
@@ -2225,10 +2266,21 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Event Listeners
-    if (openSettingsBtn) openSettingsBtn.addEventListener('click', openSettings);
+    // Expose functions to window for inline HTML access (Fix for button click issues)
+    window.openSettings = openSettings;
+    window.closeSettings = closeSettings;
+
+    window.handleMobileNightLight = function () {
+        const btn = document.getElementById('mobileNightLightBtn');
+        if (btn && btn.classList.contains('disabled')) return;
+
+        const toggle = document.getElementById('nightLightToggle');
+        if (toggle) toggle.click();
+    };
+
+    // Keep existing listeners as backup
     if (settingsCloseBtn) settingsCloseBtn.addEventListener('click', closeSettings);
     if (settingsOverlay) settingsOverlay.addEventListener('click', closeSettings);
-
     if (nightLightToggle) nightLightToggle.addEventListener('click', toggleNightLight);
 
     themeBtns.forEach(btn => {
@@ -2352,16 +2404,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Handle Mobile Button Click
-    if (mobileNightLightBtn) {
-        mobileNightLightBtn.addEventListener('click', () => {
-            if (mobileNightLightBtn.classList.contains('disabled')) return;
-            // Trigger the existing toggle logic
-            if (nightLightToggle) {
-                nightLightToggle.click();
-            }
-        });
-    }
+    // Handle Mobile Button Click - Handled by delegation above
 
     // Monitor Theme Changes
     const themeObserver = new MutationObserver((mutations) => {
@@ -2378,4 +2421,14 @@ document.addEventListener('DOMContentLoaded', () => {
     checkThemeForNightLight();
     updateMobileNightLightBtn();
 
-});
+};
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+        initApp();
+        initPart2();
+    });
+} else {
+    initApp();
+    initPart2();
+}
