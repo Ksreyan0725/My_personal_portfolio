@@ -3308,9 +3308,13 @@ footer {
 }
 
 /* Disable scrolling when sidebar or settings are open */
+html.sidebar-open,
+html.no-scroll,
 body.sidebar-open,
 body.no-scroll {
     overflow: hidden !important;
+    height: 100% !important;
+    touch-action: none;
 }
 
 .settings-content {
@@ -3552,6 +3556,7 @@ body.no-scroll {
     -webkit-backdrop-filter: blur(10px);
     width: auto !important; /* Prevent full width */
     height: auto !important; /* Prevent fixed height */
+    max-width: 90vw; /* Ensure it fits on small screens */
 }
 
 .notification-banner.active {
@@ -3563,18 +3568,47 @@ body.no-scroll {
     display: flex;
     align-items: center;
     gap: 10px;
+    max-width: 100%; /* Ensure content doesn't overflow container */
 }
 
 .notification-icon {
     width: 20px;
     height: 20px;
     object-fit: contain;
+    flex-shrink: 0; /* Prevent icon from shrinking */
 }
 
 #notificationMessage {
     font-weight: 600;
     color: var(--text-primary);
     font-size: 0.95rem;
+    white-space: nowrap; /* Prevent wrapping */
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Tablet & Desktop: Make notification larger */
+@media (min-width: 600px) {
+    .notification-banner {
+        padding: 14px 32px;
+        border-radius: 60px !important;
+    }
+    
+    .notification-icon {
+        width: 24px;
+        height: 24px;
+    }
+    
+    #notificationMessage {
+        font-size: 1.1rem;
+    }
+}
+
+/* Hide notification on screens where sidebar is not available (Desktop) */
+@media (min-width: 768px) {
+    .notification-banner {
+        display: none !important;
+    }
 }
 
 .mobile-night-light-btn {

@@ -69,6 +69,7 @@ const initApp = () => {
         settingsPanel.classList.add('active');
         settingsOverlay.classList.add('active');
         document.body.classList.add('no-scroll');
+        document.documentElement.classList.add('no-scroll');
 
         // Close sidebar if open
         const sidebarOverlay = document.getElementById('sidebarOverlay');
@@ -87,6 +88,7 @@ const initApp = () => {
         settingsPanel.classList.remove('active');
         settingsOverlay.classList.remove('active');
         document.body.classList.remove('no-scroll');
+        document.documentElement.classList.remove('no-scroll');
     }
     window.closeSettings = closeSettings; // Expose immediately
 
