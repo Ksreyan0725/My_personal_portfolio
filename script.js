@@ -320,6 +320,10 @@ const initApp = () => {
     }
 
     function showNotification(message) {
+        // Global Notification Guard
+        // If Push Notifications are disabled in settings, do not show anything
+        if (localStorage.getItem('pushEnabled') !== 'true') return;
+
         if (!notificationBanner || !notificationMessage) return;
         notificationMessage.textContent = message;
         notificationBanner.classList.add('active');
@@ -357,6 +361,12 @@ const initApp = () => {
     }
 
     function toggleNightLight() {
+        // Restrict to mobile/tablet screens (<= 1024px)
+        if (window.innerWidth > 1024) {
+            showNotification('Night Light is only available on mobile devices');
+            return;
+        }
+
         if (!nightLightToggle) return;
         nightLightToggle.classList.toggle('active');
         const isEnabled = nightLightToggle.classList.contains('active');
@@ -387,24 +397,44 @@ const initApp = () => {
         showNotification(isEnabled ? 'Night light turned ON' : 'Night light turned OFF');
     }
 
+    // Auto-disable Night Light on large screens
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 1024 && localStorage.getItem('nightLight') === 'true') {
+            // Silently turn off
+            const overlay = document.getElementById('night-light-overlay');
+            if (overlay) overlay.classList.remove('active');
+
+            if (nightLightToggle) nightLightToggle.classList.remove('active');
+            if (nightLightIntensityContainer) nightLightIntensityContainer.classList.remove('active');
+
+            localStorage.setItem('nightLight', 'false');
+            updateMobileNightLightBtn();
+        }
+    });
+
     if (nightLightToggle) {
         nightLightToggle.addEventListener('click', toggleNightLight);
 
-        // Initialize from storage
+        // Initialize from storage (only if mobile)
         if (localStorage.getItem('nightLight') === 'true') {
-            nightLightToggle.classList.add('active');
-            let overlay = document.getElementById('night-light-overlay');
-            if (!overlay) {
-                overlay = document.createElement('div');
-                overlay.id = 'night-light-overlay';
-                document.body.appendChild(overlay);
-            }
-            overlay.classList.add('active');
+            if (window.innerWidth > 1024) {
+                // Auto-disable if loaded on desktop with it enabled
+                localStorage.setItem('nightLight', 'false');
+            } else {
+                nightLightToggle.classList.add('active');
+                let overlay = document.getElementById('night-light-overlay');
+                if (!overlay) {
+                    overlay = document.createElement('div');
+                    overlay.id = 'night-light-overlay';
+                    document.body.appendChild(overlay);
+                }
+                overlay.classList.add('active');
 
-            // Show slider and apply intensity
-            if (nightLightIntensityContainer) nightLightIntensityContainer.classList.add('active');
-            if (nightLightIntensitySlider) {
-                updateNightLightIntensity(nightLightIntensitySlider.value);
+                // Show slider and apply intensity
+                if (nightLightIntensityContainer) nightLightIntensityContainer.classList.add('active');
+                if (nightLightIntensitySlider) {
+                    updateNightLightIntensity(nightLightIntensitySlider.value);
+                }
             }
         }
     }
@@ -2067,6 +2097,16 @@ const initApp = () => {
 
 // Logo Click Animation & Reload Logic
 const initPart2 = () => {
+    // Temporarily disable smooth scrolling to prevent jumps on reload
+    document.documentElement.style.scrollBehavior = 'auto';
+
+    // Re-enable smooth scrolling after load
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            document.documentElement.style.scrollBehavior = '';
+        }, 100);
+    });
+
     // Restore scroll position if saved
     const savedScroll = sessionStorage.getItem('restoreScrollPosition');
     if (savedScroll) {
@@ -2123,6 +2163,9 @@ const initPart2 = () => {
 
     // Restore scroll position on page load
     window.addEventListener('load', () => {
+        // Only use manual fallback if browser doesn't support native restoration
+        if ('scrollRestoration' in history) return;
+
         try {
             const savedData = sessionStorage.getItem(`scrollPos_${window.location.pathname}`);
             if (savedData) {

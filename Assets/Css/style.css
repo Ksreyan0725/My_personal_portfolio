@@ -807,20 +807,31 @@ body.sidebar-open #pageWrapper {
 }
 
 .notification-content {
-  background: rgba(15, 23, 42, 0.9);
+  background: rgba(0, 0, 0, 0.25);
   color: #fff;
   padding: 12px 24px;
   border-radius: 50px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
   display: flex;
   align-items: center;
   gap: 12px;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(30px) saturate(200%);
+  -webkit-backdrop-filter: blur(30px) saturate(200%);
+  border: 2px solid var(--accent);
   pointer-events: auto;
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.3s ease, transform 0.3s ease;
+  outline: none;
+  box-shadow: none !important;
+  filter: none;
+}
+
+[data-theme="light"] .notification-content {
+  background: rgba(255, 255, 255, 0.25);
+  color: #000;
+  border: 2px solid var(--accent);
+  box-shadow: none !important;
+  filter: none;
 }
 
 .notification-banner.active .notification-content {
@@ -3699,6 +3710,26 @@ body.no-scroll {
     filter: grayscale(1);
     background: var(--bg-secondary);
     border-color: var(--border);
+}
+
+/* ==================== DESKTOP/TABLET: Remove Night Light Active State ==================== */
+/* On screens where the side-menu button (.menu-icon) is hidden, remove the yellow highlight */
+@media (min-width: 768px) {
+    .mobile-night-light-btn.active {
+        background: var(--bg-secondary) !important;
+        border-color: var(--border) !important;
+        color: var(--text-primary) !important;
+        box-shadow: none !important;
+    }
+    
+    .mobile-night-light-btn.active .night-light-icon {
+        filter: none !important;
+        transform: none !important;
+    }
+    
+    [data-theme="light"] .mobile-night-light-btn.active .night-light-icon {
+        filter: invert(1) !important;
+    }
 }
 
 .night-light-icon {
