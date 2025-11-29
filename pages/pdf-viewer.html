@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PDF Viewer - Portfolio</title>
-    <link rel="icon" type="image/png" href="../Assets/Images.icons/favicon.png" sizes="64x64" />
+    <link rel="icon" type="image/png" href="../assets/icons/favicon.png" sizes="64x64" />
     
     <!-- Early theme initialization to prevent flash of wrong theme -->
     <script>
@@ -514,11 +514,11 @@
                     <span style="font-size: 18px;">+</span>
                 </button>
                 <button id="print-pdf" title="Print PDF" aria-label="Print PDF">
-                    <img id="printIcon" src="../Assets/Images.icons/printer.png" alt="Print" width="20" height="20" onerror="this.onerror=null; this.src='../Assets/Images.icons/printer.png';" />
+                    <img id="printIcon" src="../assets/icons/printer.png" alt="Print" width="20" height="20" onerror="this.onerror=null; this.src='../assets/icons/printer.png';" />
                     <span class="button-text">Print</span>
                 </button>
                 <button id="download-pdf" title="Download PDF" aria-label="Download PDF">
-                    <img id="downloadIcon" src="../Assets/Images.icons/download.png" alt="Download" width="20" height="20" onerror="this.onerror=null; this.src='../Assets/Images.icons/download.png';" />
+                    <img id="downloadIcon" src="../assets/icons/download.png" alt="Download" width="20" height="20" onerror="this.onerror=null; this.src='../assets/icons/download.png';" />
                     <span class="button-text">Download</span>
                 </button>
             </div>
@@ -624,9 +624,9 @@
         function setIconSrc(imgEl, fileName) {
             if (!imgEl) return;
             const candidates = [
-                `../Assets/Images.icons/${fileName}`,
-                `./../Assets/Images.icons/${fileName}`,
-                `${window.location.pathname.split('/')[1] ? '/' + window.location.pathname.split('/')[1] : ''}/Assets/Images.icons/${fileName}`
+                `../assets/icons/${fileName}`,
+                `./../assets/icons/${fileName}`,
+                `${window.location.pathname.split('/')[1] ? '/' + window.location.pathname.split('/')[1] : ''}/assets/icons/${fileName}`
             ];
 
             let idx = 0;
@@ -644,10 +644,10 @@
         // ==================== CONFIGURATION ====================
         // 🔧 TO REPLACE THE PDF FILE:
         // Change the path below to point to your PDF file.
-        // Example: 'Assets/Docs/Resume.pdf' or 'Assets/Docs/MyDocument.pdf'
+        // Example: 'assets/docs/resume.pdf' or 'assets/docs/mydocument.pdf'
         // Default PDF path. Will be overridden if ?file=... is provided in the URL.
-    // Default PDF path. Prefer files kept in Assets/Docs
-    let PDF_PATH = '../Assets/Docs/Kumar_Sreyan_Pattanayak_Resume.pdf';
+    // Default PDF path. Prefer files kept in assets/docs
+    let PDF_PATH = '../assets/docs/kumar-sreyan-pattanayak-resume.pdf';
 
         // If caller passed a `file` query parameter, decode and use it.
         (function() {

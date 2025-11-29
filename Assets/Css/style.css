@@ -3853,3 +3853,16 @@ body.no-scroll {
         background: rgba(255, 255, 255, 0.8) !important; /* Semi-transparent light for Light Mode */
     }
 }
+
+/* ==================== Logo Animation ==================== */
+.nav-logo {
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.logo-exit-anim {
+    transform: scale(0.8) translateY(2px);
+    opacity: 0;
+    pointer-events: none;
+}

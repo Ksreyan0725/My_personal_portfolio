@@ -123,16 +123,18 @@ const initApp = () => {
 
             // Set the appropriate icon based on theme
             const timestamp = new Date().getTime();
+            const isDark = effectiveTheme === 'dark'; // Determine if the effective theme is dark
             if (theme === 'system') {
-                imgElement.src = `Assets/Images.icons/system-theme.png?v=${timestamp}`;
+                imgElement.src = 'assets/icons/system-theme.png';
                 imgElement.alt = 'System Theme';
             } else if (theme === 'light') {
-                imgElement.src = `Assets/Images.icons/light-mode.png?v=${timestamp}`;
+                imgElement.src = 'assets/icons/light-mode.png';
                 imgElement.alt = 'Light Mode';
             } else { // dark
-                imgElement.src = `Assets/Images.icons/dark-mode.png?v=${timestamp}`;
+                imgElement.src = 'assets/icons/dark-mode.png';
                 imgElement.alt = 'Dark Mode';
             }
+
 
             themeToggle.prepend(imgElement); // Add as first child
 
@@ -148,9 +150,9 @@ const initApp = () => {
             // Light mode -> Dark version (zoho-dark.png)
             // Dark mode -> White version (zohomail.png)
             if (effectiveTheme === 'light') {
-                zohoLogo.src = 'Assets/Images.icons/zoho-dark.png';
+                zohoLogo.src = 'assets/icons/zoho-dark.png';
             } else {
-                zohoLogo.src = 'Assets/Images.icons/zohomail.png';
+                zohoLogo.src = 'assets/icons/zohomail.png';
             }
         }
 
@@ -946,10 +948,10 @@ const initApp = () => {
         { title: 'Skills', description: 'Programming languages and technical skills', link: '#skills' },
         { title: 'Contact', description: 'Get in touch via email or social media', link: 'contact.html' },
 
-        { title: 'Resume', description: 'Download resume PDF file', link: 'Assets/Docs/Kumar_Sreyan_Pattanayak_Resume.pdf' },
-        { title: 'Download Resume', description: 'Download Kumar Sreyan Pattanayak resume PDF', link: 'Assets/Docs/Kumar_Sreyan_Pattanayak_Resume.pdf' },
-        { title: 'CV', description: 'Curriculum Vitae - Resume PDF download', link: 'Assets/Docs/Kumar_Sreyan_Pattanayak_Resume.pdf' },
-        { title: 'PDF', description: 'Resume in PDF format for download', link: 'Assets/Docs/Kumar_Sreyan_Pattanayak_Resume.pdf' },
+        { title: 'Resume', description: 'Download resume PDF file', link: 'assets/docs/kumar-sreyan-pattanayak-resume.pdf' },
+        { title: 'Download Resume', description: 'Download Kumar Sreyan Pattanayak resume PDF', link: 'assets/docs/kumar-sreyan-pattanayak-resume.pdf' },
+        { title: 'CV', description: 'Curriculum Vitae - Resume PDF download', link: 'assets/docs/kumar-sreyan-pattanayak-resume.pdf' },
+        { title: 'PDF', description: 'Resume in PDF format for download', link: 'assets/docs/kumar-sreyan-pattanayak-resume.pdf' },
         { title: 'Python', description: 'Programming language - Python development', link: '#skills' },
         { title: 'JavaScript', description: 'Programming language - Web development', link: '#skills' },
         { title: 'Web Development', description: 'HTML, CSS, JavaScript, React', link: '#skills' },
@@ -1161,7 +1163,7 @@ const initApp = () => {
                 if (link.includes('.pdf') && !link.toLowerCase().includes('download')) {
                     // Open PDF in the site viewer (pass file path via query param)
                     // Open in a new tab to avoid losing the current page
-                    window.open('Others-pages/pdf-viewer.html?file=' + encodeURIComponent('../' + link), '_blank', 'noopener');
+                    window.open('pages/pdf-viewer.html?file=' + encodeURIComponent('../' + link), '_blank', 'noopener');
                 } else if (link.includes('download')) {
                     // For explicit download links, create a temporary anchor element
                     const tempLink = document.createElement('a');
@@ -1223,7 +1225,7 @@ const initApp = () => {
                     if (link.includes('.pdf') && !link.toLowerCase().includes('download')) {
                         // Open PDF in the site viewer (pass file path via query param)
                         // Open in a new tab to avoid losing the current page
-                        window.open('Others-pages/pdf-viewer.html?file=' + encodeURIComponent('../' + link), '_blank', 'noopener');
+                        window.open('pages/pdf-viewer.html?file=' + encodeURIComponent('../' + link), '_blank', 'noopener');
                     } else if (link.includes('download')) {
                         // For explicit download links, create a temporary anchor element
                         const tempLink = document.createElement('a');
@@ -1439,7 +1441,7 @@ const initApp = () => {
     // Helper function to navigate to different link types
     function navigateToLink(link) {
         if (link.includes('.pdf') && !link.toLowerCase().includes('download')) {
-            window.open('Others-pages/pdf-viewer.html?file=' + encodeURIComponent('../' + link), '_blank', 'noopener');
+            window.open('pages/pdf-viewer.html?file=' + encodeURIComponent('../' + link), '_blank', 'noopener');
         } else if (link.includes('download')) {
             const tempLink = document.createElement('a');
             tempLink.href = link;
@@ -2033,7 +2035,7 @@ const initApp = () => {
         // Redirect broken placeholder links to 404
         if (rawHref === '#') {
             e.preventDefault();
-            window.location.href = 'Others-pages/404.html';
+            window.location.href = 'pages/404.html';
             return;
         }
 
@@ -2050,11 +2052,11 @@ const initApp = () => {
                 // Must be a syntactically valid email AND on the allowlist
                 if (!isValidEmail(decoded) || !ALLOWED_MAILTO.has(decoded)) {
                     e.preventDefault();
-                    window.location.href = 'Others-pages/404.html';
+                    window.location.href = 'pages/404.html';
                 }
             } catch (_) {
                 e.preventDefault();
-                window.location.href = 'Others-pages/404.html';
+                window.location.href = 'pages/404.html';
             }
             return;
         }
@@ -2077,12 +2079,12 @@ const initApp = () => {
                 // Some servers may not support HEAD; allow through on 405/501
                 if (res.status === 405 || res.status === 501) return;
                 e.preventDefault();
-                window.location.href = 'Others-pages/404.html';
+                window.location.href = 'pages/404.html';
             }
         } catch (err) {
             // Network or fetch error -> route to 404
             e.preventDefault();
-            window.location.href = 'Others-pages/404.html';
+            window.location.href = 'pages/404.html';
         }
     }, true); // capture phase to intercept early
 };
