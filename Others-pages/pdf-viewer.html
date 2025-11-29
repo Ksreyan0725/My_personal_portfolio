@@ -658,9 +658,8 @@
                     // Basic sanitization: disallow absolute URLs (must be relative path inside site)
                     if (/^https?:\/\//i.test(fileParam)) {
                         console.warn('External URL provided for PDF; using default PDF instead for security.');
-                    } else if (/\.\./.test(fileParam)) {
-                        console.warn('Path traversal detected in file parameter; using default PDF instead for security.');
                     } else {
+                        // Allow relative paths including '..' for local navigation
                         PDF_PATH = decodeURIComponent(fileParam);
                     }
                 }
