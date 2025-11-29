@@ -2371,6 +2371,202 @@ const initPart2 = () => {
     /* ==================== Settings Panel Logic ==================== */
     // Logic moved to initApp to ensure correct scope and functionality
 
+    /* ==================== Long-Press to Copy Link (Mobile) ==================== */
+    /**
+     * Adds long-press detection to links on mobile devices
+     * Long-press copies the URL to clipboard
+     * Normal tap continues to open the link as usual
+     */
+    function initLongPressCopy() {
+        // Only enable on touch devices
+        if (!isTouchDevice) return;
+
+        // Select all links that should have long-press copy functionality
+        const linkSelectors = [
+            '.social-link-animated',  // Social media links (GitHub, LinkedIn)
+            '.course-button',         // View Research, Visit Course buttons
+            'a[href*="github.com"]',  // Any GitHub links
+            'a[href*="linkedin.com"]' // Any LinkedIn links
+        ];
+
+        const links = document.querySelectorAll(linkSelectors.join(', '));
+
+        links.forEach(link => {
+            let pressTimer = null;
+            let touchMoved = false;
+            let touchStartX = 0;
+            let touchStartY = 0;
+
+            // Start long-press timer on touchstart
+            link.addEventListener('touchstart', (e) => {
+                touchMoved = false;
+                const touch = e.touches[0];
+                touchStartX = touch.clientX;
+                touchStartY = touch.clientY;
+
+                // Start timer for long-press (600ms)
+                pressTimer = setTimeout(() => {
+                    if (!touchMoved) {
+                        // Long-press detected - copy URL to clipboard
+                        const url = link.href;
+
+                        // Use modern Clipboard API
+                        if (navigator.clipboard && navigator.clipboard.writeText) {
+                            navigator.clipboard.writeText(url)
+                                .then(() => {
+                                    showCopyFeedback(link, 'Link copied!');
+                                })
+                                .catch(() => {
+                                    // Fallback for clipboard API failure
+                                    fallbackCopyToClipboard(url, link);
+                                });
+                        } else {
+                            // Fallback for older browsers
+                            fallbackCopyToClipboard(url, link);
+                        }
+
+                        // Prevent the link from opening
+                        e.preventDefault();
+                    }
+                }, 600); // 600ms long-press threshold
+            }, { passive: false });
+
+            // Track touch movement
+            link.addEventListener('touchmove', (e) => {
+                const touch = e.touches[0];
+                const deltaX = Math.abs(touch.clientX - touchStartX);
+                const deltaY = Math.abs(touch.clientY - touchStartY);
+
+                // If moved more than 10px, consider it a scroll/swipe
+                if (deltaX > 10 || deltaY > 10) {
+                    touchMoved = true;
+                    clearTimeout(pressTimer);
+                }
+            }, { passive: true });
+
+            // Clear timer on touchend
+            link.addEventListener('touchend', () => {
+                clearTimeout(pressTimer);
+            }, { passive: true });
+
+            // Clear timer on touchcancel
+            link.addEventListener('touchcancel', () => {
+                clearTimeout(pressTimer);
+            }, { passive: true });
+        });
+    }
+
+    /**
+     * Fallback method to copy text to clipboard for older browsers
+     */
+    function fallbackCopyToClipboard(text, element) {
+        const textArea = document.createElement('textarea');
+        textArea.value = text;
+        textArea.style.position = 'fixed';
+        textArea.style.left = '-9999px';
+        textArea.style.top = '0';
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+
+        try {
+            const successful = document.execCommand('copy');
+            if (successful) {
+                showCopyFeedback(element, 'Link copied!');
+            } else {
+                showCopyFeedback(element, 'Copy failed', true);
+            }
+        } catch (err) {
+            showCopyFeedback(element, 'Copy failed', true);
+        }
+
+        document.body.removeChild(textArea);
+    }
+
+    /**
+     * Show visual feedback when link is copied
+     */
+    function showCopyFeedback(element, message, isError = false) {
+        // Create feedback toast
+        const feedback = document.createElement('div');
+        feedback.textContent = message;
+        feedback.style.cssText = `
+            position: fixed;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-20px);
+            background: ${isError ? 'rgba(239, 68, 68, 0.95)' : 'rgba(16, 185, 129, 0.95)'};
+            color: white;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 500;
+            z-index: 10000;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(10px);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        `;
+
+        // Add animation keyframes if not already present
+        if (!document.getElementById('copyFeedbackStyles')) {
+            const style = document.createElement('style');
+            style.id = 'copyFeedbackStyles';
+            style.textContent = `
+                @keyframes toastFadeIn {
+                    from { 
+                        opacity: 0; 
+                        transform: translateX(-50%) translateY(-20px);
+                    }
+                    to { 
+                        opacity: 1; 
+                        transform: translateX(-50%) translateY(0);
+                    }
+                }
+                @keyframes toastFadeOut {
+                    from { 
+                        opacity: 1; 
+                        transform: translateX(-50%) translateY(0);
+                    }
+                    to { 
+                        opacity: 0; 
+                        transform: translateX(-50%) translateY(-10px);
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+
+        document.body.appendChild(feedback);
+
+        // Trigger fade-in animation
+        requestAnimationFrame(() => {
+            feedback.style.opacity = '1';
+            feedback.style.transform = 'translateX(-50%) translateY(0)';
+        });
+
+        // Add haptic feedback if available
+        if (navigator.vibrate) {
+            navigator.vibrate(50);
+        }
+
+        // Fade out and remove after 2 seconds
+        setTimeout(() => {
+            feedback.style.opacity = '0';
+            feedback.style.transform = 'translateX(-50%) translateY(-10px)';
+
+            setTimeout(() => {
+                if (feedback.parentNode) {
+                    feedback.parentNode.removeChild(feedback);
+                }
+            }, 300); // Wait for fade-out animation
+        }, 2000);
+    }
+
+    // Initialize long-press functionality
+    initLongPressCopy();
+
 };
 
 if (document.readyState === 'loading') {

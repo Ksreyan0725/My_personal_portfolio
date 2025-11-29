@@ -33,7 +33,7 @@
   }
 
   .nav-container {
-    gap: 6px;
+    gap: 4px;
     padding: 0 10px;
     justify-content: flex-start !important;
   }
@@ -265,6 +265,7 @@
       order: 4 !important;
     }
 }
+
 
   /* Profile photo - smaller */
   .profile-photo {
@@ -512,7 +513,7 @@
   }
 
   .nav-container {
-    gap: 8px;
+    gap: 4px;
     padding: 0 12px;
   }
 
@@ -936,7 +937,7 @@
   }
 
   .nav-logo {
-    display: block !important;
+    display: flex !important;
     font-size: 1.35rem;
     order: 1;
   }
@@ -1210,7 +1211,7 @@
   .theme-icon {
     font-size: 18px !important;
     margin: 0 !important;
-    display: block !important;
+    display: inline-block !important; /* Changed from block to fix centering */
     line-height: 1 !important;
   }
 }
@@ -1402,6 +1403,8 @@
     display: none !important;
   }
   .theme-toggle {
+    display: flex !important;
+    align-items: center !important;
     width: 40px !important;
     height: 40px !important;
     min-width: 40px !important;
@@ -1422,14 +1425,17 @@
   }
   .theme-icon {
     margin: 0 !important;
+    display: inline-block !important; /* Changed from block to fix centering */
   }
 }
 
 /* Mobile and smaller screens - Ensure logo is visible per new requirement */
 @media (max-width: 759px) {
   .nav-logo {
-    display: block !important;
-    font-size: 1.2rem; /* Slightly smaller for mobile */
+    order: 2 !important;
+    margin-left: 0 !important;
+    margin-right: auto !important;
+    display: flex !important;
   }
 }
 
@@ -1513,6 +1519,14 @@
     margin-left: 8px; /* Gap between search and theme */
     order: 4;
   }
+  
+  #navbar .theme-icon {
+    width: 16px !important;
+    height: 16px !important;
+    display: block !important;
+    margin: 0 !important;
+    object-fit: contain;
+  }
   #navbar .theme-toggle:hover { border-color: var(--accent); }
   #navbar .theme-toggle:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--accent-glow); }
 
@@ -1525,11 +1539,16 @@
   }
 }
 
+/* ===========================================
+   CRITICAL FIX: SCREENS 589px AND BELOW
+   Override space-between to eliminate gap between menu and logo
+   Must come AFTER max-width: 767px rule to override it
+   =========================================== */
+
 /* Horizontal layout for TABLET (768px - 1024px) */
 /* Photo on LEFT, Content on RIGHT (Grid Layout) */
 /* NOT applied on mobile screens (767px and below) */
 @media (min-width: 768px) and (max-width: 1024px) {
-
 
   #home .home-grid {
     display: flex;
@@ -1866,7 +1885,15 @@
 
 @media (max-width: 590px) {
   nav { height: 54px !important; }
+  
+  .nav-container {
+    justify-content: flex-start !important;
+    gap: 4px !important;
+    padding: 0 10px !important;
+  }
+
   #navbar .desktop-search { display: none !important; }
+  
   #navbar .mobile-search-icon { 
     display: inline-flex !important; 
     order: 3; 
@@ -1880,6 +1907,7 @@
     border-radius: 10px !important;
     box-sizing: border-box !important;
   }
+  
   #navbar .theme-toggle { 
     order: 4;
     background: var(--card-bg) !important;
@@ -1890,7 +1918,7 @@
     display: flex !important;
     align-items: center;
     justify-content: center;
-    margin-left: 8px;
+    margin-left: 0 !important;
     width: 40px !important;
     height: 40px !important;
     min-width: 40px !important;
@@ -1900,9 +1928,10 @@
     -webkit-backdrop-filter: blur(8px);
     box-sizing: border-box !important;
   }
+  
   #navbar .menu-icon {
     order: 1 !important;
-    margin-right: auto !important;
+    margin-right: 0 !important;
     margin-left: 0 !important;
     background: transparent !important;
     border: none !important;
@@ -1920,6 +1949,15 @@
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
     box-sizing: border-box !important;
+  }
+
+  .nav-logo {
+    order: 2 !important;
+    margin-left: 0 !important;
+    margin-right: auto !important;
+    display: flex !important;
+    align-items: center !important;
+    flex-grow: 0 !important;
   }
 }
 @media (min-width: 769px) and (max-width: 1024px) {

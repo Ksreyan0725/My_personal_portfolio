@@ -507,6 +507,158 @@
           const nextTheme = themes[(currentIndex + 1) % themes.length];
           applyTheme(nextTheme);
         });
+
+        /* ==================== Long-Press to Copy Link (Mobile) ==================== */
+        // Detect touch devices
+        const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+        function initLongPressCopy() {
+            if (!isTouchDevice) return;
+
+            const links = document.querySelectorAll('.social-icons a, a[href*="github.com"], a[href*="linkedin.com"], a[href*="x.com"]');
+            
+            links.forEach(link => {
+                let pressTimer = null;
+                let touchMoved = false;
+                let touchStartX = 0;
+                let touchStartY = 0;
+
+                link.addEventListener('touchstart', (e) => {
+                    touchMoved = false;
+                    const touch = e.touches[0];
+                    touchStartX = touch.clientX;
+                    touchStartY = touch.clientY;
+
+                    pressTimer = setTimeout(() => {
+                        if (!touchMoved) {
+                            const url = link.href;
+                            
+                            if (navigator.clipboard && navigator.clipboard.writeText) {
+                                navigator.clipboard.writeText(url)
+                                    .then(() => showCopyFeedback('Link copied!'))
+                                    .catch(() => fallbackCopyToClipboard(url));
+                            } else {
+                                fallbackCopyToClipboard(url);
+                            }
+                            e.preventDefault();
+                        }
+                    }, 600);
+                }, { passive: false });
+
+                link.addEventListener('touchmove', (e) => {
+                    const touch = e.touches[0];
+                    const deltaX = Math.abs(touch.clientX - touchStartX);
+                    const deltaY = Math.abs(touch.clientY - touchStartY);
+                    
+                    if (deltaX > 10 || deltaY > 10) {
+                        touchMoved = true;
+                        clearTimeout(pressTimer);
+                    }
+                }, { passive: true });
+
+                link.addEventListener('touchend', () => {
+                    clearTimeout(pressTimer);
+                }, { passive: true });
+
+                link.addEventListener('touchcancel', () => {
+                    clearTimeout(pressTimer);
+                }, { passive: true });
+            });
+        }
+
+        function fallbackCopyToClipboard(text) {
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+            textArea.style.position = 'fixed';
+            textArea.style.left = '-9999px';
+            document.body.appendChild(textArea);
+            textArea.select();
+
+            try {
+                const successful = document.execCommand('copy');
+                showCopyFeedback(successful ? 'Link copied!' : 'Copy failed', !successful);
+            } catch (err) {
+                showCopyFeedback('Copy failed', true);
+            }
+            document.body.removeChild(textArea);
+        }
+
+        function showCopyFeedback(message, isError = false) {
+            const feedback = document.createElement('div');
+            feedback.textContent = message;
+            feedback.style.cssText = `
+                position: fixed;
+                top: 80px;
+                left: 50%;
+                transform: translateX(-50%) translateY(-20px);
+                background: ${isError ? 'rgba(239, 68, 68, 0.95)' : 'rgba(16, 185, 129, 0.95)'};
+                color: white;
+                padding: 12px 24px;
+                border-radius: 12px;
+                font-size: 14px;
+                font-weight: 500;
+                z-index: 10000;
+                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+                backdrop-filter: blur(10px);
+                pointer-events: none;
+                opacity: 0;
+                transition: opacity 0.3s ease, transform 0.3s ease;
+            `;
+
+            if (!document.getElementById('copyFeedbackStyles')) {
+                const style = document.createElement('style');
+                style.id = 'copyFeedbackStyles';
+                style.textContent = `
+                    @keyframes toastFadeIn {
+                        from { 
+                            opacity: 0; 
+                            transform: translateX(-50%) translateY(-20px);
+                        }
+                        to { 
+                            opacity: 1; 
+                            transform: translateX(-50%) translateY(0);
+                        }
+                    }
+                    @keyframes toastFadeOut {
+                        from { 
+                            opacity: 1; 
+                            transform: translateX(-50%) translateY(0);
+                        }
+                        to { 
+                            opacity: 0; 
+                            transform: translateX(-50%) translateY(-10px);
+                        }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+
+            document.body.appendChild(feedback);
+
+            requestAnimationFrame(() => {
+                feedback.style.opacity = '1';
+                feedback.style.transform = 'translateX(-50%) translateY(0)';
+            });
+
+            if (navigator.vibrate) {
+                navigator.vibrate(50);
+            }
+
+            setTimeout(() => {
+                feedback.style.opacity = '0';
+                feedback.style.transform = 'translateX(-50%) translateY(-10px)';
+                
+                setTimeout(() => {
+                    if (feedback.parentNode) {
+                        feedback.parentNode.removeChild(feedback);
+                    }
+                }, 300);
+            }, 2000);
+        }
+
+        // Initialize long-press functionality
+        initLongPressCopy();
+      
       </script>
     </div>
   </body>
