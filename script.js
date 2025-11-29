@@ -222,6 +222,63 @@ const initApp = () => {
     });
 
     /* ==================== Settings Panel Logic (Integrated) ==================== */
+    // Open/Close Handlers
+    if (openSettingsBtn) openSettingsBtn.addEventListener('click', openSettings);
+    if (settingsCloseBtn) settingsCloseBtn.addEventListener('click', closeSettings);
+    if (settingsOverlay) settingsOverlay.addEventListener('click', closeSettings);
+
+    // Slide down to close (Mobile)
+    if (settingsPanel) {
+        let touchStartY = 0;
+        let touchCurrentY = 0;
+
+        settingsPanel.addEventListener('touchstart', (e) => {
+            const touch = e.touches[0];
+            // Only trigger if at the top of the panel (header area) or if panel is not scrolled
+            if (settingsPanel.scrollTop === 0) {
+                touchStartY = touch.clientY;
+            } else {
+                touchStartY = -1; // Ignore
+            }
+        }, { passive: true });
+
+        settingsPanel.addEventListener('touchmove', (e) => {
+            if (touchStartY === -1) return;
+
+            const touch = e.touches[0];
+            touchCurrentY = touch.clientY;
+            const deltaY = touchCurrentY - touchStartY;
+
+            // If pulling down
+            if (deltaY > 0) {
+                // Animate the panel
+                settingsPanel.style.transform = `translateY(${deltaY}px)`;
+                settingsPanel.style.transition = 'none';
+            }
+        }, { passive: true });
+
+        settingsPanel.addEventListener('touchend', (e) => {
+            if (touchStartY === -1) return;
+
+            const deltaY = touchCurrentY - touchStartY;
+            settingsPanel.style.transition = 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+
+            // Threshold to close (e.g., 100px)
+            if (deltaY > 100) {
+                closeSettings();
+                setTimeout(() => {
+                    settingsPanel.style.transform = '';
+                }, 300);
+            } else {
+                // Snap back
+                settingsPanel.style.transform = '';
+            }
+
+            touchStartY = 0;
+            touchCurrentY = 0;
+        }, { passive: true });
+    }
+
     // Theme Buttons
     if (themeBtns) {
         themeBtns.forEach(btn => {
@@ -237,7 +294,30 @@ const initApp = () => {
     const mobileNightLightBtn = document.getElementById('mobileNightLightBtn');
     const notificationBanner = document.getElementById('nightLightNotification');
     const notificationMessage = document.getElementById('notificationMessage');
+    const nightLightIntensitySlider = document.getElementById('nightLightIntensitySlider');
+    const nightLightIntensityContainer = document.getElementById('nightLightIntensityContainer');
     let notificationTimeout;
+
+    function updateNightLightIntensity(intensity) {
+        const overlay = document.getElementById('night-light-overlay');
+        if (overlay) {
+            // Map 0-100 to opacity 0.1 - 0.5
+            const opacity = 0.1 + (intensity / 100) * 0.4;
+            overlay.style.backgroundColor = `rgba(255, 160, 0, ${opacity})`;
+        }
+    }
+
+    if (nightLightIntensitySlider) {
+        nightLightIntensitySlider.addEventListener('input', (e) => {
+            const intensity = e.target.value;
+            localStorage.setItem('nightLightIntensity', intensity);
+            updateNightLightIntensity(intensity);
+        });
+
+        // Initialize slider value
+        const savedIntensity = localStorage.getItem('nightLightIntensity') || '50';
+        nightLightIntensitySlider.value = savedIntensity;
+    }
 
     function showNotification(message) {
         if (!notificationBanner || !notificationMessage) return;
@@ -291,9 +371,16 @@ const initApp = () => {
         if (isEnabled) {
             overlay.classList.add('active');
             localStorage.setItem('nightLight', 'true');
+            if (nightLightIntensityContainer) nightLightIntensityContainer.classList.add('active');
+
+            // Apply current intensity
+            if (nightLightIntensitySlider) {
+                updateNightLightIntensity(nightLightIntensitySlider.value);
+            }
         } else {
             overlay.classList.remove('active');
             localStorage.setItem('nightLight', 'false');
+            if (nightLightIntensityContainer) nightLightIntensityContainer.classList.remove('active');
         }
 
         updateMobileNightLightBtn();
@@ -313,6 +400,12 @@ const initApp = () => {
                 document.body.appendChild(overlay);
             }
             overlay.classList.add('active');
+
+            // Show slider and apply intensity
+            if (nightLightIntensityContainer) nightLightIntensityContainer.classList.add('active');
+            if (nightLightIntensitySlider) {
+                updateNightLightIntensity(nightLightIntensitySlider.value);
+            }
         }
     }
 

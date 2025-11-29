@@ -3444,14 +3444,19 @@ body.no-scroll {
 
 /* '×' icon in OFF state */
 .toggle-slider::before {
-    content: '×';
-    font-size: 18px;
-    font-weight: 600;
-    color: #666;
-    line-height: 1;
+    content: '';
+    width: 12px;
+    height: 12px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23666666' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='18' y1='6' x2='6' y2='18'%3E%3C/line%3E%3Cline x1='6' y1='6' x2='18' y2='18'%3E%3C/line%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     opacity: 1;
     transition: opacity 0.2s ease;
-    margin-top: 1px;
 }
 
 .toggle-switch.active .toggle-slider {
@@ -3710,6 +3715,78 @@ body.no-scroll {
     filter: none;
 }
 
+/* Night Light Intensity Slider */
+.night-light-intensity-container {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease, margin 0.3s ease;
+    opacity: 0;
+    margin-top: 0;
+}
+
+.night-light-intensity-container.active {
+    max-height: 100px;
+    opacity: 1;
+    margin-top: 16px;
+}
+
+.intensity-label {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+    font-weight: 500;
+}
+
+.intensity-slider-wrapper {
+    position: relative;
+    width: 100%;
+    height: 24px;
+    display: flex;
+    align-items: center;
+}
+
+/* Center dot at 50% */
+.intensity-slider-wrapper::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 4px;
+    height: 4px;
+    background-color: var(--text-primary);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.intensity-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 4px;
+    background: var(--border);
+    border-radius: 2px;
+    outline: none;
+    cursor: pointer;
+}
+
+.intensity-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    background: var(--text-secondary);
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    transition: transform 0.1s ease, background 0.2s ease;
+}
+
+.intensity-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.1);
+    background: var(--text-primary);
+}
+
 /* Hide on desktop */
 /* CONSOLIDATED: Moved to main 769px query at end of file */
 
@@ -3733,4 +3810,15 @@ body.no-scroll {
 /* Light Theme Sidebar Icon (Moved from responsive.css) */
 [data-theme="light"] .sidebar-icon {
     filter: invert(1);
+}
+
+/* Night Light Notification Background Fix (Tablet/Mobile Only) */
+@media (max-width: 768px) {
+    .notification-banner {
+        background: rgba(0, 0, 0, 0.7) !important; /* Semi-transparent black for Dark Mode */
+    }
+
+    [data-theme="light"] .notification-banner {
+        background: rgba(255, 255, 255, 0.8) !important; /* Semi-transparent light for Light Mode */
+    }
 }
