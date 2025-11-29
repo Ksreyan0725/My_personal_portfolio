@@ -582,7 +582,9 @@
       }
 
       .theme-icon {
-        font-size: 16px;
+        width: 16px;
+        height: 16px;
+        object-fit: contain;
         transition: transform 0.3s ease;
       }
 
@@ -1252,11 +1254,6 @@
         }
       }
 
-      function updateThemeButton(index) {
-        themeIcon.textContent = themes[index].icon;
-        themeText.textContent = themes[index].text;
-      }
-
       // Initialize theme
       applyTheme(themes[currentThemeIndex].name);
       updateThemeButton(currentThemeIndex);
@@ -1303,6 +1300,27 @@
         updateThemeButton(currentThemeIndex);
         localStorage.setItem("theme", currentTheme);
       });
+
+      function updateThemeButton(index) {
+          const theme = themes[index];
+          const themeIcon = themeToggle.querySelector(".theme-icon");
+          const themeText = themeToggle.querySelector(".theme-text");
+          
+          if (themeIcon) {
+              // Update icon source based on theme
+              if (theme.name === 'system') {
+                  themeIcon.src = 'Assets/Images.icons/system-theme.png';
+              } else if (theme.name === 'light') {
+                  themeIcon.src = 'Assets/Images.icons/light-mode.png';
+              } else if (theme.name === 'dark') {
+                  themeIcon.src = 'Assets/Images.icons/dark-mode.png';
+              }
+          }
+          
+          if (themeText) {
+              themeText.textContent = theme.text;
+          }
+      }
 
       // Contact page search behavior: inline results without redirect
       (function initContactSearch(){
@@ -1560,6 +1578,8 @@
         <strong>Copyright © 2025</strong> Kumar Sreyan Pattanayak
         <br>
         All Rights Reserved | Made with ❤️
+        <br>
+        Hosted on GitHub Pages | <a href="https://docs.github.com/en/site-policy/github-terms/github-terms-of-service" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;"> <strong>GitHub Terms of Service</strong></a>
       </p>
     </footer>
     </div>

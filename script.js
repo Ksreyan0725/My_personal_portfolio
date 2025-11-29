@@ -1,5 +1,5 @@
 // Modern Portfolio JavaScript
-console.log("******************************JAVASCRIPT_ACTIVATED************************************************************************");
+console.log("******************************JAVASCRIPT_ACTIVATED**************************************");
 // Detect touch devices
 const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
@@ -220,6 +220,130 @@ const initApp = () => {
         const storedTheme = localStorage.getItem('theme') || 'system';
         applyTheme(storedTheme, false);
     });
+
+    /* ==================== Settings Panel Logic (Integrated) ==================== */
+    // Theme Buttons
+    if (themeBtns) {
+        themeBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const theme = btn.dataset.theme;
+                applyTheme(theme, true);
+                updateActiveThemeBtn(theme);
+            });
+        });
+    }
+
+    // Night Light Logic
+    const mobileNightLightBtn = document.getElementById('mobileNightLightBtn');
+    const notificationBanner = document.getElementById('nightLightNotification');
+    const notificationMessage = document.getElementById('notificationMessage');
+    let notificationTimeout;
+
+    function showNotification(message) {
+        if (!notificationBanner || !notificationMessage) return;
+        notificationMessage.textContent = message;
+        notificationBanner.classList.add('active');
+
+        clearTimeout(notificationTimeout);
+        notificationTimeout = setTimeout(() => {
+            notificationBanner.classList.remove('active');
+        }, 3500);
+    }
+
+    // Swipe to dismiss notification
+    if (notificationBanner) {
+        let touchStartX = 0;
+        notificationBanner.addEventListener('touchstart', e => {
+            touchStartX = e.touches[0].clientX;
+        }, { passive: true });
+
+        notificationBanner.addEventListener('touchend', e => {
+            const touchEndX = e.changedTouches[0].clientX;
+            if (Math.abs(touchEndX - touchStartX) > 50) {
+                notificationBanner.classList.remove('active');
+            }
+        }, { passive: true });
+    }
+
+    function updateMobileNightLightBtn() {
+        if (!mobileNightLightBtn) return;
+        const isEnabled = localStorage.getItem('nightLight') === 'true';
+        if (isEnabled) {
+            mobileNightLightBtn.classList.add('active');
+        } else {
+            mobileNightLightBtn.classList.remove('active');
+        }
+        mobileNightLightBtn.classList.remove('disabled'); // Ensure enabled
+    }
+
+    function toggleNightLight() {
+        if (!nightLightToggle) return;
+        nightLightToggle.classList.toggle('active');
+        const isEnabled = nightLightToggle.classList.contains('active');
+
+        let overlay = document.getElementById('night-light-overlay');
+        if (!overlay) {
+            overlay = document.createElement('div');
+            overlay.id = 'night-light-overlay';
+            document.body.appendChild(overlay);
+        }
+
+        if (isEnabled) {
+            overlay.classList.add('active');
+            localStorage.setItem('nightLight', 'true');
+        } else {
+            overlay.classList.remove('active');
+            localStorage.setItem('nightLight', 'false');
+        }
+
+        updateMobileNightLightBtn();
+        showNotification(isEnabled ? 'Night light turned ON' : 'Night light turned OFF');
+    }
+
+    if (nightLightToggle) {
+        nightLightToggle.addEventListener('click', toggleNightLight);
+
+        // Initialize from storage
+        if (localStorage.getItem('nightLight') === 'true') {
+            nightLightToggle.classList.add('active');
+            let overlay = document.getElementById('night-light-overlay');
+            if (!overlay) {
+                overlay = document.createElement('div');
+                overlay.id = 'night-light-overlay';
+                document.body.appendChild(overlay);
+            }
+            overlay.classList.add('active');
+        }
+    }
+
+    // Expose for HTML onclick
+    window.handleMobileNightLight = function () {
+        if (nightLightToggle) toggleNightLight();
+    };
+
+    // Initial update
+    updateMobileNightLightBtn();
+
+    // Other Toggles (Push & Sound)
+    const pushToggle = document.getElementById('pushToggle');
+    const soundToggle = document.getElementById('soundToggle');
+
+    if (pushToggle) {
+        pushToggle.addEventListener('click', () => {
+            pushToggle.classList.toggle('active');
+            localStorage.setItem('pushEnabled', pushToggle.classList.contains('active'));
+        });
+        if (localStorage.getItem('pushEnabled') === 'true') pushToggle.classList.add('active');
+    }
+
+    if (soundToggle) {
+        soundToggle.addEventListener('click', () => {
+            soundToggle.classList.toggle('active');
+            localStorage.setItem('soundEnabled', soundToggle.classList.contains('active'));
+        });
+        if (localStorage.getItem('soundEnabled') === 'true') soundToggle.classList.add('active');
+    }
+
 
     /* ==================== Ripple Animation Functions ==================== */
     function createRipple(event) {
@@ -2245,178 +2369,7 @@ const initPart2 = () => {
     }
 
     /* ==================== Settings Panel Logic ==================== */
-    // Variables and functions moved to top of file for scope availability
-
-    function toggleNightLight() {
-        if (!nightLightToggle) return;
-        nightLightToggle.classList.toggle('active');
-        const isEnabled = nightLightToggle.classList.contains('active');
-
-        let overlay = document.getElementById('night-light-overlay');
-        if (!overlay) {
-            overlay = document.createElement('div');
-            overlay.id = 'night-light-overlay';
-            document.body.appendChild(overlay);
-        }
-
-        if (isEnabled) {
-            overlay.classList.add('active');
-            localStorage.setItem('nightLight', 'true');
-        } else {
-            overlay.classList.remove('active');
-            localStorage.setItem('nightLight', 'false');
-        }
-
-        // Update mobile button state to reflect the change
-        updateMobileNightLightBtn();
-    }
-
-    // Event Listeners
-    // Expose functions to window for inline HTML access (Fix for button click issues)
-    window.openSettings = openSettings;
-    window.closeSettings = closeSettings;
-
-    window.handleMobileNightLight = function () {
-        const btn = document.getElementById('mobileNightLightBtn');
-        if (btn && btn.classList.contains('disabled')) return;
-
-        const toggle = document.getElementById('nightLightToggle');
-        if (toggle) toggle.click();
-    };
-
-    // Keep existing listeners as backup
-    if (settingsCloseBtn) settingsCloseBtn.addEventListener('click', closeSettings);
-    if (settingsOverlay) settingsOverlay.addEventListener('click', closeSettings);
-    if (nightLightToggle) nightLightToggle.addEventListener('click', toggleNightLight);
-
-    themeBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            const theme = btn.dataset.theme;
-            // applyTheme is defined in the parent scope (DOMContentLoaded)
-            if (typeof applyTheme === 'function') {
-                applyTheme(theme, true);
-            }
-            updateActiveThemeBtn(theme);
-        });
-    });
-
-    // Initialize Night Light from storage
-    // Initialize Night Light from storage
-    if (localStorage.getItem('nightLight') === 'true') {
-        if (nightLightToggle) nightLightToggle.classList.add('active');
-        let overlay = document.getElementById('night-light-overlay');
-        if (!overlay) {
-            overlay = document.createElement('div');
-            overlay.id = 'night-light-overlay';
-            document.body.appendChild(overlay);
-        }
-        overlay.classList.add('active');
-    }
-
-    // Notifications Logic
-    const pushToggle = document.getElementById('pushToggle');
-    const soundToggle = document.getElementById('soundToggle');
-
-    function togglePush() {
-        if (!pushToggle) return;
-        pushToggle.classList.toggle('active');
-        localStorage.setItem('pushEnabled', pushToggle.classList.contains('active'));
-    }
-
-    function toggleSound() {
-        if (!soundToggle) return;
-        soundToggle.classList.toggle('active');
-        localStorage.setItem('soundEnabled', soundToggle.classList.contains('active'));
-    }
-
-    if (pushToggle) pushToggle.addEventListener('click', togglePush);
-    if (soundToggle) soundToggle.addEventListener('click', toggleSound);
-
-    // Initialize from storage
-    if (localStorage.getItem('pushEnabled') === 'true' && pushToggle) {
-        pushToggle.classList.add('active');
-    }
-    if (localStorage.getItem('soundEnabled') === 'true' && soundToggle) {
-        soundToggle.classList.add('active');
-    }
-
-    /* ==================== Night Light Extension (Mobile & Notification) ==================== */
-    const mobileNightLightBtn = document.getElementById('mobileNightLightBtn');
-    const notificationBanner = document.getElementById('nightLightNotification');
-    const notificationMessage = document.getElementById('notificationMessage');
-    let notificationTimeout;
-
-    function showNotification(message) {
-        if (!notificationBanner || !notificationMessage) return;
-        notificationMessage.textContent = message;
-        notificationBanner.classList.add('active');
-
-        clearTimeout(notificationTimeout);
-        notificationTimeout = setTimeout(() => {
-            notificationBanner.classList.remove('active');
-        }, 3500);
-    }
-
-    // Swipe to dismiss notification
-    let touchStartX = 0;
-    if (notificationBanner) {
-        notificationBanner.addEventListener('touchstart', e => {
-            touchStartX = e.touches[0].clientX;
-        }, { passive: true });
-
-        notificationBanner.addEventListener('touchend', e => {
-            const touchEndX = e.changedTouches[0].clientX;
-            if (Math.abs(touchEndX - touchStartX) > 50) { // Swipe threshold
-                notificationBanner.classList.remove('active');
-            }
-        }, { passive: true });
-    }
-
-    function updateMobileNightLightBtn() {
-        if (!mobileNightLightBtn) return;
-        const isEnabled = localStorage.getItem('nightLight') === 'true';
-        if (isEnabled) {
-            mobileNightLightBtn.classList.add('active');
-        } else {
-            mobileNightLightBtn.classList.remove('active');
-        }
-    }
-
-    function checkThemeForNightLight() {
-        if (!mobileNightLightBtn) return;
-        // Night Light is now allowed in both themes
-        mobileNightLightBtn.classList.remove('disabled');
-    }
-
-    // Sync with existing toggle and handle notification
-    if (nightLightToggle) {
-        // Add a secondary listener to the existing toggle
-        nightLightToggle.addEventListener('click', () => {
-            // Small delay to ensure state is updated
-            setTimeout(() => {
-                updateMobileNightLightBtn();
-                const isEnabled = nightLightToggle.classList.contains('active');
-                showNotification(isEnabled ? 'Night Light turned ON' : 'Night Light turned OFF');
-            }, 50);
-        });
-    }
-
-    // Handle Mobile Button Click - Handled by delegation above
-
-    // Monitor Theme Changes
-    const themeObserver = new MutationObserver((mutations) => {
-        mutations.forEach((mutation) => {
-            if (mutation.type === 'attributes' && mutation.attributeName === 'data-theme') {
-                checkThemeForNightLight();
-            }
-        });
-    });
-
-    themeObserver.observe(document.documentElement, { attributes: true });
-
-    // Initial checks
-    checkThemeForNightLight();
-    updateMobileNightLightBtn();
+    // Logic moved to initApp to ensure correct scope and functionality
 
 };
 

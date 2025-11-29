@@ -3539,68 +3539,93 @@ body.no-scroll {
 .notification-banner {
     position: fixed !important;
     top: -100px !important;
-    bottom: auto !important; /* Override potential bottom positioning */
+    bottom: auto !important;
     left: 50% !important;
     transform: translateX(-50%) !important;
-    background: var(--card-bg);
+    /* Default Dark Mode Style */
+    background: rgba(0, 0, 0, 0.85) !important;
     padding: 12px 24px;
-    border-radius: 50px !important; /* Override potential circular shape */
-    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+    border-radius: 9999px !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
     z-index: 10000;
     transition: top 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid var(--border);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    width: auto !important; /* Prevent full width */
-    height: auto !important; /* Prevent fixed height */
-    max-width: 90vw; /* Ensure it fits on small screens */
+    /* Unified Light Blue Border */
+    border: 1.5px solid #38bdf8 !important;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    width: fit-content !important;
+    max-width: 92vw;
+    white-space: nowrap;
+}
+
+/* Light Mode Override */
+[data-theme="light"] .notification-banner {
+    background: rgba(255, 255, 255, 0.9) !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
 }
 
 .notification-banner.active {
-    top: 20px !important;
-    bottom: auto !important;
+    top: 24px !important;
 }
 
 .notification-content {
     display: flex;
     align-items: center;
-    gap: 10px;
-    max-width: 100%; /* Ensure content doesn't overflow container */
+    gap: 12px;
+    flex-wrap: nowrap;
 }
 
 .notification-icon {
-    width: 20px;
-    height: 20px;
+    width: 24px;
+    height: 24px;
     object-fit: contain;
-    flex-shrink: 0; /* Prevent icon from shrinking */
+    flex-shrink: 0;
 }
 
 #notificationMessage {
     font-weight: 600;
-    color: var(--text-primary);
-    font-size: 0.95rem;
-    white-space: nowrap; /* Prevent wrapping */
-    overflow: hidden;
-    text-overflow: ellipsis;
+    /* Default Dark Mode Text */
+    color: #ffffff !important;
+    font-size: 1rem;
+    white-space: nowrap;
 }
 
-/* Tablet & Desktop: Make notification larger */
-@media (min-width: 600px) {
+/* Light Mode Text Override */
+[data-theme="light"] #notificationMessage {
+    color: #000000 !important;
+}
+
+/* Responsive Adjustments for Small Screens */
+@media (max-width: 480px) {
     .notification-banner {
-        padding: 14px 32px;
-        border-radius: 60px !important;
-    }
-    
-    .notification-icon {
-        width: 24px;
-        height: 24px;
+        padding: 10px 20px;
+        max-width: 95vw;
     }
     
     #notificationMessage {
-        font-size: 1.1rem;
+        font-size: 0.9rem; /* Slightly smaller text */
+    }
+    
+    .notification-icon {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+@media (max-width: 360px) {
+    .notification-banner {
+        padding: 8px 16px;
+    }
+    
+    #notificationMessage {
+        font-size: 0.8rem; /* Smaller text for very narrow screens */
+    }
+    
+    .notification-content {
+        gap: 8px;
     }
 }
 
