@@ -487,6 +487,9 @@
         <!-- Top Toolbar -->
         <div class="toolbar" role="toolbar" aria-label="PDF viewer toolbar">
             <div class="toolbar-section">
+                <button id="back-btn" title="Back to Portfolio" aria-label="Back to Portfolio">
+                    <span>🔙</span> <span class="button-text">Back</span>
+                </button>
                 <button id="prev-page" title="Previous Page" aria-label="Previous page">
                     <span>◀</span> <span class="button-text">Previous</span>
                 </button>
@@ -516,6 +519,11 @@
                 </button>
                 <button id="download-pdf" title="Download PDF" aria-label="Download PDF">
                     <img id="downloadIcon" src="../Assets/Images.icons/download.png" alt="Download" width="20" height="20" onerror="this.onerror=null; this.src='../Assets/Images.icons/download.png';" />
+                    <span class="button-text">Download</span>
+                </button>
+            </div>
+        </div>
+
         <div class="error-message" id="error-message"></div>
 
         <!-- PDF Display Area -->
@@ -1009,10 +1017,12 @@
          * Download the currently displayed PDF file
          */
         function downloadPDF() {
-            const link = document.createElement('a');
-            link.href = PDF_PATH;
-            link.download = PDF_PATH.split('/').pop(); // Extract filename
-            link.click();
+            if (confirm('Do you want to download the PDF?')) {
+                const link = document.createElement('a');
+                link.href = PDF_PATH;
+                link.download = PDF_PATH.split('/').pop(); // Extract filename
+                link.click();
+            }
         }
 
         // ==================== PRINT FUNCTION ====================
@@ -1149,6 +1159,22 @@
         if (downloadButton && !downloadButton.hasAttribute('aria-label')) downloadButton.setAttribute('aria-label', 'Download PDF');
         if (printButton && !printButton.hasAttribute('aria-label')) printButton.setAttribute('aria-label', 'Print PDF');
 
+        // Back button
+        const backBtn = document.getElementById('back-btn');
+        if (backBtn) {
+            backBtn.addEventListener('click', () => {
+                try {
+                    window.close();
+                } catch(e) {
+                    window.location.href = '../index.html';
+                }
+                // Fallback if window.close() is blocked and history exists
+                setTimeout(() => {
+                     if (!window.closed) window.location.href = '../index.html';
+                }, 100);
+            });
+        }
+
         // Prev/Next/Zoom bindings (existing)
         prevButton.addEventListener('click', onPrevPage);
         nextButton.addEventListener('click', onNextPage);
@@ -1241,7 +1267,20 @@
             attachRipples();
             // Load PDF
             loadPDF();
+            // Adjust layout
+            adjustLayout();
         });
+
+        // Adjust padding based on toolbar height
+        function adjustLayout() {
+            const toolbar = document.querySelector('.toolbar');
+            const container = document.querySelector('.pdf-container');
+            if (toolbar && container) {
+                const height = toolbar.offsetHeight;
+                container.style.paddingTop = (height + 20) + 'px';
+            }
+        }
+        window.addEventListener('resize', adjustLayout);
 
         // Inline edit for page-info (edit the page number directly inside the label)
 if (pageInfoBtn && pageInfo) {
