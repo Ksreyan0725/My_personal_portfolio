@@ -26,6 +26,28 @@ const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 })();
 const initApp = () => {
     console.log('App Initializing...');
+
+    // Initialize Lenis Smooth Scroll
+    if (typeof Lenis !== 'undefined') {
+        const lenis = new Lenis({
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            direction: 'vertical',
+            gestureDirection: 'vertical',
+            smooth: true,
+            mouseMultiplier: 1,
+            smoothTouch: true,
+            touchMultiplier: 2,
+        });
+
+        function raf(time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
+
+        requestAnimationFrame(raf);
+        window.lenis = lenis;
+    }
     const htmlElement = document.documentElement;
     const body = document.body;
     // Default to 'system' if no preference is saved
@@ -2120,8 +2142,8 @@ const initPart2 = () => {
     }
 
 
-    const logo = document.querySelector('.nav-logo');
-    if (logo) {
+    const logos = document.querySelectorAll('.nav-logo, .sidebar-logo');
+    logos.forEach(logo => {
         logo.addEventListener('click', (e) => {
             e.preventDefault();
 
@@ -2136,7 +2158,7 @@ const initPart2 = () => {
                 location.reload();
             }, 500);
         });
-    }
+    });
 
     /* ==================== Scroll Position Restoration System ==================== */
     /**

@@ -2870,7 +2870,10 @@ footer {
   -webkit-text-fill-color: transparent;
   background-clip: text;
   cursor: pointer;
-  padding-top: 0; /* Align to top */
+  padding: 6px 0; /* Match vertical padding of close button */
+  line-height: 1; /* Match line-height of close button */
+  display: inline-block;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease;
 }
 
 .sidebar-close {
@@ -3680,7 +3683,7 @@ body.no-scroll {
 
 .mobile-night-light-btn.active {
     background: rgba(255, 160, 0, 0.15) !important;
-    border-color: #ffa000 !important;
+    border-color: var(--border) !important;
     color: #ffa000 !important;
     box-shadow: 0 0 15px rgba(255, 160, 0, 0.25); /* Soft yellow glow */
 }
@@ -3865,4 +3868,25 @@ body.no-scroll {
     transform: scale(0.8) translateY(2px);
     opacity: 0;
     pointer-events: none;
+}
+
+/* ==================== Lenis Smooth Scroll ==================== */
+html.lenis, html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
 }
