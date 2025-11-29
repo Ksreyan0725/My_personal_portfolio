@@ -3565,7 +3565,7 @@ body.no-scroll {
     background: rgba(0, 0, 0, 0.85) !important;
     padding: 12px 24px;
     border-radius: 9999px !important;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    box-shadow: none !important;
     z-index: 10000;
     transition: top 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     display: flex;

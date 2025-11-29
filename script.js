@@ -88,15 +88,24 @@ const initApp = () => {
 
     function openSettings() {
         if (!settingsPanel) return;
-        settingsPanel.classList.add('active');
-        settingsOverlay.classList.add('active');
-        document.body.classList.add('no-scroll');
-        document.documentElement.classList.add('no-scroll');
-
         // Close sidebar if open
         const sidebarOverlay = document.getElementById('sidebarOverlay');
         if (sidebarOverlay && getComputedStyle(sidebarOverlay).opacity !== '0') {
             sidebarOverlay.click();
+
+            // Wait for sidebar close animation (300ms) before opening settings
+            setTimeout(() => {
+                settingsPanel.classList.add('active');
+                settingsOverlay.classList.add('active');
+                document.body.classList.add('no-scroll');
+                document.documentElement.classList.add('no-scroll');
+            }, 300);
+        } else {
+            // If sidebar is not open, open settings immediately
+            settingsPanel.classList.add('active');
+            settingsOverlay.classList.add('active');
+            document.body.classList.add('no-scroll');
+            document.documentElement.classList.add('no-scroll');
         }
 
         // Update active theme button
