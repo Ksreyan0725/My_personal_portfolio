@@ -489,7 +489,6 @@ const initApp = () => {
             pushToggle.classList.toggle('active');
             localStorage.setItem('pushEnabled', pushToggle.classList.contains('active'));
         });
-        if (localStorage.getItem('pushEnabled') === 'true') pushToggle.classList.add('active');
     }
 
     if (soundToggle) {
@@ -497,6 +496,20 @@ const initApp = () => {
             soundToggle.classList.toggle('active');
             localStorage.setItem('soundEnabled', soundToggle.classList.contains('active'));
         });
+    }
+
+    // Initialize toggles from localStorage (default Push to ON if not set)
+    if (pushToggle) {
+        const savedPush = localStorage.getItem('pushEnabled');
+        // Default to true if null (not set) or 'true'
+        if (savedPush === 'true' || savedPush === null) {
+            pushToggle.classList.add('active');
+            localStorage.setItem('pushEnabled', 'true'); // Ensure it's saved
+        } else {
+            pushToggle.classList.remove('active');
+        }
+    }
+    if (soundToggle) {
         if (localStorage.getItem('soundEnabled') === 'true') soundToggle.classList.add('active');
     }
 
