@@ -141,6 +141,11 @@
     height: var(--banner-height);
   }
 
+  /* Slow down ticker animation for better readability on small screens */
+  .ticker-content {
+    animation: scroll-right-to-left 35s linear infinite;
+  }
+
   /* ==================== CENTERING & ADJUSTMENTS (310px - 412px) ==================== */
   /* Ensure vertical and horizontal centering for very small screens */
   .container, .home-grid, .profile-section {
@@ -289,6 +294,11 @@
     
     .theme-text {
       display: none !important;
+    }
+
+    /* Slow down ticker animation for better readability on small screens */
+    .ticker-content {
+      animation: scroll-right-to-left 30s linear infinite;
     }
 }
 
@@ -624,6 +634,11 @@
   .notice-banner {
     top: var(--nav-height);
     height: var(--banner-height);
+  }
+
+  /* Slow down ticker animation for better readability on small screens */
+  .ticker-content {
+    animation: scroll-right-to-left 32s linear infinite;
   }
 
 
