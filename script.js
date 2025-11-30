@@ -260,23 +260,29 @@ const initApp = () => {
     if (settingsCloseBtn) settingsCloseBtn.addEventListener('click', closeSettings);
     if (settingsOverlay) settingsOverlay.addEventListener('click', closeSettings);
 
-    // Slide down to close (Mobile)
+    // Slide down to close (Mobile) - Only from header
     if (settingsPanel) {
+        const settingsHeader = document.querySelector('.settings-header');
         let touchStartY = 0;
         let touchCurrentY = 0;
+        let touchStartedInHeader = false;
 
         settingsPanel.addEventListener('touchstart', (e) => {
             const touch = e.touches[0];
-            // Only trigger if at the top of the panel (header area) or if panel is not scrolled
-            if (settingsPanel.scrollTop === 0) {
+            const target = e.target;
+
+            // Check if touch started in the header area
+            if (settingsHeader && settingsHeader.contains(target)) {
+                touchStartedInHeader = true;
                 touchStartY = touch.clientY;
             } else {
+                touchStartedInHeader = false;
                 touchStartY = -1; // Ignore
             }
         }, { passive: true });
 
         settingsPanel.addEventListener('touchmove', (e) => {
-            if (touchStartY === -1) return;
+            if (touchStartY === -1 || !touchStartedInHeader) return;
 
             const touch = e.touches[0];
             touchCurrentY = touch.clientY;
@@ -291,7 +297,7 @@ const initApp = () => {
         }, { passive: true });
 
         settingsPanel.addEventListener('touchend', (e) => {
-            if (touchStartY === -1) return;
+            if (touchStartY === -1 || !touchStartedInHeader) return;
 
             const deltaY = touchCurrentY - touchStartY;
             settingsPanel.style.transition = 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
@@ -309,6 +315,7 @@ const initApp = () => {
 
             touchStartY = 0;
             touchCurrentY = 0;
+            touchStartedInHeader = false;
         }, { passive: true });
     }
 
