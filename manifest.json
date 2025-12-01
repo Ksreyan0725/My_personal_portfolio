@@ -33,22 +33,6 @@
         "portfolio",
         "technology"
     ],
-    "screenshots": [
-        {
-            "src": "assets/images/screenshot-desktop.png",
-            "sizes": "1280x720",
-            "type": "image/png",
-            "form_factor": "wide",
-            "label": "Desktop view of portfolio"
-        },
-        {
-            "src": "assets/images/screenshot-mobile.png",
-            "sizes": "750x1334",
-            "type": "image/png",
-            "form_factor": "narrow",
-            "label": "Mobile view of portfolio"
-        }
-    ],
     "shortcuts": [
         {
             "name": "Contact",
