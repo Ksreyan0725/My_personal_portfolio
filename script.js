@@ -2789,6 +2789,62 @@ const initPart2 = () => {
     // Initialize long-press functionality
     initLongPressCopy();
 
+    /* ==================== PWA Install Logic ==================== */
+    let deferredPrompt;
+    const installAppGroup = document.getElementById('installAppGroup');
+    const installAppBtn = document.getElementById('installAppBtn');
+    const iosInstallInstructions = document.getElementById('iosInstallInstructions');
+
+    // Check if iOS
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    // Check if already in standalone mode (installed)
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+
+    if (isIOS && !isStandalone) {
+        // Show iOS instructions
+        if (installAppGroup) installAppGroup.style.display = 'block';
+        if (installAppBtn) installAppBtn.style.display = 'none';
+        if (iosInstallInstructions) iosInstallInstructions.style.display = 'block';
+    } else {
+        // Handle Android/Desktop Install Prompt
+        window.addEventListener('beforeinstallprompt', (e) => {
+            // Prevent Chrome 67 and earlier from automatically showing the prompt
+            e.preventDefault();
+            // Stash the event so it can be triggered later.
+            deferredPrompt = e;
+            // Show the install UI
+            if (installAppGroup) installAppGroup.style.display = 'block';
+        });
+
+        if (installAppBtn) {
+            installAppBtn.addEventListener('click', async () => {
+                if (deferredPrompt) {
+                    // Show the install prompt
+                    deferredPrompt.prompt();
+                    // Wait for the user to respond to the prompt
+                    const { outcome } = await deferredPrompt.userChoice;
+                    console.log(`User response to the install prompt: ${outcome}`);
+                    // We've used the prompt, and can't use it again, throw it away
+                    deferredPrompt = null;
+                    // Hide the UI
+                    if (installAppGroup) installAppGroup.style.display = 'none';
+                }
+            });
+        }
+    }
+
+    // Hide install option if app is already installed
+    if (isStandalone) {
+        if (installAppGroup) installAppGroup.style.display = 'none';
+    }
+
+    // Listen for app installed event
+    window.addEventListener('appinstalled', () => {
+        // Hide the UI
+        if (installAppGroup) installAppGroup.style.display = 'none';
+        console.log('PWA was installed');
+    });
+
 };
 
 if (document.readyState === 'loading') {
