@@ -2800,50 +2800,80 @@ const initPart2 = () => {
     // Check if already in standalone mode (installed)
     const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
 
-    if (isIOS && !isStandalone) {
-        // Show iOS instructions
-        if (installAppGroup) installAppGroup.style.display = 'block';
-        if (installAppBtn) installAppBtn.style.display = 'none';
-        if (iosInstallInstructions) iosInstallInstructions.style.display = 'block';
-    } else {
-        // Handle Android/Desktop Install Prompt
-        window.addEventListener('beforeinstallprompt', (e) => {
-            // Prevent Chrome 67 and earlier from automatically showing the prompt
-            e.preventDefault();
-            // Stash the event so it can be triggered later.
-            deferredPrompt = e;
-            // Show the install UI
-            if (installAppGroup) installAppGroup.style.display = 'block';
-        });
+    // Always show the Install App section
+    if (installAppGroup) installAppGroup.style.display = 'block';
 
-        if (installAppBtn) {
-            installAppBtn.addEventListener('click', async () => {
-                if (deferredPrompt) {
-                    // Show the install prompt
-                    deferredPrompt.prompt();
-                    // Wait for the user to respond to the prompt
-                    const { outcome } = await deferredPrompt.userChoice;
-                    console.log(`User response to the install prompt: ${outcome}`);
-                    // We've used the prompt, and can't use it again, throw it away
-                    deferredPrompt = null;
-                    // Hide the UI
-                    if (installAppGroup) installAppGroup.style.display = 'none';
-                }
-            });
+    // Update button text based on installation status
+    function updateInstallButton() {
+        if (!installAppBtn) return;
+
+        const btnTitle = installAppBtn.querySelector('.theme-btn-title');
+        if (!btnTitle) return;
+
+        if (isStandalone) {
+            // App is already installed
+            btnTitle.textContent = 'App Already Installed ✓';
+            installAppBtn.style.opacity = '0.6';
+            installAppBtn.style.cursor = 'not-allowed';
+            installAppBtn.disabled = true;
+        } else if (isIOS) {
+            // iOS device - hide button, show instructions
+            installAppBtn.style.display = 'none';
+            if (iosInstallInstructions) iosInstallInstructions.style.display = 'block';
+        } else if (deferredPrompt) {
+            // Install prompt available
+            btnTitle.textContent = 'Install App';
+            installAppBtn.style.opacity = '1';
+            installAppBtn.style.cursor = 'pointer';
+            installAppBtn.disabled = false;
+        } else {
+            // No install prompt available (browser doesn't support or already dismissed)
+            btnTitle.textContent = 'Install Not Available';
+            installAppBtn.style.opacity = '0.6';
+            installAppBtn.style.cursor = 'not-allowed';
+            installAppBtn.disabled = true;
         }
     }
 
-    // Hide install option if app is already installed
-    if (isStandalone) {
-        if (installAppGroup) installAppGroup.style.display = 'none';
+    // Handle Android/Desktop Install Prompt
+    window.addEventListener('beforeinstallprompt', (e) => {
+        // Prevent Chrome 67 and earlier from automatically showing the prompt
+        e.preventDefault();
+        // Stash the event so it can be triggered later.
+        deferredPrompt = e;
+        updateInstallButton();
+    });
+
+    if (installAppBtn) {
+        installAppBtn.addEventListener('click', async () => {
+            if (deferredPrompt && !isStandalone) {
+                // Show the install prompt
+                deferredPrompt.prompt();
+                // Wait for the user to respond to the prompt
+                const { outcome } = await deferredPrompt.userChoice;
+                console.log(`User response to the install prompt: ${outcome}`);
+
+                if (outcome === 'accepted') {
+                    // User accepted the install
+                    const btnTitle = installAppBtn.querySelector('.theme-btn-title');
+                    if (btnTitle) btnTitle.textContent = 'Installing...';
+                }
+
+                // We've used the prompt, and can't use it again, throw it away
+                deferredPrompt = null;
+                updateInstallButton();
+            }
+        });
     }
 
     // Listen for app installed event
     window.addEventListener('appinstalled', () => {
-        // Hide the UI
-        if (installAppGroup) installAppGroup.style.display = 'none';
         console.log('PWA was installed');
+        updateInstallButton();
     });
+
+    // Initial button state update
+    updateInstallButton();
 
 };
 
