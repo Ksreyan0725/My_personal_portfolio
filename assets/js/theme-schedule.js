@@ -25,25 +25,22 @@
     updateActiveOption();
 
     // Toggle dropdown when Auto theme button is clicked
+    // Toggle dropdown when Auto theme button is clicked
     if (autoThemeBtn) {
         autoThemeBtn.addEventListener('click', function (e) {
             e.stopPropagation(); // Prevent event bubbling
 
-            // Check if auto theme is currently active
-            const currentTheme = localStorage.getItem('theme');
+            // Always toggle dropdown visibility
+            toggleDropdown();
 
-            if (currentTheme === 'auto') {
-                // Already in auto mode, toggle dropdown
-                toggleDropdown();
-            } else {
-                // Not in auto mode, activate it first
-                // The main theme system will handle this via the theme-btn click
-                // Then show dropdown after a brief delay
+            // If not in auto mode, switch to it
+            const currentTheme = localStorage.getItem('theme');
+            if (currentTheme !== 'auto') {
+                // The main theme system will handle the theme switch via the class 'theme-btn'
+                // We just ensure the UI reflects the schedule options
                 setTimeout(() => {
-                    if (localStorage.getItem('theme') === 'auto' && scheduleDropdown) {
-                        scheduleDropdown.style.display = 'block';
-                    }
-                }, 150);
+                    if (scheduleDropdown) scheduleDropdown.style.display = 'block';
+                }, 50);
             }
         });
     }

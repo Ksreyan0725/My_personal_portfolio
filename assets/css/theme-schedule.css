@@ -6,6 +6,8 @@
     border-radius: 12px;
     overflow: hidden;
     animation: slideDown 0.3s ease;
+    z-index: 100;
+    position: relative;
 }
 
 @keyframes slideDown {

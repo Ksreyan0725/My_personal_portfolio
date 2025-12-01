@@ -25,7 +25,8 @@ const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 })();
 
 // Preloader Logic
-window.addEventListener('load', () => {
+// Preloader Logic
+const hidePreloader = () => {
     const preloader = document.getElementById('preloader');
     if (preloader) {
         // Minimum display time of 800ms to prevent flickering on fast connections
@@ -37,7 +38,13 @@ window.addEventListener('load', () => {
             }, 500);
         }, 800);
     }
-});
+};
+
+if (document.readyState === 'complete') {
+    hidePreloader();
+} else {
+    window.addEventListener('load', hidePreloader);
+}
 
 const initApp = () => {
     // Initialize Lenis Smooth Scroll
@@ -302,7 +309,13 @@ const initApp = () => {
 
     /* ==================== Settings Panel Logic (Integrated) ==================== */
     // Open/Close Handlers
-    if (openSettingsBtn) openSettingsBtn.addEventListener('click', openSettings);
+    if (openSettingsBtn) {
+        openSettingsBtn.addEventListener('click', (e) => {
+            if (typeof openSettings === 'function') openSettings(e);
+            // Update install button state when opening settings
+            if (typeof updateInstallButton === 'function') updateInstallButton();
+        });
+    }
     if (settingsCloseBtn) settingsCloseBtn.addEventListener('click', closeSettings);
     if (settingsOverlay) settingsOverlay.addEventListener('click', closeSettings);
 
@@ -2810,8 +2823,11 @@ const initPart2 = () => {
 
     // Check if iOS
     const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-    // Check if already in standalone mode (installed)
-    const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+
+    // Function to check if app is installed (dynamic check)
+    function checkIsStandalone() {
+        return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+    }
 
     // Always show the Install App section
     if (installAppGroup) installAppGroup.style.display = 'block';
@@ -2823,7 +2839,10 @@ const initPart2 = () => {
         const btnTitle = installAppBtn.querySelector('.theme-btn-title');
         if (!btnTitle) return;
 
-        if (isStandalone) {
+        // Check installation status dynamically
+        const isCurrentlyInstalled = checkIsStandalone();
+
+        if (isCurrentlyInstalled) {
             // App is already installed
             btnTitle.textContent = 'App Already Installed ✓';
             installAppBtn.style.opacity = '0.6';
@@ -2859,7 +2878,7 @@ const initPart2 = () => {
 
     if (installAppBtn) {
         installAppBtn.addEventListener('click', async () => {
-            if (deferredPrompt && !isStandalone) {
+            if (deferredPrompt && !checkIsStandalone()) {
                 try {
                     // Show the install prompt
                     await deferredPrompt.prompt();
