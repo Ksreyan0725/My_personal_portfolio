@@ -2,7 +2,7 @@
 
 A modern, accessible, and high-performance personal portfolio website built with HTML5, CSS3, and JavaScript. This project showcases my skills, projects, and professional journey.
 
-🔗 **Live Demo:** https://ksreyan0725.github.io/My_personal_portfolio/
+🔗 Live Demo: https://ksreyan0725.github.io/My_personal_portfolio/
 
 ---
 
@@ -14,11 +14,11 @@ The site includes a fully responsive layout that adapts seamlessly to mobile, ta
 
 ## ✨ Key Features
 
-The website is built as a **Progressive Web App (PWA)** 📱, meaning it can be installed as a native application on both mobile and desktop devices. It includes offline support using a Service Worker, allowing users to access the site even without an internet connection.
+The website is built as a Progressive Web App (PWA) 📱, meaning it can be installed as a native application on both mobile and desktop devices. It includes offline support using a Service Worker, allowing users to access the site even without an internet connection.
 
-**Accessibility** ♿ is a core priority. The site adheres to WCAG 2.1 AA standards, ensuring it is friendly to screen readers and fully navigable via keyboard. It also respects user preferences for reduced motion.
+Accessibility ♿ is a core priority. The site adheres to WCAG 2.1 AA standards, ensuring it is friendly to screen readers and fully navigable via keyboard. It also respects user preferences for reduced motion.
 
-For **Search Engine Optimization (SEO)** 🔍, the site includes comprehensive meta tags for social sharing (Open Graph and Twitter Cards) and structured data (JSON-LD) to ensure rich search results.
+For Search Engine Optimization (SEO) 🔍, the site includes comprehensive meta tags for social sharing (Open Graph and Twitter Cards) and structured data (JSON-LD) to ensure rich search results.
 
 ## 🛠️ Technology Stack
 
