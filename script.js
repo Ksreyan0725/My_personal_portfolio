@@ -2860,22 +2860,133 @@ const initPart2 = () => {
     if (installAppBtn) {
         installAppBtn.addEventListener('click', async () => {
             if (deferredPrompt && !isStandalone) {
-                // Show the install prompt
-                deferredPrompt.prompt();
-                // Wait for the user to respond to the prompt
-                const { outcome } = await deferredPrompt.userChoice;
-                console.log(`User response to the install prompt: ${outcome}`);
+                try {
+                    // Show the install prompt
+                    await deferredPrompt.prompt();
 
-                if (outcome === 'accepted') {
-                    // User accepted the install - show download animation
-                    showInstallAnimation();
+                    // Wait for the user to respond to the prompt
+                    const { outcome } = await deferredPrompt.userChoice;
+                    console.log(`User response to the install prompt: ${outcome}`);
+
+                    // Analytics tracking
+                    trackInstallEvent(outcome);
+
+                    if (outcome === 'accepted') {
+                        // User accepted the install - show download animation
+                        showInstallAnimation();
+                    } else {
+                        // User dismissed - offer retry option
+                        showRetryOption();
+                    }
+
+                    // We've used the prompt, and can't use it again, throw it away
+                    deferredPrompt = null;
+                    updateInstallButton();
+
+                } catch (error) {
+                    console.error('Install prompt failed:', error);
+
+                    // Show error message to user
+                    showInstallError();
+
+                    // Track error
+                    trackInstallEvent('error', error.message);
                 }
-
-                // We've used the prompt, and can't use it again, throw it away
-                deferredPrompt = null;
-                updateInstallButton();
             }
         });
+    }
+
+    // Analytics tracking function
+    function trackInstallEvent(outcome, errorMessage = null) {
+        try {
+            // Google Analytics 4 (if available)
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'pwa_install', {
+                    event_category: 'PWA',
+                    event_label: outcome,
+                    value: outcome === 'accepted' ? 1 : 0
+                });
+            }
+
+            // Console log for debugging
+            console.log(`[Analytics] PWA Install: ${outcome}`, errorMessage ? `Error: ${errorMessage}` : '');
+
+            // Store in localStorage for tracking
+            const installAttempts = JSON.parse(localStorage.getItem('installAttempts') || '[]');
+            installAttempts.push({
+                timestamp: new Date().toISOString(),
+                outcome: outcome,
+                error: errorMessage
+            });
+            localStorage.setItem('installAttempts', JSON.stringify(installAttempts.slice(-10))); // Keep last 10
+
+        } catch (e) {
+            console.warn('Analytics tracking failed:', e);
+        }
+    }
+
+    // Show retry option when user dismisses
+    function showRetryOption() {
+        if (!installAppBtn) return;
+
+        const btnTitle = installAppBtn.querySelector('.theme-btn-title');
+        if (!btnTitle) return;
+
+        btnTitle.textContent = 'Install Dismissed';
+        installAppBtn.style.opacity = '0.7';
+
+        // Reset after 3 seconds to allow retry
+        setTimeout(() => {
+            btnTitle.textContent = 'Retry Install';
+            installAppBtn.style.opacity = '1';
+
+            // Note: The prompt can only be shown once per page load
+            // User needs to refresh to try again
+            installAppBtn.addEventListener('click', () => {
+                if (!deferredPrompt) {
+                    showRefreshPrompt();
+                }
+            }, { once: true });
+        }, 3000);
+    }
+
+    // Show refresh prompt for retry
+    function showRefreshPrompt() {
+        if (!installAppBtn) return;
+
+        const btnTitle = installAppBtn.querySelector('.theme-btn-title');
+        if (!btnTitle) return;
+
+        btnTitle.textContent = 'Refresh to Retry';
+
+        // Add click to refresh
+        installAppBtn.addEventListener('click', () => {
+            location.reload();
+        }, { once: true });
+    }
+
+    // Show error message
+    function showInstallError() {
+        if (!installAppBtn) return;
+
+        const btnTitle = installAppBtn.querySelector('.theme-btn-title');
+        if (!btnTitle) return;
+
+        btnTitle.textContent = 'Install Failed ✕';
+        installAppBtn.style.opacity = '0.6';
+        installAppBtn.style.background = 'linear-gradient(135deg, #ef4444, #dc2626)';
+
+        // Reset after 3 seconds
+        setTimeout(() => {
+            btnTitle.textContent = 'Retry Install';
+            installAppBtn.style.opacity = '1';
+            installAppBtn.style.background = '';
+
+            // Offer refresh to retry
+            installAppBtn.addEventListener('click', () => {
+                location.reload();
+            }, { once: true });
+        }, 3000);
     }
 
     // Install animation function
