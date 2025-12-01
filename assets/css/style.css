@@ -3310,7 +3310,6 @@ footer {
     transition: bottom 0.3s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.3s step-end;
     box-shadow: 0 -5px 30px rgba(0,0,0,0.2);
     max-height: 50vh;
-    overflow-y: auto;
     border-top: 1px solid var(--border);
     display: flex;
     flex-direction: column;
@@ -3379,6 +3378,35 @@ body.no-scroll {
 .settings-content {
     padding: 20px;
     overflow-y: auto;
+    overflow-x: hidden;
+    flex: 1;
+    min-height: 0;
+}
+
+/* Custom scrollbar for settings panel */
+.settings-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.settings-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.settings-content::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 4px;
+}
+
+.settings-content::-webkit-scrollbar-thumb:hover {
+    background: var(--text-secondary);
+}
+
+[data-theme="dark"] .settings-content::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+[data-theme="dark"] .settings-content::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.3);
 }
 
 .setting-group {
@@ -3596,6 +3624,227 @@ body.no-scroll {
 [data-theme="dark"] #night-light-overlay {
     background: rgba(255, 140, 0, 0.1);
     mix-blend-mode: overlay;
+}
+
+/* ==================== Theme Schedule Dropdown ==================== */
+.schedule-dropdown {
+    margin-top: 12px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.schedule-option {
+    padding: 14px 16px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-bottom: 1px solid var(--border);
+}
+
+.schedule-option:last-child {
+    border-bottom: none;
+}
+
+.schedule-option:hover {
+    background: var(--card-bg);
+    transform: translateX(4px);
+}
+
+.schedule-option.active {
+    background: var(--accent-glow);
+    border-left: 3px solid var(--accent);
+}
+
+.schedule-option-title {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--text-primary);
+    margin-bottom: 2px;
+}
+
+.schedule-option-desc {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+/* ==================== Custom Time Picker ==================== */
+.custom-time-picker {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--bg-secondary);
+    border: 2px solid var(--border);
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    z-index: 3000;
+    width: 90%;
+    max-width: 400px;
+    animation: popIn 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes popIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+.time-picker-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid var(--border);
+}
+
+.time-picker-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.time-picker-close {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    font-size: 1.3rem;
+    color: var(--text-primary);
+    cursor: pointer;
+    padding: 0;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.time-picker-close:hover {
+    color: var(--accent);
+    background: rgba(99, 102, 241, 0.1);
+    border-color: var(--accent);
+}
+
+.time-picker-body {
+    padding: 24px 20px;
+}
+
+.time-input-group {
+    margin-bottom: 20px;
+}
+
+.time-input-group:last-child {
+    margin-bottom: 0;
+}
+
+.time-input-group label {
+    display: block;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+}
+
+.time-input-group input[type="time"] {
+    width: 100%;
+    padding: 12px 16px;
+    background: var(--card-bg);
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    color: var(--text-primary);
+    font-size: 1rem;
+    font-family: inherit;
+    transition: all 0.2s ease;
+}
+
+.time-input-group input[type="time"]:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-glow);
+}
+
+/* Dark mode time input styling */
+[data-theme="dark"] .time-input-group input[type="time"] {
+    color-scheme: dark;
+}
+
+[data-theme="light"] .time-input-group input[type="time"] {
+    color-scheme: light;
+}
+
+.time-picker-footer {
+    display: flex;
+    gap: 12px;
+    padding: 16px 20px;
+    border-top: 1px solid var(--border);
+}
+
+.time-picker-cancel,
+.time-picker-save {
+    flex: 1;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.time-picker-cancel {
+    background: var(--card-bg);
+    color: var(--text-primary);
+    border: 2px solid var(--border);
+}
+
+.time-picker-cancel:hover {
+    background: var(--bg-secondary);
+    border-color: var(--text-secondary);
+}
+
+.time-picker-save {
+    background: linear-gradient(135deg, var(--accent), #8b5cf6);
+    color: white;
+}
+
+.time-picker-save:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px var(--accent-glow);
+}
+
+.time-picker-save:active {
+    transform: translateY(0);
+}
+
+/* Overlay for time picker */
+.time-picker-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 2999;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
 }
 
 

@@ -100,6 +100,7 @@ Last Updated: November 27, 2025
         </div>
     </div>
     <script src="script.js" defer></script>
+    <script src="assets/js/theme-schedule.js" defer></script>
 
     <!-- ==================== Maintenance Mode (Currently Disabled) ==================== -->
     <!-- Uncomment below lines to enable maintenance mode redirection -->
@@ -591,10 +592,48 @@ Last Updated: November 27, 2025
                         <div class="theme-btn-title">Dark Mode 🌙</div>
                         <div class="theme-btn-desc">Easy on the eyes with dark backgrounds</div>
                     </button>
-                    <button class="theme-btn" data-theme="auto">
-                        <div class="theme-btn-title">Auto (Time) 🕒</div>
-                        <div class="theme-btn-desc">Switch based on time (7 AM - 7 PM)</div>
+                    <button class="theme-btn" data-theme="auto" id="autoThemeBtn">
+                        <div class="theme-btn-title">Schedule Time 🕒</div>
+                        <div class="theme-btn-desc" id="autoThemeDesc">Switch based on time</div>
                     </button>
+                    
+                    <!-- Schedule Options Dropdown -->
+                    <div class="schedule-dropdown" id="scheduleDropdown" style="display: none;">
+                        <div class="schedule-option" data-schedule="fixed">
+                            <div class="schedule-option-title">Fixed Time ⏰</div>
+                            <div class="schedule-option-desc">7 AM to 7 PM (default)</div>
+                        </div>
+                        <div class="schedule-option" data-schedule="sunrise">
+                            <div class="schedule-option-title">Sunrise to Sunset 🌅</div>
+                            <div class="schedule-option-desc">Auto-adjust based on your location</div>
+                        </div>
+                        <div class="schedule-option" data-schedule="custom">
+                            <div class="schedule-option-title">Custom Time ⚙️</div>
+                            <div class="schedule-option-desc">Set your own schedule</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Custom Time Picker -->
+                    <div class="custom-time-picker" id="customTimePicker" style="display: none;">
+                        <div class="time-picker-header">
+                            <div class="time-picker-title">Set Custom Schedule</div>
+                            <button class="time-picker-close" id="closeTimePicker">✕</button>
+                        </div>
+                        <div class="time-picker-body">
+                            <div class="time-input-group">
+                                <label>Light Mode Starts</label>
+                                <input type="time" id="lightModeStart" value="07:00">
+                            </div>
+                            <div class="time-input-group">
+                                <label>Dark Mode Starts</label>
+                                <input type="time" id="darkModeStart" value="19:00">
+                            </div>
+                        </div>
+                        <div class="time-picker-footer">
+                            <button class="time-picker-cancel" id="cancelTimePicker">Cancel</button>
+                            <button class="time-picker-save" id="saveTimePicker">Save Schedule</button>
+                        </div>
+                    </div>
                 </div>
             </div>
 
