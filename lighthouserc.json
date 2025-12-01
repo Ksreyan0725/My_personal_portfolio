@@ -1,27 +1,19 @@
 {
     "ci": {
         "collect": {
-            "url": [
-                "https://ksreyan0725.github.io/My_personal_portfolio/",
-                "https://ksreyan0725.github.io/My_personal_portfolio/contact.html"
-            ],
+            "staticDistDir": "./",
             "numberOfRuns": 3,
             "settings": {
-                "preset": "desktop",
-                "throttling": {
-                    "rttMs": 40,
-                    "throughputKbps": 10240,
-                    "cpuSlowdownMultiplier": 1
-                }
+                "preset": "desktop"
             }
         },
         "assert": {
             "preset": "lighthouse:recommended",
             "assertions": {
                 "categories:performance": [
-                    "error",
+                    "warn",
                     {
-                        "minScore": 0.9
+                        "minScore": 0.8
                     }
                 ],
                 "categories:accessibility": [

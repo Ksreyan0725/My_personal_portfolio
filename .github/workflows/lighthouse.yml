@@ -23,7 +23,7 @@ jobs:
         run: npm install -g @lhci/cli@0.12.x
 
       - name: Run Lighthouse CI
-        run: lhci autorun
+        run: lhci autorun --config=./lighthouserc.json
 
       - name: Upload results
         uses: actions/upload-artifact@v3
