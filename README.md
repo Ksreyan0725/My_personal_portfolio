@@ -14,32 +14,108 @@ The site includes a fully responsive layout that adapts seamlessly to mobile, ta
 
 ## ✨ Key Features
 
-The website is built as a Progressive Web App (PWA) 📱, meaning it can be installed as a native application on both mobile and desktop devices. It includes offline support using a Service Worker, allowing users to access the site even without an internet connection.
+### Progressive Web App (PWA) 📱
+The website is built as a Progressive Web App, meaning it can be installed as a native application on both mobile and desktop devices. Features include:
+- App Installation: Dedicated install section in Settings Panel with smart state detection
+- Offline Support: Service Worker enables offline access to the site
+- Version Tracking: Displays current version based on git commit count
+- Platform-Specific Instructions: Automatic detection and guidance for iOS vs Android/Desktop installation
 
-Accessibility ♿ is a core priority. The site adheres to WCAG 2.1 AA standards, ensuring it is friendly to screen readers and fully navigable via keyboard. It also respects user preferences for reduced motion.
+### User Experience Enhancements
+- Preloader Animation: Smooth loading animation with branded "KSP" logo on initial page load
+- Smooth Scrolling: Powered by Lenis library for buttery-smooth navigation
+- Mobile Sidebar: Swipe-enabled navigation menu with gesture support
+- Night Light Mode: Reduces blue light on mobile devices for comfortable evening viewing
+- Settings Panel: Comprehensive settings including theme selection, notifications, and app installation
 
-For Search Engine Optimization (SEO) 🔍, the site includes comprehensive meta tags for social sharing (Open Graph and Twitter Cards) and structured data (JSON-LD) to ensure rich search results.
+### Accessibility ♿
+The site adheres to WCAG 2.1 AA standards:
+- Screen reader friendly with proper ARIA labels
+- Full keyboard navigation support
+- Respects user preferences for reduced motion
+- Skip navigation links for improved accessibility
+
+### Search Engine Optimization (SEO) 🔍
+- Comprehensive meta tags for social sharing (Open Graph and Twitter Cards)
+- Structured data (JSON-LD) for rich search results
+- Semantic HTML5 markup
+- Optimized performance scores
 
 ## 🛠️ Technology Stack
 
 The project is built using standard web technologies:
 - HTML5 for semantic structure
-- CSS3 with custom properties for styling
+- CSS3 with custom properties (CSS variables) for theming
 - JavaScript (ES6+) for logic and interactivity
+- Lenis (`@studio-freight/lenis`) for smooth scrolling
+- Service Worker for offline functionality and caching
 
-It utilizes the `@studio-freight/lenis` library for smooth scrolling and Font Awesome for icons. The project is hosted on GitHub Pages.
+Hosted on GitHub Pages with automatic deployment.
 
 ## 📂 Project Structure
 
-The codebase is organized into clear directories. The `assets` folder contains stylesheets, images, and icons. Secondary pages like the 404 error page and thank you page are located in the `pages` directory. The main logic resides in `script.js`, while the Service Worker logic is in `sw.js`.
+```
+My_personal_portfolio/
+├── assets/
+│   ├── css/
+│   │   ├── style.css           # Main stylesheet
+│   │   ├── responsive.css      # Responsive design rules
+│   │   ├── preloader.css       # Loading animation styles
+│   │   └── install-button.css  # PWA install button styles
+│   ├── icons/                  # App icons and UI elements
+│   ├── images/                 # Profile photos and assets
+│   └── docs/                   # PDF documents (resume, research)
+├── pages/
+│   ├── 404.html               # Custom error page
+│   ├── thankyou.html          # Form submission confirmation
+│   └── pdf-viewer.html        # PDF document viewer
+├── index.html                 # Main landing page
+├── contact.html               # Contact form page
+├── script.js                  # Main application logic
+├── sw.js                      # Service Worker for PWA
+└── manifest.json              # PWA manifest file
+```
 
 ## 🚦 Running Locally
 
-To run this project on your local machine, clone the repository using Git. Navigate to the project directory and serve it using any static file server, such as Python's `http.server` or the Live Server extension in VS Code.
+To run this project on your local machine:
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/Ksreyan0725/My_personal_portfolio.git
+   cd My_personal_portfolio
+   ```
+
+2. Serve the files using any static file server:
+   
+   Option 1: Python
+   ```bash
+   python -m http.server 8000
+   ```
+   
+   Option 2: Node.js (http-server)
+   ```bash
+   npx http-server
+   ```
+   
+   Option 3: VS Code Live Server
+   - Install the Live Server extension
+   - Right-click `index.html` and select "Open with Live Server"
+
+3. Access the site at `http://localhost:8000` (or the port shown by your server)
 
 ## 🧪 Testing
 
-The project undergoes rigorous testing to ensure quality. Manual testing is performed across Chrome, Firefox, Safari, and Edge browsers to ensure cross-browser compatibility.
+The project undergoes rigorous testing to ensure quality:
+- Cross-browser testing on Chrome, Firefox, Safari, and Edge
+- Responsive testing across mobile, tablet, and desktop viewports
+- Accessibility testing using screen readers and keyboard navigation
+- Performance testing with Lighthouse CI
+- PWA validation using Chrome DevTools
+
+## 📊 Version Information
+
+The portfolio uses git commit count for version tracking. Current version is displayed in the Settings Panel under the App section.
 
 ## 📄 License
 
@@ -48,3 +124,5 @@ This project is distributed under the MIT License.
 ---
 
 Made with ❤️ by Kumar Sreyan Pattanayak
+
+Last Updated: 1 December 2025
