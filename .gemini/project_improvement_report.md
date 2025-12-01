@@ -39,7 +39,7 @@ Solution:
 
 ---
 
-#### 2. **Missing Image Optimization**
+#### 2.**Missing Image Optimization**
 **Issue:** No lazy loading for images, potential for large file sizes  
 **Impact:** Slower page load, higher bandwidth usage  
 **Solution:**
