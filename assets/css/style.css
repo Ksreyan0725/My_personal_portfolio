@@ -201,8 +201,9 @@ html {
 /* Skip Navigation Link - Hidden until focused */
 .skip-link {
   position: absolute;
-  top: -40px;
+  top: 0;
   left: 0;
+  transform: translateY(-100%);
   background: var(--accent);
   color: white;
   padding: 8px 16px;
@@ -210,11 +211,11 @@ html {
   border-radius: 0 0 4px 0;
   z-index: 10000;
   font-weight: 600;
-  transition: top 0.2s ease;
+  transition: transform 0.2s ease;
 }
 
 .skip-link:focus {
-  top: 0;
+  transform: translateY(0);
   outline: 3px solid var(--accent-glow);
   outline-offset: 2px;
 }
