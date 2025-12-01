@@ -1,5 +1,4 @@
 // Modern Portfolio JavaScript
-console.log("******************************JAVASCRIPT_ACTIVATED**************************************");
 // Detect touch devices
 const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
@@ -25,8 +24,6 @@ const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
     }
 })();
 const initApp = () => {
-    console.log('App Initializing...');
-
     // Initialize Lenis Smooth Scroll
     if (typeof Lenis !== 'undefined') {
         const lenis = new Lenis({

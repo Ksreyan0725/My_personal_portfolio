@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://ksreyan0725.github.io/My_personal_portfolio/sitemap.xml
+
+# Disallow crawling of specific directories (optional)
+Disallow: /assets/docs/
