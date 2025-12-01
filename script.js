@@ -23,6 +23,22 @@ const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
         console.warn('Early theme init failed:', e && e.message);
     }
 })();
+
+// Preloader Logic
+window.addEventListener('load', () => {
+    const preloader = document.getElementById('preloader');
+    if (preloader) {
+        // Minimum display time of 800ms to prevent flickering on fast connections
+        setTimeout(() => {
+            document.body.classList.add('loaded');
+            // Remove from DOM after transition
+            setTimeout(() => {
+                preloader.style.display = 'none';
+            }, 500);
+        }, 800);
+    }
+});
+
 const initApp = () => {
     // Initialize Lenis Smooth Scroll
     if (typeof Lenis !== 'undefined') {
