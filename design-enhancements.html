@@ -1,0 +1,229 @@
+<!-- Loading Skeleton Styles -->
+<style>
+/* ==================== Loading Skeletons ==================== */
+.skeleton {
+    background: linear-gradient(90deg, 
+        rgba(255, 255, 255, 0.05) 25%, 
+        rgba(255, 255, 255, 0.1) 50%, 
+        rgba(255, 255, 255, 0.05) 75%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 8px;
+}
+
+@keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+.skeleton-text {
+    height: 16px;
+    margin-bottom: 8px;
+}
+
+.skeleton-title {
+    height: 24px;
+    width: 60%;
+    margin-bottom: 12px;
+}
+
+.skeleton-card {
+    height: 200px;
+    margin-bottom: 20px;
+}
+
+.skeleton-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+
+/* Hide skeleton when content loads */
+.content-loaded .skeleton {
+    display: none;
+}
+
+/* ==================== Smooth Page Transitions ==================== */
+@media (prefers-reduced-motion: no-preference) {
+    .page-transition {
+        animation: fadeIn 0.6s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Stagger animations for cards */
+    .card-animated {
+        opacity: 0;
+        animation: slideUp 0.6s ease forwards;
+    }
+
+    .card-animated:nth-child(1) { animation-delay: 0.1s; }
+    .card-animated:nth-child(2) { animation-delay: 0.2s; }
+    .card-animated:nth-child(3) { animation-delay: 0.3s; }
+    .card-animated:nth-child(4) { animation-delay: 0.4s; }
+    .card-animated:nth-child(5) { animation-delay: 0.5s; }
+
+    @keyframes slideUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+}
+
+/* ==================== Reduced Motion Support ==================== */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    .skeleton {
+        animation: none;
+        background: rgba(255, 255, 255, 0.1);
+    }
+}
+
+/* ==================== Enhanced Micro-interactions ==================== */
+.hover-lift {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-lift:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(99, 102, 241, 0.2);
+}
+
+.hover-glow {
+    position: relative;
+    overflow: hidden;
+}
+
+.hover-glow::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(99, 102, 241, 0.2);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.hover-glow:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+/* ==================== Improved Typography with Fluid Sizing ==================== */
+:root {
+    --fluid-min-width: 320;
+    --fluid-max-width: 1920;
+    --fluid-screen: 100vw;
+    --fluid-bp: calc(
+        (var(--fluid-screen) - var(--fluid-min-width) / 16 * 1rem) /
+        (var(--fluid-max-width) - var(--fluid-min-width))
+    );
+}
+
+@media screen and (min-width: 1920px) {
+    :root {
+        --fluid-screen: calc(var(--fluid-max-width) * 1px);
+    }
+}
+
+.fluid-text-xl {
+    font-size: calc(
+        (24 / 16) * 1rem + (48 - 24) * var(--fluid-bp)
+    );
+    line-height: 1.2;
+}
+
+.fluid-text-lg {
+    font-size: calc(
+        (18 / 16) * 1rem + (32 - 18) * var(--fluid-bp)
+    );
+    line-height: 1.4;
+}
+
+.fluid-text-base {
+    font-size: calc(
+        (16 / 16) * 1rem + (20 - 16) * var(--fluid-bp)
+    );
+    line-height: 1.6;
+}
+
+/* ==================== Better Easing Functions ==================== */
+:root {
+    --ease-in-out-cubic: cubic-bezier(0.65, 0, 0.35, 1);
+    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-in-out-back: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.smooth-transition {
+    transition: all 0.4s var(--ease-out-expo);
+}
+
+.spring-transition {
+    transition: all 0.5s var(--ease-spring);
+}
+</style>
+
+<!-- JavaScript for Loading Skeletons -->
+<script>
+// Show content and hide skeletons when page loads
+window.addEventListener('load', () => {
+    document.body.classList.add('content-loaded');
+    
+    // Add page transition class
+    document.querySelector('main')?.classList.add('page-transition');
+    
+    // Add stagger animation to cards
+    document.querySelectorAll('.article-card, .certification-card, .skill-card').forEach((card, index) => {
+        card.classList.add('card-animated');
+    });
+});
+
+// Intersection Observer for scroll animations
+const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('animate-in');
+            observer.unobserve(entry.target);
+        }
+    });
+}, observerOptions);
+
+// Observe sections for scroll animations
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('section').forEach(section => {
+        observer.observe(section);
+    });
+});
+</script>

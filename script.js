@@ -123,8 +123,15 @@ const initApp = () => {
     // Theme application function
     function applyTheme(theme, animate = false) {
         const systemPrefersDark = prefersDark.matches;
-        const effectiveTheme = theme === 'system' ?
-            (systemPrefersDark ? 'dark' : 'light') : theme;
+        let effectiveTheme = theme;
+
+        if (theme === 'system') {
+            effectiveTheme = systemPrefersDark ? 'dark' : 'light';
+        } else if (theme === 'auto') {
+            const hour = new Date().getHours();
+            // Dark mode from 7 PM (19) to 7 AM (7)
+            effectiveTheme = (hour >= 19 || hour < 7) ? 'dark' : 'light';
+        }
 
         if (animate) {
             htmlElement.classList.add('theme-transitioning');
@@ -155,6 +162,11 @@ const initApp = () => {
             if (theme === 'system') {
                 imgElement.src = 'assets/icons/system-theme.png';
                 imgElement.alt = 'System Theme';
+            } else if (theme === 'auto') {
+                imgElement.src = 'assets/icons/auto-theme.png'; // We'll need to make sure this exists or use a fallback
+                imgElement.alt = 'Auto Theme';
+                // Fallback to system icon if auto icon doesn't exist (using error handler)
+                imgElement.onerror = function () { this.src = 'assets/icons/system-theme.png'; };
             } else if (theme === 'light') {
                 imgElement.src = 'assets/icons/light-mode.png';
                 imgElement.alt = 'Light Mode';
@@ -200,6 +212,14 @@ const initApp = () => {
             }, 600);
         }
     }
+
+    // Auto Theme Check Interval (every minute)
+    setInterval(() => {
+        const currentTheme = localStorage.getItem('theme');
+        if (currentTheme === 'auto') {
+            applyTheme('auto', true); // Re-apply to check time
+        }
+    }, 60000);
 
     // Initialize theme - use stored preference or default to 'dark'
     // If no preference, follow system; otherwise, use saved preference

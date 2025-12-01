@@ -70,6 +70,13 @@ Last Updated: November 27, 2025
     }
     </script>
 
+    <!-- ==================== PWA Manifest ==================== -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#6366f1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="KSP Portfolio">
+
     <!-- ==================== External Resources ==================== -->
     <!-- Google Fonts - Inter family for modern typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -572,6 +579,10 @@ Last Updated: November 27, 2025
                         <div class="theme-btn-title">Dark Mode 🌙</div>
                         <div class="theme-btn-desc">Easy on the eyes with dark backgrounds</div>
                     </button>
+                    <button class="theme-btn" data-theme="auto">
+                        <div class="theme-btn-title">Auto (Time) 🕒</div>
+                        <div class="theme-btn-desc">Switch based on time (7 AM - 7 PM)</div>
+                    </button>
                 </div>
             </div>
 
@@ -650,6 +661,217 @@ Last Updated: November 27, 2025
             </div>
         </div>
     </div>
+
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/My_personal_portfolio/sw.js')
+                    .then((registration) => {
+                        console.log('ServiceWorker registration successful:', registration.scope);
+                    })
+                    .catch((error) => {
+                        console.log('ServiceWorker registration failed:', error);
+                    });
+            });
+        }
+    </script>
+
+    <!-- PWA Install Prompt -->
+    <div id="installPrompt" class="install-prompt" style="display: none;">
+        <div class="install-prompt-content">
+            <button class="install-prompt-close" onclick="closeInstallPrompt()">✕</button>
+            <div class="install-prompt-icon">📱</div>
+            <h3>Install Portfolio App</h3>
+            <p>Add this portfolio to your home screen for quick access and offline viewing!</p>
+            <div class="install-prompt-buttons">
+                <button class="install-btn-primary" onclick="installPWA()">Install</button>
+                <button class="install-btn-secondary" onclick="closeInstallPrompt()">Maybe Later</button>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .install-prompt {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 10000;
+            animation: slideUp 0.4s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(100px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .install-prompt-content {
+            background: linear-gradient(135deg, #6366f1 0%, #4F5BD5 100%);
+            color: white;
+            padding: 24px;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(99, 102, 241, 0.4);
+            max-width: 320px;
+            position: relative;
+        }
+
+        .install-prompt-close {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+        }
+
+        .install-prompt-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .install-prompt-icon {
+            font-size: 48px;
+            text-align: center;
+            margin-bottom: 12px;
+        }
+
+        .install-prompt h3 {
+            margin: 0 0 8px 0;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .install-prompt p {
+            margin: 0 0 20px 0;
+            font-size: 14px;
+            opacity: 0.95;
+            line-height: 1.5;
+        }
+
+        .install-prompt-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .install-btn-primary,
+        .install-btn-secondary {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .install-btn-primary {
+            background: white;
+            color: #6366f1;
+        }
+
+        .install-btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
+        }
+
+        .install-btn-secondary {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .install-btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .install-prompt {
+                bottom: 10px;
+                right: 10px;
+                left: 10px;
+            }
+
+            .install-prompt-content {
+                max-width: none;
+            }
+        }
+    </style>
+
+    <script>
+        // PWA Install Prompt Logic
+        let deferredPrompt;
+        const installPrompt = document.getElementById('installPrompt');
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            // Prevent the mini-infobar from appearing on mobile
+            e.preventDefault();
+            // Stash the event so it can be triggered later
+            deferredPrompt = e;
+            
+            // Check if user has dismissed the prompt before
+            const dismissed = localStorage.getItem('pwa-install-dismissed');
+            const installed = localStorage.getItem('pwa-installed');
+            
+            if (!dismissed && !installed) {
+                // Show the custom install prompt after 3 seconds
+                setTimeout(() => {
+                    installPrompt.style.display = 'block';
+                }, 3000);
+            }
+        });
+
+        function installPWA() {
+            if (!deferredPrompt) {
+                return;
+            }
+
+            // Show the install prompt
+            deferredPrompt.prompt();
+
+            // Wait for the user to respond to the prompt
+            deferredPrompt.userChoice.then((choiceResult) => {
+                if (choiceResult.outcome === 'accepted') {
+                    console.log('User accepted the install prompt');
+                    localStorage.setItem('pwa-installed', 'true');
+                } else {
+                    console.log('User dismissed the install prompt');
+                }
+                
+                // Hide the prompt
+                installPrompt.style.display = 'none';
+                deferredPrompt = null;
+            });
+        }
+
+        function closeInstallPrompt() {
+            installPrompt.style.display = 'none';
+            // Remember that user dismissed it (for 7 days)
+            const dismissedUntil = new Date();
+            dismissedUntil.setDate(dismissedUntil.getDate() + 7);
+            localStorage.setItem('pwa-install-dismissed', dismissedUntil.toISOString());
+        }
+
+        // Listen for app installed event
+        window.addEventListener('appinstalled', () => {
+            console.log('PWA was installed');
+            localStorage.setItem('pwa-installed', 'true');
+            installPrompt.style.display = 'none';
+        });
+    </script>
 
 </body>
 </html>
