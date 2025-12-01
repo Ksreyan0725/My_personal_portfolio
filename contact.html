@@ -249,9 +249,7 @@
         </div>
 
         <div class="contact-form">
-          <h3
-            style="margin-bottom: 30px; font-size: 1.8rem; color: var(--accent)"
-          >
+          <h3 class="form-title">
             Send Me a Message
           </h3>
           
@@ -267,8 +265,12 @@
                 id="name"
                 name="name"
                 required
+                aria-required="true"
+                aria-describedby="name-error"
+                aria-invalid="false"
                 placeholder="Enter your full name here..."
               />
+              <span id="name-error" class="error-message" role="alert" aria-live="polite"></span>
             </div>
             <div class="form-group">
               <label for="email">Email *</label>
@@ -277,8 +279,12 @@
                 id="email"
                 name="email"
                 required
+                aria-required="true"
+                aria-describedby="email-error"
+                aria-invalid="false"
                 placeholder="Enter your email address..."
               />
+              <span id="email-error" class="error-message" role="alert" aria-live="polite"></span>
             </div>
             
             <!-- Phone Number Field -->
@@ -287,19 +293,25 @@
               <input 
                 type="tel" 
                 id="phone" 
-                name="phone" 
+                name="phone"
+                aria-required="false"
+                aria-describedby="phone-error"
+                aria-invalid="false"
+                placeholder="Optional"
               />
+              <span id="phone-error" class="error-message" role="alert" aria-live="polite"></span>
             </div>
 
             <!-- Subject Dropdown -->
             <div class="form-group">
               <label for="subject">Subject *</label>
-              <select id="subject" name="subject" required>
+              <select id="subject" name="subject" required aria-required="true" aria-describedby="subject-error" aria-invalid="false">
                   <option value="">Select a subject</option>
                   <option value="general">General Inquiry</option>
                   <option value="support">Technical Support</option>
                   <option value="feedback">Feedback</option>
               </select>
+              <span id="subject-error" class="error-message" role="alert" aria-live="polite"></span>
             </div>
 
             <!-- Honeypot for Spam Protection -->
@@ -312,8 +324,12 @@
                 name="message"
                 rows="2"
                 required
+                aria-required="true"
+                aria-describedby="message-error"
+                aria-invalid="false"
                 placeholder="Enter your message here..."
               ></textarea>
+              <span id="message-error" class="error-message" role="alert" aria-live="polite"></span>
             </div>
             <input type="hidden" name="_subject" value="New contact form submission from portfolio" />
             <button type="submit" class="submit-button" aria-label="Submit form">Submit</button>
@@ -1244,6 +1260,87 @@
           font-size: 0.8rem;
         }
       }
+
+      /* ==================== Form Title ==================== */
+      .form-title {
+        margin-bottom: 30px;
+        font-size: 1.8rem;
+        color: var(--accent);
+      }
+
+      /* ==================== Form Error States ==================== */
+      .error-message {
+        display: none;
+        color: #ef4444;
+        font-size: 0.875rem;
+        margin-top: 0.5rem;
+        font-weight: 500;
+      }
+
+      .error-message.active {
+        display: block;
+      }
+
+      input[aria-invalid="true"],
+      textarea[aria-invalid="true"],
+      select[aria-invalid="true"] {
+        border-color: #ef4444 !important;
+        box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+      }
+
+      /* Success State */
+      input[aria-invalid="false"]:valid:not(:placeholder-shown),
+      textarea[aria-invalid="false"]:valid:not(:placeholder-shown),
+      select[aria-invalid="false"]:valid {
+        border-color: #10b981;
+      }
+
+      /* Loading State */
+      .submit-button:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+
+      .submit-button.loading::after {
+        content: '';
+        display: inline-block;
+        width: 14px;
+        height: 14px;
+        margin-left: 8px;
+        border: 2px solid white;
+        border-top-color: transparent;
+        border-radius: 50%;
+        animation: spin 0.6s linear infinite;
+      }
+
+      @keyframes spin {
+        to { transform: rotate(360deg); }
+      }
+
+      /* Toast Notification Styles */
+      .toast {
+        position: fixed;
+        top: -100px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(16, 185, 129, 0.95);
+        color: white;
+        padding: 16px 32px;
+        border-radius: 12px;
+        font-size: 15px;
+        font-weight: 600;
+        z-index: 10000;
+        transition: top 0.4s ease;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+      }
+
+      .toast.active {
+        top: 30px;
+      }
+
+      .toast.error {
+        background: rgba(239, 68, 68, 0.95);
+      }
     </style>
     <script>
       const themeToggle = document.getElementById("themeToggle");
@@ -1756,5 +1853,156 @@
       </p>
     </footer>
     </div>
+
+    <!-- Form Validation and Accessibility Script -->
+    <script>
+    // Form Validation and Accessibility
+    (function() {
+      const form = document.getElementById('contactForm');
+      if (!form) return;
+      
+      const submitButton = form.querySelector('.submit-button');
+      
+      // Validation rules
+      const validators = {
+        name: (value) => {
+          if (!value.trim()) return 'Name is required';
+          if (value.trim().length < 2) return 'Name must be at least 2 characters';
+          return '';
+        },
+        email: (value) => {
+          if (!value.trim()) return 'Email is required';
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          if (!emailRegex.test(value)) return 'Please enter a valid email address';
+          return '';
+        },
+        phone: (value) => {
+          // Optional field
+          if (!value.trim()) return '';
+          const phoneRegex = /^[\d\s\-\+\(\)]+$/;
+          if (!phoneRegex.test(value)) return 'Please enter a valid phone number';
+          return '';
+        },
+        subject: (value) => {
+          if (!value) return 'Please select a subject';
+          return '';
+        },
+        message: (value) => {
+          if (!value.trim()) return 'Message is required';
+          if (value.trim().length < 10) return 'Message must be at least 10 characters';
+          return '';
+        }
+      };
+      
+      // Validate single field
+      function validateField(field) {
+        const fieldName = field.name;
+        const errorSpan = document.getElementById(`${fieldName}-error`);
+        if (!errorSpan) return true;
+        
+        const errorMessage = validators[fieldName](field.value);
+        
+        if (errorMessage) {
+          field.setAttribute('aria-invalid', 'true');
+          errorSpan.textContent = errorMessage;
+          errorSpan.classList.add('active');
+          return false;
+        } else {
+          field.setAttribute('aria-invalid', 'false');
+          errorSpan.textContent = '';
+          errorSpan.classList.remove('active');
+          return true;
+        }
+      }
+      
+      // Add blur validation to all fields
+      ['name', 'email', 'phone', 'subject', 'message'].forEach(fieldName => {
+        const field = document.getElementById(fieldName);
+        if (field) {
+          field.addEventListener('blur', () => validateField(field));
+          field.addEventListener('input', () => {
+            // Clear error on input if field was invalid
+            if (field.getAttribute('aria-invalid') === 'true') {
+              validateField(field);
+            }
+          });
+        }
+      });
+      
+      // Form submission
+      form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        // Validate all fields
+        let isValid = true;
+        ['name', 'email', 'phone', 'subject', 'message'].forEach(fieldName => {
+          const field = document.getElementById(fieldName);
+          if (field && !validateField(field)) {
+            isValid = false;
+          }
+        });
+        
+        if (!isValid) {
+          // Focus first invalid field
+          const firstInvalid = form.querySelector('[aria-invalid="true"]');
+          if (firstInvalid) firstInvalid.focus();
+          return;
+        }
+        
+        // Show loading state
+        submitButton.disabled = true;
+        submitButton.classList.add('loading');
+        const originalText = submitButton.textContent;
+        submitButton.textContent = 'Sending';
+        
+        try {
+          const formData = new FormData(form);
+          const response = await fetch(form.action, {
+            method: 'POST',
+            body: formData,
+            headers: {
+              'Accept': 'application/json'
+            }
+          });
+          
+          if (response.ok) {
+            // Success
+            form.reset();
+            // Reset all aria-invalid states
+            ['name', 'email', 'phone', 'subject', 'message'].forEach(fieldName => {
+              const field = document.getElementById(fieldName);
+              if (field) field.setAttribute('aria-invalid', 'false');
+            });
+            showToast('Message sent successfully!', 'success');
+            // Redirect to thank you page after 1.5 seconds
+            setTimeout(() => {
+              window.location.href = 'pages/thank-you.html';
+            }, 1500);
+          } else {
+            throw new Error('Form submission failed');
+          }
+        } catch (error) {
+          showToast('Failed to send message. Please try again.', 'error');
+        } finally {
+          submitButton.disabled = false;
+          submitButton.classList.remove('loading');
+          submitButton.textContent = originalText;
+        }
+      });
+      
+      // Toast notification function
+      function showToast(message, type = 'success') {
+        const toast = document.getElementById('contactToast');
+        if (!toast) return;
+        
+        toast.textContent = message;
+        toast.className = `toast ${type} active`;
+        
+        setTimeout(() => {
+          toast.classList.remove('active');
+        }, 4000);
+      }
+    })();
+    </script>
   </body>
   </html>
