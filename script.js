@@ -175,13 +175,16 @@ const initApp = () => {
             // Set the appropriate icon based on theme
             const timestamp = new Date().getTime();
             const isDark = effectiveTheme === 'dark'; // Determine if the effective theme is dark
+            const scheduleType = localStorage.getItem('scheduleType') || 'fixed';
+
             if (theme === 'system') {
                 imgElement.src = 'assets/icons/system-theme.png';
                 imgElement.alt = 'System Theme';
             } else if (theme === 'auto') {
-                imgElement.src = 'assets/icons/auto-theme.png'; // We'll need to make sure this exists or use a fallback
-                imgElement.alt = 'Auto Theme';
-                // Fallback to system icon if auto icon doesn't exist (using error handler)
+                // Use schedule icon for auto mode
+                imgElement.src = 'assets/icons/schedule-theme.png';
+                imgElement.alt = `Schedule Theme (${scheduleType})`;
+                // Fallback to system icon if schedule icon doesn't exist
                 imgElement.onerror = function () { this.src = 'assets/icons/system-theme.png'; };
             } else if (theme === 'light') {
                 imgElement.src = 'assets/icons/light-mode.png';
@@ -196,7 +199,17 @@ const initApp = () => {
 
             // Update text if it exists
             if (themeText) {
-                themeText.textContent = theme.charAt(0).toUpperCase() + theme.slice(1);
+                if (theme === 'auto') {
+                    // Show schedule type in text
+                    const scheduleLabels = {
+                        'fixed': 'Schedule',
+                        'sunrise': 'Sunrise',
+                        'custom': 'Custom'
+                    };
+                    themeText.textContent = scheduleLabels[scheduleType] || 'Schedule';
+                } else {
+                    themeText.textContent = theme.charAt(0).toUpperCase() + theme.slice(1);
+                }
             }
         }
 
@@ -2854,9 +2867,8 @@ const initPart2 = () => {
                 console.log(`User response to the install prompt: ${outcome}`);
 
                 if (outcome === 'accepted') {
-                    // User accepted the install
-                    const btnTitle = installAppBtn.querySelector('.theme-btn-title');
-                    if (btnTitle) btnTitle.textContent = 'Installing...';
+                    // User accepted the install - show download animation
+                    showInstallAnimation();
                 }
 
                 // We've used the prompt, and can't use it again, throw it away
@@ -2864,6 +2876,73 @@ const initPart2 = () => {
                 updateInstallButton();
             }
         });
+    }
+
+    // Install animation function
+    function showInstallAnimation() {
+        if (!installAppBtn) return;
+
+        const btnTitle = installAppBtn.querySelector('.theme-btn-title');
+        if (!btnTitle) return;
+
+        // Create progress elements
+        const progressBar = document.createElement('div');
+        progressBar.className = 'install-progress-bar';
+
+        const progressFill = document.createElement('div');
+        progressFill.className = 'install-progress-fill';
+
+        const progressText = document.createElement('div');
+        progressText.className = 'install-progress-text';
+        progressText.textContent = '0%';
+
+        progressBar.appendChild(progressFill);
+
+        // Store original button content
+        const originalContent = btnTitle.textContent;
+
+        // Update button
+        btnTitle.textContent = '';
+        btnTitle.appendChild(progressText);
+        installAppBtn.appendChild(progressBar);
+        installAppBtn.style.position = 'relative';
+        installAppBtn.style.overflow = 'hidden';
+
+        // Animate progress
+        let progress = 0;
+        const duration = 3000; // 3 seconds
+        const steps = 60;
+        const increment = 100 / steps;
+        const stepDuration = duration / steps;
+
+        const interval = setInterval(() => {
+            progress += increment;
+
+            if (progress >= 100) {
+                progress = 100;
+                clearInterval(interval);
+
+                // Show completion
+                progressText.textContent = '100%';
+                progressFill.style.width = '100%';
+
+                // After completion, show success message
+                setTimeout(() => {
+                    progressText.textContent = 'Installed ✓';
+                    progressFill.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+
+                    // Reset after 2 seconds
+                    setTimeout(() => {
+                        btnTitle.textContent = originalContent;
+                        progressBar.remove();
+                        updateInstallButton();
+                    }, 2000);
+                }, 500);
+            } else {
+                progressText.textContent = Math.round(progress) + '%';
+                progressFill.style.width = progress + '%';
+            }
+        }, stepDuration);
     }
 
     // Listen for app installed event
