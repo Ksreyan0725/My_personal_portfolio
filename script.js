@@ -2871,8 +2871,12 @@ const initPart2 = () => {
             installAppBtn.style.cursor = 'not-allowed';
             installAppBtn.disabled = true;
         } else if (isIOS) {
-            // iOS device - hide button, show instructions
-            installAppBtn.style.display = 'none';
+            // iOS device - show button as disabled, show instructions
+            installAppBtn.style.display = 'flex';
+            installAppBtn.style.opacity = '0.6';
+            installAppBtn.style.cursor = 'default';
+            installAppBtn.disabled = true;
+            btnTitle.textContent = 'Follow Instructions Below';
             if (iosInstallInstructions) iosInstallInstructions.style.display = 'block';
         } else if (deferredPrompt) {
             // Install prompt available

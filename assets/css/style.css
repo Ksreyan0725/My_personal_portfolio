@@ -4017,3 +4017,10 @@ html.lenis, html.lenis body {
 .lenis.lenis-scrolling iframe {
   pointer-events: none;
 }
+
+/* Force Install App Group to be visible */
+#installAppGroup {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
