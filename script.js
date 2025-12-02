@@ -24,25 +24,42 @@ const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
     }
 })();
 
-// Preloader Logic
+// Preloader Logic - Enhanced for PWA
 const hidePreloader = () => {
     const preloader = document.getElementById('preloader');
     if (preloader) {
-        // Ensure preloader is visible initially (safeguard for all devices)
+        // Check if running as PWA
+        const isPWA = window.matchMedia('(display-mode: standalone)').matches ||
+            window.navigator.standalone === true;
+
+        // Minimum display time: longer for PWA to ensure animation is visible
+        const minDisplayTime = isPWA ? 1200 : 800;
+
+        // Ensure preloader is visible initially
         preloader.style.display = 'flex';
         preloader.style.opacity = '1';
         preloader.style.visibility = 'visible';
 
-        // Minimum display time of 800ms to prevent flickering on fast connections
+        // Wait for minimum display time
         setTimeout(() => {
             document.body.classList.add('loaded');
             // Remove from DOM after transition
             setTimeout(() => {
                 preloader.style.display = 'none';
             }, 500);
-        }, 800);
+        }, minDisplayTime);
     }
 };
+
+// Force preloader to show on every load (especially important for PWA)
+document.addEventListener('DOMContentLoaded', () => {
+    const preloader = document.getElementById('preloader');
+    if (preloader) {
+        preloader.style.display = 'flex';
+        preloader.style.opacity = '1';
+        preloader.style.visibility = 'visible';
+    }
+});
 
 if (document.readyState === 'complete') {
     hidePreloader();
@@ -443,6 +460,14 @@ const initApp = () => {
         notificationMessage.textContent = message;
         notificationBanner.classList.add('active');
 
+        // Play sound and vibrate if enabled
+        if (typeof window.playNotificationSound === 'function') {
+            window.playNotificationSound();
+        }
+        if (typeof window.triggerVibration === 'function') {
+            window.triggerVibration([200, 100, 200]);
+        }
+
         clearTimeout(notificationTimeout);
         notificationTimeout = setTimeout(() => {
             notificationBanner.classList.remove('active');
@@ -566,17 +591,90 @@ const initApp = () => {
     const pushToggle = document.getElementById('pushToggle');
     const soundToggle = document.getElementById('soundToggle');
 
+    // Sound and Vibration Helper Functions
+    function playNotificationSound() {
+        if (localStorage.getItem('soundEnabled') !== 'true') return;
+
+        try {
+            // Create a pleasant notification sound using Web Audio API
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+
+            // Create a pleasant two-tone notification sound
+            oscillator.frequency.value = 800;
+            oscillator.type = 'sine';
+
+            gainNode.gain.setValueAtTime(0, audioContext.currentTime);
+            gainNode.gain.linearRampToValueAtTime(0.3, audioContext.currentTime + 0.01);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.15);
+
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 0.15);
+
+            // Second tone
+            setTimeout(() => {
+                const oscillator2 = audioContext.createOscillator();
+                const gainNode2 = audioContext.createGain();
+
+                oscillator2.connect(gainNode2);
+                gainNode2.connect(audioContext.destination);
+
+                oscillator2.frequency.value = 1000;
+                oscillator2.type = 'sine';
+
+                gainNode2.gain.setValueAtTime(0, audioContext.currentTime);
+                gainNode2.gain.linearRampToValueAtTime(0.3, audioContext.currentTime + 0.01);
+                gainNode2.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.15);
+
+                oscillator2.start(audioContext.currentTime);
+                oscillator2.stop(audioContext.currentTime + 0.15);
+            }, 100);
+        } catch (error) {
+            console.warn('Could not play notification sound:', error);
+        }
+    }
+
+    function triggerVibration(pattern = [200, 100, 200]) {
+        if (localStorage.getItem('soundEnabled') !== 'true') return;
+
+        if ('vibrate' in navigator) {
+            navigator.vibrate(pattern);
+        }
+    }
+
+    // Expose globally for use in notifications
+    window.playNotificationSound = playNotificationSound;
+    window.triggerVibration = triggerVibration;
+
     if (pushToggle) {
         pushToggle.addEventListener('click', () => {
             pushToggle.classList.toggle('active');
-            localStorage.setItem('pushEnabled', pushToggle.classList.contains('active'));
+            const isEnabled = pushToggle.classList.contains('active');
+            localStorage.setItem('pushEnabled', isEnabled);
+
+            // Play feedback sound and vibrate
+            if (isEnabled) {
+                playNotificationSound();
+                triggerVibration([50]);
+            }
         });
     }
 
     if (soundToggle) {
         soundToggle.addEventListener('click', () => {
             soundToggle.classList.toggle('active');
-            localStorage.setItem('soundEnabled', soundToggle.classList.contains('active'));
+            const isEnabled = soundToggle.classList.contains('active');
+            localStorage.setItem('soundEnabled', isEnabled);
+
+            // Play demo sound and vibrate when enabling
+            if (isEnabled) {
+                playNotificationSound();
+                triggerVibration([100, 50, 100]);
+            }
         });
     }
 
@@ -3142,3 +3240,150 @@ const initPart2 = () => {
 // Call initialization functions after they are defined
 initApp();
 initPart2();
+
+/* ==================== PWA Install Prompt Logic ==================== */
+let deferredPrompt = null;
+const installPrompt = document.getElementById('installPrompt');
+
+// Listen for beforeinstallprompt event
+window.addEventListener('beforeinstallprompt', (e) => {
+    // Prevent the mini-infobar from appearing on mobile
+    e.preventDefault();
+    // Stash the event so it can be triggered later
+    deferredPrompt = e;
+
+    // Check if app is already installed
+    if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) {
+        return; // Don't show prompt if already installed
+    }
+
+    // Show install prompt after a delay (3 seconds)
+    setTimeout(() => {
+        if (installPrompt && deferredPrompt) {
+            installPrompt.style.display = 'block';
+        }
+    }, 3000);
+});
+
+// Install PWA function
+window.installPWA = async function () {
+    if (!deferredPrompt) {
+        console.log('Install prompt not available');
+        return;
+    }
+
+    // Hide the install prompt
+    if (installPrompt) {
+        installPrompt.style.display = 'none';
+    }
+
+    // Show the install prompt
+    deferredPrompt.prompt();
+
+    // Wait for the user to respond to the prompt
+    const { outcome } = await deferredPrompt.userChoice;
+
+    console.log(`User response to the install prompt: ${outcome}`);
+
+    // Clear the deferredPrompt
+    deferredPrompt = null;
+};
+
+// Close install prompt function
+window.closeInstallPrompt = function () {
+    if (installPrompt) {
+        installPrompt.style.display = 'none';
+    }
+
+    // Don't show again for this session
+    sessionStorage.setItem('installPromptDismissed', 'true');
+};
+
+// Check if prompt was dismissed in this session
+if (sessionStorage.getItem('installPromptDismissed') === 'true') {
+    if (installPrompt) {
+        installPrompt.style.display = 'none';
+    }
+}
+
+// Listen for app installed event
+window.addEventListener('appinstalled', () => {
+    console.log('PWA was installed successfully');
+    if (installPrompt) {
+        installPrompt.style.display = 'none';
+    }
+    deferredPrompt = null;
+    updateInstallButtonInSettings();
+});
+
+/* ==================== Settings Panel Install Button ==================== */
+const installAppBtn = document.getElementById('installAppBtn');
+const installAppGroup = document.getElementById('installAppGroup');
+const iosInstallInstructions = document.getElementById('iosInstallInstructions');
+
+// Update install button state
+function updateInstallButtonInSettings() {
+    if (!installAppBtn) return;
+
+    const isInstalled = window.matchMedia('(display-mode: standalone)').matches ||
+        window.navigator.standalone === true;
+
+    // Detect iOS
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+
+    if (isInstalled) {
+        // App is already installed
+        installAppBtn.querySelector('.theme-btn-title').textContent = 'App Installed ✓';
+        installAppBtn.disabled = true;
+        installAppBtn.style.opacity = '0.6';
+        installAppBtn.style.cursor = 'not-allowed';
+        if (iosInstallInstructions) iosInstallInstructions.style.display = 'none';
+    } else if (isIOS) {
+        // iOS device - show manual instructions
+        installAppBtn.querySelector('.theme-btn-title').textContent = 'Install Instructions';
+        installAppBtn.disabled = false;
+        installAppBtn.style.opacity = '1';
+        installAppBtn.style.cursor = 'pointer';
+
+        installAppBtn.onclick = () => {
+            if (iosInstallInstructions) {
+                iosInstallInstructions.style.display =
+                    iosInstallInstructions.style.display === 'none' ? 'block' : 'none';
+            }
+        };
+    } else if (deferredPrompt) {
+        // Can install - show install button
+        installAppBtn.querySelector('.theme-btn-title').textContent = 'Install App';
+        installAppBtn.disabled = false;
+        installAppBtn.style.opacity = '1';
+        installAppBtn.style.cursor = 'pointer';
+        if (iosInstallInstructions) iosInstallInstructions.style.display = 'none';
+
+        installAppBtn.onclick = async () => {
+            await window.installPWA();
+            updateInstallButtonInSettings();
+        };
+    } else {
+        // Cannot install (not supported or already prompted)
+        installAppBtn.querySelector('.theme-btn-title').textContent = 'Install Not Available';
+        installAppBtn.disabled = true;
+        installAppBtn.style.opacity = '0.6';
+        installAppBtn.style.cursor = 'not-allowed';
+        if (iosInstallInstructions) iosInstallInstructions.style.display = 'none';
+    }
+}
+
+// Initial update
+updateInstallButtonInSettings();
+
+// Update when beforeinstallprompt fires
+window.addEventListener('beforeinstallprompt', () => {
+    setTimeout(updateInstallButtonInSettings, 100);
+});
+
+// Update on page visibility change
+document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) {
+        updateInstallButtonInSettings();
+    }
+});

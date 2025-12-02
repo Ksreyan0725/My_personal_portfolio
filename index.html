@@ -5,7 +5,7 @@ Purpose: Main landing page for Kumar Sreyan Pattanayak's personal portfolio
 Description: Showcases education, projects, certifications, and skills with
              responsive design, dark/light theme support, and smooth animations
 Author: Kumar Sreyan Pattanayak
-Last Updated: November 27, 2025
+Last Updated: December 2, 2025
 =============================================================================
 --> 
 
@@ -776,7 +776,7 @@ Last Updated: November 27, 2025
                 </div>
                 
                 <div style="margin-top: 15px; text-align: center; font-size: 0.8rem; color: var(--text-secondary); opacity: 0.7;">
-                    Version: 1.0.238
+                    Version: 1.1.1
                 </div>
             </div>
             
@@ -797,11 +797,121 @@ Last Updated: November 27, 2025
                 navigator.serviceWorker.register('./sw.js')
                     .then((registration) => {
                         console.log('ServiceWorker registration successful:', registration.scope);
+                        
+                        // Check for updates every 60 seconds
+                        setInterval(() => {
+                            registration.update();
+                        }, 60000);
+                        
+                        // Listen for updates
+                        registration.addEventListener('updatefound', () => {
+                            const newWorker = registration.installing;
+                            
+                            newWorker.addEventListener('statechange', () => {
+                                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                                    // New service worker available, show update notification
+                                    showUpdateNotification();
+                                }
+                            });
+                        });
                     })
                     .catch((error) => {
                         console.log('ServiceWorker registration failed:', error);
                     });
             });
+            
+            // Listen for controller change (when new SW takes over)
+            navigator.serviceWorker.addEventListener('controllerchange', () => {
+                // Reload the page to get the latest version
+                window.location.reload();
+            });
+        }
+        
+        // Show update notification
+        function showUpdateNotification() {
+            const updateBanner = document.createElement('div');
+            updateBanner.id = 'updateNotification';
+            updateBanner.style.cssText = `
+                position: fixed;
+                top: 70px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: linear-gradient(135deg, #6366f1 0%, #4F5BD5 100%);
+                color: white;
+                padding: 16px 24px;
+                border-radius: 12px;
+                box-shadow: 0 8px 32px rgba(99, 102, 241, 0.4);
+                z-index: 10001;
+                display: flex;
+                align-items: center;
+                gap: 16px;
+                animation: slideDown 0.4s ease;
+                max-width: 90%;
+            `;
+            
+            updateBanner.innerHTML = `
+                <div style="flex: 1;">
+                    <strong style="display: block; margin-bottom: 4px;">🎉 New Version Available!</strong>
+                    <span style="font-size: 14px; opacity: 0.95;">Version 1.1.1 is ready. Click to update.</span>
+                </div>
+                <button onclick="updateApp()" style="
+                    background: white;
+                    color: #6366f1;
+                    border: none;
+                    padding: 8px 16px;
+                    border-radius: 8px;
+                    font-weight: 600;
+                    cursor: pointer;
+                    white-space: nowrap;
+                ">Update Now</button>
+                <button onclick="dismissUpdate()" style="
+                    background: rgba(255,255,255,0.2);
+                    color: white;
+                    border: none;
+                    padding: 8px 12px;
+                    border-radius: 8px;
+                    cursor: pointer;
+                ">✕</button>
+            `;
+            
+            document.body.appendChild(updateBanner);
+            
+            // Add animation
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes slideDown {
+                    from {
+                        transform: translateX(-50%) translateY(-100px);
+                        opacity: 0;
+                    }
+                    to {
+                        transform: translateX(-50%) translateY(0);
+                        opacity: 1;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+        
+        // Update app function
+        function updateApp() {
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.getRegistration().then((registration) => {
+                    if (registration && registration.waiting) {
+                        // Tell the waiting service worker to skip waiting
+                        registration.waiting.postMessage({ type: 'SKIP_WAITING' });
+                    }
+                });
+            }
+        }
+        
+        // Dismiss update notification
+        function dismissUpdate() {
+            const banner = document.getElementById('updateNotification');
+            if (banner) {
+                banner.style.animation = 'slideDown 0.3s ease reverse';
+                setTimeout(() => banner.remove(), 300);
+            }
         }
     </script>
 
@@ -938,68 +1048,5 @@ Last Updated: November 27, 2025
             }
         }
     </style>
-
-    <script>
-        // PWA Install Prompt Logic
-        let deferredPrompt;
-        const installPrompt = document.getElementById('installPrompt');
-
-        window.addEventListener('beforeinstallprompt', (e) => {
-            // Prevent the mini-infobar from appearing on mobile
-            e.preventDefault();
-            // Stash the event so it can be triggered later
-            deferredPrompt = e;
-            
-            // Check if user has dismissed the prompt before
-            const dismissed = localStorage.getItem('pwa-install-dismissed');
-            const installed = localStorage.getItem('pwa-installed');
-            
-            if (!dismissed && !installed) {
-                // Show the custom install prompt after 3 seconds
-                setTimeout(() => {
-                    installPrompt.style.display = 'block';
-                }, 3000);
-            }
-        });
-
-        function installPWA() {
-            if (!deferredPrompt) {
-                return;
-            }
-
-            // Show the install prompt
-            deferredPrompt.prompt();
-
-            // Wait for the user to respond to the prompt
-            deferredPrompt.userChoice.then((choiceResult) => {
-                if (choiceResult.outcome === 'accepted') {
-                    console.log('User accepted the install prompt');
-                    localStorage.setItem('pwa-installed', 'true');
-                } else {
-                    console.log('User dismissed the install prompt');
-                }
-                
-                // Hide the prompt
-                installPrompt.style.display = 'none';
-                deferredPrompt = null;
-            });
-        }
-
-        function closeInstallPrompt() {
-            installPrompt.style.display = 'none';
-            // Remember that user dismissed it (for 7 days)
-            const dismissedUntil = new Date();
-            dismissedUntil.setDate(dismissedUntil.getDate() + 7);
-            localStorage.setItem('pwa-install-dismissed', dismissedUntil.toISOString());
-        }
-
-        // Listen for app installed event
-        window.addEventListener('appinstalled', () => {
-            console.log('PWA was installed');
-            localStorage.setItem('pwa-installed', 'true');
-            installPrompt.style.display = 'none';
-        });
-    </script>
-
 </body>
 </html>

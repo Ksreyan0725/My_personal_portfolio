@@ -104,17 +104,27 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            flex-wrap: wrap;
+            flex-wrap: nowrap; /* Changed from wrap to nowrap */
             gap: 10px;
             border-bottom: 1px solid var(--toolbar-border);
             box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+            overflow-x: auto; /* Allow horizontal scroll if needed */
+            overflow-y: hidden;
+            -ms-overflow-style: none;  /* Hide scrollbar for IE and Edge */
+            scrollbar-width: none;  /* Hide scrollbar for Firefox */
+        }
+
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        .toolbar::-webkit-scrollbar {
+            display: none;
         }
 
         .toolbar-section {
             display: flex;
             align-items: center;
             gap: 10px;
-            flex-wrap: wrap;
+            flex-wrap: nowrap; /* Changed from wrap to nowrap */
+            flex-shrink: 0; /* Prevent sections from shrinking */
         }
 
         .toolbar button {
@@ -130,6 +140,8 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            flex-shrink: 0; /* Prevent buttons from shrinking */
+            white-space: nowrap; /* Prevent text wrapping inside buttons */
         }
 
         .toolbar button img {
@@ -422,20 +434,6 @@
         }
 
         @media (max-width: 480px) {
-            .toolbar {
-                justify-content: center;
-            }
-
-            .toolbar-section {
-                width: 100%;
-                justify-content: center;
-                flex-wrap: nowrap;
-                overflow-x: auto;
-                -ms-overflow-style: none;
-                scrollbar-width: none;
-            }
-            .toolbar-section::-webkit-scrollbar { display: none; }
-
             .toolbar button {
                 flex: 0 0 auto;
             }
@@ -1162,15 +1160,13 @@
         const backBtn = document.getElementById('back-btn');
         if (backBtn) {
             backBtn.addEventListener('click', () => {
-                try {
-                    window.close();
-                } catch(e) {
+                // Check if there's history to go back to
+                if (window.history.length > 1 && document.referrer) {
+                    window.history.back();
+                } else {
+                    // Fallback to index page if no history
                     window.location.href = '../index.html';
                 }
-                // Fallback if window.close() is blocked and history exists
-                setTimeout(() => {
-                     if (!window.closed) window.location.href = '../index.html';
-                }, 100);
             });
         }
 

@@ -1,6 +1,7 @@
 {
     "name": "Kumar Sreyan Pattanayak - Portfolio",
     "short_name": "KSP Portfolio",
+    "version": "1.1.1",
     "description": "Personal portfolio of Kumar Sreyan Pattanayak - BCA Student & Technology Enthusiast",
     "start_url": "/My_personal_portfolio/",
     "scope": "/My_personal_portfolio/",

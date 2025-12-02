@@ -1,89 +1,149 @@
 // Service Worker for Portfolio PWA
-// Version 1.0.0
+// Version 1.1.1
+const CACHE_NAME = 'portfolio-v1.1.1';
+const RUNTIME_CACHE = 'portfolio-runtime-v1.1.1';
 
-const CACHE_NAME = 'portfolio-v1';
-const urlsToCache = [
+// Critical resources for initial load (minimal set for fast install)
+const CORE_ASSETS = [
     '/My_personal_portfolio/',
     '/My_personal_portfolio/index.html',
-    '/My_personal_portfolio/contact.html',
-    '/My_personal_portfolio/assets/css/style.css',
-    '/My_personal_portfolio/assets/css/responsive.css',
-    '/My_personal_portfolio/script.js',
-    '/My_personal_portfolio/assets/images/my-photo.jpg',
-    '/My_personal_portfolio/assets/icons/favicon.png',
     '/My_personal_portfolio/manifest.json'
 ];
 
-// Install event - cache resources
+// Secondary resources to cache after install (lazy cache)
+const SECONDARY_ASSETS = [
+    '/My_personal_portfolio/contact.html',
+    '/My_personal_portfolio/assets/css/style.css',
+    '/My_personal_portfolio/assets/css/responsive.css',
+    '/My_personal_portfolio/assets/css/preloader.css',
+    '/My_personal_portfolio/assets/css/install-button.css',
+    '/My_personal_portfolio/assets/css/theme-schedule.css',
+    '/My_personal_portfolio/script.js',
+    '/My_personal_portfolio/assets/js/theme-schedule.js',
+    '/My_personal_portfolio/assets/icons/favicon.png',
+    '/My_personal_portfolio/assets/icons/system-theme.png',
+    '/My_personal_portfolio/assets/icons/custom-theme.png',
+    '/My_personal_portfolio/assets/icons/light-mode.png',
+    '/My_personal_portfolio/assets/icons/dark-mode.png'
+];
+
+// Install event - cache only critical resources for fast install
 self.addEventListener('install', (event) => {
     event.waitUntil(
         caches.open(CACHE_NAME)
             .then((cache) => {
-                console.log('Opened cache');
-                return cache.addAll(urlsToCache);
+                console.log('Caching core assets');
+                return cache.addAll(CORE_ASSETS);
+            })
+            .then(() => {
+                console.log('Core assets cached successfully');
+                // Skip waiting immediately for faster activation
+                return self.skipWaiting();
             })
             .catch((error) => {
                 console.error('Cache installation failed:', error);
             })
     );
-    // Force the waiting service worker to become the active service worker
-    self.skipWaiting();
 });
 
-// Activate event - clean up old caches
+// Activate event - clean up old caches and cache secondary assets
 self.addEventListener('activate', (event) => {
     event.waitUntil(
-        caches.keys().then((cacheNames) => {
-            return Promise.all(
-                cacheNames.map((cacheName) => {
-                    if (cacheName !== CACHE_NAME) {
-                        console.log('Deleting old cache:', cacheName);
-                        return caches.delete(cacheName);
-                    }
-                })
-            );
-        })
+        Promise.all([
+            // Clean up old caches
+            caches.keys().then((cacheNames) => {
+                return Promise.all(
+                    cacheNames.map((cacheName) => {
+                        if (cacheName !== CACHE_NAME && cacheName !== RUNTIME_CACHE) {
+                            console.log('Deleting old cache:', cacheName);
+                            return caches.delete(cacheName);
+                        }
+                    })
+                );
+            }),
+            // Cache secondary assets in background (non-blocking)
+            caches.open(CACHE_NAME).then((cache) => {
+                console.log('Caching secondary assets');
+                // Use Promise.allSettled to continue even if some fail
+                return Promise.allSettled(
+                    SECONDARY_ASSETS.map(url =>
+                        cache.add(url).catch(err => console.warn('Failed to cache:', url, err))
+                    )
+                );
+            }),
+            // Take control immediately
+            self.clients.claim()
+        ])
     );
-    // Take control of all pages immediately
-    return self.clients.claim();
 });
 
-// Fetch event - serve from cache, fallback to network
+// Listen for skip waiting message
+self.addEventListener('message', (event) => {
+    if (event.data && event.data.type === 'SKIP_WAITING') {
+        self.skipWaiting();
+    }
+});
+
+// Optimized fetch strategy: Cache First with Network Fallback
 self.addEventListener('fetch', (event) => {
+    // Skip non-GET requests
+    if (event.request.method !== 'GET') return;
+
+    // Skip chrome-extension and other non-http(s) requests
+    if (!event.request.url.startsWith('http')) return;
+
     event.respondWith(
         caches.match(event.request)
-            .then((response) => {
-                // Cache hit - return response
-                if (response) {
-                    return response;
+            .then((cachedResponse) => {
+                if (cachedResponse) {
+                    // Return cached response immediately
+                    // Update cache in background for next time
+                    updateCacheInBackground(event.request);
+                    return cachedResponse;
                 }
 
-                // Clone the request
-                const fetchRequest = event.request.clone();
+                // Not in cache, fetch from network
+                return fetch(event.request)
+                    .then((response) => {
+                        // Check if valid response
+                        if (!response || response.status !== 200 || response.type === 'error') {
+                            return response;
+                        }
 
-                return fetch(fetchRequest).then((response) => {
-                    // Check if valid response
-                    if (!response || response.status !== 200 || response.type !== 'basic') {
+                        // Only cache same-origin requests
+                        if (event.request.url.startsWith(self.location.origin)) {
+                            const responseToCache = response.clone();
+                            caches.open(RUNTIME_CACHE)
+                                .then((cache) => {
+                                    cache.put(event.request, responseToCache);
+                                });
+                        }
+
                         return response;
-                    }
-
-                    // Clone the response
-                    const responseToCache = response.clone();
-
-                    caches.open(CACHE_NAME)
-                        .then((cache) => {
-                            cache.put(event.request, responseToCache);
-                        });
-
-                    return response;
-                }).catch((error) => {
-                    console.error('Fetch failed:', error);
-                    // Return offline page if available
-                    return caches.match('/My_personal_portfolio/pages/maintenance.html');
-                });
+                    })
+                    .catch((error) => {
+                        console.error('Fetch failed:', error);
+                        // Return offline page if available
+                        return caches.match('/My_personal_portfolio/index.html');
+                    });
             })
     );
 });
+
+// Background cache update (stale-while-revalidate pattern)
+function updateCacheInBackground(request) {
+    fetch(request)
+        .then((response) => {
+            if (response && response.status === 200) {
+                caches.open(CACHE_NAME).then((cache) => {
+                    cache.put(request, response);
+                });
+            }
+        })
+        .catch(() => {
+            // Silently fail - we already have cached version
+        });
+}
 
 // Background sync for form submissions (if supported)
 self.addEventListener('sync', (event) => {

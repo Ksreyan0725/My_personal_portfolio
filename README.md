@@ -16,17 +16,18 @@ The site includes a fully responsive layout that adapts seamlessly to mobile, ta
 
 ### Progressive Web App (PWA) 📱
 The website is built as a Progressive Web App, meaning it can be installed as a native application on both mobile and desktop devices. Features include:
-- App Installation: Dedicated install section in Settings Panel with smart state detection
-- Offline Support: Service Worker enables offline access to the site
-- Version Tracking: Displays current version based on git commit count
-- Platform-Specific Instructions: Automatic detection and guidance for iOS vs Android/Desktop installation
+- **Smart Install System**: Dedicated install section in Settings Panel with automatic platform detection (iOS/Android/Desktop)
+- **Update Notifications**: Automatic alerts when a new version is available with "Update Now" functionality
+- **Offline Support**: Advanced Service Worker with stale-while-revalidate caching strategy
+- **Version Tracking**: Displays current version (v1.1.1) in Settings Panel
+- **Platform-Specific Instructions**: Automatic detection and guidance for iOS vs Android/Desktop installation
 
 ### User Experience Enhancements
-- Preloader Animation: Smooth loading animation with branded "KSP" logo on initial page load
-- Smooth Scrolling: Powered by Lenis library for buttery-smooth navigation
-- Mobile Sidebar: Swipe-enabled navigation menu with gesture support
-- Night Light Mode: Reduces blue light on mobile devices for comfortable evening viewing
-- Settings Panel: Comprehensive settings including theme selection, notifications, and app installation
+- **Enhanced Preloader**: Dual spinning circles animation with gradient loading bar (v1.1.1)
+- **Smooth Scrolling**: Powered by Lenis library for buttery-smooth navigation
+- **Mobile Sidebar**: Swipe-enabled navigation menu with gesture support
+- **Night Light Mode**: Reduces blue light on mobile devices for comfortable evening viewing
+- **Settings Panel**: Comprehensive settings including theme selection, notifications, and app installation
 
 ### Accessibility ♿
 The site adheres to WCAG 2.1 AA standards:
@@ -115,7 +116,9 @@ The project undergoes rigorous testing to ensure quality:
 
 ## 📊 Version Information
 
-The portfolio uses git commit count for version tracking. Current version is displayed in the Settings Panel under the App section.
+Current Version: **1.1.1**
+- Version tracking is displayed in the Settings Panel under the App section.
+- Updates are automatically detected and prompted via the Service Worker.
 
 ## 📄 License
 
@@ -125,4 +128,4 @@ This project is distributed under the MIT License.
 
 Made with ❤️ by Kumar Sreyan Pattanayak
 
-Last Updated: 1 December 2025
+Last Updated: 2 December 2025
