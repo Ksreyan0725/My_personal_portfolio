@@ -1095,6 +1095,59 @@ nav.scrolled {
   display: none; /* Hidden on mobile by default */
 }
 
+/* Settings Toggle Button - Matches Theme Toggle */
+.settings-toggle {
+    background: var(--card-bg);
+    color: var(--text-primary);
+    border: 2px solid var(--border);
+    box-sizing: border-box;
+    padding: 8px 18px;
+    border-radius: 50px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: none; /* Hidden on mobile by default */
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    user-select: none;
+    flex-shrink: 0;
+    white-space: nowrap;
+    overflow: visible;
+    height: 40px;
+    min-height: 40px;
+}
+
+.settings-toggle:hover {
+    border-color: var(--accent);
+    background: var(--accent-glow);
+    box-shadow: 0 0 20px var(--accent-glow);
+    transform: scale(1.05);
+}
+
+.settings-toggle:active,
+.settings-toggle:focus-visible {
+    border-color: var(--accent);
+    background: var(--accent-glow);
+    box-shadow: 0 0 20px var(--accent-glow);
+    transform: scale(0.95);
+    outline: none;
+}
+
+.settings-icon {
+    width: 22px;
+    height: 22px;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.settings-toggle:hover .settings-icon {
+    transform: rotate(90deg); /* Gear rotation on hover */
+}
+
+.settings-text {
+    display: none; /* Hidden on mobile by default */
+}
 
 /* ==================== Scrolling Notice Banner ==================== */
 .notice-banner {
@@ -3309,7 +3362,7 @@ footer {
     z-index: 2001;
     transition: bottom 0.3s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.3s step-end;
     box-shadow: 0 -5px 30px rgba(0,0,0,0.2);
-    max-height: 50vh;
+    max-height: 85vh;
     border-top: 1px solid var(--border);
     display: flex;
     flex-direction: column;

@@ -180,6 +180,12 @@ Last Updated: November 27, 2025
                 <span class="theme-text">System</span>
             </button>
 
+            <!-- Desktop Settings Button -->
+            <button class="settings-toggle desktop-settings-btn" id="desktopSettingsBtn" aria-label="Open settings" data-tooltip="Settings">
+                <img src="assets/icons/settings.png" alt="Settings" class="settings-icon">
+                <span class="settings-text">Settings</span>
+            </button>
+
             <!-- Mobile Search Icon -->
             <button class="mobile-search-icon" id="mobileSearchIcon" aria-label="Search">
                 <img src="assets/icons/search.png" alt="Search" class="mobile-search-icon-img" />
@@ -603,7 +609,7 @@ Last Updated: November 27, 2025
                         <div class="theme-btn-desc">Bright and clear interface for daytime use</div>
                     </button>
                     <button class="theme-btn" data-theme="dark">
-                        <div class="theme-btn-title">Dark Mode 🌙</div>
+                        <div class="theme-btn-title">Dark Mode 🌜</div>
                         <div class="theme-btn-desc">Easy on the eyes with dark backgrounds</div>
                     </button>
                     <button class="theme-btn" data-theme="auto" id="autoThemeBtn">
@@ -613,16 +619,12 @@ Last Updated: November 27, 2025
                     
                     <!-- Schedule Options Dropdown -->
                     <div class="schedule-dropdown" id="scheduleDropdown" style="display: none;">
-                        <div class="schedule-option" data-schedule="fixed">
-                            <div class="schedule-option-title">Fixed Time ⏰</div>
-                            <div class="schedule-option-desc">7 AM to 7 PM (default)</div>
-                        </div>
                         <div class="schedule-option" data-schedule="sunrise">
                             <div class="schedule-option-title">Sunrise to Sunset 🌅</div>
                             <div class="schedule-option-desc">Auto-adjust based on your location</div>
                         </div>
                         <div class="schedule-option" data-schedule="custom">
-                            <div class="schedule-option-title">Custom Time ⚙️</div>
+                            <div class="schedule-option-title">Custom Time ⌛</div>
                             <div class="schedule-option-desc">Set your own schedule</div>
                         </div>
                     </div>
@@ -634,13 +636,44 @@ Last Updated: November 27, 2025
                             <button class="time-picker-close" id="closeTimePicker">✕</button>
                         </div>
                         <div class="time-picker-body">
-                            <div class="time-input-group">
+                            <!-- Light Mode Time Picker -->
+                            <div class="time-wheel-group">
                                 <label>Light Mode Starts</label>
-                                <input type="time" id="lightModeStart" value="07:00">
+                                <div class="time-wheels" id="lightModeWheels">
+                                    <div class="wheel-container">
+                                        <div class="wheel-label">Hour</div>
+                                        <div class="wheel" id="lightHourWheel"></div>
+                                    </div>
+                                    <div class="wheel-separator">:</div>
+                                    <div class="wheel-container">
+                                        <div class="wheel-label">Minute</div>
+                                        <div class="wheel" id="lightMinuteWheel"></div>
+                                    </div>
+                                    <div class="wheel-container">
+                                        <div class="wheel-label">Period</div>
+                                        <div class="wheel" id="lightPeriodWheel"></div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="time-input-group">
+                            
+                            <!-- Dark Mode Time Picker -->
+                            <div class="time-wheel-group">
                                 <label>Dark Mode Starts</label>
-                                <input type="time" id="darkModeStart" value="19:00">
+                                <div class="time-wheels" id="darkModeWheels">
+                                    <div class="wheel-container">
+                                        <div class="wheel-label">Hour</div>
+                                        <div class="wheel" id="darkHourWheel"></div>
+                                    </div>
+                                    <div class="wheel-separator">:</div>
+                                    <div class="wheel-container">
+                                        <div class="wheel-label">Minute</div>
+                                        <div class="wheel" id="darkMinuteWheel"></div>
+                                    </div>
+                                    <div class="wheel-container">
+                                        <div class="wheel-label">Period</div>
+                                        <div class="wheel" id="darkPeriodWheel"></div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="time-picker-footer">
@@ -753,7 +786,7 @@ Last Updated: November 27, 2025
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/My_personal_portfolio/sw.js')
+                navigator.serviceWorker.register('./sw.js')
                     .then((registration) => {
                         console.log('ServiceWorker registration successful:', registration.scope);
                     })

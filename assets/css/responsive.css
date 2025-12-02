@@ -2050,8 +2050,15 @@
     padding: 6px 38px 6px 12px; 
     border-width: 2px !important; 
   }
+  
+  /* Hide the standalone icon button */
   #navbar .desktop-search .search-icon-button {
     display: none !important;
+  }
+  
+  /* Show the search button icon at the right of the input */
+  #navbar .desktop-search .search-button {
+    display: flex !important;
   }
 }
 
@@ -2177,9 +2184,7 @@
   .menu-icon,
   .mobile-search-icon,
   .swipe-indicator,
-  .settings-btn-container,
-  .settings-overlay,
-  .settings-panel {
+  .settings-btn-container {
     display: none !important;
   }
 
@@ -2208,7 +2213,7 @@
 
 
 /* Desktop-only visibility for dropdown (Moved from style.css) */
-@media (max-width: 1024px) {
+@media (max-width: 899px) {
   .desktop-search-results {
     display: none !important;
   }
@@ -2219,8 +2224,76 @@
   #home .home-grid {
     padding-top: 0; /* Reduced top padding for larger screens */
   }
+  
+  /* Ensure full search bar is visible on large desktops */
+  #navbar .desktop-search {
+    display: flex !important;
+    width: auto;
+    max-width: 350px;
+    flex: 0 1 350px;
+  }
+  
+  #navbar .search-input {
+    display: block !important;
+    height: 40px !important;
+    padding: 6px 38px 6px 12px;
+    border-width: 2px !important;
+  }
+  
+  /* Hide the standalone icon button (used for icon-only mode) */
+  #navbar .desktop-search .search-icon-button {
+    display: none !important;
+  }
+  
+  /* Show the search button icon at the right of the input */
+  #navbar .desktop-search .search-button {
+    display: flex !important;
+  }
+  
+  /* Hide mobile search icon on desktop */
+  #navbar .mobile-search-icon {
+    display: none !important;
+  }
 }
 
+/* ==================== Desktop Settings Button ==================== */
+@media (min-width: 900px) {
+  /* Hide settings button on desktop - only available in mobile sidebar */
+  .desktop-settings-btn,
+  .settings-toggle {
+    display: none !important;
+  }
+  
+  /* Show text labels on larger screens */
+  .settings-text,
+  .theme-text {
+    display: inline !important;
+  }
 
+  /* Ensure desktop search results are visible and override tablet hiding rules */
+  #navbar .desktop-search .desktop-search-results {
+    display: none; /* Default hidden */
+    visibility: visible !important; /* Override visibility: hidden */
+  }
+
+  #navbar .desktop-search .desktop-search-results.active {
+    display: flex !important;
+  }
+
+  /* Ensure input and buttons are visible */
+  #navbar .desktop-search .search-input,
+  #navbar .desktop-search .search-button {
+    display: block !important;
+    visibility: visible !important;
+  }
+  
+  #navbar .desktop-search .search-button {
+    display: flex !important; /* Icon container needs flex */
+  }
+
+  #navbar .desktop-search .search-clear {
+    display: none !important;
+  }
+}
 
 

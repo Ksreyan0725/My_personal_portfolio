@@ -25,10 +25,14 @@ const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 })();
 
 // Preloader Logic
-// Preloader Logic
 const hidePreloader = () => {
     const preloader = document.getElementById('preloader');
     if (preloader) {
+        // Ensure preloader is visible initially (safeguard for all devices)
+        preloader.style.display = 'flex';
+        preloader.style.opacity = '1';
+        preloader.style.visibility = 'visible';
+
         // Minimum display time of 800ms to prevent flickering on fast connections
         setTimeout(() => {
             document.body.classList.add('loaded');
@@ -249,6 +253,9 @@ const initApp = () => {
         }
     }
 
+    // Expose applyTheme globally for theme-schedule.js
+    window.applyTheme = applyTheme;
+
     // Auto Theme Check Interval (every minute)
     setInterval(() => {
         const currentTheme = localStorage.getItem('theme');
@@ -381,6 +388,9 @@ const initApp = () => {
     // Theme Buttons
     if (themeBtns) {
         themeBtns.forEach(btn => {
+            // Skip the auto theme button - it's handled by theme-schedule.js
+            if (btn.id === 'autoThemeBtn') return;
+
             btn.addEventListener('click', () => {
                 const theme = btn.dataset.theme;
                 applyTheme(theme, true);
@@ -1415,13 +1425,14 @@ const initApp = () => {
 
     // Add search functionality to desktop search bars (dropdown with results, desktop-only)
     const desktopSearchInputs = document.querySelectorAll('.desktop-search .search-input');
+    console.log('Desktop search inputs found:', desktopSearchInputs.length);
     const desktopSearchButtons = document.querySelectorAll('.desktop-search .search-button');
     const desktopSearchClears = document.querySelectorAll('.desktop-search .search-clear');
     const desktopSearchResultsContainer = document.getElementById('desktopSearchResults');
     let currentDesktopResultIndex = -1;
 
-    // Desktop gating (Laptop and larger only)
-    const desktopMql = window.matchMedia('(min-width: 1024px)');
+    // Desktop gating (Desktop and larger - 900px+)
+    const desktopMql = window.matchMedia('(min-width: 900px)');
     let isDesktop = desktopMql.matches;
 
     function hideAllDesktopDropdowns() {
@@ -1584,7 +1595,11 @@ const initApp = () => {
         input.addEventListener('input', (e) => {
             toggleClear();
             const query = e.target.value.trim();
-            if (!isDesktop) {
+            // Check both the media query and direct screen width
+            const isCurrentlyDesktop = window.innerWidth >= 900;
+            console.log('Search input:', query, 'isDesktop:', isCurrentlyDesktop);
+
+            if (!isCurrentlyDesktop) {
                 // Do not show dropdown on non-desktop
                 resultsContainer?.classList.remove('active');
                 return;
@@ -1600,7 +1615,8 @@ const initApp = () => {
 
         // Handle keyboard navigation
         input.addEventListener('keydown', (e) => {
-            if (!isDesktop) return; // desktop-only navigation
+            const isCurrentlyDesktop = window.innerWidth >= 900;
+            if (!isCurrentlyDesktop) return; // desktop-only navigation
             if (!resultsContainer) return;
             const items = Array.from(resultsContainer.querySelectorAll('.desktop-search-result-item'));
 
@@ -1642,7 +1658,8 @@ const initApp = () => {
 
         // Show results on focus if there's a query (desktop only)
         input.addEventListener('focus', () => {
-            if (!isDesktop) return;
+            const isCurrentlyDesktop = window.innerWidth >= 900;
+            if (!isCurrentlyDesktop) return;
             const query = input.value.trim();
             if (query.length >= 2 && resultsContainer) {
                 showDesktopSearchResults(query, resultsContainer);
@@ -1651,7 +1668,8 @@ const initApp = () => {
 
         // On non-desktop, Enter opens the modal with results
         input.addEventListener('keypress', (e) => {
-            if (isDesktop) return;
+            const isCurrentlyDesktop = window.innerWidth >= 900;
+            if (isCurrentlyDesktop) return;
             if (e.key === 'Enter') {
                 const q = input.value.trim();
                 if (q.length < 2) {
@@ -2829,8 +2847,12 @@ const initPart2 = () => {
         return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
     }
 
-    // Always show the Install App section
-    if (installAppGroup) installAppGroup.style.display = 'block';
+    // Always show the Install App section on all devices
+    if (installAppGroup) {
+        installAppGroup.style.display = 'block';
+        installAppGroup.style.visibility = 'visible';
+        installAppGroup.style.opacity = '1';
+    }
 
     // Update button text based on installation status
     function updateInstallButton() {
@@ -3081,17 +3103,32 @@ const initPart2 = () => {
         updateInstallButton();
     });
 
+    // Listen for visibility changes to detect uninstalls
+    document.addEventListener('visibilitychange', () => {
+        if (!document.hidden) {
+            // Page became visible - check if app was uninstalled
+            updateInstallButton();
+        }
+    });
+
+    // Listen for focus events to detect uninstalls
+    window.addEventListener('focus', () => {
+        updateInstallButton();
+    });
+
     // Initial button state update
     updateInstallButton();
 
-};
+    // Expose updateInstallButton globally for settings panel
+    window.updateInstallButton = updateInstallButton;
 
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-        initApp();
-        initPart2();
-    });
-} else {
-    initApp();
-    initPart2();
+    /* ==================== Desktop Settings Button - REMOVED ==================== */
+    // Desktop settings button has been removed from the UI (hidden via CSS)
+    // Settings are now only accessible via the mobile sidebar menu
+
 }
+
+/* ==================== Initialize Application ==================== */
+// Call initialization functions after they are defined
+initApp();
+initPart2();
