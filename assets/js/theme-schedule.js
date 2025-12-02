@@ -3,7 +3,8 @@
 (function () {
     'use strict';
 
-    const autoThemeBtn = document.getElementById('autoThemeBtn');
+    const autoThemeBtn = document.getElementById('autoThemeBtn'); // Kept for reference if needed, but likely replaced
+    const autoThemeToggle = document.getElementById('autoThemeToggle'); // New toggle element
     const autoThemeDesc = document.getElementById('autoThemeDesc');
     const scheduleDropdown = document.getElementById('scheduleDropdown');
     const customTimePicker = document.getElementById('customTimePicker');
@@ -12,7 +13,7 @@
     const saveTimePicker = document.getElementById('saveTimePicker');
     const scheduleOptions = document.querySelectorAll('.schedule-option');
 
-    let currentScheduleType = localStorage.getItem('scheduleType') || 'sunrise';
+    let currentScheduleType = localStorage.getItem('scheduleType') || 'custom';
     let customTimes = JSON.parse(localStorage.getItem('customTimes')) || {
         lightStart: '07:00',
         darkStart: '19:00'
@@ -66,14 +67,9 @@
 
         wheel.innerHTML = '';
 
-        // Add padding items at top and bottom for scroll snap
-        const padding = 2;
-        for (let i = 0; i < padding; i++) {
-            const paddingItem = document.createElement('div');
-            paddingItem.className = 'wheel-item';
-            paddingItem.innerHTML = '&nbsp;';
-            wheel.appendChild(paddingItem);
-        }
+        // Padding items removed for single-item view
+        // const padding = 2;
+        // for (let i = 0; i < padding; i++) { ... }
 
         // Add actual items
         items.forEach(item => {
@@ -95,13 +91,8 @@
             wheel.appendChild(wheelItem);
         });
 
-        // Add padding items at bottom
-        for (let i = 0; i < padding; i++) {
-            const paddingItem = document.createElement('div');
-            paddingItem.className = 'wheel-item';
-            paddingItem.innerHTML = '&nbsp;';
-            wheel.appendChild(paddingItem);
-        }
+        // Padding items removed for single-item view
+        // for (let i = 0; i < padding; i++) { ... }
 
         // Scroll to selected item
         setTimeout(() => {
@@ -170,13 +161,15 @@
     }
 
     // Toggle dropdown when Auto theme button is clicked
-    if (autoThemeBtn) {
-        autoThemeBtn.addEventListener('click', function (e) {
+    // Toggle dropdown when Auto theme toggle is clicked
+    if (autoThemeToggle) {
+        autoThemeToggle.addEventListener('click', function (e) {
             e.stopPropagation();
 
             const currentTheme = localStorage.getItem('theme');
 
             if (currentTheme !== 'auto') {
+                // Switch TO Auto
                 if (typeof window.applyTheme === 'function') {
                     window.applyTheme('auto', true);
                 } else {
@@ -186,17 +179,39 @@
                     );
                 }
 
+                // Update toggle visual state
+                autoThemeToggle.classList.add('active');
+
                 if (currentScheduleType === 'sunrise') {
                     applySunriseSchedule();
                 } else if (currentScheduleType === 'custom') {
                     applyCustomSchedule();
                 }
 
+                // Open dropdown immediately when switching to auto
                 setTimeout(() => {
                     showDropdown();
-                }, 100);
+                }, 50);
             } else {
-                toggleDropdown();
+                // Switch FROM Auto (Turn Off)
+                // Default to system or light/dark based on current preference? 
+                // Let's default to 'system' as a safe fallback or just toggle off the dropdown if user meant to close it?
+                // Actually, a toggle usually means ON/OFF. If it's ON (auto), clicking it should turn it OFF.
+
+                // However, the user might just want to close the dropdown. 
+                // But the request said "toggle on and off just like night light".
+                // Night light toggle turns the feature off.
+
+                // So, turn off Auto Theme -> Switch to System (or previous).
+                if (typeof window.applyTheme === 'function') {
+                    window.applyTheme('system', true);
+                } else {
+                    localStorage.setItem('theme', 'system');
+                    // System theme logic would go here, but for now just remove auto
+                }
+
+                autoThemeToggle.classList.remove('active');
+                hideDropdown();
             }
         });
     }
@@ -213,7 +228,8 @@
                 showTimePicker();
             } else {
                 applySchedule(scheduleType);
-                hideDropdown();
+                // Don't hide dropdown immediately for better UX in inline mode
+                // hideDropdown(); 
             }
         });
     });
@@ -240,99 +256,43 @@
             localStorage.setItem('customTimes', JSON.stringify(customTimes));
             applySchedule('custom');
             hideTimePicker();
-            hideDropdown();
+            // hideDropdown(); // Keep open
         });
     }
 
 
     // Close dropdown when clicking outside (not needed with backdrop, but kept for safety)
-    document.addEventListener('click', function (e) {
-        if (scheduleDropdown && scheduleDropdown.classList.contains('active')) {
-            if (!scheduleDropdown.contains(e.target) && !autoThemeBtn.contains(e.target)) {
-                hideDropdown();
-            }
-        }
-    });
+    // Removed backdrop logic since it's inline now
 
-    // Create backdrop element
-    let scheduleBackdrop = document.getElementById('scheduleBackdrop');
-    if (!scheduleBackdrop) {
-        scheduleBackdrop = document.createElement('div');
-        scheduleBackdrop.className = 'schedule-backdrop';
-        scheduleBackdrop.id = 'scheduleBackdrop';
-        document.body.appendChild(scheduleBackdrop);
+    // Create backdrop element - REMOVED
 
-        // Close on backdrop click
-        scheduleBackdrop.addEventListener('click', hideDropdown);
-    }
-
-    // Add swipe-down gesture to close bottom sheet
-    if (scheduleDropdown) {
-        let startY = 0;
-        let currentY = 0;
-        let isDragging = false;
-
-        scheduleDropdown.addEventListener('touchstart', (e) => {
-            startY = e.touches[0].clientY;
-            isDragging = true;
-        }, { passive: true });
-
-        scheduleDropdown.addEventListener('touchmove', (e) => {
-            if (!isDragging) return;
-            currentY = e.touches[0].clientY;
-            const diff = currentY - startY;
-
-            // Only allow dragging down
-            if (diff > 0) {
-                scheduleDropdown.style.transform = `translateY(${diff}px)`;
-            }
-        }, { passive: true });
-
-        scheduleDropdown.addEventListener('touchend', () => {
-            if (!isDragging) return;
-            isDragging = false;
-
-            const diff = currentY - startY;
-
-            // Close if dragged down more than 100px
-            if (diff > 100) {
-                hideDropdown();
-            }
-
-            // Reset transform
-            scheduleDropdown.style.transform = '';
-        }, { passive: true });
-    }
+    // Add swipe-down gesture to close bottom sheet - REMOVED
 
     function toggleDropdown() {
         if (scheduleDropdown) {
             const isActive = scheduleDropdown.classList.contains('active');
             if (isActive) {
                 hideDropdown();
+                if (autoThemeToggle) autoThemeToggle.classList.remove('active');
             } else {
                 showDropdown();
+                if (autoThemeToggle) autoThemeToggle.classList.add('active');
             }
         }
     }
 
     function showDropdown() {
-        if (scheduleDropdown && scheduleBackdrop) {
+        if (scheduleDropdown) {
             scheduleDropdown.classList.add('active');
-            scheduleBackdrop.classList.add('active');
             updateActiveOption();
-
-            // Disable body scroll when bottom sheet is open
-            document.body.style.overflow = 'hidden';
+            if (autoThemeToggle) autoThemeToggle.classList.add('active');
         }
     }
 
     function hideDropdown() {
-        if (scheduleDropdown && scheduleBackdrop) {
+        if (scheduleDropdown) {
             scheduleDropdown.classList.remove('active');
-            scheduleBackdrop.classList.remove('active');
-
-            // Re-enable body scroll
-            document.body.style.overflow = '';
+            if (autoThemeToggle) autoThemeToggle.classList.remove('active');
         }
     }
 
@@ -340,13 +300,15 @@
         hideDropdown();
 
         if (customTimePicker) {
-            const overlay = document.createElement('div');
-            overlay.className = 'time-picker-overlay';
-            overlay.id = 'timePickerOverlay';
-            overlay.addEventListener('click', hideTimePicker);
-            document.body.appendChild(overlay);
+            // Overlay removed to prevent blurring/dimming
+            // const overlay = document.createElement('div');
+            // overlay.className = 'time-picker-overlay';
+            // overlay.id = 'timePickerOverlay';
+            // overlay.addEventListener('click', hideTimePicker);
+            // document.body.appendChild(overlay);
 
             customTimePicker.style.display = 'block';
+            document.body.style.overflow = 'hidden'; // Disable scroll
             initializeWheels(); // Initialize wheels with current values
         }
     }
@@ -354,11 +316,13 @@
     function hideTimePicker() {
         if (customTimePicker) {
             customTimePicker.style.display = 'none';
+            document.body.style.overflow = ''; // Re-enable scroll
         }
-        const overlay = document.getElementById('timePickerOverlay');
-        if (overlay) {
-            overlay.remove();
-        }
+        // Overlay removal logic commented out
+        // const overlay = document.getElementById('timePickerOverlay');
+        // if (overlay) {
+        //     overlay.remove();
+        // }
 
         updateActiveOption();
 
@@ -547,6 +511,8 @@
     // Initial icon refresh if in auto mode
     if (localStorage.getItem('theme') === 'auto') {
         setTimeout(refreshThemeIcon, 100);
+        if (autoThemeToggle) autoThemeToggle.classList.add('active');
+        // We don't auto-show dropdown on load, but we show the toggle as active
     }
 
     // Initialize after all functions are defined

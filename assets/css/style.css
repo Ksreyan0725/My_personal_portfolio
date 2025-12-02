@@ -3362,7 +3362,7 @@ footer {
     z-index: 2001;
     transition: bottom 0.3s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.3s step-end;
     box-shadow: 0 -5px 30px rgba(0,0,0,0.2);
-    max-height: 85vh;
+    height: 70vh;
     border-top: 1px solid var(--border);
     display: flex;
     flex-direction: column;

@@ -1,61 +1,34 @@
-/* ==================== Theme Schedule Bottom Sheet ==================== */
+/* ==================== Theme Schedule Inline Panel ==================== */
 .schedule-dropdown {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    position: relative;
     background: var(--bg-secondary);
-    border-top-left-radius: 24px;
-    border-top-right-radius: 24px;
     border: 1px solid var(--border);
-    border-bottom: none;
-    box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.3);
-    z-index: 2500;
-    transform: translateY(100%);
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    max-height: 60vh;
+    border-radius: 12px;
+    margin-top: 10px;
     overflow: hidden;
-    display: none;
+    max-height: 0;
+    opacity: 0;
+    transform: none;
+    transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease, margin-top 0.3s ease;
+    box-shadow: none;
+    display: block !important; /* Always block, visibility controlled by max-height */
+    z-index: 1;
 }
 
 .schedule-dropdown.active {
-    display: block;
-    transform: translateY(0);
-}
-
-/* Drag handle at top */
-.schedule-dropdown::before {
-    content: '';
-    position: absolute;
-    top: 12px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 40px;
-    height: 4px;
-    background: var(--text-secondary);
-    border-radius: 2px;
-    opacity: 0.5;
-}
-
-/* Bottom sheet backdrop */
-.schedule-backdrop {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    z-index: 2499;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
-}
-
-.schedule-backdrop.active {
+    max-height: 200px; /* Enough for 2 options */
     opacity: 1;
-    visibility: visible;
+    margin-top: 10px;
+    transform: none;
+}
+
+/* Remove drag handle and backdrop since it's inline */
+.schedule-dropdown::before {
+    display: none;
+}
+
+.schedule-backdrop {
+    display: none !important;
 }
 
 .schedule-option {
@@ -63,10 +36,13 @@
     cursor: pointer;
     transition: all 0.2s ease;
     border-bottom: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    background: var(--card-bg);
 }
 
 .schedule-option:first-child {
-    padding-top: 32px; /* Extra space for drag handle */
+    padding-top: 14px; /* Reset extra padding */
 }
 
 .schedule-option:last-child {
@@ -74,8 +50,7 @@
 }
 
 .schedule-option:hover {
-    background: var(--card-bg);
-    transform: translateX(4px);
+    background: var(--bg-secondary);
 }
 
 .schedule-option.active {
@@ -98,11 +73,11 @@
 
 /* ==================== Custom Time Picker ==================== */
 .custom-time-picker {
-    position: fixed;
+    position: fixed; /* Keep fixed to center on screen, or change to absolute if container allows */
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: var(--bg-secondary);
+    background: rgba(var(--bg-secondary-rgb), 0.85);
     border: 2px solid var(--border);
     border-radius: 16px;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
@@ -110,6 +85,9 @@
     width: 90%;
     max-width: 400px;
     animation: popIn 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    /* Glassmorphism effect */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
 }
 
 @keyframes popIn {
@@ -204,7 +182,7 @@
 
 .wheel {
     width: 70px;
-    height: 180px;
+    height: 45px; /* Show only one item */
     overflow-y: scroll;
     scroll-snap-type: y mandatory;
     scrollbar-width: none; /* Firefox */
@@ -250,7 +228,8 @@
 }
 
 /* Selection highlight overlay */
-.time-wheels::before {
+/* Selection highlight overlay - REMOVED since wheel is single item height */
+/* .time-wheels::before {
     content: '';
     position: absolute;
     left: 50%;
@@ -264,7 +243,7 @@
     pointer-events: none;
     z-index: 1;
     margin-top: 20px;
-}
+} */
 
 .wheel-container .wheel {
     position: relative;
@@ -315,8 +294,8 @@
     transform: translateY(0);
 }
 
-/* Overlay for time picker */
-.time-picker-overlay {
+/* Overlay for time picker - REMOVED */
+/* .time-picker-overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -326,4 +305,4 @@
     z-index: 2999;
     backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
-}
+} */
