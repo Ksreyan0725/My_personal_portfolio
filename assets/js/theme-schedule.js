@@ -5,6 +5,7 @@
 
     const autoThemeBtn = document.getElementById('autoThemeBtn'); // Kept for reference if needed, but likely replaced
     const autoThemeToggle = document.getElementById('autoThemeToggle'); // New toggle element
+    const sunriseToggleBtn = document.getElementById('sunriseToggleBtn'); // New circular toggle
     const autoThemeDesc = document.getElementById('autoThemeDesc');
     const scheduleDropdown = document.getElementById('scheduleDropdown');
     const customTimePicker = document.getElementById('customTimePicker');
@@ -160,7 +161,6 @@
         return `${String(hour).padStart(2, '0')}:${String(state.minute).padStart(2, '0')}`;
     }
 
-    // Toggle dropdown when Auto theme button is clicked
     // Toggle dropdown when Auto theme toggle is clicked
     if (autoThemeToggle) {
         autoThemeToggle.addEventListener('click', function (e) {
@@ -168,68 +168,46 @@
 
             const currentTheme = localStorage.getItem('theme');
 
-            if (currentTheme !== 'auto') {
-                // Switch TO Auto
-                if (typeof window.applyTheme === 'function') {
-                    window.applyTheme('auto', true);
-                } else {
-                    localStorage.setItem('theme', 'auto');
-                    document.documentElement.setAttribute('data-theme',
-                        (new Date().getHours() >= 7 && new Date().getHours() < 19) ? 'light' : 'dark'
-                    );
-                }
-
-                // Update toggle visual state
-                autoThemeToggle.classList.add('active');
-
-                if (currentScheduleType === 'sunrise') {
-                    applySunriseSchedule();
-                } else if (currentScheduleType === 'custom') {
-                    applyCustomSchedule();
-                }
-
-                // Open dropdown immediately when switching to auto
-                setTimeout(() => {
-                    showDropdown();
-                }, 50);
-            } else {
-                // Switch FROM Auto (Turn Off)
-                // Default to system or light/dark based on current preference? 
-                // Let's default to 'system' as a safe fallback or just toggle off the dropdown if user meant to close it?
-                // Actually, a toggle usually means ON/OFF. If it's ON (auto), clicking it should turn it OFF.
-
-                // However, the user might just want to close the dropdown. 
-                // But the request said "toggle on and off just like night light".
-                // Night light toggle turns the feature off.
-
-                // So, turn off Auto Theme -> Switch to System (or previous).
+            // If theme is already 'auto', clicking the toggle should turn it OFF (switch to system)
+            if (currentTheme === 'auto') {
                 if (typeof window.applyTheme === 'function') {
                     window.applyTheme('system', true);
                 } else {
                     localStorage.setItem('theme', 'system');
-                    // System theme logic would go here, but for now just remove auto
                 }
-
                 autoThemeToggle.classList.remove('active');
                 hideDropdown();
+            } else {
+                // If theme is NOT 'auto', clicking opens the dropdown (user must select option to enable)
+                toggleDropdown();
             }
         });
     }
 
-    // Schedule option selection
+    // Sunrise Toggle Button Logic
+    if (sunriseToggleBtn) {
+        sunriseToggleBtn.addEventListener('click', function (e) {
+            e.stopPropagation();
+
+            // Toggle logic: If currently sunrise, switch to custom (OFF). If custom, switch to sunrise (ON).
+            if (currentScheduleType === 'sunrise') {
+                // Turn OFF -> Switch to Custom
+                applySchedule('custom');
+            } else {
+                // Turn ON -> Switch to Sunrise
+                applySchedule('sunrise');
+            }
+        });
+    }
+
+    // Schedule option selection (Keep for Custom Time option)
     scheduleOptions.forEach(option => {
         option.addEventListener('click', function () {
             const scheduleType = this.dataset.schedule;
 
-            scheduleOptions.forEach(opt => opt.classList.remove('active'));
-            this.classList.add('active');
-
+            // If clicking Custom Time row
             if (scheduleType === 'custom') {
                 showTimePicker();
-            } else {
-                applySchedule(scheduleType);
-                // Don't hide dropdown immediately for better UX in inline mode
-                // hideDropdown(); 
             }
         });
     });
@@ -256,27 +234,16 @@
             localStorage.setItem('customTimes', JSON.stringify(customTimes));
             applySchedule('custom');
             hideTimePicker();
-            // hideDropdown(); // Keep open
         });
     }
-
-
-    // Close dropdown when clicking outside (not needed with backdrop, but kept for safety)
-    // Removed backdrop logic since it's inline now
-
-    // Create backdrop element - REMOVED
-
-    // Add swipe-down gesture to close bottom sheet - REMOVED
 
     function toggleDropdown() {
         if (scheduleDropdown) {
             const isActive = scheduleDropdown.classList.contains('active');
             if (isActive) {
                 hideDropdown();
-                if (autoThemeToggle) autoThemeToggle.classList.remove('active');
             } else {
                 showDropdown();
-                if (autoThemeToggle) autoThemeToggle.classList.add('active');
             }
         }
     }
@@ -285,14 +252,29 @@
         if (scheduleDropdown) {
             scheduleDropdown.classList.add('active');
             updateActiveOption();
-            if (autoThemeToggle) autoThemeToggle.classList.add('active');
+            // Only visually activate toggle if theme is actually auto
+            if (localStorage.getItem('theme') === 'auto' && autoThemeToggle) {
+                autoThemeToggle.classList.add('active');
+            }
         }
     }
 
     function hideDropdown() {
         if (scheduleDropdown) {
             scheduleDropdown.classList.remove('active');
-            if (autoThemeToggle) autoThemeToggle.classList.remove('active');
+            // Don't remove active class from toggle if theme is auto, just hide dropdown
+            // But if we want the toggle to reflect dropdown state?
+            // User said "clicking the toggle simply opens the options panel".
+            // So the toggle button acts as a dropdown trigger.
+            // But it also has a visual "active" state in CSS.
+            // Let's keep it simple: Toggle button reflects "Auto Theme Active" state?
+            // Or "Dropdown Open" state?
+            // Usually a toggle switch reflects the feature state (Auto Theme).
+            // So we should NOT toggle the .active class on show/hide dropdown unless the theme changes.
+
+            // However, the previous code synced them.
+            // Let's rely on refreshThemeIcon or similar to update the toggle state?
+            // Or just leave it alone here.
         }
     }
 
@@ -300,13 +282,6 @@
         hideDropdown();
 
         if (customTimePicker) {
-            // Overlay removed to prevent blurring/dimming
-            // const overlay = document.createElement('div');
-            // overlay.className = 'time-picker-overlay';
-            // overlay.id = 'timePickerOverlay';
-            // overlay.addEventListener('click', hideTimePicker);
-            // document.body.appendChild(overlay);
-
             customTimePicker.style.display = 'block';
             document.body.style.overflow = 'hidden'; // Disable scroll
             initializeWheels(); // Initialize wheels with current values
@@ -318,12 +293,6 @@
             customTimePicker.style.display = 'none';
             document.body.style.overflow = ''; // Re-enable scroll
         }
-        // Overlay removal logic commented out
-        // const overlay = document.getElementById('timePickerOverlay');
-        // if (overlay) {
-        //     overlay.remove();
-        // }
-
         updateActiveOption();
 
         if (localStorage.getItem('theme') === 'auto') {
@@ -332,6 +301,7 @@
     }
 
     function updateActiveOption() {
+        // Update Custom Time option highlight
         scheduleOptions.forEach(option => {
             if (option.dataset.schedule === currentScheduleType) {
                 option.classList.add('active');
@@ -339,11 +309,32 @@
                 option.classList.remove('active');
             }
         });
+
+        // Update Sunrise Toggle Button
+        if (sunriseToggleBtn) {
+            if (currentScheduleType === 'sunrise') {
+                sunriseToggleBtn.textContent = 'ON';
+                sunriseToggleBtn.classList.add('active');
+            } else {
+                sunriseToggleBtn.textContent = 'OFF';
+                sunriseToggleBtn.classList.remove('active');
+            }
+        }
     }
 
     async function applySchedule(scheduleType) {
         currentScheduleType = scheduleType;
         localStorage.setItem('scheduleType', scheduleType);
+
+        // Enforce Auto Theme when a schedule is applied
+        if (localStorage.getItem('theme') !== 'auto') {
+            if (typeof window.applyTheme === 'function') {
+                window.applyTheme('auto', true);
+            } else {
+                localStorage.setItem('theme', 'auto');
+            }
+            if (autoThemeToggle) autoThemeToggle.classList.add('active');
+        }
 
         updateScheduleDescription();
         playConfirmationSound();
@@ -372,7 +363,7 @@
                 const themeText = themeToggle.querySelector('.theme-text');
 
                 if (themeIcon) {
-                    themeIcon.src = 'assets/icons/auto-theme.png';
+                    themeIcon.src = 'assets/icons/custom-theme.png';
                     themeIcon.alt = `Auto Theme (${currentScheduleType})`;
                 }
 
@@ -518,7 +509,7 @@
     // Initialize after all functions are defined
     if (scheduleOptions && scheduleOptions.length > 0) {
         updateScheduleDescription();
-        updateActiveOption();
+        updateActiveOption(); // This will set the button text based on currentScheduleType
     }
 
 })();

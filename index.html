@@ -624,9 +624,12 @@ Last Updated: November 27, 2025
                     
                     <!-- Schedule Options Dropdown -->
                     <div class="schedule-dropdown" id="scheduleDropdown">
-                        <div class="schedule-option" data-schedule="sunrise">
-                            <div class="schedule-option-title">Sunrise to Sunset 🌅</div>
-                            <div class="schedule-option-desc">Auto-adjust based on your location</div>
+                        <div class="schedule-option-row" style="display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; border-bottom: 1px solid var(--border);">
+                            <div class="schedule-info">
+                                <div class="schedule-option-title">Sunrise to Sunset 🌅</div>
+                                <div class="schedule-option-desc">Auto-adjust based on your location</div>
+                            </div>
+                            <button id="sunriseToggleBtn" class="circular-toggle-btn">OFF</button>
                         </div>
                         <div class="schedule-option" data-schedule="custom">
                             <div class="schedule-option-title">Custom Time ⌛</div>

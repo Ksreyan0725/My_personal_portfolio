@@ -306,3 +306,33 @@
     backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
 } */
+
+/* Circular Toggle Button */
+.circular-toggle-btn {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 2px solid var(--text-secondary);
+    background: transparent;
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.circular-toggle-btn:hover {
+    border-color: var(--text-primary);
+    color: var(--text-primary);
+}
+
+.circular-toggle-btn.active {
+    border-color: var(--accent);
+    background: var(--accent);
+    color: #fff;
+    box-shadow: 0 0 10px var(--accent-glow);
+}

@@ -112,10 +112,16 @@ const initApp = () => {
 
     function openSettings() {
         if (!settingsPanel) return;
+
         // Close sidebar if open
+        const sidebarMenu = document.getElementById('sidebarMenu');
         const sidebarOverlay = document.getElementById('sidebarOverlay');
-        if (sidebarOverlay && getComputedStyle(sidebarOverlay).opacity !== '0') {
-            sidebarOverlay.click();
+
+        // Check if sidebar is active (more reliable than opacity)
+        const isSidebarOpen = sidebarMenu && sidebarMenu.classList.contains('active');
+
+        if (isSidebarOpen) {
+            if (sidebarOverlay) sidebarOverlay.click();
 
             // Wait for sidebar close animation (300ms) before opening settings
             setTimeout(() => {
@@ -193,7 +199,7 @@ const initApp = () => {
                 imgElement.alt = 'System Theme';
             } else if (theme === 'auto') {
                 // Use schedule icon for auto mode
-                imgElement.src = 'assets/icons/schedule-theme.png';
+                imgElement.src = 'assets/icons/custom-theme.png';
                 imgElement.alt = `Schedule Theme (${scheduleType})`;
                 // Fallback to system icon if schedule icon doesn't exist
                 imgElement.onerror = function () { this.src = 'assets/icons/system-theme.png'; };
