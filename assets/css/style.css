@@ -3821,12 +3821,12 @@ body.no-scroll {
     transition: all 0.3s ease;
 }
 
-/* Light Mode: Invert White Icon to Black */
+/* Light Mode: Use same white icon as dark mode */
 [data-theme="light"] .night-light-icon {
-    filter: invert(1);
+    filter: none;
 }
 
-/* Light Mode Active: Un-invert to White then Colorize */
+/* Light Mode Active: Same colorization as dark mode */
 [data-theme="light"] .mobile-night-light-btn.active .night-light-icon {
     filter: sepia(1) saturate(3000%) hue-rotate(-50deg) drop-shadow(0 0 8px #ffa000) !important;
 }
@@ -3855,7 +3855,7 @@ body.no-scroll {
     }
     
     [data-theme="light"] .mobile-night-light-btn.active .night-light-icon {
-        filter: invert(1) !important;
+        filter: none !important;
     }
 }
 
