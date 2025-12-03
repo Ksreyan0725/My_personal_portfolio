@@ -1,7 +1,7 @@
 // Service Worker for Portfolio PWA
-// Version 1.1.1
-const CACHE_NAME = 'portfolio-v1.1.1';
-const RUNTIME_CACHE = 'portfolio-runtime-v1.1.1';
+// Version 1.2
+const CACHE_NAME = 'portfolio-v1.2';
+const RUNTIME_CACHE = 'portfolio-runtime-v1.2';
 
 // Critical resources for initial load (minimal set for fast install)
 const CORE_ASSETS = [
@@ -18,13 +18,23 @@ const SECONDARY_ASSETS = [
     '/My_personal_portfolio/assets/css/preloader.css',
     '/My_personal_portfolio/assets/css/install-button.css',
     '/My_personal_portfolio/assets/css/theme-schedule.css',
+    '/My_personal_portfolio/assets/css/skeleton.css',
+    '/My_personal_portfolio/assets/css/print.css',
     '/My_personal_portfolio/script.js',
     '/My_personal_portfolio/assets/js/theme-schedule.js',
+    '/My_personal_portfolio/assets/js/constants.js',
     '/My_personal_portfolio/assets/icons/favicon.png',
     '/My_personal_portfolio/assets/icons/system-theme.png',
     '/My_personal_portfolio/assets/icons/custom-theme.png',
     '/My_personal_portfolio/assets/icons/light-mode.png',
-    '/My_personal_portfolio/assets/icons/dark-mode.png'
+    '/My_personal_portfolio/assets/icons/dark-mode.png',
+    '/My_personal_portfolio/assets/icons/github.png',
+    '/My_personal_portfolio/assets/icons/linkedin.png',
+    '/My_personal_portfolio/assets/icons/nightlight-icon.png',
+    '/My_personal_portfolio/assets/icons/search.png',
+    '/My_personal_portfolio/assets/icons/setting-button.png',
+    '/My_personal_portfolio/assets/icons/side-menu.png',
+    '/My_personal_portfolio/assets/images/my-photo.jpg'
 ];
 
 // Install event - cache only critical resources for fast install

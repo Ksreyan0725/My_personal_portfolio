@@ -2,7 +2,7 @@
 
 A modern, accessible, and high-performance personal portfolio website built with HTML5, CSS3, and JavaScript. This project showcases my skills, projects, and professional journey.
 
-🔗 Live Demo: https://ksreyan0725.github.io/My_personal_portfolio/
+🔗 Live Demo: [https://ksreyan0725.github.io/My_personal_portfolio/](https://ksreyan0725.github.io/My_personal_portfolio/)
 
 ---
 
@@ -16,31 +16,33 @@ The site includes a fully responsive layout that adapts seamlessly to mobile, ta
 
 ### Progressive Web App (PWA) 📱
 The website is built as a Progressive Web App, meaning it can be installed as a native application on both mobile and desktop devices. Features include:
-- **Smart Install System**: Dedicated install section in Settings Panel with automatic platform detection (iOS/Android/Desktop)
-- **Update Notifications**: Automatic alerts when a new version is available with "Update Now" functionality
-- **Offline Support**: Advanced Service Worker with stale-while-revalidate caching strategy
-- **Version Tracking**: Displays current version (v1.1.1) in Settings Panel
-- **Platform-Specific Instructions**: Automatic detection and guidance for iOS vs Android/Desktop installation
+- Smart Install System: Dedicated install section in Settings Panel with automatic platform detection.
+- Update Notifications: Automatic alerts when a new version is available.
+- Offline Support: Advanced Service Worker with stale-while-revalidate caching strategy.
+- Share Target: Receive shared content (text/links) from other apps directly into the contact form.
+- File Handling: Native support for opening PDF files.
 
 ### User Experience Enhancements
-- **Enhanced Preloader**: Dual spinning circles animation with gradient loading bar (v1.1.1)
-- **Smooth Scrolling**: Powered by Lenis library for buttery-smooth navigation
-- **Mobile Sidebar**: Swipe-enabled navigation menu with gesture support
-- **Night Light Mode**: Reduces blue light on mobile devices for comfortable evening viewing
-- **Settings Panel**: Comprehensive settings including theme selection, notifications, and app installation
+- Skeleton Loading: Smooth loading states for improved perceived performance.
+- Print Optimization: Dedicated print stylesheet for clean hard copies.
+- Enhanced Preloader: Dual spinning circles animation with gradient loading bar.
+- Smooth Scrolling: Powered by Lenis library for buttery-smooth navigation.
+- Mobile Sidebar: Swipe-enabled navigation menu with gesture support.
+- Night Light Mode: Reduces blue light on mobile devices.
+- Project Filtering: Filter projects by category (Web Dev, Research).
 
 ### Accessibility ♿
 The site adheres to WCAG 2.1 AA standards:
-- Screen reader friendly with proper ARIA labels
-- Full keyboard navigation support
-- Respects user preferences for reduced motion
-- Skip navigation links for improved accessibility
+- Visual Focus Indicators: Clear outlines for keyboard navigation.
+- Screen reader friendly with proper ARIA labels.
+- Full keyboard navigation support.
+- Respects user preferences for reduced motion.
 
 ### Search Engine Optimization (SEO) 🔍
-- Comprehensive meta tags for social sharing (Open Graph and Twitter Cards)
-- Structured data (JSON-LD) for rich search results
-- Semantic HTML5 markup
-- Optimized performance scores
+- Comprehensive meta tags for social sharing.
+- Structured data (JSON-LD) for rich search results.
+- Semantic HTML5 markup.
+- DNS Prefetching for faster external resource loading.
 
 ## 🛠️ Technology Stack
 
@@ -48,8 +50,8 @@ The project is built using standard web technologies:
 - HTML5 for semantic structure
 - CSS3 with custom properties (CSS variables) for theming
 - JavaScript (ES6+) for logic and interactivity
-- Lenis (`@studio-freight/lenis`) for smooth scrolling
-- Service Worker for offline functionality and caching
+- Lenis for smooth scrolling
+- Service Worker for offline functionality
 
 Hosted on GitHub Pages with automatic deployment.
 
@@ -61,8 +63,14 @@ My_personal_portfolio/
 │   ├── css/
 │   │   ├── style.css           # Main stylesheet
 │   │   ├── responsive.css      # Responsive design rules
+│   │   ├── skeleton.css        # Skeleton loading states
+│   │   ├── print.css           # Print-specific styles
 │   │   ├── preloader.css       # Loading animation styles
-│   │   └── install-button.css  # PWA install button styles
+│   │   ├── install-button.css  # PWA install button styles
+│   │   └── theme-schedule.css  # Theme scheduling styles
+│   ├── js/
+│   │   ├── constants.js        # Global configuration
+│   │   └── theme-schedule.js   # Theme logic
 │   ├── icons/                  # App icons and UI elements
 │   ├── images/                 # Profile photos and assets
 │   └── docs/                   # PDF documents (resume, research)
@@ -77,34 +85,6 @@ My_personal_portfolio/
 └── manifest.json              # PWA manifest file
 ```
 
-## 🚦 Running Locally
-
-To run this project on your local machine:
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/Ksreyan0725/My_personal_portfolio.git
-   cd My_personal_portfolio
-   ```
-
-2. Serve the files using any static file server:
-   
-   Option 1: Python
-   ```bash
-   python -m http.server 8000
-   ```
-   
-   Option 2: Node.js (http-server)
-   ```bash
-   npx http-server
-   ```
-   
-   Option 3: VS Code Live Server
-   - Install the Live Server extension
-   - Right-click `index.html` and select "Open with Live Server"
-
-3. Access the site at `http://localhost:8000` (or the port shown by your server)
-
 ## 🧪 Testing
 
 The project undergoes rigorous testing to ensure quality:
@@ -116,9 +96,9 @@ The project undergoes rigorous testing to ensure quality:
 
 ## 📊 Version Information
 
-Current Version: **1.1.1**
-- Version tracking is displayed in the Settings Panel under the App section.
-- Updates are automatically detected and prompted via the Service Worker.
+Current Version: 1.2
+- Version tracking is displayed in the Settings Panel.
+- Updates are automatically detected via the Service Worker.
 
 ## 📄 License
 
@@ -128,4 +108,4 @@ This project is distributed under the MIT License.
 
 Made with ❤️ by Kumar Sreyan Pattanayak
 
-Last Updated: 2 December 2025
+Last Updated: 3 December 2025

@@ -1,7 +1,7 @@
 {
     "name": "Kumar Sreyan Pattanayak - Portfolio",
     "short_name": "KSP Portfolio",
-    "version": "1.1.1",
+    "version": "1.2",
     "description": "Personal portfolio of Kumar Sreyan Pattanayak - BCA Student & Technology Enthusiast",
     "start_url": "/My_personal_portfolio/",
     "scope": "/My_personal_portfolio/",
@@ -60,8 +60,34 @@
             ]
         }
     ],
+    "share_target": {
+        "action": "/My_personal_portfolio/contact.html",
+        "method": "GET",
+        "enctype": "application/x-www-form-urlencoded",
+        "params": {
+            "title": "subject",
+            "text": "message",
+            "url": "url"
+        }
+    },
     "related_applications": [],
     "prefer_related_applications": false,
+    "file_handlers": [
+        {
+            "action": "/My_personal_portfolio/pages/pdf-viewer.html",
+            "accept": {
+                "application/pdf": [
+                    ".pdf"
+                ]
+            }
+        }
+    ],
+    "protocol_handlers": [
+        {
+            "protocol": "web+portfolio",
+            "url": "/My_personal_portfolio/?action=%s"
+        }
+    ],
     "lang": "en-US",
     "dir": "ltr"
 }

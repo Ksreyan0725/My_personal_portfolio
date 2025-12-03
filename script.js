@@ -2319,6 +2319,42 @@ const initApp = () => {
             window.location.href = 'pages/404.html';
         }
     }, true); // capture phase to intercept early
+
+    /* ==================== Project Filtering ==================== */
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const projectCards = document.querySelectorAll('.project-card');
+
+    if (filterButtons.length > 0 && projectCards.length > 0) {
+        filterButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active class from all buttons
+                filterButtons.forEach(b => b.classList.remove('active'));
+                // Add active class to clicked button
+                btn.classList.add('active');
+
+                const filterValue = btn.getAttribute('data-filter');
+
+                projectCards.forEach(card => {
+                    // Reset animation classes
+                    card.classList.remove('show');
+                    card.classList.add('hide');
+
+                    setTimeout(() => {
+                        if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
+                            card.style.display = 'block';
+                            // Trigger reflow
+                            void card.offsetWidth;
+                            card.classList.remove('hide');
+                            card.classList.add('show');
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    }, 300); // Wait for hide animation
+                });
+            });
+        });
+    }
+
 };
 
 /* Mobile inline expandable search removed to prevent duplicate inputs.
@@ -3387,3 +3423,55 @@ document.addEventListener('visibilitychange', () => {
         updateInstallButtonInSettings();
     }
 });
+
+// Initialize everything with Error Boundary
+const startApp = () => {
+    try {
+        initApp();
+        initPart2();
+
+        // Samsung-style update check
+        const appVersion = document.getElementById('appVersion');
+        if (appVersion) {
+            let clickCount = 0;
+            let lastClickTime = 0;
+
+            appVersion.addEventListener('click', () => {
+                const currentTime = new Date().getTime();
+                if (currentTime - lastClickTime < 500) {
+                    clickCount++;
+                } else {
+                    clickCount = 1;
+                }
+                lastClickTime = currentTime;
+
+                if (clickCount >= 5) {
+                    clickCount = 0;
+                    // Trigger update check
+                    if ('serviceWorker' in navigator) {
+                        navigator.serviceWorker.ready.then(registration => {
+                            registration.update().then(() => {
+                                alert('Checking for updates...');
+                            }).catch(err => {
+                                console.error('Update check failed:', err);
+                                alert('Update check failed. See console.');
+                            });
+                        });
+                    } else {
+                        alert('Service Worker not supported.');
+                    }
+                }
+            });
+        }
+    } catch (error) {
+        console.error('App initialization failed:', error);
+        // Optional: Show error screen if critical failure
+        // document.body.innerHTML = '<h1>Something went wrong. Please refresh.</h1>';
+    }
+};
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', startApp);
+} else {
+    startApp();
+}
