@@ -43,6 +43,14 @@ const hidePreloader = () => {
         // Wait for minimum display time
         setTimeout(() => {
             document.body.classList.add('loaded');
+
+            // Force content visibility in case animations fail
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => {
+                section.style.opacity = '1';
+                section.style.transform = 'translateY(0)';
+            });
+
             // Remove from DOM after transition
             setTimeout(() => {
                 preloader.style.display = 'none';
@@ -66,6 +74,15 @@ if (document.readyState === 'complete') {
 } else {
     window.addEventListener('load', hidePreloader);
 }
+
+// Fallback: Force hide preloader after 5 seconds if for some reason load event didn't fire correctly
+setTimeout(() => {
+    const preloader = document.getElementById('preloader');
+    if (preloader && preloader.style.display !== 'none') {
+        console.warn('Preloader fallback triggered');
+        hidePreloader();
+    }
+}, 5000);
 
 const initApp = () => {
     // Initialize Lenis Smooth Scroll

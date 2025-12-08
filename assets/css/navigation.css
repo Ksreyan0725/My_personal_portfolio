@@ -9,7 +9,8 @@
   transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
   will-change: transform;
   transform: translateX(0);
-  padding-top: var(--header-height);
+  /* Add safe area to header height spacing */
+  padding-top: calc(var(--header-height) + env(safe-area-inset-top, 0px));
   box-sizing: border-box;
   overflow-x: hidden;
 }
@@ -103,6 +104,7 @@ body.use-page-frame .page-frame.scale-to-fit {
   transform: scale(var(--page-scale, 1));
 }
 
+/* Safe area support for PWA */
 nav {
   position: fixed;
   top: 0;
@@ -113,9 +115,14 @@ nav {
   border-bottom: 2px solid var(--border);
   z-index: 1000;
   padding: 6px 0;
+  /* Add safe area inset for notch */
+  padding-top: env(safe-area-inset-top, 0px);
   /* Use specific transitions to prevent "flying" on load */
   transition: background 0.3s ease, box-shadow 0.3s ease, padding 0.3s ease, height 0.3s ease, transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
-  height: 48px; /* compact desktop */
+  /* Adjust height to include safe area if needed, though usually padding handles it. 
+     We use min-height or automatic height with box-sizing */
+  height: auto; 
+  min-height: calc(48px + env(safe-area-inset-top, 0px)); /* compact desktop + safe area */
   will-change: transform;
 }
 
@@ -137,7 +144,7 @@ nav.scrolled {
   padding: 0 20px;
   gap: 10px;
   flex-wrap: nowrap; /* prevent wrapping that causes upward movement */
-  height: 100%;
+  height: 48px; /* Fixed height for content inside nav */
   /* overflow: hidden; REMOVED to allow search dropdown to show */
 }
 
