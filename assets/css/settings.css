@@ -97,10 +97,13 @@ body.no-scroll {
 
 .settings-content {
     padding: 20px;
+    display: flex; /* Ensure button stretches or behaves as flex item */
+    flex-direction: column;
     overflow-y: auto;
     overflow-x: hidden;
     flex: 1;
     min-height: 0;
+    overscroll-behavior: contain;
 }
 
 /* Custom scrollbar for settings panel */
