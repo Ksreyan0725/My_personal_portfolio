@@ -789,7 +789,7 @@ Last Updated: December 8, 2025
                         <div class="toggle-title">Night Light</div>
                         <div class="toggle-desc">Reduce blue light by adding a warm color filter</div>
                     </div>
-                    <div class="toggle-switch" id="nightLightToggle">
+                    <div class="toggle-switch" id="nightLightToggle" onclick="console.log('NIGHT LIGHT TOGGLE CLICKED'); this.classList.toggle('active'); if(typeof window.handleNightLightToggle === 'function') window.handleNightLightToggle();">
                         <div class="toggle-slider"></div>
                     </div>
                 </div>
@@ -829,7 +829,7 @@ Last Updated: December 8, 2025
                         <div class="toggle-title">Push Notifications</div>
                         <div class="toggle-desc">Receive real-time updates and alerts</div>
                     </div>
-                    <div class="toggle-switch active" id="pushToggle">
+                    <div class="toggle-switch active" id="pushToggle" onclick="console.log('PUSH TOGGLE CLICKED VIA ONCLICK'); this.classList.toggle('active');">
                         <div class="toggle-slider"></div>
                     </div>
                 </div>
@@ -839,7 +839,7 @@ Last Updated: December 8, 2025
                         <div class="toggle-title">Sound & Vibration</div>
                         <div class="toggle-desc">Play sounds and vibrate for notifications</div>
                     </div>
-                    <div class="toggle-switch" id="soundToggle">
+                    <div class="toggle-switch" id="soundToggle" onclick="console.log('SOUND TOGGLE CLICKED VIA ONCLICK'); this.classList.toggle('active');">
                         <div class="toggle-slider"></div>
                     </div>
                 </div>

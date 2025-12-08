@@ -617,6 +617,11 @@ const initApp = () => {
         if (nightLightToggle) toggleNightLight();
     };
 
+    // Expose for settings panel toggle
+    window.handleNightLightToggle = function () {
+        toggleNightLight();
+    };
+
     // Initial update
     updateMobileNightLightBtn();
 
