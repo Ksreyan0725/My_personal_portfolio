@@ -33,7 +33,7 @@ const hidePreloader = () => {
             window.navigator.standalone === true;
 
         // Minimum display time: longer for PWA to ensure animation is visible
-        const minDisplayTime = isPWA ? 1200 : 800;
+        const minDisplayTime = isPWA ? 400 : 200;
 
         // Ensure preloader is visible initially
         preloader.style.display = 'flex';
@@ -83,6 +83,7 @@ setTimeout(() => {
         hidePreloader();
     }
 }, 5000);
+
 
 const initApp = () => {
     // Initialize Lenis Smooth Scroll
