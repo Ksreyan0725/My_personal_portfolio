@@ -54,5 +54,8 @@
         border-radius: 16px !important;
         transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.3s !important;
         z-index: 2001 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        overflow: hidden !important; /* Ensure content doesn't spill out */
     }
 }
