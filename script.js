@@ -3360,11 +3360,6 @@ window.addEventListener('beforeinstallprompt', (e) => {
         return; // Don't show prompt if already installed
     }
 
-    // Only show on mobile/tablet (below 1024px), not on desktop
-    if (window.innerWidth >= 1024) {
-        return; // Don't show on desktop
-    }
-
     // Check if user previously dismissed the prompt
     if (localStorage.getItem('installPromptDismissed') === 'true') {
         return; // Don't show if user clicked "Maybe Later"

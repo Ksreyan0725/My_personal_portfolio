@@ -63,6 +63,9 @@
     />
     
     <!-- ==================== Stylesheets ==================== -->
+    <!-- CRITICAL: Preloader must load FIRST to prevent FOUC -->
+    <link rel="stylesheet" href="assets/css/preloader.css">
+    
     <!-- Core styles (must load first) -->
     <link rel="stylesheet" href="assets/css/core.css?v=20251207184001" />
     
@@ -78,8 +81,6 @@
     <!-- Contact Page Specific Styles -->
     <link rel="stylesheet" href="assets/css/contact.css?v=20251207194001">
     
-    <!-- Preloader must load after contact.css to prevent conflicts -->
-    <link rel="stylesheet" href="assets/css/preloader.css">
     <link rel="stylesheet" href="assets/css/install-button.css">
     <link rel="stylesheet" href="assets/css/theme-schedule.css">
     <link rel="stylesheet" href="assets/css/skeleton.css">
@@ -162,7 +163,7 @@
     </script>
     
     <!-- ==================== Preloader ==================== -->
-    <div id="preloader">
+    <div id="preloader" style="display: flex;">
         <div class="loader-content">
             <div class="loader-logo">KSP</div>
             <div class="loader-bar"></div>

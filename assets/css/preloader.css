@@ -1,17 +1,36 @@
 /* ==================== Preloader ==================== */
+
+/* FOUC Prevention - Hide all content until page is loaded */
+body:not(.loaded) #pageWrapper,
+body:not(.loaded) nav,
+body:not(.loaded) .notice-banner,
+body:not(.loaded) header,
+body:not(.loaded) .container,
+body:not(.loaded) .page-frame > *:not(#preloader) {
+    opacity: 0 !important;
+    visibility: hidden !important;
+}
+
+/* Hide skeleton loader when preloader is active */
+body:not(.loaded) #skeletonLoader {
+    display: none !important;
+}
+
 #preloader {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
     background-color: #000000; /* Fallback color */
     background-color: var(--bg-primary);
-    z-index: 99999; /* Highest priority */
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    z-index: 999999 !important; /* Maximum z-index to ensure visibility */
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
     transition: opacity 0.5s ease, visibility 0.5s ease;
+    visibility: visible !important;
+    opacity: 1 !important;
 }
 
 /* Hide preloader when loaded */
@@ -24,6 +43,7 @@ body.loaded #preloader {
 .loader-content {
     text-align: center;
     position: relative;
+    z-index: 1000000 !important;
 }
 
 .loader-logo {
@@ -35,7 +55,9 @@ body.loaded #preloader {
     color: transparent;
     animation: pulse-glow 2s infinite ease-in-out;
     position: relative;
-    z-index: 2;
+    z-index: 1000001 !important;
+    display: block !important;
+    visibility: visible !important;
 }
 
 /* Spinning circle around logo */
@@ -119,4 +141,43 @@ body.loaded #preloader {
 @keyframes spin {
     0% { transform: translate(-50%, -50%) rotate(0deg); }
     100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* ==================== Mobile & PWA Specific Fixes ==================== */
+/* Ensure preloader is always visible on mobile and tablet */
+@media (max-width: 1024px) {
+    #preloader {
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+    
+    .loader-logo {
+        font-size: 2.5rem !important;
+    }
+    
+    .loader-bar {
+        width: 150px !important;
+    }
+}
+
+/* Extra small mobile devices */
+@media (max-width: 480px) {
+    .loader-logo {
+        font-size: 2rem !important;
+    }
+    
+    .loader-bar {
+        width: 120px !important;
+    }
+}
+
+/* PWA standalone mode - ensure preloader is always visible */
+@media (display-mode: standalone) {
+    #preloader {
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        z-index: 999999 !important;
+    }
 }

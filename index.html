@@ -111,6 +111,9 @@ Last Updated: December 8, 2025
     <link rel="dns-prefetch" href="https://formspree.io">
     
     <!-- ==================== Stylesheets & Scripts ==================== -->
+    <!-- CRITICAL: Preloader must load FIRST to prevent FOUC -->
+    <link rel="stylesheet" href="assets/css/preloader.css?v=3.2">
+    
     <!-- Core styles (must load first) -->
     <link rel="stylesheet" href="assets/css/core.css?v=3.2" />
     
@@ -124,10 +127,7 @@ Last Updated: December 8, 2025
     <link rel="stylesheet" href="assets/css/responsive.css?v=3.2" />
     
     <!-- Existing specialized files -->
-  
-    <link rel="stylesheet" href="assets/css/preloader.css?v=3.2">
     <link rel="stylesheet" href="assets/css/install-button.css?v=3.2">
-    <link rel="stylesheet" href="assets/css/theme-schedule.css?v=3.2">
     <link rel="stylesheet" href="assets/css/skeleton.css?v=3.2">
     <link rel="stylesheet" href="assets/css/print.css?v=3.2" media="print">
     
@@ -180,7 +180,7 @@ Last Updated: December 8, 2025
         </div>
     </div>
     <script src="script.js?v=3.2" defer></script>
-    <script src="assets/js/theme-schedule.js?v=3.2" defer></script>
+
 
     <!-- ==================== Maintenance Mode (Currently Disabled) ==================== -->
     <!-- Uncomment below lines to enable maintenance mode redirection -->
@@ -315,6 +315,23 @@ Last Updated: December 8, 2025
 
     <!-- Sidebar Overlay -->
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- ==================== PWA Install Prompt Banner ==================== -->
+    <!-- Notification banner for PWA installation (appears on all devices) -->
+    <div id="installPrompt" class="install-prompt" style="display: none;">
+        <div class="install-prompt-content">
+            <div class="install-prompt-icon">
+                <img src="assets/icons/pwa-icon-192.png" alt="App Icon" class="install-app-icon">
+            </div>
+            <div class="install-prompt-text">
+                <div class="install-prompt-title">Install KSP Portfolio</div>
+            </div>
+            <div class="install-prompt-actions">
+                <button class="install-btn-primary" onclick="installPWA()">Install</button>
+                <button class="install-btn-secondary" onclick="closeInstallPrompt()">Maybe Later</button>
+            </div>
+        </div>
+    </div>
 
     <!-- ==================== Scrolling Notice Banner ==================== -->
     <!-- News ticker style banner below navbar -->
@@ -682,83 +699,7 @@ Last Updated: December 8, 2025
                         <div class="theme-btn-title">Dark Mode 🌜</div>
                         <div class="theme-btn-desc">Easy on the eyes with dark backgrounds</div>
                     </button>
-                    <div class="toggle-container" id="scheduleToggleContainer" style="margin-top: 10px; padding: 12px; background: var(--bg-secondary); border: 2px solid var(--border); border-radius: 12px;">
-                        <div class="toggle-info">
-                            <div class="toggle-title" style="font-weight: 600; color: var(--text-primary);">Schedule Time 🕒</div>
-                            <div class="toggle-desc" id="autoThemeDesc" style="font-size: 0.8rem; color: var(--text-secondary);">Switch based on time</div>
-                        </div>
-                        <div class="toggle-switch" id="autoThemeToggle">
-                            <div class="toggle-slider"></div>
-                        </div>
-                    </div>
-                    
-                    <!-- Schedule Options Dropdown -->
-                    <div class="schedule-dropdown" id="scheduleDropdown">
-                        <div class="schedule-option-row" style="display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; border-bottom: 1px solid var(--border);">
-                            <div class="schedule-info">
-                                <div class="schedule-option-title">Sunrise to Sunset 🌅</div>
-                                <div class="schedule-option-desc">Auto-adjust based on your location</div>
-                            </div>
-                            <button id="sunriseToggleBtn" class="circular-toggle-btn">OFF</button>
-                        </div>
-                        <div class="schedule-option" data-schedule="custom">
-                            <div class="schedule-option-title">Custom Time ⌛</div>
-                            <div class="schedule-option-desc">Set your own schedule</div>
-                        </div>
-                    </div>
-                    
-                    <!-- Custom Time Picker -->
-                    <div class="custom-time-picker" id="customTimePicker" style="display: none;">
-                        <div class="time-picker-header">
-                            <div class="time-picker-title">Set Custom Schedule</div>
-                            <button class="time-picker-close" id="closeTimePicker">✕</button>
-                        </div>
-                        <div class="time-picker-body">
-                            <!-- Light Mode Time Picker -->
-                            <div class="time-wheel-group">
-                                <label>Light Mode Starts</label>
-                                <div class="time-wheels" id="lightModeWheels">
-                                    <div class="wheel-container">
-                                        <div class="wheel-label">Hour</div>
-                                        <div class="wheel" id="lightHourWheel"></div>
-                                    </div>
-                                    <div class="wheel-separator">:</div>
-                                    <div class="wheel-container">
-                                        <div class="wheel-label">Minute</div>
-                                        <div class="wheel" id="lightMinuteWheel"></div>
-                                    </div>
-                                    <div class="wheel-container">
-                                        <div class="wheel-label">Period</div>
-                                        <div class="wheel" id="lightPeriodWheel"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- Dark Mode Time Picker -->
-                            <div class="time-wheel-group">
-                                <label>Dark Mode Starts</label>
-                                <div class="time-wheels" id="darkModeWheels">
-                                    <div class="wheel-container">
-                                        <div class="wheel-label">Hour</div>
-                                        <div class="wheel" id="darkHourWheel"></div>
-                                    </div>
-                                    <div class="wheel-separator">:</div>
-                                    <div class="wheel-container">
-                                        <div class="wheel-label">Minute</div>
-                                        <div class="wheel" id="darkMinuteWheel"></div>
-                                    </div>
-                                    <div class="wheel-container">
-                                        <div class="wheel-label">Period</div>
-                                        <div class="wheel" id="darkPeriodWheel"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="time-picker-footer">
-                            <button class="time-picker-cancel" id="cancelTimePicker">Cancel</button>
-                            <button class="time-picker-save" id="saveTimePicker">Save Schedule</button>
-                        </div>
-                    </div>
+
                 </div>
             </div>
 
