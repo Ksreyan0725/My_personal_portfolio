@@ -1,7 +1,7 @@
 // Service Worker for Portfolio PWA
-// Version 3.0
-const CACHE_NAME = 'portfolio-v1.2';
-const RUNTIME_CACHE = 'portfolio-runtime-v1.2';
+// Version 3.1
+const CACHE_NAME = 'portfolio-v3.1';
+const RUNTIME_CACHE = 'portfolio-runtime-v3.1';
 
 // Critical resources for initial load (minimal set for fast install)
 const CORE_ASSETS = [

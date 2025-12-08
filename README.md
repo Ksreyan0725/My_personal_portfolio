@@ -109,7 +109,7 @@ The project undergoes rigorous testing to ensure quality:
 
 ## 📊 Version Information
 
-Current Version: 3.0
+Current Version: 3.1
 - Version tracking is displayed in the Settings Panel.
 - Updates are automatically detected via the Service Worker.
 
@@ -154,5 +154,5 @@ This project is distributed under the MIT License.
 ---
 
 Made with ❤️ by Kumar Sreyan Pattanayak
-Version: 3.0
+Version: 3.1
 Last Updated: 8 December 2025

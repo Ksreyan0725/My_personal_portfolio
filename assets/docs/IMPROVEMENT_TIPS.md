@@ -1,7 +1,7 @@
 # 🔍 Portfolio Project - Improvement Guide
 
 Project: Kumar Sreyan Pattanayak - Personal Portfolio  
-Version: 3.0  
+Version: 3.1  
 Analysis Date: December 3, 2025  
 Overall Score: 8.5/10 🌟
 
@@ -186,8 +186,8 @@ After:
 
 
 Last Updated: December 8, 2025  
-Version: 3.0  
-Project Version: 3.0
+Version: 3.1  
+Project Version: 3.1
 
 ---
 
