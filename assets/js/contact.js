@@ -248,97 +248,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     })();
 
-    // ==================== Form Submission ====================
-    const form = document.getElementById("contactForm");
-    const successTick = document.getElementById("successTick");
-    const toast = document.getElementById("contactToast");
-
-    function showToast(message, isError = false) {
-        if (!toast) return;
-        toast.textContent = message;
-        toast.style.background = isError ? 'rgba(239, 68, 68, 0.95)' : 'rgba(16, 185, 129, 0.95)';
-        toast.classList.add("show");
-        setTimeout(() => {
-            toast.classList.remove("show");
-        }, 3000);
-    }
-
-    form.addEventListener("submit", async (e) => {
-        e.preventDefault();
-
-        // Honeypot check
-        const honeypot = form.querySelector('input[name="_gotcha"]');
-        if (honeypot && honeypot.value) {
-            form.reset();
-            return;
-        }
-
-        const emailInput = document.getElementById("email");
-        const phoneInput = document.getElementById("phone");
-        const subjectInput = document.getElementById("subject");
-
-        // Email validation
-        const emailVal = (emailInput && emailInput.value || "").trim();
-        if (!emailVal.includes("@")) {
-            showToast("Please enter a valid email address", true);
-            return;
-        }
-
-        // Phone validation
-        if (phoneInput && phoneInput.value) {
-            const phoneRegex = /^\+?[\d\s\-\(\)]{10,20}$/;
-            if (!phoneRegex.test(phoneInput.value)) {
-                showToast("Please enter a valid phone number", true);
-                return;
-            }
-        }
-
-        // Subject validation
-        if (subjectInput && !subjectInput.value) {
-            showToast("Please select a subject", true);
-            return;
-        }
-
-        // Update _subject
-        const subjectHidden = form.querySelector('input[name="_subject"]');
-        if (subjectHidden && subjectInput) {
-            subjectHidden.value = `New submission: ${subjectInput.value}`;
-        }
-
-        const submitBtn = form.querySelector('.submit-button');
-        const originalText = submitBtn.textContent;
-        submitBtn.textContent = 'Sending...';
-        submitBtn.disabled = true;
-
-        try {
-            const response = await fetch(form.action, {
-                method: form.method,
-                body: new FormData(form),
-                headers: {
-                    'Accept': 'application/json'
-                }
-            });
-
-            if (response.ok) {
-                successTick.classList.add("show");
-                form.reset();
-                setTimeout(() => {
-                    successTick.classList.remove("show");
-                    showToast("Message sent successfully!");
-                }, 2000);
-            } else {
-                const data = await response.json();
-                const errorMsg = data.errors ? data.errors.map(e => e.message).join(', ') : 'Oops! There was a problem.';
-                showToast(errorMsg, true);
-            }
-        } catch (error) {
-            showToast("Network error. Please try again.", true);
-        } finally {
-            submitBtn.textContent = originalText;
-            submitBtn.disabled = false;
-        }
-    });
-
     // ==================== Long-Press to Copy Link (Mobile) ====================
     const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
@@ -589,6 +498,20 @@ document.addEventListener('DOMContentLoaded', function () {
         // Form submission
         form.addEventListener('submit', async function (e) {
             e.preventDefault();
+
+            // Honeypot check (Spam Protection)
+            const honeypot = form.querySelector('input[name="_gotcha"]');
+            if (honeypot && honeypot.value) {
+                form.reset();
+                return;
+            }
+
+            // Fix for Formspree subject: Update hidden _subject input with selected value
+            const subjectInput = document.getElementById("subject");
+            const subjectHidden = form.querySelector('input[name="_subject"]');
+            if (subjectHidden && subjectInput && subjectInput.value) {
+                subjectHidden.value = `New submission: ${subjectInput.value}`;
+            }
 
             // Validate all fields
             let isValid = true;

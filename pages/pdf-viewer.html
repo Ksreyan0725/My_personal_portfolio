@@ -1413,6 +1413,105 @@ if (pageInfoBtn && pageInfo) {
     // (updatePageInfo already sets pageInfo.textContent; keep it unchanged)
 }
 
+        // ==================== Swipe Back Navigation (PWA) ====================
+        (function initSwipeBackNavigation() {
+            // Only enable in PWA mode or mobile devices
+            const isPWA = window.matchMedia('(display-mode: standalone)').matches ||
+                window.navigator.standalone === true;
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+            if (!isPWA && !isMobile) return;
+
+            let touchStartX = 0;
+            let touchStartY = 0;
+            let touchCurrentX = 0;
+            let isSwiping = false;
+            const swipeThreshold = 100; // Minimum swipe distance
+            const edgeThreshold = 50;   // Must start from left edge
+
+            document.addEventListener('touchstart', (e) => {
+                const touch = e.touches[0];
+                touchStartX = touch.clientX;
+                touchStartY = touch.clientY;
+
+                // Only start swipe if touch starts from left edge
+                if (touchStartX <= edgeThreshold) {
+                    isSwiping = true;
+                }
+            }, { passive: true });
+
+            document.addEventListener('touchmove', (e) => {
+                if (!isSwiping) return;
+
+                const touch = e.touches[0];
+                touchCurrentX = touch.clientX;
+                const touchCurrentY = touch.clientY;
+
+                const deltaX = touchCurrentX - touchStartX;
+                const deltaY = Math.abs(touchCurrentY - touchStartY);
+
+                // Only continue if horizontal swipe (not vertical scroll)
+                if (deltaY > 30) {
+                    isSwiping = false;
+                    return;
+                }
+
+                // Visual feedback: slightly move the page
+                if (deltaX > 0 && deltaX < 200) {
+                    document.body.style.transform = `translateX(${deltaX * 0.3}px)`;
+                    document.body.style.transition = 'none';
+                }
+            }, { passive: true });
+
+            document.addEventListener('touchend', () => {
+                if (!isSwiping) return;
+
+                const deltaX = touchCurrentX - touchStartX;
+
+                // Reset visual feedback
+                document.body.style.transform = '';
+                document.body.style.transition = 'transform 0.3s ease';
+
+                // Navigate back if swipe distance exceeds threshold
+                if (deltaX > swipeThreshold) {
+                    // Add fade-out animation
+                    document.body.style.opacity = '0.7';
+                    setTimeout(() => {
+                        window.location.href = '../index.html';
+                    }, 150);
+                }
+
+                isSwiping = false;
+                touchCurrentX = 0;
+            }, { passive: true });
+
+            document.addEventListener('touchcancel', () => {
+                isSwiping = false;
+                touchCurrentX = 0;
+                document.body.style.transform = '';
+                document.body.style.transition = 'transform 0.3s ease';
+            }, { passive: true });
+
+            console.log('Swipe-back navigation initialized for PDF Viewer');
+        })();
+
+        // ==================== Back Button Navigation (PWA) ====================
+        (function initBackButtonNavigation() {
+            // Handle browser/device back button
+            // Push a state to enable back button detection
+            if (window.history.state === null) {
+                window.history.pushState({ page: 'pdf-viewer' }, '', window.location.href);
+            }
+
+            // Listen for back button press
+            window.addEventListener('popstate', (event) => {
+                // Navigate to index.html when back button is pressed
+                window.location.href = '../index.html';
+            });
+
+            console.log('Back button navigation initialized for PDF Viewer');
+        })();
+
         // Cleanup observers on unload to prevent memory leaks
         window.addEventListener('unload', () => {
             if (window._pdfRenderObserver) {
