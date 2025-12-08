@@ -187,7 +187,7 @@ After:
 
 Last Updated: December 8, 2025  
 Version: 3.0  
-Project Version: 1.1.1
+Project Version: 3.0
 
 ---
 
