@@ -1,0 +1,654 @@
+﻿/* ==================== Settings Panel & Night Light (Mobile) ==================== */
+.settings-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 2000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
+
+.settings-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.settings-panel {
+    position: fixed;
+    bottom: -100%;
+    left: 0;
+    width: 100%;
+    background: var(--bg-secondary);
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    z-index: 2001;
+    transition: bottom 0.3s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.3s step-end;
+    box-shadow: 0 -5px 30px rgba(0,0,0,0.2);
+    height: 70vh;
+    border-top: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    visibility: hidden; /* Hide from layout/scroll when not active */
+}
+
+.settings-panel.active {
+    bottom: 0;
+    visibility: visible;
+    transition: bottom 0.3s cubic-bezier(0.4, 0, 0.2, 1), visibility 0s step-start;
+}
+
+.settings-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    background: var(--bg-secondary);
+    z-index: 10;
+    flex-shrink: 0;
+}
+
+.settings-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.settings-close-btn {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    font-size: 1.5rem;
+    color: var(--text-primary);
+    cursor: pointer;
+    padding: 0;
+    border-radius: 50%;
+    line-height: 1;
+    transition: all 0.3s ease;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.settings-close-btn:hover {
+    opacity: 1;
+    color: var(--accent);
+    background: rgba(99, 102, 241, 0.1);
+    border-color: var(--accent);
+}
+
+/* Disable scrolling when sidebar or settings are open */
+html.sidebar-open,
+html.no-scroll,
+body.sidebar-open,
+body.no-scroll {
+    overflow: hidden !important;
+    height: 100% !important;
+    touch-action: none;
+}
+
+.settings-content {
+    padding: 20px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    flex: 1;
+    min-height: 0;
+}
+
+/* Custom scrollbar for settings panel */
+.settings-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.settings-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.settings-content::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 4px;
+}
+
+.settings-content::-webkit-scrollbar-thumb:hover {
+    background: var(--text-secondary);
+}
+
+[data-theme="dark"] .settings-content::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+[data-theme="dark"] .settings-content::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.setting-group {
+    margin-bottom: 24px;
+    background: var(--card-bg);
+    padding: 16px;
+    border-radius: 16px;
+    border: 1px solid var(--border);
+}
+
+.setting-label {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+}
+
+.setting-description {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 16px;
+}
+
+.theme-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.theme-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 12px;
+    background: var(--bg-secondary);
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    width: 100%;
+    text-align: left;
+    pointer-events: auto; /* Ensure clickable */
+    position: relative;
+    z-index: 1;
+}
+
+.theme-btn:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+}
+
+.theme-btn.active {
+    border-color: var(--accent);
+    background: var(--accent-glow);
+}
+
+.theme-btn-title {
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+    font-size: 0.95rem;
+}
+
+.theme-btn-desc {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+/* Toggle Switch */
+.toggle-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.toggle-info {
+    flex: 1;
+    padding-right: 16px;
+}
+
+.toggle-title {
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-bottom: 2px;
+}
+
+.toggle-desc {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+.toggle-switch {
+    width: 50px;
+    height: 28px;
+    background: var(--border);
+    border-radius: 50px;
+    position: relative;
+    cursor: pointer;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+    flex-shrink: 0;
+}
+
+.toggle-switch.active {
+    background: #007bff; /* Blue accent matching notice banner */
+    box-shadow: 0 0 10px rgba(0, 123, 255, 0.5); /* Focus glow */
+}
+
+.toggle-slider {
+    width: 24px;
+    height: 24px;
+    background: white;
+    border-radius: 50%;
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    transition: transform 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 'Ã—' icon in OFF state */
+.toggle-slider::before {
+    content: '';
+    width: 12px;
+    height: 12px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23666666' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='18' y1='6' x2='6' y2='18'%3E%3C/line%3E%3Cline x1='6' y1='6' x2='18' y2='18'%3E%3C/line%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 1;
+    transition: opacity 0.2s ease;
+}
+
+.toggle-switch.active .toggle-slider {
+    transform: translateX(22px);
+}
+
+/* Hide 'Ã—' icon in ON state */
+.toggle-switch.active .toggle-slider::before {
+    opacity: 0;
+}
+
+/* Option List */
+.option-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.option-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    background: var(--bg-secondary);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.option-item:hover {
+    background: var(--card-bg);
+}
+
+.option-title {
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.option-desc {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+.option-arrow {
+    font-size: 1.5rem;
+    color: var(--text-secondary);
+    line-height: 1;
+}
+
+.version-info {
+    text-align: center;
+    margin-top: 20px;
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+}
+
+/* Night Light Overlay */
+#night-light-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 160, 0, 0.15);
+    z-index: 9999;
+    pointer-events: none; /* Prevents hanging/blocking */
+    mix-blend-mode: multiply;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    display: none;
+}
+
+#night-light-overlay.active {
+    display: block;
+    opacity: 1;
+}
+
+[data-theme="dark"] #night-light-overlay {
+    background: rgba(255, 140, 0, 0.1);
+    mix-blend-mode: overlay;
+}
+
+
+
+/* ==================== Notification Banner ==================== */
+.notification-banner {
+    position: fixed !important;
+    top: -100px !important;
+    bottom: auto !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    /* Default Dark Mode Style */
+    background: rgba(0, 0, 0, 0.85) !important;
+    padding: 12px 24px;
+    border-radius: 9999px !important;
+    box-shadow: none !important;
+    z-index: 10000;
+    transition: top 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Unified Light Blue Border */
+    border: 1.5px solid #38bdf8 !important;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    width: fit-content !important;
+    max-width: 92vw;
+    white-space: nowrap;
+}
+
+/* Light Mode Override */
+[data-theme="light"] .notification-banner {
+    background: rgba(255, 255, 255, 0.9) !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+}
+
+.notification-banner.active {
+    top: 24px !important;
+}
+
+.notification-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: nowrap;
+}
+
+.notification-icon {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+#notificationMessage {
+    font-weight: 600;
+    /* Default Dark Mode Text */
+    color: #ffffff !important;
+    font-size: 1rem;
+    white-space: nowrap;
+}
+
+/* Light Mode Text Override */
+[data-theme="light"] #notificationMessage {
+    color: #000000 !important;
+}
+
+/* Responsive Adjustments for Small Screens */
+@media (max-width: 480px) {
+    .notification-banner {
+        padding: 10px 20px;
+        max-width: 95vw;
+    }
+    
+    #notificationMessage {
+        font-size: 0.9rem; /* Slightly smaller text */
+    }
+    
+    .notification-icon {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+@media (max-width: 360px) {
+    .notification-banner {
+        padding: 8px 16px;
+    }
+    
+    #notificationMessage {
+        font-size: 0.8rem; /* Smaller text for very narrow screens */
+    }
+    
+    .notification-content {
+        gap: 8px;
+    }
+}
+
+/* Hide notification on screens where sidebar is not available (Desktop) */
+@media (min-width: 768px) {
+    .notification-banner {
+        display: none !important;
+    }
+}
+
+.mobile-night-light-btn {
+    width: 100%;
+    padding: 18px 25px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px; /* Reduced from 12px for closer icon-text spacing */
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    border: none;
+    border-top: 1px solid var(--border);
+    border-radius: 0;
+    text-align: left;
+    font-weight: 500;
+    min-height: 56px;
+    box-sizing: border-box;
+}
+
+.mobile-night-light-btn:hover {
+    background: var(--card-bg);
+    color: var(--accent);
+}
+
+.mobile-night-light-btn.active {
+    background: rgba(255, 160, 0, 0.15) !important;
+    border-color: var(--border) !important;
+    color: #ffa000 !important;
+    box-shadow: 0 0 15px rgba(255, 160, 0, 0.25); /* Soft yellow glow */
+}
+
+/* Active Icon - Soft Yellow/Orange Glow */
+/* Active Icon - Soft Yellow/Orange Glow */
+.mobile-night-light-btn.active .night-light-icon {
+    /* White -> Orange/Yellow + Glow */
+    filter: sepia(1) saturate(3000%) hue-rotate(-50deg) drop-shadow(0 0 8px #ffa000) !important;
+    transform: scale(1.1);
+    transition: all 0.3s ease;
+}
+
+/* Light Mode: Use same white icon as dark mode */
+[data-theme="light"] .night-light-icon {
+    filter: none;
+}
+
+/* Light Mode Active: Same colorization as dark mode */
+[data-theme="light"] .mobile-night-light-btn.active .night-light-icon {
+    filter: sepia(1) saturate(3000%) hue-rotate(-50deg) drop-shadow(0 0 8px #ffa000) !important;
+}
+
+.mobile-night-light-btn.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+    filter: grayscale(1);
+    background: var(--bg-secondary);
+    border-color: var(--border);
+}
+
+/* ==================== DESKTOP/TABLET: Remove Night Light Active State ==================== */
+/* On screens where the side-menu button (.menu-icon) is hidden, remove the yellow highlight */
+@media (min-width: 768px) {
+    .mobile-night-light-btn.active {
+        background: var(--bg-secondary) !important;
+        border-color: var(--border) !important;
+        color: var(--text-primary) !important;
+        box-shadow: none !important;
+    }
+    
+    .mobile-night-light-btn.active .night-light-icon {
+        filter: none !important;
+        transform: none !important;
+    }
+    
+    [data-theme="light"] .mobile-night-light-btn.active .night-light-icon {
+        filter: none !important;
+    }
+}
+
+.night-light-icon {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+    /* Default: White (for Dark Mode) */
+}
+
+/* Dark Mode: No filter needed for white icon */
+[data-theme="dark"] .night-light-icon {
+    filter: none;
+}
+
+/* Night Light Intensity Slider */
+.night-light-intensity-container {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease, margin 0.3s ease;
+    opacity: 0;
+    margin-top: 0;
+}
+
+.night-light-intensity-container.active {
+    max-height: 100px;
+    opacity: 1;
+    margin-top: 16px;
+}
+
+.intensity-label {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+    font-weight: 500;
+}
+
+.intensity-slider-wrapper {
+    position: relative;
+    width: 100%;
+    height: 24px;
+    display: flex;
+    align-items: center;
+}
+
+/* Center dot at 50% */
+.intensity-slider-wrapper::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 4px;
+    height: 4px;
+    background-color: var(--text-primary);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.intensity-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 4px;
+    background: var(--border);
+    border-radius: 2px;
+    outline: none;
+    cursor: pointer;
+}
+
+.intensity-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    background: var(--text-secondary);
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    transition: transform 0.1s ease, background 0.2s ease;
+}
+
+.intensity-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.1);
+    background: var(--text-primary);
+}
+
+/* Hide on desktop */
+/* CONSOLIDATED: Moved to main 769px query at end of file */
+
+/* Theme Toggle Base Styles (Moved from responsive.css) */
+.theme-text {
+  transition: max-width 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease, margin 0.3s ease;
+  max-width: 100px;
+  opacity: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.theme-toggle {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* Light Theme Sidebar Icon (Moved from responsive.css) */
+[data-theme="light"] .sidebar-icon {
+    filter: invert(1);
+}
+
+/* Night Light Notification Background Fix (Tablet/Mobile Only) */
+@media (max-width: 768px) {
+    .notification-banner {
+        background: rgba(0, 0, 0, 0.7) !important; /* Semi-transparent black for Dark Mode */
+    }
+
+    [data-theme="light"] .notification-banner {
+        background: rgba(255, 255, 255, 0.8) !important; /* Semi-transparent light for Light Mode */
+    }
+}
+

@@ -1,5 +1,5 @@
 // Service Worker for Portfolio PWA
-// Version 1.2
+// Version 3.0
 const CACHE_NAME = 'portfolio-v1.2';
 const RUNTIME_CACHE = 'portfolio-runtime-v1.2';
 

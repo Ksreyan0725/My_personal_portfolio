@@ -4,7 +4,7 @@
 
 // Configuration
 export const CONFIG = {
-    VERSION: '1.2',
+    VERSION: '3.0',
     CACHE_NAME: 'portfolio-v1.2',
     API_ENDPOINT: 'https://formspree.io/f/mzzjopyn', // Updated with actual ID from contact.html
     GITHUB_URL: 'https://github.com/Ksreyan0725',

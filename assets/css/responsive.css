@@ -101,7 +101,7 @@
     min-width: 28px !important;
     min-height: 28px !important;
     max-width: 28px !important;
-    padding: 2px !important;
+    padding: 0 !important;
     border-radius: 10px !important;
     backdrop-filter: blur(10px);
     display: flex !important;
@@ -124,9 +124,11 @@
   }
 
   .theme-icon {
-    width: 22px !important;
-    height: 22px !important;
+    width: 24px !important;
+    height: 24px !important;
     object-fit: contain;
+    display: block !important;
+    margin: 0 !important;
   }
   
   .nav-logo {
@@ -619,9 +621,11 @@
   }
   
   .theme-icon {
-    width: 22px !important;
-    height: 22px !important;
+    width: 24px !important;
+    height: 24px !important;
     object-fit: contain;
+    display: block !important;
+    margin: 0 !important;
   }
 
   .theme-text {
@@ -1132,7 +1136,7 @@
     aspect-ratio: auto !important;
     gap: 6px;
     font-weight: 500;
-    font-size: 13px;
+    font-size: 14px;
     color: var(--text-primary);
     white-space: nowrap;
   }
@@ -1142,8 +1146,8 @@
   }
 
   .theme-icon {
-    width: 18px !important;
-    height: 18px !important;
+    width: 20px !important;
+    height: 20px !important;
     object-fit: contain;
   }
 
@@ -1374,8 +1378,9 @@
   100% { transform: scale(1); opacity: 1; }
 }
 
-/* Tight spacing for 768px-1024px to prevent navbar wrapping and duplicates */
-@media (min-width: 768px) and (max-width: 1024px) {
+/* Tight spacing for 768px-899px (tablet) to prevent navbar wrapping and duplicates */
+/* Note: 900px+ is handled by desktop queries */
+@media (min-width: 768px) and (max-width: 899px) {
   .nav-container {
     gap: 8px !important; /* Reduce gap between all items */
     padding: 0 15px !important;
@@ -1473,8 +1478,55 @@
     transform: translateY(-1px) !important;
   }
   .theme-icon {
+    width: 22px !important;
+    height: 22px !important;
     margin: 0 !important;
-    display: inline-block !important; /* Changed from block to fix centering */
+    display: block !important;
+    object-fit: contain;
+  }
+
+  /* Show desktop settings button on tablet (icon-only) */
+  .desktop-settings-btn {
+    display: flex !important;
+    order: 5 !important;
+    margin-left: 8px !important;
+    padding: 0 !important;
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    background: var(--card-bg) !important;
+    border: 2px solid var(--border) !important;
+    border-radius: 10px !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-shrink: 0 !important;
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+  }
+
+  .desktop-settings-btn:hover {
+    background: var(--accent-glow) !important;
+    border-color: var(--accent) !important;
+    box-shadow: 0 0 20px var(--accent-glow) !important;
+    transform: translateY(-1px) !important;
+  }
+
+  .desktop-settings-btn .settings-icon {
+    width: 20px !important;
+    height: 20px !important;
+    display: block !important;
+    object-fit: contain !important;
+    transition: transform 0.3s ease !important;
+  }
+
+  .desktop-settings-btn:hover .settings-icon {
+    transform: rotate(90deg) !important;
+  }
+
+  .desktop-settings-btn .settings-text {
+    display: none !important;
   }
 }
 
@@ -1570,8 +1622,8 @@
   }
   
   #navbar .theme-icon {
-    width: 16px !important;
-    height: 16px !important;
+    width: 20px !important;
+    height: 20px !important;
     display: block !important;
     margin: 0 !important;
     object-fit: contain;
@@ -2200,7 +2252,7 @@
   .desktop-nav {
     display: flex !important;
     order: 2;
-    gap: 24px; /* Gap between links */
+    gap: 18px; /* Gap between links - reduced for tighter spacing */
     flex: 1 1 auto;
   }
   
@@ -2210,11 +2262,125 @@
   }
 }
 
+/* ==================== RESPONSIVE NAV IMPROVEMENTS (900px - 1024px) ==================== */
+/* Tighter spacing, smaller sizes, and vertical alignment fixes for medium screens */
+@media (min-width: 900px) and (max-width: 1024px) {
+  /* ===== SPACING & LAYOUT ===== */
+  .nav-container {
+    gap: 15px !important; /* Reduced from 30px */
+    padding: 0 16px !important; /* Reduced horizontal padding */
+    align-items: center !important; /* Prevent vertical drift */
+    height: 100% !important;
+    display: flex !important;
+    flex-wrap: nowrap !important;
+  }
 
+  .desktop-nav {
+    gap: 12px !important; /* Reduced from 18px - tighter spacing between nav links */
+  }
+
+  /* ===== VERTICAL ALIGNMENT FIXES ===== */
+  /* Ensure nav links stay vertically centered */
+  .nav-links {
+    align-items: center !important;
+    display: flex !important;
+    align-self: center !important;
+    margin: 0 !important;
+  }
+
+  .nav-links li {
+    display: flex !important;
+    align-items: center !important;
+    margin: 0 !important;
+  }
+
+  .nav-links a {
+    font-size: 0.875rem !important; /* Slightly smaller font */
+    padding: 4px 8px !important; /* Reduced padding */
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    line-height: 1.5 !important;
+    vertical-align: middle !important;
+    margin: 0 !important;
+    align-self: center !important;
+  }
+
+  /* ===== LOGO ===== */
+  .nav-logo {
+    font-size: 1.25rem !important; /* Slightly smaller logo */
+    display: flex !important;
+    align-items: center !important;
+    align-self: center !important;
+    margin: 0 !important;
+    line-height: 1 !important;
+  }
+
+  /* ===== THEME TOGGLE ===== */
+  .theme-toggle {
+    padding: 7px 14px !important;
+    font-size: 0.875rem !important;
+    gap: 5px !important;
+    align-self: center !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+
+  .theme-icon {
+    width: 22px !important;
+    height: 22px !important;
+    object-fit: contain;
+    display: block !important;
+    margin: 0 !important;
+  }
+
+  /* ===== SETTINGS BUTTON ===== */
+  .desktop-settings-btn {
+    padding: 7px 10px !important;
+    margin-left: 6px !important;
+    align-self: center !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+
+  .desktop-settings-btn .settings-icon {
+    width: 20px !important;
+    height: 20px !important;
+  }
+
+  /* ===== SEARCH CONTAINER ===== */
+  #navbar .desktop-search {
+    max-width: 180px !important;
+    margin-left: auto !important;
+    align-self: center !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+
+  #navbar .search-container {
+    max-width: 180px !important;
+  }
+
+  #navbar .search-input {
+    font-size: 0.85rem !important;
+    padding: 6px 35px 6px 10px !important;
+  }
+
+  /* ===== PREVENT UPWARD SHIFT ===== */
+  nav {
+    display: flex !important;
+    align-items: center !important;
+  }
+}
 
 /* Desktop-only visibility for dropdown (Moved from style.css) */
-@media (max-width: 899px) {
+@media (max-width: 767px) {
   .desktop-search-results {
+    display: none !important;
+  }
+  
+  /* Hide desktop settings button on mobile (show from 768px+) */
+  .desktop-settings-btn {
     display: none !important;
   }
 }
@@ -2256,16 +2422,181 @@
   }
 }
 
-/* ==================== Desktop Settings Button ==================== */
+/* ==================== Desktop Project Filter Buttons ==================== */
 @media (min-width: 900px) {
-  /* Hide settings button on desktop - only available in mobile sidebar */
-  .desktop-settings-btn,
-  .settings-toggle {
+  .project-filters {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: center !important;
+    align-items: center !important;
+    margin-bottom: 35px !important;
+    margin-top: 15px !important; /* Proper spacing below Projects title */
+    gap: 12px !important;
+    width: 100% !important;
+  }
+
+  .filter-btn {
+    padding: 8px 20px !important;
+    font-size: 0.9rem !important;
+    font-weight: 500 !important;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 20px !important;
+    min-width: 80px !important;
+  }
+
+  .filter-btn:hover {
+    box-shadow: 0 4px 12px var(--accent-glow);
+    transform: translateY(-2px) !important;
+  }
+
+  .filter-btn.active {
+    box-shadow: 0 6px 20px var(--accent-glow);
+    transform: translateY(-1px) scale(1.03) !important;
+  }
+
+  /* Enhanced visibility for light theme */
+  [data-theme="light"] .filter-btn {
+    background: rgba(255, 255, 255, 0.9);
+    border-color: rgba(0, 0, 0, 0.15);
+    color: var(--text-primary);
+  }
+
+  [data-theme="light"] .filter-btn:hover {
+    border-color: var(--accent);
+    background: rgba(255, 255, 255, 0.95);
+  }
+
+  /* Enhanced visibility for dark theme */
+  [data-theme="dark"] .filter-btn {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.2);
+    color: var(--text-primary);
+  }
+
+  [data-theme="dark"] .filter-btn:hover {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: var(--accent);
+  }
+}
+
+/* ==================== Desktop Settings Button & Dropdown ==================== */
+@media (min-width: 900px) {
+  /* Hide hamburger menu icon on desktop */
+  .menu-icon {
     display: none !important;
   }
   
-  /* Show text labels on larger screens */
-  .settings-text,
+  /* Show desktop settings button as icon-only at far right */
+  .desktop-settings-btn {
+    display: flex !important;
+    order: 5 !important; /* After theme toggle (order: 4) */
+    margin-left: 8px !important; /* Small gap after theme toggle */
+    padding: 8px 12px !important;
+    background: var(--card-bg) !important;
+    border: 2px solid var(--border) !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    border-radius: 50px !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+    flex-shrink: 0 !important;
+    height: 40px !important;
+    min-height: 40px !important;
+    box-sizing: border-box !important;
+  }
+
+  .desktop-settings-btn:hover {
+    background: var(--accent-glow) !important;
+    border-color: var(--accent) !important;
+    box-shadow: 0 0 20px var(--accent-glow) !important;
+    transform: scale(1.05) !important;
+  }
+
+  .desktop-settings-btn .settings-icon {
+    width: 22px !important;
+    height: 22px !important;
+    display: block !important;
+    object-fit: contain !important;
+    transition: transform 0.3s ease !important;
+  }
+
+  .desktop-settings-btn:hover .settings-icon {
+    transform: rotate(90deg) !important;
+  }
+
+  /* Hide settings text on desktop - icon only */
+  .desktop-settings-btn .settings-text {
+    display: none !important;
+  }
+
+  /* Transform settings panel into dropdown for desktop */
+  .settings-panel {
+    position: fixed !important;
+    top: 70px !important; /* Below navbar */
+    right: -400px !important; /* Hidden off-screen to the right */
+    bottom: auto !important;
+    left: auto !important;
+    width: 380px !important;
+    max-width: 90vw !important;
+    height: auto !important;
+    max-height: calc(100vh - 90px) !important;
+    border-radius: 16px !important;
+    border: 1px solid var(--border) !important;
+    border-top-left-radius: 16px !important;
+    border-top-right-radius: 16px !important;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3) !important;
+    transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.3s step-end !important;
+    visibility: hidden !important;
+  }
+
+  .settings-panel.active {
+    right: 20px !important; /* Slide in from right */
+    visibility: visible !important;
+    transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1), visibility 0s step-start !important;
+  }
+
+  /* Desktop settings content scrolling */
+  .settings-content {
+    max-height: none !important;
+    height: calc(100vh - 140px) !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    padding-bottom: 20px !important;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Allow scrolling inside settings panel on desktop */
+  @media (min-width: 900px) {
+    body.no-scroll .settings-content,
+    html.no-scroll .settings-content {
+      overflow-y: auto !important;
+    }
+  }
+
+  /* Hide overlay on desktop - dropdown doesn't need it */
+  .settings-overlay {
+    display: none !important;
+  }
+
+  /* Adjust settings panel header for desktop */
+  .settings-header {
+    padding: 16px 20px !important;
+  }
+
+  .settings-title {
+    font-size: 1.1rem !important;
+  }
+
+  .settings-close-btn {
+    width: 32px !important;
+    height: 32px !important;
+    font-size: 1.3rem !important;
+  }
+  
+  /* Show text labels on larger screens for theme toggle */
   .theme-text {
     display: inline !important;
   }

@@ -109,6 +109,7 @@ const initApp = () => {
     const settingsPanel = document.getElementById('settingsPanel');
     const settingsOverlay = document.getElementById('settingsOverlay');
     const openSettingsBtn = document.getElementById('openSettingsBtn');
+    const desktopSettingsBtn = document.getElementById('desktopSettingsBtn');
     const settingsCloseBtn = document.getElementById('settingsCloseBtn');
     const nightLightToggle = document.getElementById('nightLightToggle');
     const themeBtns = document.querySelectorAll('.theme-btn');
@@ -128,7 +129,14 @@ const initApp = () => {
     }
 
     function openSettings() {
-        if (!settingsPanel) return;
+        console.log('openSettings() called');
+        console.log('settingsPanel element:', settingsPanel);
+        console.log('settingsOverlay element:', settingsOverlay);
+
+        if (!settingsPanel) {
+            console.error('Settings panel not found!');
+            return;
+        }
 
         // Close sidebar if open
         const sidebarMenu = document.getElementById('sidebarMenu');
@@ -136,12 +144,14 @@ const initApp = () => {
 
         // Check if sidebar is active (more reliable than opacity)
         const isSidebarOpen = sidebarMenu && sidebarMenu.classList.contains('active');
+        console.log('Is sidebar open?', isSidebarOpen);
 
         if (isSidebarOpen) {
             if (sidebarOverlay) sidebarOverlay.click();
 
             // Wait for sidebar close animation (300ms) before opening settings
             setTimeout(() => {
+                console.log('Adding active class to settings panel (after sidebar close)');
                 settingsPanel.classList.add('active');
                 settingsOverlay.classList.add('active');
                 document.body.classList.add('no-scroll');
@@ -149,10 +159,12 @@ const initApp = () => {
             }, 300);
         } else {
             // If sidebar is not open, open settings immediately
+            console.log('Adding active class to settings panel (immediately)');
             settingsPanel.classList.add('active');
             settingsOverlay.classList.add('active');
             document.body.classList.add('no-scroll');
             document.documentElement.classList.add('no-scroll');
+            console.log('Settings panel classes after adding active:', settingsPanel.className);
         }
 
         // Update active theme button
@@ -340,11 +352,32 @@ const initApp = () => {
     /* ==================== Settings Panel Logic (Integrated) ==================== */
     // Open/Close Handlers
     if (openSettingsBtn) {
-        openSettingsBtn.addEventListener('click', (e) => {
+        openSettingsBtn.addEventListener('click', function (e) {
             if (typeof openSettings === 'function') openSettings(e);
             // Update install button state when opening settings
             if (typeof updateInstallButton === 'function') updateInstallButton();
         });
+    }
+    if (desktopSettingsBtn) {
+        console.log('Desktop settings button found:', desktopSettingsBtn);
+        desktopSettingsBtn.addEventListener('click', function (e) {
+            console.log('Desktop settings button clicked!');
+            console.log('Settings panel:', settingsPanel);
+            console.log('Panel has active class:', settingsPanel?.classList.contains('active'));
+
+            // Toggle: if panel is open, close it; otherwise open it
+            if (settingsPanel && settingsPanel.classList.contains('active')) {
+                console.log('Closing settings...');
+                if (typeof closeSettings === 'function') closeSettings();
+            } else {
+                console.log('Opening settings...');
+                if (typeof openSettings === 'function') openSettings(e);
+                // Update install button state when opening settings
+                if (typeof updateInstallButton === 'function') updateInstallButton();
+            }
+        });
+    } else {
+        console.error('Desktop settings button NOT found!');
     }
     if (settingsCloseBtn) settingsCloseBtn.addEventListener('click', closeSettings);
     if (settingsOverlay) settingsOverlay.addEventListener('click', closeSettings);
@@ -854,6 +887,14 @@ const initApp = () => {
 
             // Disable swipe if settings panel is open (no-scroll class)
             if (document.body.classList.contains('no-scroll')) return;
+
+            // Prevent swipe on interactive elements (buttons, links, inputs, etc.)
+            const target = e.target;
+            const isInteractive = target.closest('button, a, input, textarea, select, .filter-btn, .project-card, [role="button"]');
+            if (isInteractive) {
+                this.isSwiping = false;
+                return;
+            }
 
             const touch = e.touches[0];
             this.startX = touch.clientX;
@@ -3293,6 +3334,16 @@ window.addEventListener('beforeinstallprompt', (e) => {
         return; // Don't show prompt if already installed
     }
 
+    // Only show on mobile/tablet (below 1024px), not on desktop
+    if (window.innerWidth >= 1024) {
+        return; // Don't show on desktop
+    }
+
+    // Check if user previously dismissed the prompt
+    if (localStorage.getItem('installPromptDismissed') === 'true') {
+        return; // Don't show if user clicked "Maybe Later"
+    }
+
     // Show install prompt after a delay (3 seconds)
     setTimeout(() => {
         if (installPrompt && deferredPrompt) {
@@ -3331,12 +3382,12 @@ window.closeInstallPrompt = function () {
         installPrompt.style.display = 'none';
     }
 
-    // Don't show again for this session
-    sessionStorage.setItem('installPromptDismissed', 'true');
+    // Don't show again - persist across page reloads
+    localStorage.setItem('installPromptDismissed', 'true');
 };
 
-// Check if prompt was dismissed in this session
-if (sessionStorage.getItem('installPromptDismissed') === 'true') {
+// Check if prompt was dismissed
+if (localStorage.getItem('installPromptDismissed') === 'true') {
     if (installPrompt) {
         installPrompt.style.display = 'none';
     }

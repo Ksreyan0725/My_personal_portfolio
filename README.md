@@ -61,28 +61,41 @@ Hosted on GitHub Pages with automatic deployment.
 My_personal_portfolio/
 ├── assets/
 │   ├── css/
-│   │   ├── style.css           # Main stylesheet
-│   │   ├── responsive.css      # Responsive design rules
-│   │   ├── skeleton.css        # Skeleton loading states
-│   │   ├── print.css           # Print-specific styles
-│   │   ├── preloader.css       # Loading animation styles
-│   │   ├── install-button.css  # PWA install button styles
-│   │   └── theme-schedule.css  # Theme scheduling styles
+│   │   ├── core.css             # Core styles and variables
+│   │   ├── navigation.css       # Navigation and navbar styles
+│   │   ├── sidebar.css          # Mobile sidebar styles
+│   │   ├── search.css           # Search functionality styles
+│   │   ├── settings.css         # Settings panel styles
+│   │   ├── settings-fix.css     # Settings button fixes
+│   │   ├── responsive.css       # Responsive design rules
+│   │   ├── contact.css          # Contact page styles
+│   │   ├── skeleton.css         # Skeleton loading states
+│   │   ├── print.css            # Print-specific styles
+│   │   ├── preloader.css        # Loading animation styles
+│   │   ├── install-button.css   # PWA install button styles
+│   │   └── theme-schedule.css   # Theme scheduling styles
 │   ├── js/
-│   │   ├── constants.js        # Global configuration
-│   │   └── theme-schedule.js   # Theme logic
-│   ├── icons/                  # App icons and UI elements
-│   ├── images/                 # Profile photos and assets
-│   └── docs/                   # PDF documents (resume, research)
+│   │   ├── constants.js         # Global configuration
+│   │   ├── contact.js           # Contact form logic
+│   │   └── theme-schedule.js    # Theme scheduling logic
+│   ├── icons/                   # App icons and UI elements
+│   ├── images/                  # Profile photos and assets
+│   └── docs/                    # PDF documents (resume, research)
 ├── pages/
-│   ├── 404.html               # Custom error page
-│   ├── thankyou.html          # Form submission confirmation
-│   └── pdf-viewer.html        # PDF document viewer
-├── index.html                 # Main landing page
-├── contact.html               # Contact form page
-├── script.js                  # Main application logic
-├── sw.js                      # Service Worker for PWA
-└── manifest.json              # PWA manifest file
+│   ├── 404.html                 # Custom error page
+│   ├── maintenance.html         # Maintenance mode page
+│   ├── thank-you.html           # Form submission confirmation
+│   └── pdf-viewer.html          # PDF document viewer
+├── .github/                     # GitHub Actions workflows
+├── index.html                   # Main landing page
+├── contact.html                 # Contact form page
+├── script.js                    # Main application logic (140KB)
+├── sw.js                        # Service Worker for PWA
+├── service-worker.js            # Alternative service worker
+├── manifest.json                # PWA manifest file
+├── sitemap.xml                  # SEO sitemap
+├── robots.txt                   # Search engine instructions
+└── README.md                    # Project documentation
 ```
 
 ## 🧪 Testing
@@ -96,9 +109,43 @@ The project undergoes rigorous testing to ensure quality:
 
 ## 📊 Version Information
 
-Current Version: 1.2
+Current Version: 3.0
 - Version tracking is displayed in the Settings Panel.
 - Updates are automatically detected via the Service Worker.
+
+### What's New in Version 3.0 (December 8, 2025)
+
+Major improvements to responsive design and user experience:
+
+Responsive Navigation Enhancements:
+- Optimized navigation layout for medium screens (900px-1024px)
+- Reduced spacing and font sizes to prevent wrapping on smaller desktops
+- Fixed vertical alignment issues where nav items would drift upward
+- Improved visual balance across all breakpoints
+
+Settings Button Accessibility:
+- Extended desktop settings button access down to 768px (tablets and up)
+- Previously only available on desktop (900px+), now accessible on tablets
+- Consistent icon-only styling across all screen sizes
+- Fixed click functionality with proper pointer-events handling
+
+Theme Toggle Improvements:
+- Increased theme icon sizes for better visibility (24px → 26px base, varies by breakpoint)
+- Increased text sizes for improved readability (15px → 16px)
+- Perfect centering of icons within button borders across all displays
+- Better visual balance between icon and text elements
+
+Bug Fixes:
+- Fixed mobile sidebar swipe interfering with project filter buttons
+- Prevented swipe gestures from triggering on interactive elements (buttons, links, inputs)
+- Resolved CSS override conflicts in responsive media queries
+- Consolidated and cleaned up media query structure
+
+Performance & Code Quality:
+- Eliminated duplicate and conflicting CSS rules
+- Optimized media query breakpoints for cleaner transitions
+- Improved code maintainability with better organization
+- All changes maintain 100% backward compatibility
 
 ## 📄 License
 
@@ -107,5 +154,5 @@ This project is distributed under the MIT License.
 ---
 
 Made with ❤️ by Kumar Sreyan Pattanayak
-
-Last Updated: 3 December 2025
+Version: 3.0
+Last Updated: 8 December 2025

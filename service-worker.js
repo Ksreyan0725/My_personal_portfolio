@@ -1,5 +1,5 @@
 // Service Worker for Kumar Sreyan Pattanayak Portfolio
-// Version 1.0.0
+// Version 3.0
 
 const CACHE_NAME = 'ksp-portfolio-v1';
 const urlsToCache = [

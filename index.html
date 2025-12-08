@@ -5,7 +5,8 @@ Purpose: Main landing page for Kumar Sreyan Pattanayak's personal portfolio
 Description: Showcases education, projects, certifications, and skills with
              responsive design, dark/light theme support, and smooth animations
 Author: Kumar Sreyan Pattanayak
-Last Updated: December 3, 2025
+Version: 3.0
+Last Updated: December 8, 2025
 =============================================================================
 --> 
 
@@ -21,9 +22,6 @@ Last Updated: December 3, 2025
     <meta name="author" content="Kumar Sreyan Pattanayak">
     
     <!-- ==================== Security Headers ==================== -->
-    <!-- Content Security Policy -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://unpkg.com https://cdnjs.cloudflare.com https://formspree.io; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' https://cdnjs.cloudflare.com https://fonts.gstatic.com; img-src 'self' data: https://ksreyan0725.github.io; connect-src 'self' https://formspree.io https://api.sunrise-sunset.org; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self' https://formspree.io; upgrade-insecure-requests;">
-    
     <!-- Prevent MIME type sniffing -->
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
     
@@ -32,9 +30,6 @@ Last Updated: December 3, 2025
     
     <!-- Control referrer information -->
     <meta name="referrer" content="strict-origin-when-cross-origin">
-    
-    <!-- Permissions Policy (formerly Feature Policy) -->
-    <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=(), payment=(), usb=(), magnetometer=(), gyroscope=(), speaker=()">
     
     <!-- ==================== Page Title & Favicon ==================== -->
     <title>Kumar Sreyan Pattanayak - Portfolio</title>
@@ -99,7 +94,7 @@ Last Updated: December 3, 2025
     
     <!-- ==================== Preload Critical Resources ==================== -->
     <!-- Critical CSS -->
-    <link rel="preload" href="assets/css/style.css" as="style">
+    <link rel="preload" href="assets/css/core.css" as="style">
     <link rel="preload" href="assets/css/responsive.css" as="style">
     
     <!-- Critical JavaScript -->
@@ -107,9 +102,6 @@ Last Updated: December 3, 2025
     
     <!-- Hero Image -->
     <link rel="preload" href="assets/images/my-photo.jpg" as="image">
-    
-    <!-- Critical Icons -->
-    <link rel="preload" href="assets/icons/favicon.png" as="image">
     
     <!-- DNS Prefetch for External Resources -->
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
@@ -119,13 +111,28 @@ Last Updated: December 3, 2025
     <link rel="dns-prefetch" href="https://formspree.io">
     
     <!-- ==================== Stylesheets & Scripts ==================== -->
-    <link rel="stylesheet" href="assets/css/style.css" />
-    <link rel="stylesheet" href="assets/css/responsive.css" />
+    <!-- Core styles (must load first) -->
+    <link rel="stylesheet" href="assets/css/core.css?v=20251207184001" />
+    
+    <!-- Feature modules -->
+    <link rel="stylesheet" href="assets/css/navigation.css?v=20251207184001" />
+    <link rel="stylesheet" href="assets/css/search.css?v=20251207184001" />
+    <link rel="stylesheet" href="assets/css/sidebar.css?v=20251207184001" />
+    <link rel="stylesheet" href="assets/css/settings.css?v=20251207184001" />
+    
+    <!-- Responsive overrides (must load after modules) -->
+    <link rel="stylesheet" href="assets/css/responsive.css?v=20251207184001" />
+    
+    <!-- Existing specialized files -->
     <link rel="stylesheet" href="assets/css/preloader.css">
     <link rel="stylesheet" href="assets/css/install-button.css">
     <link rel="stylesheet" href="assets/css/theme-schedule.css">
     <link rel="stylesheet" href="assets/css/skeleton.css">
     <link rel="stylesheet" href="assets/css/print.css" media="print">
+    
+    <!-- EMERGENCY FIX: Must be last to override everything -->
+    <link rel="stylesheet" href="assets/css/settings-fix.css?v=20251207184001">
+    
     <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js" integrity="sha384-li4UtcFCH6QeUqR4JyV58/VgTprMuz9aauj+oWtew7V4Y7ZVjnvz5px9Y3UCG0Ea" crossorigin="anonymous"></script> 
 </head>
 
@@ -254,10 +261,9 @@ Last Updated: December 3, 2025
                 <span class="theme-text">System</span>
             </button>
 
-            <!-- Desktop Settings Button -->
+            <!-- Desktop Settings Button (Icon Only) -->
             <button class="settings-toggle desktop-settings-btn" id="desktopSettingsBtn" aria-label="Open settings" data-tooltip="Settings">
-                <img src="assets/icons/settings.png" alt="Settings" class="settings-icon">
-                <span class="settings-text">Settings</span>
+                <img src="assets/icons/setting-button.png" alt="Settings" class="settings-icon">
             </button>
 
             <!-- Mobile Search Icon -->
@@ -857,7 +863,7 @@ Last Updated: December 3, 2025
                 </div>
                 
                 <div id="appVersion" style="margin-top: 15px; text-align: center; font-size: 0.8rem; color: var(--text-secondary); opacity: 0.7; cursor: pointer; user-select: none;">
-                    Version: 1.2
+                    Version: 3.0
                 </div>
             </div>
             
@@ -961,7 +967,7 @@ Last Updated: December 3, 2025
             updateBanner.innerHTML = `
                 <div style="flex: 1;">
                     <strong style="display: block; margin-bottom: 4px;">🎉 New Version Available!</strong>
-                    <span style="font-size: 14px; opacity: 0.95;">Version 1.1.1 is ready. Click to update.</span>
+                    <span style="font-size: 14px; opacity: 0.95;">Version 3.0 is ready. Click to update.</span>
                 </div>
                 <button onclick="updateApp()" style="
                     background: white;

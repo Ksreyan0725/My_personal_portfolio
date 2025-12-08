@@ -1,0 +1,358 @@
+﻿/* ==================== Page Wrapper for Sidebar Slide Effect ==================== */
+/* This wrapper contains all page content and slides right when sidebar opens */
+#pageWrapper {
+  position: relative;
+  width: 100%;
+  flex: 1; /* Take up remaining space */
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+  transform: translateX(0);
+  padding-top: var(--header-height);
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+/* Copilot-style page slide effect - when sidebar is open, shift entire page right */
+body.sidebar-open #pageWrapper {
+  transform: translateX(var(--sidebar-width, 280px));
+}
+
+/* Spacer removed */
+
+/* ==================== Notification Banner (Fixed Position) ==================== */
+/* Ensures the banner doesn't affect document flow or scroll height */
+.notification-banner {
+  position: fixed !important;
+  bottom: 20px !important;
+  top: auto !important;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 99999 !important;
+  pointer-events: none;
+  display: none; /* Hidden by default to prevent layout issues */
+  justify-content: center;
+  width: auto;
+  max-width: 90%;
+}
+
+.notification-banner.active {
+  display: flex !important; /* Show when active */
+  animation: slideUpFade 0.3s ease forwards;
+}
+
+@keyframes slideUpFade {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 20px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+.notification-content {
+  background: rgba(0, 0, 0, 0.3);
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--accent);
+  pointer-events: auto;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  box-shadow: none;
+}
+
+[data-theme="light"] .notification-content {
+  background: rgba(255, 255, 255, 0.3);
+  color: #000;
+  border: 1px solid var(--accent);
+  box-shadow: none;
+}
+
+.notification-banner.active .notification-content {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.notification-icon {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+
+/* Ensure html/body don't have fixed height that conflicts */
+html {
+  height: auto;
+  min-height: 100%;
+}
+
+/* Optional helper to scale the frame down on small viewports while keeping aspect ratio.
+   To enable, add the class 'scale-to-fit' to the page-frame and set --page-scale via JS.
+*/
+body.use-page-frame .page-frame.scale-to-fit {
+  transform-origin: top left;
+  transform: scale(var(--page-scale, 1));
+}
+
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: var(--card-bg);
+  backdrop-filter: blur(20px);
+  border-bottom: 2px solid var(--border);
+  z-index: 1000;
+  padding: 6px 0;
+  transition: all 0.3s ease, transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  height: 48px; /* compact desktop */
+  will-change: transform;
+}
+
+/* Slide navbar right when sidebar is open */
+body.sidebar-open nav {
+  transform: translateX(var(--sidebar-width, 280px));
+}
+
+nav.scrolled {
+  box-shadow: 0 5px 30px var(--accent-glow);
+}
+
+.nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: flex-start; /* left pack logo + links */
+  align-items: center; /* vertically center all items */
+  padding: 0 20px;
+  gap: 10px;
+  flex-wrap: nowrap; /* prevent wrapping that causes upward movement */
+  height: 100%;
+  /* overflow: hidden; REMOVED to allow search dropdown to show */
+}
+
+.nav-logo {
+  font-size: 1.3rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6, #a78bfa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  cursor: pointer;
+  flex-shrink: 0;
+  order: 1; /* leftmost */
+}
+
+.nav-logo strong,
+.nav-logo i {
+  background: inherit;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-style: italic;
+}
+
+.nav-links {
+  display: flex;
+  gap: 15px; /* Reduced from 20px for tighter spacing */
+  align-items: center;
+  list-style: none;
+  flex: 0 0 auto; /* don't stretch, keep left-aligned */
+  justify-content: flex-start;
+  order: 2; /* after logo */
+}
+
+/* Desktop search goes to the right */
+.desktop-search {
+  display: flex; /* Always visible, JS controls icon-mode */
+  order: 3;
+  margin-left: auto; /* push to right */
+  flex-shrink: 1; /* allow shrinking when space is tight */
+  min-width: 40px; /* minimum width when in icon mode */
+  max-width: 280px; /* maximum width for search box */
+  align-items: center;
+  justify-content: flex-end; /* Ensure icon stays far right */
+  transition: all 0.3s ease;
+}
+
+/* When in icon mode, ensure icon is far right */
+.desktop-search.icon-mode {
+  max-width: 40px;
+  min-width: 40px;
+  flex-shrink: 0;
+}
+
+/* Theme toggle comes after search */
+.theme-toggle {
+  order: 4;
+  margin-left: 8px; /* small gap after search */
+  flex-shrink: 0;
+}
+
+.nav-links a {
+  color: var(--text-primary);
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  position: relative;
+  padding: 4px 0;
+  font-size: 0.95rem;
+}
+
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--accent);
+  transition: width 0.3s ease;
+}
+
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+.nav-links a:hover {
+  color: var(--accent);
+}
+
+/* Active navigation link styles */
+.nav-links a.active {
+  color: var(--accent);
+  font-weight: 700;
+  text-shadow: 0 0 8px var(--accent-glow);
+}
+
+.nav-links a.active::after {
+  width: 100%;
+  height: 3px;
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent-glow);
+}
+
+/* ==================== ALL OLD SCATTERED MEDIA QUERIES REMOVED - NOW CONSOLIDATED AT END OF FILE ==================== */
+
+/* Theme Toggle - Default (Mobile): Circular button */
+.theme-toggle {
+    background: var(--card-bg);
+    color: var(--text-primary);
+    border: 2px solid var(--border);
+    box-sizing: border-box;
+    padding: 8px 16px;
+    border-radius: 50px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    user-select: none;
+    flex-shrink: 0;
+    white-space: nowrap;
+    overflow: visible;
+    height: 40px;
+    min-height: 40px;
+}
+
+
+.theme-toggle:hover {
+  border-color: var(--accent);
+  background: var(--accent-glow);
+  box-shadow: 0 0 20px var(--accent-glow);
+  transform: scale(1.05);
+}
+
+.theme-toggle:active,
+.theme-toggle:focus-visible {
+  border-color: var(--accent);
+  background: var(--accent-glow);
+  box-shadow: 0 0 20px var(--accent-glow);
+  transform: scale(0.95);
+  outline: none;
+}
+
+.theme-icon {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+  display: block;
+  margin: 0 auto;
+  flex-shrink: 0;
+}
+
+.theme-toggle:hover .theme-icon {
+  transform: rotate(20deg);
+}
+
+.theme-text {
+  display: none; /* Hidden on mobile by default */
+}
+
+
+/* Settings Toggle Button - Matches Theme Toggle */
+.settings-toggle {
+    background: var(--card-bg);
+    color: var(--text-primary);
+    border: 2px solid var(--border);
+    box-sizing: border-box;
+    padding: 8px 18px;
+    border-radius: 50px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: none; /* Hidden by default, shown on desktop via responsive.css */
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    user-select: none;
+    flex-shrink: 0;
+    white-space: nowrap;
+    overflow: visible;
+    height: 40px;
+    min-height: 40px;
+}
+
+.settings-toggle:hover {
+    border-color: var(--accent);
+    background: var(--accent-glow);
+    box-shadow: 0 0 20px var(--accent-glow);
+    transform: scale(1.05);
+}
+
+.settings-toggle:active,
+.settings-toggle:focus-visible {
+    border-color: var(--accent);
+    background: var(--accent-glow);
+    box-shadow: 0 0 20px var(--accent-glow);
+    transform: scale(0.95);
+    outline: none;
+}
+
+.settings-icon {
+    width: 22px;
+    height: 22px;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.settings-toggle:hover .settings-icon {
+    transform: rotate(90deg); /* Gear rotation on hover */
+}
+
+.settings-text {
+    display: none; /* Hidden on mobile by default */
+}
+
