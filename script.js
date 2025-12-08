@@ -684,9 +684,12 @@ const initApp = () => {
     window.triggerVibration = triggerVibration;
 
     if (pushToggle) {
+        console.log('Push toggle found, attaching event listener');
         pushToggle.addEventListener('click', () => {
+            console.log('Push toggle clicked!');
             pushToggle.classList.toggle('active');
             const isEnabled = pushToggle.classList.contains('active');
+            console.log('Push notifications:', isEnabled ? 'ENABLED' : 'DISABLED');
             localStorage.setItem('pushEnabled', isEnabled);
 
             // Play feedback sound and vibrate
@@ -695,12 +698,17 @@ const initApp = () => {
                 triggerVibration([50]);
             }
         });
+    } else {
+        console.error('Push toggle NOT found!');
     }
 
     if (soundToggle) {
+        console.log('Sound toggle found, attaching event listener');
         soundToggle.addEventListener('click', () => {
+            console.log('Sound toggle clicked!');
             soundToggle.classList.toggle('active');
             const isEnabled = soundToggle.classList.contains('active');
+            console.log('Sound & Vibration:', isEnabled ? 'ENABLED' : 'DISABLED');
             localStorage.setItem('soundEnabled', isEnabled);
 
             // Play demo sound and vibrate when enabling
@@ -709,6 +717,8 @@ const initApp = () => {
                 triggerVibration([100, 50, 100]);
             }
         });
+    } else {
+        console.error('Sound toggle NOT found!');
     }
 
     // Initialize toggles from localStorage (default Push to ON if not set)
