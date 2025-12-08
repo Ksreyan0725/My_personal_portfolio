@@ -5,7 +5,7 @@ Purpose: Main landing page for Kumar Sreyan Pattanayak's personal portfolio
 Description: Showcases education, projects, certifications, and skills with
              responsive design, dark/light theme support, and smooth animations
 Author: Kumar Sreyan Pattanayak
-Version: 3.1
+Version: 3.2
 Last Updated: December 8, 2025
 =============================================================================
 --> 
@@ -94,11 +94,11 @@ Last Updated: December 8, 2025
     
     <!-- ==================== Preload Critical Resources ==================== -->
     <!-- Critical CSS -->
-    <link rel="preload" href="assets/css/core.css" as="style">
-    <link rel="preload" href="assets/css/responsive.css" as="style">
+    <link rel="preload" href="assets/css/core.css?v=3.2" as="style">
+    <link rel="preload" href="assets/css/responsive.css?v=3.2" as="style">
     
     <!-- Critical JavaScript -->
-    <link rel="preload" href="script.js" as="script">
+    <link rel="preload" href="script.js?v=3.2" as="script">
     
     <!-- Hero Image -->
     <link rel="preload" href="assets/images/my-photo.jpg" as="image">
@@ -112,129 +112,27 @@ Last Updated: December 8, 2025
     
     <!-- ==================== Stylesheets & Scripts ==================== -->
     <!-- Core styles (must load first) -->
-    <link rel="stylesheet" href="assets/css/core.css?v=20251207184001" />
+    <link rel="stylesheet" href="assets/css/core.css?v=3.2" />
     
     <!-- Feature modules -->
-    <link rel="stylesheet" href="assets/css/navigation.css?v=20251207184001" />
-    <link rel="stylesheet" href="assets/css/search.css?v=20251207184001" />
-    <link rel="stylesheet" href="assets/css/sidebar.css?v=20251207184001" />
-    <link rel="stylesheet" href="assets/css/settings.css?v=20251207184001" />
+    <link rel="stylesheet" href="assets/css/navigation.css?v=3.2" />
+    <link rel="stylesheet" href="assets/css/search.css?v=3.2" />
+    <link rel="stylesheet" href="assets/css/sidebar.css?v=3.2" />
+    <link rel="stylesheet" href="assets/css/settings.css?v=3.2" />
     
     <!-- Responsive overrides (must load after modules) -->
-    <link rel="stylesheet" href="assets/css/responsive.css?v=20251207184001" />
+    <link rel="stylesheet" href="assets/css/responsive.css?v=3.2" />
     
     <!-- Existing specialized files -->
   
-    <style>
-        /* ==================== Critical Preloader CSS ==================== */
-        :root {
-            --bg-primary: #000000;
-            --accent: #6366f1;
-        }
-        #preloader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #000000;
-            background-color: var(--bg-primary);
-            z-index: 99999;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: opacity 0.5s ease, visibility 0.5s ease;
-        }
-        body.loaded #preloader {
-            opacity: 0;
-            visibility: hidden;
-        }
-        .loader-content {
-            text-align: center;
-            position: relative;
-        }
-        .loader-logo {
-            font-size: 3rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            animation: pulse-glow 2s infinite ease-in-out;
-            position: relative;
-            z-index: 2;
-        }
-        .loader-logo::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 120px;
-            height: 120px;
-            border: 3px solid transparent;
-            border-top-color: var(--accent);
-            border-right-color: var(--accent);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            z-index: 1;
-        }
-        .loader-logo::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 140px;
-            height: 140px;
-            border: 2px solid transparent;
-            border-bottom-color: rgba(99, 102, 241, 0.3);
-            border-left-color: rgba(99, 102, 241, 0.3);
-            border-radius: 50%;
-            animation: spin 1.5s linear infinite reverse;
-            z-index: 1;
-        }
-        .loader-bar {
-            width: 200px;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 2px;
-            margin-top: 60px;
-            overflow: hidden;
-            position: relative;
-        }
-        .loader-bar::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 50%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, var(--accent), transparent);
-            border-radius: 2px;
-            animation: loading-slide 1.5s infinite ease-in-out;
-            box-shadow: 0 0 10px var(--accent);
-        }
-        @keyframes pulse-glow {
-            0%, 100% { opacity: 0.7; transform: scale(0.95); }
-            50% { opacity: 1; transform: scale(1.05); filter: drop-shadow(0 0 20px rgba(99, 102, 241, 0.8)); }
-        }
-        @keyframes loading-slide {
-            0% { left: -50%; }
-            100% { left: 100%; }
-        }
-        @keyframes spin {
-            0% { transform: translate(-50%, -50%) rotate(0deg); }
-            100% { transform: translate(-50%, -50%) rotate(360deg); }
-        }
-    </style>
-    <link rel="stylesheet" href="assets/css/install-button.css">
-    <link rel="stylesheet" href="assets/css/theme-schedule.css">
-    <link rel="stylesheet" href="assets/css/skeleton.css">
-    <link rel="stylesheet" href="assets/css/print.css" media="print">
+    <link rel="stylesheet" href="assets/css/preloader.css?v=3.2">
+    <link rel="stylesheet" href="assets/css/install-button.css?v=3.2">
+    <link rel="stylesheet" href="assets/css/theme-schedule.css?v=3.2">
+    <link rel="stylesheet" href="assets/css/skeleton.css?v=3.2">
+    <link rel="stylesheet" href="assets/css/print.css?v=3.2" media="print">
     
     <!-- EMERGENCY FIX: Must be last to override everything -->
-    <link rel="stylesheet" href="assets/css/settings-fix.css?v=20251207184001">
+    <link rel="stylesheet" href="assets/css/settings-fix.css?v=3.2">
     
     <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js" integrity="sha384-li4UtcFCH6QeUqR4JyV58/VgTprMuz9aauj+oWtew7V4Y7ZVjnvz5px9Y3UCG0Ea" crossorigin="anonymous"></script> 
 </head>
@@ -273,25 +171,7 @@ Last Updated: December 8, 2025
         </div>
     </div>
 
-    <script>
-        // Show skeleton on page load
-        document.addEventListener('DOMContentLoaded', () => {
-            const skeleton = document.getElementById('skeletonLoader');
-            if (skeleton) skeleton.classList.add('active');
-        });
-        
-        // Hide skeleton when page is fully loaded
-        window.addEventListener('load', () => {
-            const skeleton = document.getElementById('skeletonLoader');
-            if (skeleton) {
-                skeleton.classList.add('skeleton-fade-out');
-                setTimeout(() => {
-                    skeleton.style.display = 'none';
-                    skeleton.classList.remove('active');
-                }, 300);
-            }
-        });
-    </script>
+
     <!-- ==================== Preloader ==================== -->
     <div id="preloader" style="display: flex;">
         <div class="loader-content">
@@ -299,8 +179,8 @@ Last Updated: December 8, 2025
             <div class="loader-bar"></div>
         </div>
     </div>
-    <script src="script.js" defer></script>
-    <script src="assets/js/theme-schedule.js" defer></script>
+    <script src="script.js?v=3.2" defer></script>
+    <script src="assets/js/theme-schedule.js?v=3.2" defer></script>
 
     <!-- ==================== Maintenance Mode (Currently Disabled) ==================== -->
     <!-- Uncomment below lines to enable maintenance mode redirection -->
@@ -966,7 +846,7 @@ Last Updated: December 8, 2025
                 </div>
                 
                 <div id="appVersion" style="margin-top: 15px; text-align: center; font-size: 0.8rem; color: var(--text-secondary); opacity: 0.7; cursor: pointer; user-select: none;">
-                    Version: 3.1
+                    Version: 3.2
                 </div>
             </div>
             

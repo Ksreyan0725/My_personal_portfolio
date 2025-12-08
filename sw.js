@@ -1,26 +1,31 @@
 // Service Worker for Portfolio PWA
-// Version 3.1
-const CACHE_NAME = 'portfolio-v3.1';
-const RUNTIME_CACHE = 'portfolio-runtime-v3.1';
+// Version 3.2
+const CACHE_NAME = 'portfolio-v3.2';
+const RUNTIME_CACHE = 'portfolio-runtime-v3.2';
 
 // Critical resources for initial load (minimal set for fast install)
 const CORE_ASSETS = [
     '/My_personal_portfolio/',
     '/My_personal_portfolio/index.html',
-    '/My_personal_portfolio/manifest.json'
+    '/My_personal_portfolio/manifest.json',
+    '/My_personal_portfolio/assets/css/preloader.css',
+    '/My_personal_portfolio/assets/css/core.css',
+    '/My_personal_portfolio/script.js'
 ];
 
 // Secondary resources to cache after install (lazy cache)
 const SECONDARY_ASSETS = [
     '/My_personal_portfolio/contact.html',
-    '/My_personal_portfolio/assets/css/style.css',
+    '/My_personal_portfolio/assets/css/navigation.css',
+    '/My_personal_portfolio/assets/css/search.css',
+    '/My_personal_portfolio/assets/css/sidebar.css',
+    '/My_personal_portfolio/assets/css/settings.css',
+    '/My_personal_portfolio/assets/css/settings-fix.css',
     '/My_personal_portfolio/assets/css/responsive.css',
-    '/My_personal_portfolio/assets/css/preloader.css',
     '/My_personal_portfolio/assets/css/install-button.css',
     '/My_personal_portfolio/assets/css/theme-schedule.css',
     '/My_personal_portfolio/assets/css/skeleton.css',
     '/My_personal_portfolio/assets/css/print.css',
-    '/My_personal_portfolio/script.js',
     '/My_personal_portfolio/assets/js/theme-schedule.js',
     '/My_personal_portfolio/assets/js/constants.js',
     '/My_personal_portfolio/assets/icons/favicon.png',
@@ -103,7 +108,7 @@ self.addEventListener('fetch', (event) => {
     if (!event.request.url.startsWith('http')) return;
 
     event.respondWith(
-        caches.match(event.request)
+        caches.match(event.request, { ignoreSearch: true })
             .then((cachedResponse) => {
                 if (cachedResponse) {
                     // Return cached response immediately
