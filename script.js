@@ -358,24 +358,25 @@ const initApp = () => {
             if (typeof updateInstallButton === 'function') updateInstallButton();
         });
     }
+    function toggleSettings(e) {
+        if (settingsPanel && settingsPanel.classList.contains('active')) {
+            console.log('Closing settings...');
+            closeSettings();
+        } else {
+            console.log('Opening settings...');
+            openSettings(e);
+            if (typeof updateInstallButton === 'function') updateInstallButton();
+        }
+    }
+    window.toggleSettings = toggleSettings;
+
     if (desktopSettingsBtn) {
         console.log('Desktop settings button found:', desktopSettingsBtn);
-        desktopSettingsBtn.addEventListener('click', function (e) {
-            console.log('Desktop settings button clicked!');
-            console.log('Settings panel:', settingsPanel);
-            console.log('Panel has active class:', settingsPanel?.classList.contains('active'));
+        // Remove any existing listeners by cloning node (optional but safe)
+        // desktopSettingsBtn.replaceWith(desktopSettingsBtn.cloneNode(true));
+        // const newBtn = document.getElementById('desktopSettingsBtn');
 
-            // Toggle: if panel is open, close it; otherwise open it
-            if (settingsPanel && settingsPanel.classList.contains('active')) {
-                console.log('Closing settings...');
-                if (typeof closeSettings === 'function') closeSettings();
-            } else {
-                console.log('Opening settings...');
-                if (typeof openSettings === 'function') openSettings(e);
-                // Update install button state when opening settings
-                if (typeof updateInstallButton === 'function') updateInstallButton();
-            }
-        });
+        desktopSettingsBtn.addEventListener('click', toggleSettings);
     } else {
         console.error('Desktop settings button NOT found!');
     }
