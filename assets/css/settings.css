@@ -348,8 +348,8 @@ body.no-scroll {
 }
 
 [data-theme="dark"] #night-light-overlay {
-    background: rgba(255, 140, 0, 0.1);
-    mix-blend-mode: overlay;
+    background: rgba(255, 140, 0, 0.15); /* Slightly increased opacity */
+    mix-blend-mode: multiply; /* Better for tinting light text on dark background */
 }
 
 
@@ -449,9 +449,15 @@ body.no-scroll {
 }
 
 /* Hide notification on screens where sidebar is not available (Desktop) */
+/* Notification visible on all screens */
 @media (min-width: 768px) {
     .notification-banner {
-        display: none !important;
+        /* Adjusted for desktop if needed, otherwise inherit default */
+        top: -100px;
+    }
+    
+    .notification-banner.active {
+        top: 24px !important;
     }
 }
 
@@ -515,25 +521,7 @@ body.no-scroll {
     border-color: var(--border);
 }
 
-/* ==================== DESKTOP/TABLET: Remove Night Light Active State ==================== */
-/* On screens where the side-menu button (.menu-icon) is hidden, remove the yellow highlight */
-@media (min-width: 768px) {
-    .mobile-night-light-btn.active {
-        background: var(--bg-secondary) !important;
-        border-color: var(--border) !important;
-        color: var(--text-primary) !important;
-        box-shadow: none !important;
-    }
-    
-    .mobile-night-light-btn.active .night-light-icon {
-        filter: none !important;
-        transform: none !important;
-    }
-    
-    [data-theme="light"] .mobile-night-light-btn.active .night-light-icon {
-        filter: none !important;
-    }
-}
+/* CSS Block Removed: Was forcing mobile button inactive on desktop */
 
 .night-light-icon {
     width: 20px;

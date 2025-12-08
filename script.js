@@ -535,16 +535,19 @@ const initApp = () => {
     }
 
     function toggleNightLight() {
-        // Restrict to mobile/tablet screens (<= 1024px)
-        if (window.innerWidth > 1024) {
-            showNotification('Night Light is only available on mobile devices');
-            return;
+        // Toggle state in localStorage or memory if elements are missing
+        const wasEnabled = localStorage.getItem('nightLight') === 'true';
+        const isEnabled = !wasEnabled;
+
+        localStorage.setItem('nightLight', isEnabled.toString());
+
+        // Update Toggle Switch UI if it exists
+        if (nightLightToggle) {
+            if (isEnabled) nightLightToggle.classList.add('active');
+            else nightLightToggle.classList.remove('active');
         }
 
-        if (!nightLightToggle) return;
-        nightLightToggle.classList.toggle('active');
-        const isEnabled = nightLightToggle.classList.contains('active');
-
+        // Update Overlay
         let overlay = document.getElementById('night-light-overlay');
         if (!overlay) {
             overlay = document.createElement('div');
@@ -554,16 +557,13 @@ const initApp = () => {
 
         if (isEnabled) {
             overlay.classList.add('active');
-            localStorage.setItem('nightLight', 'true');
             if (nightLightIntensityContainer) nightLightIntensityContainer.classList.add('active');
-
             // Apply current intensity
             if (nightLightIntensitySlider) {
                 updateNightLightIntensity(nightLightIntensitySlider.value);
             }
         } else {
             overlay.classList.remove('active');
-            localStorage.setItem('nightLight', 'false');
             if (nightLightIntensityContainer) nightLightIntensityContainer.classList.remove('active');
         }
 
@@ -571,51 +571,44 @@ const initApp = () => {
         showNotification(isEnabled ? 'Night light turned ON' : 'Night light turned OFF');
     }
 
-    // Auto-disable Night Light on large screens
-    window.addEventListener('resize', () => {
-        if (window.innerWidth > 1024 && localStorage.getItem('nightLight') === 'true') {
-            // Silently turn off
-            const overlay = document.getElementById('night-light-overlay');
-            if (overlay) overlay.classList.remove('active');
+    /* 
+    // REMOVED AUTO-DISABLE LOGIC TO ALLOW DESKTOP USAGE
+    */
 
-            if (nightLightToggle) nightLightToggle.classList.remove('active');
-            if (nightLightIntensityContainer) nightLightIntensityContainer.classList.remove('active');
-
-            localStorage.setItem('nightLight', 'false');
-            updateMobileNightLightBtn();
-        }
-    });
-
+    /* 
     if (nightLightToggle) {
         nightLightToggle.addEventListener('click', toggleNightLight);
+    } 
+    */
 
-        // Initialize from storage (only if mobile)
-        if (localStorage.getItem('nightLight') === 'true') {
-            if (window.innerWidth > 1024) {
-                // Auto-disable if loaded on desktop with it enabled
-                localStorage.setItem('nightLight', 'false');
-            } else {
-                nightLightToggle.classList.add('active');
-                let overlay = document.getElementById('night-light-overlay');
-                if (!overlay) {
-                    overlay = document.createElement('div');
-                    overlay.id = 'night-light-overlay';
-                    document.body.appendChild(overlay);
-                }
-                overlay.classList.add('active');
+    // Always initialize state from storage on load
+    {
+        const isEnabled = localStorage.getItem('nightLight') === 'true';
 
-                // Show slider and apply intensity
-                if (nightLightIntensityContainer) nightLightIntensityContainer.classList.add('active');
-                if (nightLightIntensitySlider) {
-                    updateNightLightIntensity(nightLightIntensitySlider.value);
-                }
+        if (nightLightToggle) {
+            if (isEnabled) nightLightToggle.classList.add('active');
+            else nightLightToggle.classList.remove('active');
+        }
+
+        if (isEnabled) {
+            let overlay = document.getElementById('night-light-overlay');
+            if (!overlay) {
+                overlay = document.createElement('div');
+                overlay.id = 'night-light-overlay';
+                document.body.appendChild(overlay);
+            }
+            overlay.classList.add('active');
+
+            if (nightLightIntensityContainer) nightLightIntensityContainer.classList.add('active');
+            if (nightLightIntensitySlider) {
+                updateNightLightIntensity(nightLightIntensitySlider.value);
             }
         }
     }
 
     // Expose for HTML onclick
     window.handleMobileNightLight = function () {
-        if (nightLightToggle) toggleNightLight();
+        toggleNightLight();
     };
 
     // Expose for settings panel toggle
