@@ -227,6 +227,10 @@
 
     .name {
         font-size: 2rem;
+        background: linear-gradient(135deg, #6366f1, #3b82f6, #06b6d4, #10b981, #f59e0b, #ec4899, #8b5cf6);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
     }
 
     .card {
@@ -318,6 +322,10 @@
     font-size: 1.6rem;
     letter-spacing: -0.03em;
     margin-bottom: 5px;
+    background: linear-gradient(135deg, #6366f1, #3b82f6, #06b6d4, #10b981, #f59e0b, #ec4899, #8b5cf6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 
   .tagline {
@@ -651,6 +659,10 @@
     font-size: 1.8rem;
     letter-spacing: -0.02em;
     margin-bottom: 6px;
+    background: linear-gradient(135deg, #6366f1, #3b82f6, #06b6d4, #10b981, #f59e0b, #ec4899, #8b5cf6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 
   .tagline {
@@ -1164,6 +1176,10 @@
 
   .name {
     font-size: 2.8rem;
+    background: linear-gradient(135deg, #6366f1, #3b82f6, #06b6d4, #10b981, #f59e0b, #ec4899, #8b5cf6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 
   .tagline {
@@ -1702,9 +1718,13 @@
     grid-row: 1;
     text-align: center; /* Center text horizontally */
     margin: 0 0 10px 0;
-    font-size: 1.8rem;
+    align-self: end;
+    font-size: 3rem;
+    background: linear-gradient(135deg, #6366f1, #3b82f6, #06b6d4, #10b981, #f59e0b, #ec4899, #8b5cf6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
     white-space: normal;
-    align-self: center; /* Center vertically */
   }
   
   /* Tagline - RIGHT column, Row 2 */
@@ -1837,6 +1857,10 @@
     text-align: center;
     width: 100%;
     margin: 0 auto 10px;
+    background: linear-gradient(135deg, #6366f1, #3b82f6, #06b6d4, #10b981, #f59e0b, #ec4899, #8b5cf6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
   
   .tagline {

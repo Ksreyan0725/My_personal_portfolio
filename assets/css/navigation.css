@@ -23,71 +23,57 @@ body.sidebar-open #pageWrapper {
 /* Spacer removed */
 
 /* ==================== Notification Banner (Fixed Position) ==================== */
-/* Ensures the banner doesn't affect document flow or scroll height */
+/* Android-style notification at top center */
 .notification-banner {
   position: fixed !important;
-  bottom: 20px !important;
-  top: auto !important;
+  top: -100px !important;
+  bottom: auto !important;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 99999 !important;
+  z-index: 10000;
   pointer-events: none;
-  display: none; /* Hidden by default to prevent layout issues */
+  display: flex;
   justify-content: center;
-  width: auto;
-  max-width: 90%;
+  align-items: center;
+  width: fit-content;
+  max-width: 90vw;
+  transition: top 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .notification-banner.active {
-  display: flex !important; /* Show when active */
-  animation: slideUpFade 0.3s ease forwards;
-}
-
-@keyframes slideUpFade {
-  from {
-    opacity: 0;
-    transform: translate(-50%, 20px);
-  }
-  to {
-    opacity: 1;
-    transform: translate(-50%, 0);
-  }
+  top: 20px !important;
+  pointer-events: auto;
 }
 
 .notification-content {
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.75);
   color: #fff;
-  padding: 12px 24px;
+  padding: 14px 28px;
   border-radius: 50px;
   display: flex;
   align-items: center;
   gap: 12px;
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid var(--accent);
-  pointer-events: auto;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  box-shadow: none;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 2px solid #073165;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
 }
 
 [data-theme="light"] .notification-content {
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.85);
   color: #000;
-  border: 1px solid var(--accent);
-  box-shadow: none;
-}
-
-.notification-banner.active .notification-content {
-  opacity: 1;
-  transform: translateY(0);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
 }
 
 .notification-icon {
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
   object-fit: contain;
+  flex-shrink: 0;
 }
 
 /* Ensure html/body don't have fixed height that conflicts */
@@ -151,7 +137,7 @@ nav.scrolled {
 .nav-logo {
   font-size: 1.3rem;
   font-weight: 700;
-  background: linear-gradient(135deg, #6366f1, #8b5cf6, #a78bfa);
+  background: linear-gradient(135deg, #6366f1, #3b82f6, #06b6d4, #10b981, #f59e0b, #ec4899, #8b5cf6);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

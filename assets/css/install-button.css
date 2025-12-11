@@ -114,24 +114,23 @@
     }
 }
 
-/* ==================== PWA Install Prompt Banner ==================== */
+/* ==================== PWA Install Prompt Banner (Updated) ==================== */
 .install-prompt {
     position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 9999;
-    padding: 16px;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    animation: slideUpPrompt 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    pointer-events: none;
+    bottom: 20px;
+    right: 20px;
+    z-index: 10000;
+    animation: slideUp 0.4s ease;
+    /* Reset previous styles if any remain */
+    pointer-events: auto;
+    background: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
 }
 
-@keyframes slideUpPrompt {
+@keyframes slideUp {
     from {
-        transform: translateY(100%);
+        transform: translateY(100px);
         opacity: 0;
     }
     to {
@@ -141,127 +140,113 @@
 }
 
 .install-prompt-content {
-    max-width: 600px;
-    margin: 0 auto;
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
+    background: linear-gradient(135deg, #6366f1 0%, #4F5BD5 100%);
+    color: white;
+    padding: 24px;
     border-radius: 16px;
-    padding: 16px;
+    box-shadow: 0 10px 40px rgba(99, 102, 241, 0.4);
+    max-width: 320px;
+    position: relative;
+    display: block;
+    margin: 0;
+    border: none;
+}
+
+.install-prompt-close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: white;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 16px;
     display: flex;
     align-items: center;
-    gap: 16px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-    pointer-events: auto;
+    justify-content: center;
+    transition: background 0.3s;
+}
+
+.install-prompt-close:hover {
+    background: rgba(255, 255, 255, 0.3);
 }
 
 .install-prompt-icon {
-    flex-shrink: 0;
+    font-size: 48px;
+    text-align: center;
+    margin-bottom: 12px;
 }
 
-.install-app-icon {
-    width: 56px;
-    height: 56px;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-}
-
-.install-prompt-text {
-    flex: 1;
-    min-width: 0;
-}
-
-.install-prompt-title {
-    font-size: 1rem;
+.install-prompt h3 {
+    margin: 0 0 8px 0;
+    font-size: 20px;
     font-weight: 700;
-    color: var(--text-primary);
-    margin-bottom: 4px;
+    color: white; /* Ensure title is white */
 }
 
-.install-prompt-desc {
-    font-size: 0.875rem;
-    color: var(--text-secondary);
+.install-prompt p {
+    margin: 0 0 20px 0;
+    font-size: 14px;
+    opacity: 0.95;
+    line-height: 1.5;
+    color: white; /* Ensure text is white */
 }
 
-.install-prompt-actions {
+.install-prompt-buttons {
     display: flex;
-    gap: 8px;
-    flex-shrink: 0;
+    gap: 10px;
 }
 
 .install-btn-primary,
 .install-btn-secondary {
-    padding: 10px 20px;
-    border-radius: 10px;
-    font-size: 0.9rem;
+    flex: 1;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s ease;
-    border: none;
-    white-space: nowrap;
+    transition: all 0.3s;
+    /* Reset previous styles */
+    width: auto;
+    background: initial;
+    color: initial;
+    box-shadow: none;
 }
 
 .install-btn-primary {
-    background: var(--accent);
-    color: white;
-    box-shadow: 0 2px 8px var(--accent-glow);
+    background: white;
+    color: #6366f1;
 }
 
 .install-btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px var(--accent-glow);
-}
-
-.install-btn-primary:active {
-    transform: translateY(0);
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
 }
 
 .install-btn-secondary {
-    background: transparent;
-    color: var(--text-secondary);
-    border: 1px solid var(--border-color);
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: none;
 }
 
 .install-btn-secondary:hover {
-    background: rgba(255, 255, 255, 0.05);
-    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.3);
 }
 
-/* Responsive adjustments */
-@media (max-width: 600px) {
+@media (max-width: 768px) {
     .install-prompt {
-        padding: 12px;
+        bottom: 10px;
+        right: 10px;
+        left: 10px;
+        padding: 0; /* Reset padding from desktop constraint if any */
     }
-    
+
     .install-prompt-content {
-        flex-direction: column;
-        text-align: center;
-        gap: 12px;
-    }
-    
-    .install-prompt-actions {
-        width: 100%;
-        flex-direction: column;
-    }
-    
-    .install-btn-primary,
-    .install-btn-secondary {
-        width: 100%;
-    }
-    
-    .install-app-icon {
-        width: 48px;
-        height: 48px;
+        max-width: none;
     }
 }
 
-/* Desktop specific styles */
-@media (min-width: 1024px) {
-    .install-prompt {
-        padding: 20px;
-    }
-    
-    .install-prompt-content {
-        max-width: 500px;
-        margin: 0 auto 0 20px; /* Position on bottom-left on desktop */
-    }
-}

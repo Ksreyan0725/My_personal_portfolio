@@ -1,19 +1,17 @@
-<!--
+﻿<!--
 =============================================================================
 File: index.html
 Purpose: Main landing page for Kumar Sreyan Pattanayak's personal portfolio
 Description: Showcases education, projects, certifications, and skills with
              responsive design, dark/light theme support, and smooth animations
 Author: Kumar Sreyan Pattanayak
-Version: 3.2
-Last Updated: December 8, 2025
+Version: 3.3
+Last Updated: December 11, 2025
 =============================================================================
 --> 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
     <!-- ==================== Meta Tags ==================== -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
@@ -92,13 +90,15 @@ Last Updated: December 8, 2025
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
     
+ 
     <!-- ==================== Preload Critical Resources ==================== -->
     <!-- Critical CSS -->
-    <link rel="preload" href="assets/css/core.css?v=3.2" as="style">
-    <link rel="preload" href="assets/css/responsive.css?v=3.2" as="style">
+    <link rel="preload" href="assets/css/core.css?v=3.3" as="style">
+    <link rel="preload" href="assets/css/responsive.css?v=3.3" as="style">
     
-    <!-- Critical JavaScript -->
-    <link rel="preload" href="script.js?v=3.2" as="script">
+    <!-- Critical JavaScript - Modular Structure -->
+    <link rel="preload" href="assets/js/modules/preloader.js?v=3.3" as="script">
+    <link rel="preload" href="assets/js/main.js?v=3.3" as="script">
     
     <!-- Hero Image -->
     <link rel="preload" href="assets/images/my-photo.jpg" as="image">
@@ -112,27 +112,27 @@ Last Updated: December 8, 2025
     
     <!-- ==================== Stylesheets & Scripts ==================== -->
     <!-- CRITICAL: Preloader must load FIRST to prevent FOUC -->
-    <link rel="stylesheet" href="assets/css/preloader.css?v=3.2">
+    <link rel="stylesheet" href="assets/css/preloader.css?v=3.3">
     
     <!-- Core styles (must load first) -->
-    <link rel="stylesheet" href="assets/css/core.css?v=3.2" />
+    <link rel="stylesheet" href="assets/css/core.css?v=3.3" />
     
     <!-- Feature modules -->
-    <link rel="stylesheet" href="assets/css/navigation.css?v=3.2" />
-    <link rel="stylesheet" href="assets/css/search.css?v=3.2" />
-    <link rel="stylesheet" href="assets/css/sidebar.css?v=3.2" />
-    <link rel="stylesheet" href="assets/css/settings.css?v=3.2" />
+    <link rel="stylesheet" href="assets/css/navigation.css?v=3.3" />
+    <link rel="stylesheet" href="assets/css/search.css?v=3.3" />
+    <link rel="stylesheet" href="assets/css/sidebar.css?v=3.3" />
+    <link rel="stylesheet" href="assets/css/settings.css?v=3.3" />
     
     <!-- Responsive overrides (must load after modules) -->
-    <link rel="stylesheet" href="assets/css/responsive.css?v=3.2" />
+    <link rel="stylesheet" href="assets/css/responsive.css?v=3.3" />
     
     <!-- Existing specialized files -->
-    <link rel="stylesheet" href="assets/css/install-button.css?v=3.2">
-    <link rel="stylesheet" href="assets/css/skeleton.css?v=3.2">
-    <link rel="stylesheet" href="assets/css/print.css?v=3.2" media="print">
+    <link rel="stylesheet" href="assets/css/install-button.css?v=3.3">
+    <link rel="stylesheet" href="assets/css/skeleton.css?v=3.3">
+    <link rel="stylesheet" href="assets/css/print.css?v=3.3" media="print">
     
     <!-- EMERGENCY FIX: Must be last to override everything -->
-    <link rel="stylesheet" href="assets/css/settings-fix.css?v=3.2">
+    <link rel="stylesheet" href="assets/css/settings-fix.css?v=3.3">
     
     <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js" integrity="sha384-li4UtcFCH6QeUqR4JyV58/VgTprMuz9aauj+oWtew7V4Y7ZVjnvz5px9Y3UCG0Ea" crossorigin="anonymous"></script> 
 </head>
@@ -179,7 +179,43 @@ Last Updated: December 8, 2025
             <div class="loader-bar"></div>
         </div>
     </div>
-    <script src="script.js?v=3.2" defer></script>
+    
+    <!-- CRITICAL: Hide loaders NOW - elements exist -->
+    <script>
+    (function() {
+        // Add loaded class to show content
+        document.body.classList.add('loaded');
+        
+        // Hide skeleton immediately
+        var s = document.getElementById('skeletonLoader');
+        if (s) s.style.setProperty('display', 'none', 'important');
+        
+        // Detect mobile device
+        var isMobile = window.innerWidth <= 768;
+        var delay = isMobile ? 1200 : 800; // 1.2s for mobile, 0.8s for desktop
+        
+        // Hide preloader after delay for smooth experience
+        setTimeout(function() {
+            var p = document.getElementById('preloader');
+            if (p) {
+                p.style.opacity = '0';
+                p.style.transition = 'opacity 0.3s ease';
+                setTimeout(function() {
+                    p.style.setProperty('display', 'none', 'important');
+                }, 300);
+            }
+        }, delay);
+    })();
+    </script>
+    
+    <!-- Modular JavaScript Loading -->
+    <!-- 1. Preloader (non-module, runs immediately) -->
+    <script src="assets/js/modules/preloader.js?v=3.6"></script>
+    
+    <!-- 2. Main app (ES6 module, loads critical features) -->
+    <script type="module" src="assets/js/main.js?v=3.3"></script>
+    
+    <!-- Old script.js removed - now using modular architecture -->
 
 
     <!-- ==================== Maintenance Mode (Currently Disabled) ==================== -->
@@ -227,7 +263,7 @@ Last Updated: December 8, 2025
                 </button>
                 <!-- Full search input (shown when expanded) -->
                 <input type="search" class="search-input" placeholder="Search..." aria-label="Search">
-                <button class="search-clear" aria-label="Clear search" hidden>✕</button>
+                <button class="search-clear" aria-label="Clear search" hidden>âœ•</button>
                 <button class="search-button" aria-label="Search">
                     <img src="assets/icons/search.png" alt="Search" class="search-icon-img" />
                 </button>
@@ -245,7 +281,7 @@ Last Updated: December 8, 2025
             </button>
 
             <!-- Desktop Settings Button (Icon Only) -->
-            <button class="settings-toggle desktop-settings-btn" id="desktopSettingsBtn" aria-label="Open settings" data-tooltip="Settings" onclick="if(window.toggleSettings) window.toggleSettings(event)">
+            <button class="settings-toggle desktop-settings-btn" id="desktopSettingsBtn" aria-label="Open settings" data-tooltip="Settings">
                 <img src="assets/icons/setting-button.png" alt="Settings" class="settings-icon">
             </button>
 
@@ -265,7 +301,7 @@ Last Updated: December 8, 2025
     <div class="search-modal" id="searchModal" role="dialog" aria-label="Search modal">
         <div class="search-modal-content">
             <div class="search-modal-header">
-                <button class="search-modal-close" id="searchModalClose" aria-label="Close search">✕</button>
+                <button class="search-modal-close" id="searchModalClose" aria-label="Close search">&times;</button>
             </div>
             <div class="search-modal-body">
                 <div class="search-modal-input-wrapper">
@@ -287,7 +323,7 @@ Last Updated: December 8, 2025
     <div class="sidebar-menu" id="sidebarMenu" role="navigation" aria-label="Mobile navigation">
         <div class="sidebar-header">
             <div class="sidebar-logo"><strong><i>KSP</i></strong></div>
-            <button class="sidebar-close" id="sidebarClose" aria-label="Close menu">✕</button>
+            <button class="sidebar-close" id="sidebarClose" aria-label="Close menu">&times;</button>
         </div>
         <ul class="sidebar-links" role="menubar">
             <li role="none"><a href="#home" role="menuitem"><img src="assets/icons/home.png" alt="Home" class="sidebar-icon"> Home</a></li>
@@ -315,6 +351,108 @@ Last Updated: December 8, 2025
 
     <!-- Sidebar Overlay -->
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- ==================== Settings Panel ==================== -->
+    <!-- Settings Overlay -->
+    <div class="settings-overlay" id="settingsOverlay"></div>
+    
+    <!-- Settings Panel -->
+    <div class="settings-panel" id="settingsPanel">
+        <div class="settings-header">
+            <h2 class="settings-title">Settings</h2>
+            <button class="settings-close-btn" id="settingsCloseBtn" aria-label="Close settings">&times;</button>
+        </div>
+        
+        <div class="settings-content" data-lenis-prevent>
+            <!-- Theme Selection -->
+            <div class="setting-group">
+                <div class="setting-label">Theme</div>
+                <div class="setting-description">Choose your preferred color scheme</div>
+                <div class="theme-buttons">
+                     <button class="theme-btn active" data-theme="system">
+                        <div class="theme-btn-title">🖥️ System</div>
+                        <div class="theme-btn-desc">Follows your device</div>
+                    </button>
+                    <button class="theme-btn" data-theme="light">
+                        <div class="theme-btn-title">☀️ Light</div>
+                        <div class="theme-btn-desc">Bright and clear</div>
+                    </button>
+                    <button class="theme-btn" data-theme="dark">
+                        <div class="theme-btn-title">🌙 Dark</div>
+                        <div class="theme-btn-desc">Easy on the eyes</div>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Night Light Toggle -->
+            <div class="setting-group">
+                <div class="toggle-container">
+                    <div class="toggle-info">
+                        <div class="toggle-title">Night Light</div>
+                        <div class="toggle-desc">Reduce blue light for better sleep</div>
+                    </div>
+                    <div class="toggle-switch" id="nightLightToggle">
+                        <div class="toggle-slider"></div>
+                    </div>
+                </div>
+                
+                <!-- Night Light Intensity Slider -->
+                <div class="night-light-intensity-container" id="nightLightIntensityContainer">
+                    <label class="intensity-label">Intensity</label>
+                    <div class="intensity-slider-wrapper">
+                        <input type="range" min="10" max="100" value="50" class="intensity-slider" id="nightLightIntensitySlider">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Notifications -->
+            <div class="setting-group">
+                <div class="setting-label">Notifications</div>
+                <div class="setting-description">Manage notification preferences</div>
+                
+                <div class="toggle-container" style="margin-bottom: 12px;">
+                    <div class="toggle-info">
+                        <div class="toggle-title">Push Notifications</div>
+                        <div class="toggle-desc">Receive updates and alerts</div>
+                    </div>
+                    <div class="toggle-switch" id="pushToggle">
+                        <div class="toggle-slider"></div>
+                    </div>
+                </div>
+                
+                <div class="toggle-container">
+                    <div class="toggle-info">
+                        <div class="toggle-title">Sound</div>
+                        <div class="toggle-desc">Play sound for notifications</div>
+                    </div>
+                    <div class="toggle-switch" id="soundToggle">
+                        <div class="toggle-slider"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Install App (PWA) -->
+            <div class="setting-group" id="installAppGroup">
+                <div class="option-list">
+                    <div class="option-item" id="installAppOption" onclick="if(window.installPWA) window.installPWA()">
+                        <div>
+                            <div class="option-title">Install App</div>
+                            <div class="option-desc">Add to home screen for quick access</div>
+                        </div>
+                        <span class="option-arrow">→</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Version Info -->
+            <div class="version-info">
+                Version 3.3 • Made with ❤️
+            </div>
+        </div>
+    </div>
+
+    <!-- Night Light Overlay -->
+    <div id="night-light-overlay"></div>
 
     <!-- ==================== PWA Install Prompt Banner ==================== -->
     <!-- Notification banner for PWA installation (appears on all devices) -->
@@ -360,31 +498,6 @@ Last Updated: December 8, 2025
                 </div>
 
                 <h1 class="name">Kumar Sreyan Pattanayak</h1>
-                <script>
-                    // Apply random color to name on page load
-                    (function() {
-                        const nameElement = document.querySelector('.name');
-                        if (!nameElement) return;
-                        
-                        const vibrantColors = [
-                            '#FF6B6B', '#4ECDC4', '#45B7D1', '#FFA07A', '#98D8C8',
-                            '#F7DC6F', '#BB8FCE', '#85C1E2', '#F8B500', '#FF69B4',
-                            '#20E3B2', '#FF7F50', '#9B59B6', '#3498DB', '#E74C3C',
-                            '#1ABC9C', '#F39C12', '#E67E22', '#16A085', '#8E44AD',
-                            '#2ECC71', '#F1C40F', '#E91E63', '#00BCD4', '#FF5722'
-                        ];
-                        
-                        const randomColor = vibrantColors[Math.floor(Math.random() * vibrantColors.length)];
-                        
-                        // Remove gradient CSS and apply solid color
-                        nameElement.style.background = 'none';
-                        nameElement.style.webkitBackgroundClip = 'unset';
-                        nameElement.style.backgroundClip = 'unset';
-                        nameElement.style.webkitTextFillColor = 'unset';
-                        nameElement.style.color = randomColor;
-                        nameElement.style.transition = 'color 0.5s ease-in-out';
-                    })();
-                </script>
                 <p class="tagline">
                     <span class="typing-text"></span>
                     <style>
@@ -478,7 +591,7 @@ Last Updated: December 8, 2025
             <!-- Bachelor of Computer Applications -->
             <article class="card">
                 <h3>Bachelor of Computer Applications (BCA)</h3>
-                <p class="date">2023 – 2026</p>
+                <p class="date">2023 â€“ 2026</p>
                 <p><strong>Roland Institute of Technology (RIT), Berhampur</strong></p>
                 <p>Currently pursuing BCA with focus on programming, computer networking, and technology applications.</p>
             </article>
@@ -486,7 +599,7 @@ Last Updated: December 8, 2025
             <!-- Class 12 -->
             <article class="card card-right">
                 <h3>Class 12 - Grade B</h3>
-                <p class="date">2022 – 2023</p>
+                <p class="date">2022 â€“ 2023</p>
                 <p><strong>Board of Secondary Education, Odisha (BSE Odisha)</strong></p>
                 <p>Completed higher secondary education with Grade B, building foundation for computer applications.</p>
             </article>
@@ -494,7 +607,7 @@ Last Updated: December 8, 2025
             <!-- Class 10 -->
             <article class="card">
                 <h3>Class 10 - Grade A</h3>
-                <p class="date">2021 – 2022</p>
+                <p class="date">2021 â€“ 2022</p>
                 <p><strong>Central Board of Secondary Education (CBSE)</strong></p>
                 <p>Achieved Grade A in secondary education, demonstrating strong academic foundation.</p>
             </article>
@@ -513,8 +626,8 @@ Last Updated: December 8, 2025
 
             <!-- CodePilot AI IDE -->
             <article class="card project-card" data-category="web">
-                <h3>CodePilot AI IDE — Interface Concept</h3>
-                <p class="date">Oct 2024 – Present</p>
+                <h3>CodePilot AI IDE â€” Interface Concept</h3>
+                <p class="date">Oct 2024 â€“ Present</p>
                 <p>
                  CodePilot AI IDE is currently presented as a concept showcasing its modern Login and Signup user interface, designed with a clean, professional, and responsive layout. This preview demonstrates the initial entry point for what will evolve into an AI-powered development platform. The interface includes smooth form interactions, password-strength guidance, and a polished visual design optimized for all devices, including very small screens. This version serves as an early product prototype to display the branding, structure, and user experience direction of CodePilot AI IDE, with full IDE functionality planned for future development.
                 </p>
@@ -526,7 +639,7 @@ Last Updated: December 8, 2025
             <!-- Systemic Failures Research -->
             <article class="card project-card" data-category="research">
                 <h3>Systemic Failures in India: A Research-Based Report</h3>
-                <p class="date">Jun 2023 – Present</p>
+                <p class="date">Jun 2023 â€“ Present</p>
                 <p>
                     Authored a comprehensive research paper analyzing corruption, weak education, and judicial 
                     inefficiency in India using AI tools, government data, and reports. The research examines 
@@ -541,7 +654,7 @@ Last Updated: December 8, 2025
 
             <!-- Web Development Course -->
             <article class="card">
-                <h3>Ultimate Web Development Course 2025 – Udemy</h3>
+                <h3>Ultimate Web Development Course 2025 â€“ Udemy</h3>
                 <p class="date">Ongoing</p>
                 <p>
                     A modern web development course focused on building responsive websites, real-world projects, 
@@ -558,7 +671,7 @@ Last Updated: December 8, 2025
 
             <!-- Python Programming Course -->
             <article class="card">
-                <h3>Python Programming Mastery – Udemy</h3>
+                <h3>Python Programming Mastery â€“ Udemy</h3>
                 <p class="date"></p>
                 <p>
                     Build Real-World Projects and Become Job-Ready in 2025. Comprehensive Python programming 
@@ -584,8 +697,6 @@ Last Updated: December 8, 2025
                 </p>
                      <a href="pages/pdf-viewer.html?file=../assets/docs/systemic-failures-in-india-copy.pdf" 
                          class="course-button ripple-effect"
-                         target="_blank"
-                         rel="noopener noreferrer"
                          aria-label="View research details">
                     <span>View Research</span>
                     <img src="assets/icons/pdf.png" alt="PDF" class="pdf-icon">
@@ -673,8 +784,6 @@ Last Updated: December 8, 2025
                 <h3 class="resume-heading">View My Resume</h3>
                 <a href="pages/pdf-viewer.html?file=../assets/docs/kumar-sreyan-pattanayak-resume.pdf" 
                    class="resume-btn" 
-                   target="_blank"
-                   rel="noopener noreferrer"
                    aria-label="View resume">
                     View Resume
                     <img src="assets/icons/pdf.png" alt="PDF" class="pdf-icon">
@@ -686,145 +795,14 @@ Last Updated: December 8, 2025
     <!-- ==================== Footer ==================== -->
     <footer role="contentinfo">
         <p>
-            <strong>Copyright © 2025</strong> Kumar Sreyan Pattanayak
+            <strong>Copyright Â© 2025</strong> Kumar Sreyan Pattanayak
             <br>
-            All Rights Reserved | Made with ❤️
+            All Rights Reserved | Made with â¤ï¸
             <br>
             Hosted on GitHub Pages | <a href="https://docs.github.com/en/site-policy/github-terms/github-terms-of-service" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;"> <strong>GitHub Terms of Service</strong></a>
         </p>
     </footer>
     </div> <!-- End of #pageWrapper -->
-
-    <!-- Settings Panel Overlay -->
-    <div class="settings-overlay" id="settingsOverlay"></div>
-
-    <!-- Settings Panel -->
-    <div class="settings-panel" id="settingsPanel">
-        <div class="settings-header">
-            <div class="settings-title">Settings</div>
-            <button class="settings-close-btn" id="settingsCloseBtn">×</button>
-        </div>
-        
-        <div class="settings-content" data-lenis-prevent>
-            <!-- Appearance Section -->
-            <div class="setting-group">
-                <div class="setting-label">🎨 Appearance</div>
-                <div class="setting-description">Customize how the app looks on your device</div>
-                
-                <div class="theme-buttons">
-                    <button class="theme-btn" data-theme="system">
-                        <div class="theme-btn-title">System Default ⚙️</div>
-                        <div class="theme-btn-desc">Automatically match your device's theme settings</div>
-                    </button>
-                    <button class="theme-btn" data-theme="light">
-                        <div class="theme-btn-title">Light Mode ☀️</div>
-                        <div class="theme-btn-desc">Bright and clear interface for daytime use</div>
-                    </button>
-                    <button class="theme-btn" data-theme="dark">
-                        <div class="theme-btn-title">Dark Mode 🌜</div>
-                        <div class="theme-btn-desc">Easy on the eyes with dark backgrounds</div>
-                    </button>
-
-                </div>
-            </div>
-
-            <!-- Display Section -->
-            <div class="setting-group">
-                <div class="setting-label">💡 Display</div>
-                <div class="setting-description">Adjust screen settings for comfortable viewing</div>
-                
-                <div class="toggle-container">
-                    <div class="toggle-info">
-                        <div class="toggle-title">Night Light</div>
-                        <div class="toggle-desc">Reduce blue light by adding a warm color filter</div>
-                    </div>
-                    <div class="toggle-switch" id="nightLightToggle" onclick="console.log('NIGHT LIGHT TOGGLE CLICKED'); this.classList.toggle('active'); if(typeof window.handleNightLightToggle === 'function') window.handleNightLightToggle();">
-                        <div class="toggle-slider"></div>
-                    </div>
-                </div>
-                
-                <!-- Night Light Intensity Slider (Hidden by default) -->
-                <div class="night-light-intensity-container" id="nightLightIntensityContainer">
-                    <div class="intensity-label">Intensity</div>
-                    <div class="intensity-slider-wrapper">
-                        <input type="range" min="0" max="100" value="50" class="intensity-slider" id="nightLightIntensitySlider">
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Accessibility Section -->
-            <div class="setting-group">
-                <div class="setting-label">♿ Accessibility</div>
-                <div class="setting-description">Make the app easier to use for everyone</div>
-                
-                <div class="option-list">
-                    <div class="option-item" id="highContrastOption" onclick="alert('High contrast settings coming soon!')">
-                        <div class="option-info">
-                            <div class="option-title">High Contrast</div>
-                            <div class="option-desc">Increase contrast for improved visibility</div>
-                        </div>
-                        <div class="option-arrow">›</div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Notifications Section -->
-            <div class="setting-group">
-                <div class="setting-label">🔔 Notifications</div>
-                <div class="setting-description">Control how you receive updates and alerts</div>
-                
-                <div class="toggle-container" style="margin-bottom: 12px;">
-                    <div class="toggle-info">
-                        <div class="toggle-title">Push Notifications</div>
-                        <div class="toggle-desc">Receive real-time updates and alerts</div>
-                    </div>
-                    <div class="toggle-switch active" id="pushToggle" onclick="console.log('PUSH TOGGLE CLICKED VIA ONCLICK'); this.classList.toggle('active');">
-                        <div class="toggle-slider"></div>
-                    </div>
-                </div>
-
-                <div class="toggle-container">
-                    <div class="toggle-info">
-                        <div class="toggle-title">Sound & Vibration</div>
-                        <div class="toggle-desc">Play sounds and vibrate for notifications</div>
-                    </div>
-                    <div class="toggle-switch" id="soundToggle" onclick="console.log('SOUND TOGGLE CLICKED VIA ONCLICK'); this.classList.toggle('active');">
-                        <div class="toggle-slider"></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Install App Section -->
-            <div class="setting-group" id="installAppGroup">
-                <div class="setting-label">📱 App</div>
-                <div class="setting-description">Install this portfolio as an app for offline access</div>
-                
-                <button class="theme-btn" id="installAppBtn" style="width: 100%; margin-top: 10px; align-items: center; justify-content: center;">
-                    <div class="theme-btn-title">Install App</div>
-                </button>
-                
-                <div id="iosInstallInstructions" style="display: none; margin-top: 10px; padding: 10px; background: rgba(255,255,255,0.1); border-radius: 8px; font-size: 0.9rem;">
-                    <p>To install on iOS:</p>
-                    <ol style="margin-left: 20px; margin-top: 5px;">
-                        <li>Tap the Share button (square with arrow up)</li>
-                        <li>Scroll down and tap "Add to Home Screen"</li>
-                    </ol>
-                </div>
-                
-                <div id="appVersion" style="margin-top: 15px; text-align: center; font-size: 0.8rem; color: var(--text-secondary); opacity: 0.7; cursor: pointer; user-select: none;">
-                    Version: 3.2
-                </div>
-            </div>
-            
-            <div class="version-info">
-                 <p>
-            <strong>Copyright © 2025</strong>
-            <br>
-            All Rights Reserved | Made with ❤️
-            </p>
-            </div>
-        </div>
-    </div>
 
     <!-- Service Worker Registration -->
     <script>
@@ -915,7 +893,7 @@ Last Updated: December 8, 2025
             
             updateBanner.innerHTML = `
                 <div style="flex: 1;">
-                    <strong style="display: block; margin-bottom: 4px;">🎉 New Version Available!</strong>
+                    <strong style="display: block; margin-bottom: 4px;">ðŸŽ‰ New Version Available!</strong>
                     <span style="font-size: 14px; opacity: 0.95;">Version 3.1 is ready. Click to update.</span>
                 </div>
                 <button onclick="updateApp()" style="
@@ -935,7 +913,7 @@ Last Updated: December 8, 2025
                     padding: 8px 12px;
                     border-radius: 8px;
                     cursor: pointer;
-                ">✕</button>
+                ">âœ•</button>
             `;
             
             document.body.appendChild(updateBanner);
@@ -982,8 +960,8 @@ Last Updated: December 8, 2025
     <!-- PWA Install Prompt -->
     <div id="installPrompt" class="install-prompt" style="display: none;">
         <div class="install-prompt-content">
-            <button class="install-prompt-close" onclick="closeInstallPrompt()">✕</button>
-            <div class="install-prompt-icon">📱</div>
+            <button class="install-prompt-close" onclick="closeInstallPrompt()">âœ•</button>
+            <div class="install-prompt-icon">ðŸ“±</div>
             <h3>Install Portfolio App</h3>
             <p>Add this portfolio to your home screen for quick access and offline viewing!</p>
             <div class="install-prompt-buttons">
@@ -993,124 +971,5 @@ Last Updated: December 8, 2025
         </div>
     </div>
 
-    <style>
-        .install-prompt {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 10000;
-            animation: slideUp 0.4s ease;
-        }
-
-        @keyframes slideUp {
-            from {
-                transform: translateY(100px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        .install-prompt-content {
-            background: linear-gradient(135deg, #6366f1 0%, #4F5BD5 100%);
-            color: white;
-            padding: 24px;
-            border-radius: 16px;
-            box-shadow: 0 10px 40px rgba(99, 102, 241, 0.4);
-            max-width: 320px;
-            position: relative;
-        }
-
-        .install-prompt-close {
-            position: absolute;
-            top: 12px;
-            right: 12px;
-            background: rgba(255, 255, 255, 0.2);
-            border: none;
-            color: white;
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background 0.3s;
-        }
-
-        .install-prompt-close:hover {
-            background: rgba(255, 255, 255, 0.3);
-        }
-
-        .install-prompt-icon {
-            font-size: 48px;
-            text-align: center;
-            margin-bottom: 12px;
-        }
-
-        .install-prompt h3 {
-            margin: 0 0 8px 0;
-            font-size: 20px;
-            font-weight: 700;
-        }
-
-        .install-prompt p {
-            margin: 0 0 20px 0;
-            font-size: 14px;
-            opacity: 0.95;
-            line-height: 1.5;
-        }
-
-        .install-prompt-buttons {
-            display: flex;
-            gap: 10px;
-        }
-
-        .install-btn-primary,
-        .install-btn-secondary {
-            flex: 1;
-            padding: 12px 20px;
-            border: none;
-            border-radius: 8px;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .install-btn-primary {
-            background: white;
-            color: #6366f1;
-        }
-
-        .install-btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
-        }
-
-        .install-btn-secondary {
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-        }
-
-        .install-btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.3);
-        }
-
-        @media (max-width: 768px) {
-            .install-prompt {
-                bottom: 10px;
-                right: 10px;
-                left: 10px;
-            }
-
-            .install-prompt-content {
-                max-width: none;
-            }
-        }
-    </style>
 </body>
 </html>

@@ -1,7 +1,7 @@
 // Service Worker for Portfolio PWA
-// Version 3.2
-const CACHE_NAME = 'portfolio-v3.2';
-const RUNTIME_CACHE = 'portfolio-runtime-v3.2';
+// Version 3.3 - Modular Architecture
+const CACHE_NAME = 'portfolio-v3.3';
+const RUNTIME_CACHE = 'portfolio-runtime-v3.3';
 
 // Critical resources for initial load (minimal set for fast install)
 const CORE_ASSETS = [
@@ -10,7 +10,11 @@ const CORE_ASSETS = [
     '/My_personal_portfolio/manifest.json',
     '/My_personal_portfolio/assets/css/preloader.css',
     '/My_personal_portfolio/assets/css/core.css',
-    '/My_personal_portfolio/script.js'
+    '/My_personal_portfolio/script.js',
+    '/My_personal_portfolio/assets/js/main.js',
+    '/My_personal_portfolio/assets/js/modules/preloader.js',
+    '/My_personal_portfolio/assets/js/modules/utils.js',
+    '/My_personal_portfolio/assets/js/modules/theme.js'
 ];
 
 // Secondary resources to cache after install (lazy cache)
@@ -28,6 +32,13 @@ const SECONDARY_ASSETS = [
     '/My_personal_portfolio/assets/css/print.css',
     '/My_personal_portfolio/assets/js/theme-schedule.js',
     '/My_personal_portfolio/assets/js/constants.js',
+    '/My_personal_portfolio/assets/js/modules/sidebar.js',
+    '/My_personal_portfolio/assets/js/modules/settings.js',
+    '/My_personal_portfolio/assets/js/modules/search.js',
+    '/My_personal_portfolio/assets/js/modules/pwa.js',
+    '/My_personal_portfolio/assets/js/modules/navigation.js',
+    '/My_personal_portfolio/assets/js/modules/features.js',
+    '/My_personal_portfolio/assets/js/modules/security.js',
     '/My_personal_portfolio/assets/icons/favicon.png',
     '/My_personal_portfolio/assets/icons/system-theme.png',
     '/My_personal_portfolio/assets/icons/custom-theme.png',

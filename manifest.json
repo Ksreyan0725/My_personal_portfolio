@@ -1,14 +1,14 @@
 {
     "name": "Kumar Sreyan Pattanayak - Portfolio",
     "short_name": "KSP Portfolio",
-    "version": "3.2",
+    "version": "3.3",
     "description": "Personal portfolio of Kumar Sreyan Pattanayak - BCA Student & Technology Enthusiast",
     "start_url": "/My_personal_portfolio/",
     "scope": "/My_personal_portfolio/",
     "display": "standalone",
     "background_color": "#0a0a0a",
     "theme_color": "#6366f1",
-    "orientation": "any",
+    "orientation": "portrait",
     "icons": [
         {
             "src": "assets/icons/favicon.png",

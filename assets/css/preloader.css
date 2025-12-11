@@ -1,15 +1,25 @@
-/* ==================== Preloader ==================== */
+/* ==================== CRITICAL CSS - Prevents FOUC ==================== */
+/* This CSS MUST load first to prevent flash of unstyled content */
 
-/* FOUC Prevention - Hide all content until page is loaded */
+/* DISABLED - This was causing preloader to get stuck */
+/* Hide all content until page is loaded - AGGRESSIVE approach */
+/*
+body:not(.loaded) > *:not(#preloader) {
+    display: none !important;
+}
+*/
+
+/* Additional specific hiding for nested elements */
+/*
 body:not(.loaded) #pageWrapper,
 body:not(.loaded) nav,
 body:not(.loaded) .notice-banner,
 body:not(.loaded) header,
 body:not(.loaded) .container,
 body:not(.loaded) .page-frame > *:not(#preloader) {
-    opacity: 0 !important;
-    visibility: hidden !important;
+    display: none !important;
 }
+*/
 
 /* Hide skeleton loader when preloader is active */
 body:not(.loaded) #skeletonLoader {
@@ -55,43 +65,45 @@ body.loaded #preloader {
     color: transparent;
     animation: pulse-glow 2s infinite ease-in-out;
     position: relative;
-    z-index: 1000001 !important;
-    display: block !important;
+    display: inline-block !important;
+    z-index: 2;
     visibility: visible !important;
 }
 
 /* Spinning circle around logo */
 .loader-logo::before {
     content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 120px;
-    height: 120px;
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    width: 130px !important;
+    height: 130px !important;
+    margin-top: -65px !important;
+    margin-left: -65px !important;
     border: 3px solid transparent;
     border-top-color: var(--accent);
     border-right-color: var(--accent);
     border-radius: 50%;
-    animation: spin 1s linear infinite;
-    z-index: 1;
+    animation: spin 0.6s linear infinite !important;
+    z-index: -1;
 }
 
 /* Outer spinning circle */
 .loader-logo::after {
     content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 140px;
-    height: 140px;
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    width: 150px !important;
+    height: 150px !important;
+    margin-top: -75px !important;
+    margin-left: -75px !important;
     border: 2px solid transparent;
     border-bottom-color: rgba(99, 102, 241, 0.3);
     border-left-color: rgba(99, 102, 241, 0.3);
     border-radius: 50%;
-    animation: spin 1.5s linear infinite reverse;
-    z-index: 1;
+    animation: spin 0.8s linear infinite reverse !important;
+    z-index: -2;
 }
 
 .loader-bar {
@@ -138,13 +150,16 @@ body.loaded #preloader {
     100% { left: 100%; }
 }
 
+
 @keyframes spin {
-    0% { transform: translate(-50%, -50%) rotate(0deg); }
-    100% { transform: translate(-50%, -50%) rotate(360deg); }
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
+
 /* ==================== Mobile & PWA Specific Fixes ==================== */
-/* Ensure preloader is always visible on mobile and tablet */
+/* DISABLED - These were preventing preloader from hiding */
+/*
 @media (max-width: 1024px) {
     #preloader {
         display: flex !important;
@@ -160,6 +175,7 @@ body.loaded #preloader {
         width: 150px !important;
     }
 }
+*/
 
 /* Extra small mobile devices */
 @media (max-width: 480px) {
@@ -172,7 +188,8 @@ body.loaded #preloader {
     }
 }
 
-/* PWA standalone mode - ensure preloader is always visible */
+/* DISABLED - Was preventing preloader from hiding in PWA */
+/*
 @media (display-mode: standalone) {
     #preloader {
         display: flex !important;
@@ -181,3 +198,4 @@ body.loaded #preloader {
         z-index: 999999 !important;
     }
 }
+*/

@@ -27,7 +27,11 @@
     
     <!-- Responsive overrides (must load after modules) -->
     <link rel="stylesheet" href="../assets/css/responsive.css" />
-    <script src="../script.js" defer></script>
+    
+    <!-- Modular JavaScript Loading -->
+    <script src="../assets/js/modules/preloader.js?v=3.3"></script>
+    <script type="module" src="../assets/js/main.js?v=3.3"></script>
+    <!-- Old script.js removed - using modular architecture -->
     
     <style>
         * {

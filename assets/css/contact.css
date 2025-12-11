@@ -211,18 +211,26 @@
           flex-direction: row;
           align-items: center;
           justify-content: space-between; /* search left, theme right */
+          gap: 10px;
         }
 
         .search-container {
           width: auto;
           flex: 1;
-          margin-right: 12px; /* space before theme toggle */
+          margin-right: 0; 
         }
         
         .theme-toggle {
-          margin-left: 0; /* reset on mobile */
-          padding: 6px 12px;
-          font-size: 12px;
+          margin-left: 0;
+          padding: 6px 14px;
+          font-size: 13px;
+          flex-shrink: 0;
+          width: auto !important; /* Prevent squishing */
+        }
+        
+        .theme-text {
+            display: inline-block !important; /* Force show text */
+            margin-left: 6px;
         }
       }
 
@@ -726,7 +734,8 @@
         }
 
         .theme-text {
-          font-size: 11px;
+          font-size: 12px;
+          display: inline-block !important;
         }
 
         .theme-toggle { height: 34px; padding: 0 12px; }

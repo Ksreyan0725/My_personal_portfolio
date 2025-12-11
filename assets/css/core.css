@@ -484,7 +484,7 @@ header {
 .name {
   font-size: 2.5rem;
   font-weight: 700;
-  background: linear-gradient(135deg, #0676c5, #cd7306);
+  background: linear-gradient(135deg, #6366f1, #3b82f6, #06b6d4, #10b981, #f59e0b, #ec4899, #8b5cf6);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -1273,7 +1273,7 @@ main > .section::after {
 
 #projects .section-title {
   text-align: center;
-  margin-bottom: 50px;
+  margin-bottom: 0;
   grid-column: 1 / -1; /* Span full width */
 }
 
@@ -1745,19 +1745,8 @@ footer {
 }
 
 .skill-bar::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.2),
-    transparent
-  );
-  animation: shimmer 4s ease-in-out infinite;
+  /* Removed shimmer animation - was causing white shadow */
+  display: none;
 }
 
 .progress {

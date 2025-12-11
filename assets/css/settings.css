@@ -361,33 +361,33 @@ body.no-scroll {
     bottom: auto !important;
     left: 50% !important;
     transform: translateX(-50%) !important;
-    /* Default Dark Mode Style */
-    background: rgba(0, 0, 0, 0.85) !important;
-    padding: 12px 24px;
-    border-radius: 9999px !important;
-    box-shadow: none !important;
+    /* Android-style transparent background */
+    background: rgba(0, 0, 0, 0.75) !important;
+    padding: 14px 28px;
+    border-radius: 50px !important; /* Fully rounded edges */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
     z-index: 10000;
     transition: top 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     display: flex;
     align-items: center;
     justify-content: center;
-    /* Unified Light Blue Border */
-    border: 1.5px solid #38bdf8 !important;
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    /* Blue border */
+    border: 2px solid #073165 !important;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     width: fit-content !important;
-    max-width: 92vw;
+    max-width: 90vw;
     white-space: nowrap;
 }
 
 /* Light Mode Override */
 [data-theme="light"] .notification-banner {
-    background: rgba(255, 255, 255, 0.9) !important;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    background: rgba(255, 255, 255, 0.85) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
 }
 
 .notification-banner.active {
-    top: 24px !important;
+    top: 20px !important; /* Centered at top */
 }
 
 .notification-content {
@@ -398,34 +398,36 @@ body.no-scroll {
 }
 
 .notification-icon {
-    width: 24px;
-    height: 24px;
+    width: 22px;
+    height: 22px;
     object-fit: contain;
     flex-shrink: 0;
 }
 
 #notificationMessage {
     font-weight: 600;
-    /* Default Dark Mode Text */
+    /* White text for dark mode */
     color: #ffffff !important;
-    font-size: 1rem;
+    font-size: 0.95rem;
     white-space: nowrap;
+    letter-spacing: 0.3px;
 }
 
-/* Light Mode Text Override */
+/* Black text for light mode */
 [data-theme="light"] #notificationMessage {
     color: #000000 !important;
 }
 
-/* Responsive Adjustments for Small Screens */
-@media (max-width: 480px) {
+/* Responsive Adjustments for All Screen Sizes */
+@media (max-width: 768px) {
     .notification-banner {
-        padding: 10px 20px;
-        max-width: 95vw;
+        padding: 12px 24px;
+        max-width: 92vw;
+        border-radius: 40px !important;
     }
     
     #notificationMessage {
-        font-size: 0.9rem; /* Slightly smaller text */
+        font-size: 0.9rem;
     }
     
     .notification-icon {
@@ -434,13 +436,31 @@ body.no-scroll {
     }
 }
 
-@media (max-width: 360px) {
+@media (max-width: 480px) {
     .notification-banner {
-        padding: 8px 16px;
+        padding: 10px 20px;
+        max-width: 95vw;
+        border-radius: 35px !important;
     }
     
     #notificationMessage {
-        font-size: 0.8rem; /* Smaller text for very narrow screens */
+        font-size: 0.85rem;
+    }
+    
+    .notification-icon {
+        width: 18px;
+        height: 18px;
+    }
+}
+
+@media (max-width: 360px) {
+    .notification-banner {
+        padding: 8px 16px;
+        border-radius: 30px !important;
+    }
+    
+    #notificationMessage {
+        font-size: 0.8rem;
     }
     
     .notification-content {
@@ -448,9 +468,8 @@ body.no-scroll {
     }
 }
 
-/* Hide notification on screens where sidebar is not available (Desktop) */
-/* Notification visible on all screens */
-@media (min-width: 768px) {
+/* Desktop - keep centered at top */
+@media (min-width: 769px) {
     .notification-banner {
         /* Adjusted for desktop if needed, otherwise inherit default */
         top: -100px;
