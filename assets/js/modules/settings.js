@@ -226,6 +226,85 @@ function initNotifications() {
 }
 
 /**
+ * Initialize swipe to close for settings panel
+ * Allows swiping down on the header with smooth tracking and velocity check
+ */
+function initSwipeToClose() {
+    if (!settingsPanel) return;
+
+    const settingsHeader = settingsPanel.querySelector('.settings-header');
+    if (!settingsHeader) return;
+
+    let startY = 0;
+    let currentY = 0;
+    let startTime = 0;
+    let isDragging = false;
+
+    // Helper to apply transform
+    const setTranslateY = (y) => {
+        settingsPanel.style.transform = `translateY(${Math.max(0, y)}px)`;
+    };
+
+    settingsHeader.addEventListener('touchstart', (e) => {
+        startY = e.changedTouches[0].screenY;
+        startTime = Date.now();
+        isDragging = true;
+        // Disable transition for direct tracking
+        settingsPanel.style.transition = 'none';
+    }, { passive: true });
+
+    settingsHeader.addEventListener('touchmove', (e) => {
+        if (!isDragging) return;
+        currentY = e.changedTouches[0].screenY;
+        const deltaY = currentY - startY;
+
+        // Only allow dragging down
+        if (deltaY > 0) {
+            setTranslateY(deltaY);
+        }
+    }, { passive: true });
+
+    settingsHeader.addEventListener('touchend', (e) => {
+        if (!isDragging) return;
+        isDragging = false;
+
+        const endY = e.changedTouches[0].screenY;
+        const deltaY = endY - startY;
+        const deltaTime = Date.now() - startTime;
+        const velocity = Math.abs(deltaY / deltaTime);
+
+        // Thresholds
+        const distanceThreshold = settingsPanel.offsetHeight * 0.3; // 30% height
+        const velocityThreshold = 0.5; // px/ms
+
+        // Use transform transition for smooth snap
+        settingsPanel.style.transition = 'transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1)';
+
+        // Close if dragged far enough OR flicked fast enough
+        if (deltaY > 0 && (deltaY > distanceThreshold || velocity > velocityThreshold)) {
+            console.log(`Swipe to close triggered (Velocity: ${velocity.toFixed(2)})`);
+
+            // Animate fully down (slide out)
+            setTranslateY(settingsPanel.offsetHeight);
+
+            // Wait for animation to finish, then actually close
+            setTimeout(() => {
+                closeSettings();
+                settingsPanel.style.transform = '';
+                settingsPanel.style.transition = ''; // Revert to CSS default
+            }, 300);
+        } else {
+            // Revert (bounce back up)
+            setTranslateY(0);
+            setTimeout(() => {
+                settingsPanel.style.transform = '';
+                settingsPanel.style.transition = ''; // Revert to CSS default
+            }, 300);
+        }
+    }, { passive: true });
+}
+
+/**
  * Initialize settings panel
  */
 export function initSettings() {
@@ -264,6 +343,9 @@ export function initSettings() {
 
     // Initialize notifications
     initNotifications();
+
+    // Initialize swipe to close
+    initSwipeToClose();
 
     console.log('✅ Settings panel ready');
 }
