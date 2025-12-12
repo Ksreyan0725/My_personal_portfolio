@@ -2,10 +2,7 @@
 
 A modern, accessible, and high-performance personal portfolio website built with HTML5, CSS3, and JavaScript. This project showcases my skills, projects, and professional journey.
 
-🌐 **Live Demo:** [https://ksreyan0725.github.io/My_personal_portfolio/]
-
-https://ksreyan0725.github.io/My_personal_portfolio/
-
+🌐 Live Demo: https://ksreyan0725.github.io/My_personal_portfolio/ ]
 ---
 
 ## 📋 Project Overview
@@ -48,11 +45,11 @@ The website is built as a Progressive Web App, meaning it can be installed as a 
 
 ## 🛠️ Technology Stack
 
-- **Frontend:** HTML5, CSS3, JavaScript (ES6+)
-- **PWA:** Service Workers, Web App Manifest
-- **Architecture:** Modular ES6 modules for better performance
-- **Hosting:** GitHub Pages
-- **Version Control:** Git
+- Frontend: HTML5, CSS3, JavaScript (ES6+)
+- PWA: Service Workers, Web App Manifest
+- Architecture: Modular ES6 modules for better performance
+- Hosting: GitHub Pages
+- Version Control: Git
 
 ### 🏗️ Modular JavaScript Architecture (New in v3.3)
 The codebase uses a modern modular architecture with 10 focused ES6 modules:
@@ -126,11 +123,11 @@ My_personal_portfolio/
 ## 🧪 Testing
 
 The website has been tested across:
-- **Browsers:** Chrome, Firefox, Safari, Edge
-- **Devices:** Desktop, Tablet, Mobile
-- **Screen Sizes:** 320px to 4K displays
-- **Accessibility:** WCAG 2.1 Level AA compliance
-- **Performance:** Lighthouse scores 90+ across all metrics
+- Browsers: Chrome, Firefox, Safari, Edge
+- Devices: Desktop, Tablet, Mobile
+- Screen Sizes: 320px to 4K displays
+- Accessibility: WCAG 2.1 Level AA compliance
+- Performance: Lighthouse scores 90+ across all metrics
 
 ---
 
