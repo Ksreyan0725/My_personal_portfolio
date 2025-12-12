@@ -25,6 +25,9 @@ scripts/txt-to-pdf.py
 # Exclude md to txt converter
 scripts/md-to-txt.py 
 
+# Exclude version viewer script
+scripts/version-viewer.py
+
 # Exclude complete manual
 COMPLETE_MANUAL.txt 
 
