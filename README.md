@@ -110,6 +110,7 @@ My_personal_portfolio/
     |-- pdf-viewer.html
     |-- thank-you.html
 |-- contact.html
+|-- DOCUMENTATION.md
 |-- index.html
 |-- manifest.json
 |-- purgecss.config.js
@@ -140,5 +141,5 @@ This project is distributed under the MIT License.
 ---
 
 Made with ❤️ by **Kumar Sreyan Pattanayak**  
-📌 Version: 1.1.3  
+📌 Version: 3.4.3  
 📅 Last Updated: 11 December 2025

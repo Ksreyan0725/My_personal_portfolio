@@ -229,6 +229,25 @@ export function initNavigation() {
     window.addEventListener('resize', () => {
         setupObserver();
     });
+
+    // Logo Click to Reload
+    const navLogo = document.querySelector('.nav-logo');
+    if (navLogo) {
+        const reloadPage = () => {
+            // Reload page from server (ignore cache) to ensure fresh load
+            window.location.reload(true);
+            // Or window.location.href = window.location.href; if you just want to go to top
+        };
+
+        navLogo.addEventListener('click', reloadPage);
+
+        // Accessibility: Allow Enter key to trigger
+        navLogo.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                reloadPage();
+            }
+        });
+    }
 }
 
 // Export for use in other modules

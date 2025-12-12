@@ -216,6 +216,38 @@ export function updateInstallButton() {
 }
 
 /**
+ * Install PWA function (can be called from anywhere)
+ */
+export async function installPWA() {
+    if (deferredPrompt && !checkIsStandalone()) {
+        try {
+            await deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            console.log(`User response to the install prompt: ${outcome}`);
+
+            trackInstallEvent(outcome);
+
+            if (outcome === 'accepted') {
+                showInstallAnimation();
+            } else {
+                showRetryOption();
+            }
+
+            deferredPrompt = null;
+            updateInstallButton();
+        } catch (error) {
+            console.error('Install prompt failed:', error);
+            showInstallError();
+            trackInstallEvent('error', error.message);
+        }
+    } else if (checkIsStandalone()) {
+        console.log('App is already installed');
+    } else {
+        console.log('Install prompt not available');
+    }
+}
+
+/**
  * Initialize PWA functionality
  */
 export function initPWA() {
@@ -223,6 +255,7 @@ export function initPWA() {
 
     // Expose globally for compatibility
     window.updateInstallButton = updateInstallButton;
+    window.installPWA = installPWA;
 
     // Always show install app section
     if (installAppGroup) {

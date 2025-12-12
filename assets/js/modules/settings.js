@@ -350,5 +350,93 @@ export function initSettings() {
     console.log('✅ Settings panel ready');
 }
 
+/**
+ * Check for updates and apply them
+ * Requires 3 clicks within 1 second to trigger
+ */
+let clickCount = 0;
+let clickTimer = null;
+
+export function checkForUpdates() {
+    clickCount++;
+
+    // Clear existing timer
+    if (clickTimer) {
+        clearTimeout(clickTimer);
+    }
+
+    // Show click progress
+    if (clickCount === 1) {
+        showNotification('Click 2 more times to check for updates');
+    } else if (clickCount === 2) {
+        showNotification('Click 1 more time to check for updates');
+    } else if (clickCount >= 3) {
+        // Trigger update check
+        clickCount = 0;
+        performUpdateCheck();
+        return;
+    }
+
+    // Reset counter after 1 second
+    clickTimer = setTimeout(() => {
+        clickCount = 0;
+    }, 1000);
+}
+
+function performUpdateCheck() {
+    console.log('🔄 Checking for updates...');
+
+    showNotification('Checking for updates...');
+
+    // Check if service worker is available
+    if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+        // Send message to service worker to check for updates
+        navigator.serviceWorker.controller.postMessage({
+            type: 'CHECK_FOR_UPDATES'
+        });
+
+        // Listen for response
+        navigator.serviceWorker.addEventListener('message', function handleUpdateMessage(event) {
+            if (event.data && event.data.type === 'UPDATE_AVAILABLE') {
+                showNotification('Update found! Applying...');
+
+                // Wait a moment then reload to apply update
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000);
+
+                // Remove listener after handling
+                navigator.serviceWorker.removeEventListener('message', handleUpdateMessage);
+            } else if (event.data && event.data.type === 'NO_UPDATE') {
+                showNotification('You are on the latest version!');
+                navigator.serviceWorker.removeEventListener('message', handleUpdateMessage);
+            }
+        });
+
+        // Fallback: If no response in 3 seconds, try manual update check
+        setTimeout(() => {
+            if (navigator.serviceWorker.controller) {
+                navigator.serviceWorker.getRegistration().then(registration => {
+                    if (registration) {
+                        registration.update().then(() => {
+                            console.log('✅ Manual update check completed');
+                            showNotification('Update check complete');
+                        });
+                    }
+                });
+            }
+        }, 3000);
+    } else {
+        // No service worker, just reload
+        showNotification('Refreshing page...');
+        setTimeout(() => {
+            window.location.reload();
+        }, 1000);
+    }
+}
+
+// Make globally available
+window.checkForUpdates = checkForUpdates;
+
 // Export for use in other modules
 export { updateNightLightIntensity, updateMobileNightLightBtn };

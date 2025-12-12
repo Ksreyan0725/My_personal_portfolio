@@ -1,7 +1,7 @@
 // Service Worker for Portfolio PWA
-// Version 1.1.3 - Modular Architecture
-const CACHE_NAME = 'portfolio-v3.3.3.3.3.3.1.1.1.1.1.3';
-const RUNTIME_CACHE = 'portfolio-runtime-v3.3.3.1.1.1.3';
+// Version 3.4.3 - Modular Architecture
+const CACHE_NAME = 'portfolio-v3.4.3';
+const RUNTIME_CACHE = 'portfolio-runtime-v3.4.3';
 
 // Critical resources for initial load (minimal set for fast install)
 const CORE_ASSETS = [
