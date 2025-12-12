@@ -4,7 +4,7 @@ A modern, accessible, and high-performance personal portfolio website built with
 
 🌐 **Live Demo:** [https://ksreyan0725.github.io/My_personal_portfolio/]
 
-                   (https://ksreyan0725.github.io/My_personal_portfolio/)
+https://ksreyan0725.github.io/My_personal_portfolio/
 
 ---
 
