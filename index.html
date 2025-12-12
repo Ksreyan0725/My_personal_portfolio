@@ -175,36 +175,126 @@ Last Updated: December 13, 2025
     <!-- ==================== Preloader ==================== -->
     <div id="preloader" style="display: flex;">
         <div class="loader-content">
-            <div class="loader-logo">KSP</div>
-            <div class="loader-bar"></div>
+            <img src="assets/icons/pwa-icon-192.png" alt="KSP Logo" class="loader-icon" style="width: 100px; height: 100px; border-radius: 24px; opacity: 1;">
+            <div class="loader-logo" id="loaderLogo">KSP</div>
+            <div class="loader-bar" id="loaderBar"></div>
         </div>
     </div>
     
-    <!-- CRITICAL: Hide loaders NOW - elements exist -->
+    <!-- CRITICAL: Network-aware preloader with guaranteed hide -->
     <script>
     (function() {
-        // Add loaded class to show content
+        var isMobile = window.innerWidth <= 768;
+        var logo = document.getElementById('loaderLogo');
+        var bar = document.getElementById('loaderBar');
+        var pageLoaded = false;
+        var preloaderHidden = false;
+        var minDisplayTime = isMobile ? 1000 : 500;
+        var maxDisplayTime = 5000; // Maximum 5 seconds
+        var startTime = Date.now();
+        
+        if (isMobile) {
+            // Mobile: Two-stage animation
+            if (logo) {
+                logo.style.opacity = '0';
+                logo.style.transform = 'translateY(20px)';
+            }
+            if (bar) {
+                bar.style.opacity = '0';
+                bar.style.transform = 'translateY(20px)';
+            }
+            
+            // Stage 2: Show text and bar after 500ms
+            setTimeout(function() {
+                if (logo) {
+                    logo.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+                    logo.style.opacity = '1';
+                    logo.style.transform = 'translateY(0)';
+                }
+                
+                if (bar) {
+                    bar.style.transition = 'opacity 0.4s ease 0.2s, transform 0.4s ease 0.2s';
+                    bar.style.opacity = '1';
+                    bar.style.transform = 'translateY(0)';
+                }
+            }, 500);
+        }
+        
+        // Ensure body is ready
         document.body.classList.add('loaded');
         
         // Hide skeleton immediately
         var s = document.getElementById('skeletonLoader');
         if (s) s.style.setProperty('display', 'none', 'important');
         
-        // Detect mobile device
-        var isMobile = window.innerWidth <= 768;
-        var delay = isMobile ? 1200 : 800; // 1.2s for mobile, 0.8s for desktop
+        // Function to hide preloader (can only run once)
+        function hidePreloader() {
+            if (preloaderHidden) return; // Prevent multiple calls
+            preloaderHidden = true;
+            
+            var elapsed = Date.now() - startTime;
+            var remainingTime = Math.max(0, minDisplayTime - elapsed);
+            
+            setTimeout(function() {
+                var p = document.getElementById('preloader');
+                if (p) {
+                    p.style.opacity = '0';
+                    p.style.transition = 'opacity 0.3s ease';
+                    setTimeout(function() {
+                        p.style.setProperty('display', 'none', 'important');
+                        p.remove(); // Completely remove from DOM
+                        
+                        // Ensure page is interactive
+                        document.body.style.overflow = '';
+                        document.body.style.pointerEvents = '';
+                    }, 300);
+                }
+            }, remainingTime);
+        }
         
-        // Hide preloader after delay for smooth experience
+        // Multiple triggers to ensure preloader hides
+        
+        // 1. Check if already loaded
+        if (document.readyState === 'complete') {
+            hidePreloader();
+        } else {
+            // 2. Wait for DOMContentLoaded (DOM ready, faster than full load)
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', function() {
+                    // DOM is ready, but wait for minimum display time
+                    var elapsed = Date.now() - startTime;
+                    if (elapsed >= minDisplayTime) {
+                        hidePreloader();
+                    }
+                });
+            }
+            
+            // 3. Wait for full page load (all resources)
+            window.addEventListener('load', function() {
+                pageLoaded = true;
+                hidePreloader();
+            });
+        }
+        
+        // 4. Guaranteed fallback - hide after max time
+        setTimeout(function() {
+            if (!preloaderHidden) {
+                console.log('Preloader fallback triggered');
+                hidePreloader();
+            }
+        }, maxDisplayTime);
+        
+        // 5. Emergency fallback - ensure page is usable after 6 seconds no matter what
         setTimeout(function() {
             var p = document.getElementById('preloader');
-            if (p) {
-                p.style.opacity = '0';
-                p.style.transition = 'opacity 0.3s ease';
-                setTimeout(function() {
-                    p.style.setProperty('display', 'none', 'important');
-                }, 300);
+            if (p && p.style.display !== 'none') {
+                console.warn('Emergency preloader removal');
+                p.style.setProperty('display', 'none', 'important');
+                p.remove();
+                document.body.style.overflow = '';
+                document.body.style.pointerEvents = '';
             }
-        }, delay);
+        }, 6000);
     })();
     </script>
     
@@ -893,7 +983,7 @@ Last Updated: December 13, 2025
             
             updateBanner.innerHTML = `
                 <div style="flex: 1;">
-                    <strong style="display: block; margin-bottom: 4px;">ðŸŽ‰ New Version Available!</strong>
+                    <strong style="display: block; margin-bottom: 4px;">🎉 New Version Available!</strong>
                     <span style="font-size: 14px; opacity: 0.95;">Version 3.4.3 is ready. Click to update.</span>
                 </div>
                 <button onclick="updateApp()" style="
@@ -913,7 +1003,7 @@ Last Updated: December 13, 2025
                     padding: 8px 12px;
                     border-radius: 8px;
                     cursor: pointer;
-                ">âœ•</button>
+                ">✕</button>
             `;
             
             document.body.appendChild(updateBanner);

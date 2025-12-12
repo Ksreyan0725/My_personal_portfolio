@@ -143,20 +143,23 @@ export function showNotification(message, type = 'info') {
     notification.style.cssText = `
         position: fixed;
         top: 80px;
-        right: 20px;
+        left: 50%;
+        transform: translateX(-50%);
         background: var(--card-bg);
         color: var(--text-primary);
         padding: 16px 24px;
         border-radius: 12px;
         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
         z-index: 10000;
-        animation: slideIn 0.3s ease;
+        animation: slideInDown 0.3s ease;
+        max-width: 90%;
+        text-align: center;
     `;
 
     document.body.appendChild(notification);
 
     setTimeout(() => {
-        notification.style.animation = 'slideOut 0.3s ease';
+        notification.style.animation = 'slideOutUp 0.3s ease';
         setTimeout(() => notification.remove(), 300);
     }, 3000);
 }

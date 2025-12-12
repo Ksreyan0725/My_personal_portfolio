@@ -314,6 +314,60 @@ export function initPWA() {
 
     // Initial button state update
     updateInstallButton();
+
+    // Manage install notification banner
+    manageInstallNotification();
+}
+
+/*
+ * Manage install notification banner visibility
+ */
+function manageInstallNotification() {
+    const installPrompt = document.getElementById('installPrompt');
+    if (!installPrompt) return;
+
+    const isInstalled = checkIsStandalone();
+    const isDesktop = window.innerWidth >= 1024;
+    const hasSeenPrompt = localStorage.getItem('pwaPromptDismissed') === 'true';
+
+    // Hide if already installed
+    if (isInstalled) {
+        installPrompt.style.display = 'none';
+        console.log('Install banner hidden: App already installed');
+        return;
+    }
+
+    // Hide on mobile (only show on desktop)
+    if (!isDesktop) {
+        installPrompt.style.display = 'none';
+        return;
+    }
+
+    // Hide if user dismissed it before
+    if (hasSeenPrompt) {
+        installPrompt.style.display = 'none';
+        return;
+    }
+
+    // Show notification after a delay if installable
+    if (deferredPrompt) {
+        setTimeout(() => {
+            installPrompt.style.display = 'flex';
+            console.log('Install banner shown');
+        }, 3000); // Show after 3 seconds
+    }
+}
+
+/**
+ * Close install prompt banner
+ */
+window.closeInstallPrompt = function () {
+    const installPrompt = document.getElementById('installPrompt');
+    if (installPrompt) {
+        installPrompt.style.display = 'none';
+        localStorage.setItem('pwaPromptDismissed', 'true');
+        console.log('Install banner dismissed by user');
+    }
 }
 
 /**

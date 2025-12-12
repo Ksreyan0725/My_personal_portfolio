@@ -117,24 +117,24 @@
 /* ==================== PWA Install Prompt Banner (Updated) ==================== */
 .install-prompt {
     position: fixed;
-    bottom: 20px;
-    right: 20px;
+    top: 80px; /* Below navbar */
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 10000;
-    animation: slideUp 0.4s ease;
-    /* Reset previous styles if any remain */
+    animation: slideDown 0.4s ease;
     pointer-events: auto;
     background: none;
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
 }
 
-@keyframes slideUp {
+@keyframes slideDown {
     from {
-        transform: translateY(100px);
+        transform: translate(-50%, -100px);
         opacity: 0;
     }
     to {
-        transform: translateY(0);
+        transform: translate(-50%, 0);
         opacity: 1;
     }
 }
@@ -239,10 +239,13 @@
 
 @media (max-width: 768px) {
     .install-prompt {
-        bottom: 10px;
-        right: 10px;
-        left: 10px;
-        padding: 0; /* Reset padding from desktop constraint if any */
+        top: 70px; /* Slightly lower on mobile */
+        left: 50%;
+        right: auto;
+        bottom: auto;
+        transform: translateX(-50%);
+        width: calc(100% - 20px);
+        max-width: 400px;
     }
 
     .install-prompt-content {

@@ -2051,3 +2051,26 @@ html.lenis, html.lenis body {
     visibility: visible !important;
     opacity: 1 !important;
 }
+
+/* ==================== Notification Animations ==================== */
+@keyframes slideInDown {
+    from {
+        transform: translate(-50%, -100%);
+        opacity: 0;
+    }
+    to {
+        transform: translate(-50%, 0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOutUp {
+    from {
+        transform: translate(-50%, 0);
+        opacity: 1;
+    }
+    to {
+        transform: translate(-50%, -100%);
+        opacity: 0;
+    }
+}
