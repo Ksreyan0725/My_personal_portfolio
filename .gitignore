@@ -14,7 +14,7 @@ version-backup-*/
 assets/backups/
 
 # Exclude version update script itself
-# scripts/version-updator.py  
+scripts/version-updator.py  
 
 # Exclude git manager script
 scripts/git-manager.py
