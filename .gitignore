@@ -1,0 +1,85 @@
+# ============================================
+# Git Ignore File for Personal Portfolio
+# ============================================
+
+# ==================== Backup Files ====================
+# Exclude all backup files created by version update script
+*.backup
+*.bak
+*_backup_*
+backup_*/
+backups/
+
+# ==================== Version Update Script Backups ====================
+# Timestamped backups created before version updates
+version_backups/
+*_version_backup_*
+
+# ==================== Python ====================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# ==================== Node Modules ====================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+
+# ==================== IDE & Editor Files ====================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# ==================== Logs ====================
+*.log
+logs/
+
+# ==================== Temporary Files ====================
+*.tmp
+*.temp
+.cache/
+
+# ==================== Environment Variables ====================
+.env
+.env.local
+.env.*.local
+
+# ==================== OS Files ====================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Desktop.ini
+
+# ==================== Agent Files (Optional) ====================
+# Uncomment if you don't want to track agent workflows
+# .agent/
