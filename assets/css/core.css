@@ -58,7 +58,8 @@
 }
 
 .cta-button:active {
-  transform: translateY(0) scale(0.98);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 14px 28px rgba(99, 102, 241, 0.35);
 }
 
 /* CTA Buttons Container */
@@ -79,6 +80,13 @@
 }
 
 .cta-button-secondary:hover {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 14px 28px rgba(99, 102, 241, 0.25);
+}
+
+.cta-button-secondary:active {
+  transform: translateY(-2px) scale(1.02);
   background: var(--accent);
   color: #fff;
   box-shadow: 0 14px 28px rgba(99, 102, 241, 0.25);
@@ -859,7 +867,8 @@ main > .section::after {
 }
 
 .submit-btn:active {
-  transform: translateY(-1px);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 40px var(--accent-glow);
 }
 
 .submit-btn span {
@@ -1007,6 +1016,11 @@ main > .section::after {
 }
 
 .course-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px var(--accent-glow);
+}
+
+.course-button:active {
   transform: translateY(-3px);
   box-shadow: 0 10px 30px var(--accent-glow);
 }
@@ -1635,6 +1649,12 @@ footer {
   transform: translateY(-2px);
 }
 
+.filter-btn:active {
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: translateY(-2px);
+}
+
 .filter-btn.active {
   background: var(--accent);
   border-color: var(--accent);
@@ -1853,8 +1873,11 @@ footer {
 }
 
 .resume-btn:active {
-  transform: translateY(0);
-  box-shadow: 0 4px 15px var(--accent-glow);
+  transform: translateY(-2px);
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent);
+  box-shadow: 0 8px 25px var(--accent-glow);
 }
 
 .resume-btn::before {

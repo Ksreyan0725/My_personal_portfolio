@@ -8,7 +8,34 @@
 *.bak
 *_backup_*
 backup_*/
-backups/
+version_backup_*/  
+backup-*/
+version-backup-*/
+assets/backups/
+
+# Exclude version update script itself
+scripts/version-updator.py  
+
+# Exclude git manager script
+scripts/git-manager.py
+
+# Exclude txt to pdf converter
+scripts/txt-to-pdf.py
+
+# Exclude md to txt converter
+scripts/md-to-txt.py 
+
+# Exclude complete manual
+COMPLETE_MANUAL.txt 
+
+# Exclude pdf file
+COMPLETE_MANUAL.pdf 
+
+# Exclude Manual folder
+MANUL For Updator/
+
+# Exclude PWA development folder 
+pwa/
 
 # ==================== Version Update Script Backups ====================
 # Timestamped backups created before version updates
@@ -83,3 +110,16 @@ Desktop.ini
 # ==================== Agent Files (Optional) ====================
 # Uncomment if you don't want to track agent workflows
 # .agent/
+
+# Skipped markdown files (auto-added by version-updator)
+assets/docs/AI_PROMPT_FOR_OTHER_PROJECTS.md
+assets/docs/INTELLIGENT_VERSIONING.md
+assets/docs/QUICK_REFERENCE.md
+pwa/PWA_ICONS_README.md
+assets/docs/SCRIPT_FEATURES.md
+assets/docs/VERSION_SCRIPT_LOGIC.md
+assets/docs/VERSION_UPDATE_GUIDE.md
+
+# Skipped markdown files (auto-added by version-updator)
+
+

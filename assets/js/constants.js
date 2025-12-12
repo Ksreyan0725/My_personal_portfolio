@@ -4,8 +4,8 @@
 
 // Configuration
 export const CONFIG = {
-    VERSION: '3.1',
-    CACHE_NAME: 'portfolio-v3.1',
+    VERSION: '1.1.3',
+    CACHE_NAME: 'portfolio-v3.3.3.1.1.1.3',
     API_ENDPOINT: 'https://formspree.io/f/mzzjopyn', // Updated with actual ID from contact.html
     GITHUB_URL: 'https://github.com/Ksreyan0725',
     LINKEDIN_URL: 'https://www.linkedin.com/in/kumar-sreyan-pattanayak-81a495230',

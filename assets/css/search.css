@@ -41,9 +41,7 @@
 .desktop-search .search-icon-button:active,
 .desktop-search .search-icon-button:focus-visible {
   border-color: var(--accent);
-  background: var(--accent-glow);
-  box-shadow: 0 0 20px var(--accent-glow);
-  transform: scale(0.95);
+  transform: scale(1.05);
   outline: none;
 }
 
@@ -213,6 +211,11 @@
   color: var(--text-primary);
 }
 
+.tablet-search-button:active {
+  border-color: var(--accent);
+  color: var(--text-primary);
+}
+
 .tablet-search-button .search-icon-img {
   width: 18px;
   height: 18px;
@@ -373,6 +376,13 @@
   transform: translateY(-1px);
 }
 
+.suggestion-chip:active {
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent);
+  transform: translateY(-1px);
+}
+
 /* Dropdown header */
 .desktop-search-results-header {
   position: sticky;
@@ -470,6 +480,12 @@
 }
 
 .menu-icon:hover {
+  border-color: var(--accent);
+  background: var(--accent-glow);
+  transform: scale(1.05);
+}
+
+.menu-icon:active {
   border-color: var(--accent);
   background: var(--accent-glow);
   transform: scale(1.05);
@@ -642,6 +658,10 @@
 }
 
 .search-modal-button:hover {
+  transform: translateY(-50%) scale(1.1);
+}
+
+.search-modal-button:active {
   transform: translateY(-50%) scale(1.1);
 }
 
