@@ -349,22 +349,22 @@ document.addEventListener('DOMContentLoaded', function () {
             style.id = 'copyFeedbackStyles';
             style.textContent = `
             @keyframes toastFadeIn {
-                from { 
-                    opacity: 0; 
+                from {
+                    opacity: 0;
                     transform: translateX(-50%) translateY(-20px);
                 }
-                to { 
-                    opacity: 1; 
+                to {
+                    opacity: 1;
                     transform: translateX(-50%) translateY(0);
                 }
             }
             @keyframes toastFadeOut {
-                from { 
-                    opacity: 1; 
+                from {
+                    opacity: 1;
                     transform: translateX(-50%) translateY(0);
                 }
-                to { 
-                    opacity: 0; 
+                to {
+                    opacity: 0;
                     transform: translateX(-50%) translateY(-10px);
                 }
             }
@@ -709,3 +709,4 @@ document.addEventListener('DOMContentLoaded', function () {
     })();
 
 }); // Close DOMContentLoaded wrapper
+

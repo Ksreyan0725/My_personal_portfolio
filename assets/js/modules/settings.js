@@ -161,7 +161,7 @@ function initNightLight() {
         const savedState = localStorage.getItem('nightLight');
         if (savedState === 'true') {
             nightLightToggle.classList.add('active');
-            updateNightLightIntensity(parseInt(localStorage.getItem('nightLightIntensity') || '50'));
+            updateNightLightIntensity(parseInt(localStorage.getItem('nightLightIntensity') || '55'));
         }
     }
 
@@ -347,40 +347,24 @@ export function initSettings() {
     // Initialize swipe to close
     initSwipeToClose();
 
+    // Close settings panel on Escape key press
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' || e.key === 'Esc') {
+            if (settingsPanel && settingsPanel.classList.contains('active')) {
+                closeSettings();
+            }
+        }
+    });
+
     console.log('✅ Settings panel ready');
 }
 
 /**
  * Check for updates and apply them
- * Requires 3 clicks within 1 second to trigger
+ * Called by the 7-click Easter egg in version info
  */
-let clickCount = 0;
-let clickTimer = null;
-
 export function checkForUpdates() {
-    clickCount++;
-
-    // Clear existing timer
-    if (clickTimer) {
-        clearTimeout(clickTimer);
-    }
-
-    // Show click progress
-    if (clickCount === 1) {
-        showNotification('Click 2 more times to check for updates');
-    } else if (clickCount === 2) {
-        showNotification('Click 1 more time to check for updates');
-    } else if (clickCount >= 3) {
-        // Trigger update check
-        clickCount = 0;
-        performUpdateCheck();
-        return;
-    }
-
-    // Reset counter after 1 second
-    clickTimer = setTimeout(() => {
-        clickCount = 0;
-    }, 1000);
+    performUpdateCheck();
 }
 
 function performUpdateCheck() {
@@ -440,3 +424,4 @@ window.checkForUpdates = checkForUpdates;
 
 // Export for use in other modules
 export { updateNightLightIntensity, updateMobileNightLightBtn };
+

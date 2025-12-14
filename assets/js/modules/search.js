@@ -343,7 +343,6 @@ function showSearchNotification(inputElement, message) {
     }
 }
 
-
 /**
  * Desktop Search Dropdown Functionality
  */
@@ -675,3 +674,4 @@ export function initSearch() {
 
 // Export for use in other modules
 export { buildSearchIndex, doSearch };
+

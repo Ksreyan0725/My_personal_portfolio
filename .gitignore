@@ -2,6 +2,10 @@
 # Git Ignore File for Personal Portfolio
 # ============================================
 
+
+# Script Manager (includes scripts/ and MANUAL/)
+manager/ 
+
 # ==================== Backup Files ====================
 # Exclude all backup files created by version update script
 *.backup
@@ -13,29 +17,11 @@ backup-*/
 version-backup-*/
 assets/backups/
 
-# Exclude version update script itself
-scripts/version-updator.py  
 
-# Exclude git manager script
-scripts/git-manager.py
 
-# Exclude txt to pdf converter
-scripts/txt-to-pdf.py
+# ==================== Documentation Files ====================
 
-# Exclude md to txt converter
-scripts/md-to-txt.py 
 
-# Exclude version viewer script
-scripts/version-viewer.py
-
-# Exclude complete manual
-COMPLETE_MANUAL.txt 
-
-# Exclude pdf file
-COMPLETE_MANUAL.pdf 
-
-# Exclude Manual folder
-MANUL For Updator/
 
 # Exclude PWA development folder 
 pwa/
@@ -91,7 +77,7 @@ Thumbs.db
 *.log
 logs/
 
-# ==================== Temporary Files ====================
+# ==================== Temporary Files ==================== 
 *.tmp
 *.temp
 .cache/
@@ -109,6 +95,8 @@ logs/
 .Trashes
 ehthumbs.db
 Desktop.ini
+*.bat
+
 
 # ==================== Agent Files (Optional) ====================
 # Uncomment if you don't want to track agent workflows
@@ -126,3 +114,12 @@ assets/docs/VERSION_UPDATE_GUIDE.md
 # Skipped markdown files (auto-added by version-updator)
 
 
+
+
+
+
+
+
+# Skipped markdown files (auto-added by version-updator)
+assets/css/RESPONSIVE_CSS_GUIDE.md
+assets/css/CORE_CSS_GUIDE.md

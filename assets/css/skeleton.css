@@ -156,7 +156,7 @@
     .skeleton-contact {
         grid-template-columns: 1fr;
     }
-    
+
     .skeleton-projects {
         grid-template-columns: 1fr;
     }
@@ -190,3 +190,4 @@
         opacity: 1;
     }
 }
+

@@ -1,4 +1,5 @@
-﻿/* ==================== Mobile Sidebar Menu (Base Styles) ==================== */
+﻿/* ============ Mobile Sidebar Menu (Base Styles) ============ */
+
 .sidebar-menu {
   position: fixed;
   top: 0;
@@ -193,8 +194,6 @@
   background: transparent;
 }
 
-
-
 .sidebar-logo {
   font-size: 1.5rem;
   font-weight: 700;
@@ -209,10 +208,20 @@
   transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease;
 }
 
+/* Ensure nested elements inherit the gradient */
+.sidebar-logo strong,
+.sidebar-logo i {
+  background: inherit;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-style: italic;
+}
+
 .sidebar-close {
   background: var(--card-bg);
   border: 1px solid var(--border);
-  font-size: 1.5rem;
+  font-size: 1.2rem; /* Reduced from 1.5rem for better spacing */
   color: var(--text-primary);
   cursor: pointer;
   padding: 6px 10px;
@@ -221,6 +230,7 @@
   line-height: 1;
   outline: none;
   margin-top: 0; /* Align to top, removed overlap offset */
+  box-sizing: border-box; /* Ensure consistent sizing */
 }
 
 .sidebar-close:hover {

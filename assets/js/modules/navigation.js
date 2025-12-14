@@ -252,3 +252,4 @@ export function initNavigation() {
 
 // Export for use in other modules
 export { updateActiveLink, highlightActiveNav, getOffsets };
+

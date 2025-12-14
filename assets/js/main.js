@@ -211,3 +211,4 @@ if (document.readyState === 'loading') {
 
 // Export for potential external use
 export { initApp, initSmoothScroll, initTouchDevice };
+

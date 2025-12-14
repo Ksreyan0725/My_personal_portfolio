@@ -6,7 +6,7 @@
 
 /**
  * MobileSidebarSwipe - Gesture-based sidebar swipe handler
- * 
+ *
  * Features:
  * - Swipe gesture detection for sidebar menu
  * - Physics-based easing for natural motion
@@ -336,3 +336,4 @@ export function initSidebar() {
 }
 
 export { MobileSidebarSwipe };
+

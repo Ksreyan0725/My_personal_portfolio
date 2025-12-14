@@ -1,3 +1,72 @@
+/*
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                       RESPONSIVE.CSS - TABLE OF CONTENTS                     ║
+║                                                                              ║
+║  Total Lines: 2655 | Use Ctrl+F to search for breakpoints                    ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+📱 BREAKPOINT NAVIGATION:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  MOBILE BREAKPOINTS:
+  ├─ Extra Small (< 412px) ................. Line 23
+  ├─ Small (413px - 600px) ................. Line 191
+  ├─ Medium (< 525px) ...................... Line 549
+  └─ Standard (< 768px) .................... Line 900+
+
+  TABLET BREAKPOINTS:
+  ├─ Portrait (< 900px) .................... Line 1200+
+  └─ Landscape (< 1024px) .................. Line 1400+
+
+  DESKTOP BREAKPOINTS:
+  ├─ Standard (≥ 900px) .................... Line 1600+
+  ├─ Large (≥ 1024px) ...................... Line 1800+
+  └─ Extra Large (≥ 1440px) ................ Line 2200+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🔍 SEARCH BY COMPONENT:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  Search for these terms with Ctrl+F:
+
+  NAVIGATION:
+  • "nav {" ................................ Navbar styles
+  • ".menu-icon" ........................... Hamburger menu
+  • ".nav-logo" ............................ Logo positioning
+  • ".theme-toggle" ........................ Theme button
+
+  LAYOUT:
+  • ".home-grid" ........................... Home section layout
+  • ".profile-photo" ....................... Profile image
+  • ".container" ........................... Main containers
+
+  COMPONENTS:
+  • ".sidebar-menu" ........................ Sidebar navigation
+  • ".search-modal" ........................ Search modal
+  • ".settings-panel" ...................... Settings panel
+  • ".notice-banner" ....................... Top banner
+
+  SECTIONS:
+  • "#projects" ............................ Projects section
+  • "#skills" .............................. Skills section
+  • "#education" ........................... Education section
+  • ".card" ................................. Card components
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+⚠️  IMPORTANT NOTES:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  • Mobile-first approach (base styles for smallest screens)
+  • Test all changes on multiple breakpoints
+  • Critical breakpoints: 412px, 768px, 900px, 1024px
+  • Always use !important sparingly
+  • Check both portrait and landscape orientations
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+*/
+
 /* ==================================================================================
    RESPONSIVE MEDIA QUERIES
    ================================================================================== */
@@ -6,11 +75,11 @@
    MOBILE-FIRST RESPONSIVE DESIGN
    Base styles above are optimized for mobile (0-600px)
    ==================================================================================
-   
+
    Breakpoints:
    - Base: 0-600px (Mobile) - defined above
    - Tablet: 601px-1024px
-   - Laptop: 1024px-1440px  
+   - Laptop: 1024px-1440px
    - Large Screen: 1441px+
    ================================================================================== */
 
@@ -18,7 +87,6 @@
    EXTRA SMALL MOBILE: Below 388px
    Ultra-compact for very small screens
    =========================================== */
-
 
 @media (max-width: 412px) {
   :root {
@@ -113,7 +181,6 @@
     order: 4 !important;
   }
 
-
   .mobile-search-icon-img {
     width: 22px !important;
     height: 22px !important;
@@ -130,7 +197,7 @@
     display: block !important;
     margin: 0 !important;
   }
-  
+
   .nav-logo {
     order: 2 !important;
     margin-left: 0 !important;
@@ -158,7 +225,7 @@
       text-align: center;
       width: 100%;
   }
-  
+
   .home-grid {
       padding-left: 10px;
       padding-right: 10px;
@@ -168,16 +235,16 @@
   .profile-photo {
       margin: 0 auto 15px;
   }
-  
+
   .cta-buttons {
       justify-content: center;
       width: 100%;
   }
-  
+
   .about-text, .section-subtitle {
       text-align: center;
   }
-  
+
   /* Ensure no overflow */
   body, html {
       overflow-x: hidden;
@@ -240,13 +307,13 @@
     .sidebar-menu {
         width: 260px;
     }
-    
+
     /* Ensure buttons are accessible */
     .cta-button {
         padding: 12px 24px;
         font-size: 0.95rem;
     }
-    
+
     .cta-buttons {
         justify-content: center;
     }
@@ -257,7 +324,7 @@
       order: 1 !important; /* Left side - first */
       margin-right: 0 !important;
     }
-    
+
     .nav-logo {
       order: 2 !important; /* Left side - second */
       margin-left: 0 !important;
@@ -291,13 +358,13 @@
       flex-shrink: 0;
       order: 4 !important;
     }
-    
+
     .theme-icon {
       width: 22px !important;
       height: 22px !important;
       object-fit: contain;
     }
-    
+
     .theme-text {
       display: none !important;
     }
@@ -307,7 +374,6 @@
       animation: scroll-right-to-left 30s linear infinite;
     }
 }
-
 
   /* Profile photo - smaller */
   .profile-photo {
@@ -541,7 +607,6 @@
     font-size: 1.05rem;
   }
 
-
 /* ===========================================
    SMALL MOBILE: Below 525px
    Extra optimization for small screens
@@ -627,7 +692,7 @@
     box-sizing: border-box !important;
     flex-shrink: 0;
   }
-  
+
   .theme-icon {
     width: 24px !important;
     height: 24px !important;
@@ -640,8 +705,6 @@
     display: none !important;
   }
 
-
-
   /* Banner - smaller */
   .notice-banner {
     top: var(--nav-height);
@@ -652,7 +715,6 @@
   .ticker-content {
     animation: scroll-right-to-left 32s linear infinite;
   }
-
 
   /* Name and tagline - smaller */
   .name {
@@ -843,7 +905,6 @@
     margin-bottom: 12px;
   }
 
-
   /* Cards - more compact */
   .card {
     padding: 20px;
@@ -1022,7 +1083,7 @@
     margin-left: auto;
     max-width: 160px;
   }
-  
+
   /* Progressive search box sizing - gradually shrink as screen gets smaller */
   @media (min-width: 1200px) {
     .desktop-search .search-container {
@@ -1032,7 +1093,7 @@
       opacity: 0.7 !important;
     }
   }
-  
+
   @media (min-width: 1100px) and (max-width: 1199px) {
     .desktop-search .search-container {
       max-width: 240px;
@@ -1041,7 +1102,7 @@
       opacity: 0.7 !important;
     }
   }
-  
+
   @media (min-width: 1000px) and (max-width: 1099px) {
     .desktop-search .search-container {
       max-width: 200px;
@@ -1050,7 +1111,7 @@
       opacity: 0.7 !important;
     }
   }
-  
+
   @media (min-width: 900px) and (max-width: 999px) {
     .desktop-search .search-container {
       max-width: 180px;
@@ -1090,7 +1151,7 @@
     .nav-links {
       display: none !important;
     }
-    
+
     .mobile-search-icon {
       display: flex !important;
       order: 3 !important;
@@ -1103,19 +1164,19 @@
       order: 1 !important; /* Left side - first */
       margin-right: 0 !important; /* Remove gap */
     }
-    
+
     .nav-logo {
       order: 2 !important; /* Left side - second, after menu */
       margin-left: 0 !important;
       margin-right: auto !important; /* Push everything else to the right */
       flex-grow: 0 !important;
     }
-    
+
     .theme-toggle {
       order: 4 !important;
       display: flex !important;
     }
-    
+
     /* Hide theme text on mobile */
     .theme-text { display: none !important; }
   }
@@ -1127,7 +1188,7 @@
     align-items: center !important;
     flex-wrap: nowrap !important;
   }
-  
+
   .nav-links {
     align-items: center !important;
   }
@@ -1302,7 +1363,7 @@
 /* Laptop ≥1025px: Full Search Input + Icon */
 /* Laptop ≥1024.1px: Full Search Input + Icon */
 @media (min-width: 1024.1px) {
-  #navbar .desktop-search { 
+  #navbar .desktop-search {
     display: flex !important;
     order: 3;
     margin-left: auto !important;
@@ -1329,7 +1390,7 @@
   }
   /* Hide tablet button and mobile icon */
   .tablet-search-button { display: none !important; }
-  
+
   /* Ensure theme toggle doesn't shrink */
   .theme-toggle {
     flex-shrink: 0 !important;
@@ -1370,13 +1431,13 @@
     padding-top: 0 !important;
     line-height: 1.2 !important; /* Ensure line-height doesn't add too much space */
   }
-  
+
   /* Adjust profile container to align image top with text top */
   #home .profile-section .profile-container {
     margin-top: -8px !important; /* Pull image up to compensate for text line-height */
     padding-top: 0 !important;
   }
-  
+
   #home .profile-section .profile-photo {
     margin-top: 0 !important;
     display: block; /* Remove inline gap */
@@ -1401,22 +1462,22 @@
     gap: 8px !important; /* Reduce gap between all items */
     padding: 0 15px !important;
   }
-  
+
   .nav-links {
     gap: 10px !important; /* Tighter spacing between nav links */
   }
-  
+
   .nav-links a {
     font-size: 0.9rem !important; /* Slightly smaller text */
     padding: 6px 10px !important;
   }
-  
+
   /* Show desktop search container but hide all its children except tablet button */
   #navbar .desktop-search {
     display: flex !important;
     margin-left: auto;
   }
-  
+
   /* Hide specific desktop search elements (not the tablet button) */
   #navbar .desktop-search .search-icon-button,
   #navbar .desktop-search .search-input,
@@ -1427,7 +1488,7 @@
     display: none !important;
     visibility: hidden !important;
   }
-  
+
   /* Show and style tablet search button */
   .tablet-search-button {
     display: flex !important;
@@ -1445,7 +1506,7 @@
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
   }
-  
+
   .tablet-search-button:hover {
     border-color: var(--accent);
     background: var(--accent-glow);
@@ -1458,7 +1519,7 @@
     height: 18px;
     filter: brightness(0.9);
   }
-  
+
   .tablet-search-button span {
     display: none !important;
   }
@@ -1566,77 +1627,77 @@
   .nav-links {
     display: none !important;
   }
-  
+
   /* Show mobile menu icon */
   .menu-icon {
     display: flex !important;
   }
-  
+
   /* ==================== MOBILE CENTERING & ALIGNMENT FIXES ==================== */
-  
+
   /* Navigation Container */
   .nav-container {
     justify-content: space-between !important;
     padding: 0 15px !important;
     align-items: center !important;
   }
-  
+
   /* Hide desktop search, show mobile icon that opens modal */
-  #navbar .desktop-search { 
-    display: none !important; 
+  #navbar .desktop-search {
+    display: none !important;
   }
-  
-  #navbar .mobile-search-icon { 
-    display: inline-flex !important; 
-    align-items: center; 
-    justify-content: center; 
-    width: 40px !important; 
-    height: 40px !important; 
-    min-width: 40px !important; 
+
+  #navbar .mobile-search-icon {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
     box-sizing: border-box !important;
-    border: 2px solid var(--border); 
-    border-radius: 10px; 
-    background: var(--card-bg); 
-    color: var(--text-secondary); 
-    transition: background 0.3s ease, border-color 0.3s ease, transform 0.2s ease; 
-    backdrop-filter: blur(8px); 
-    -webkit-backdrop-filter: blur(8px); 
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    background: var(--card-bg);
+    color: var(--text-secondary);
+    transition: background 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     margin-left: auto;
     order: 3;
   }
-  
-  #navbar .mobile-search-icon:hover { 
-    border-color: var(--accent); 
+
+  #navbar .mobile-search-icon:hover {
+    border-color: var(--accent);
   }
-  
-  #navbar .mobile-search-icon:focus-visible { 
-    outline: none; 
-    box-shadow: 0 0 0 3px var(--accent-glow); 
+
+  #navbar .mobile-search-icon:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px var(--accent-glow);
   }
-  
-  #navbar .mobile-search-icon-img { 
-    width: 16px; 
-    height: 16px; 
+
+  #navbar .mobile-search-icon-img {
+    width: 16px;
+    height: 16px;
   }
-  #navbar .theme-toggle { 
-    width: 40px !important; 
-    height: 40px !important; 
-    min-width: 40px !important; 
-    min-height: 40px !important; 
+  #navbar .theme-toggle {
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    min-height: 40px !important;
     box-sizing: border-box !important;
-    border: 2px solid var(--border) !important; 
-    border-radius: 10px !important; 
-    background: var(--card-bg) !important; 
-    display: inline-flex !important; 
-    align-items: center !important; 
-    justify-content: center !important; 
-    backdrop-filter: blur(8px); 
-    -webkit-backdrop-filter: blur(8px); 
-    transition: background 0.3s ease, border-color 0.3s ease, transform 0.2s ease; 
+    border: 2px solid var(--border) !important;
+    border-radius: 10px !important;
+    background: var(--card-bg) !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    transition: background 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
     margin-left: 8px; /* Gap between search and theme */
     order: 4;
   }
-  
+
   #navbar .theme-icon {
     width: 20px !important;
     height: 20px !important;
@@ -1647,9 +1708,8 @@
   #navbar .theme-toggle:hover { border-color: var(--accent); }
   #navbar .theme-toggle:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--accent-glow); }
 
-  
   /* ==================== MOBILE CONTENT CENTERING ==================== */
-  
+
   /* Home Section - Center Everything */
   #home {
     text-align: center;
@@ -1675,7 +1735,7 @@
     padding: 20px 20px 40px;
     gap: 30px;
   }
-  
+
   /* Profile Section - Grid layout: Photo LEFT | Content RIGHT */
   #home .profile-section {
     width: 100%;
@@ -1692,7 +1752,7 @@
     padding: 0 40px; /* Equal horizontal padding */
     margin: 0 auto;
   }
-  
+
   /* Profile photo container - LEFT column, spans all 3 rows */
   #home .profile-section .profile-container {
     grid-column: 1; /* ✅ Photo in Column 1 */
@@ -1703,7 +1763,7 @@
     justify-content: center;
     height: 100%;
   }
-  
+
   /* Profile photo - Fixed size */
   #home .profile-section .profile-photo {
     width: 150px;
@@ -1711,7 +1771,7 @@
     margin: 0;
     object-fit: cover;
   }
-  
+
   /* Name - RIGHT column, Row 1 */
   #home .profile-section .name {
     grid-column: 2; /* ✅ Content in Column 2 */
@@ -1726,7 +1786,7 @@
     background-clip: text;
     white-space: normal;
   }
-  
+
   /* Tagline - RIGHT column, Row 2 */
   #home .profile-section .tagline {
     grid-column: 2; /* ✅ Content in Column 2 */
@@ -1737,7 +1797,7 @@
     white-space: normal;
     align-self: center; /* Center vertically */
   }
-  
+
   /* Social links - RIGHT column, Row 3 */
   #home .profile-section .contact-links {
     grid-column: 2; /* ✅ Content in Column 2 */
@@ -1749,7 +1809,7 @@
     display: flex;
     align-self: center; /* Center vertically */
   }
-  
+
   #home .profile-section .contact-links a {
     min-width: auto;
     padding: 8px 16px;
@@ -1765,12 +1825,12 @@
     width: auto; /* Allow width to grow */
     max-width: 100%; /* Prevent overflowing screen */
   }
-  
+
   #home .profile-section .contact-links .social-icon {
     width: 16px;
     height: 16px;
   }
-  
+
   /* Content Section - Contains About Me */
   #home .content-section {
     width: 100%;
@@ -1799,7 +1859,7 @@
   #home .content-section .about-text {
     text-align: center;
   }
-  
+
   #home .content-section .cta-button {
     margin: 20px auto 0;
   }
@@ -1810,7 +1870,7 @@
   #home {
     text-align: center;
   }
-  
+
   /* Stack Home Grid Vertically on Mobile */
   #home .home-grid {
     display: flex;
@@ -1820,7 +1880,7 @@
     padding: 20px;
     gap: 40px;
   }
-  
+
   /* Profile Section - Center Profile Photo and Content */
   #home .profile-section {
     display: flex;
@@ -1835,11 +1895,11 @@
     top: auto;
     margin-bottom: 20px;
   }
-  
+
   #home .content-section {
     order: 2; /* Force Content to be second */
   }
-  
+
   .profile-container {
     display: flex;
     justify-content: center;
@@ -1847,11 +1907,11 @@
     width: 100%;
     margin-bottom: 20px;
   }
-  
+
   .profile-photo {
     margin: 0 auto;
   }
-  
+
   /* Name and Tagline - Centered */
   .name {
     text-align: center;
@@ -1862,13 +1922,13 @@
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
-  
+
   .tagline {
     text-align: center;
     width: 100%;
     margin: 10px auto 20px;
   }
-  
+
   /* Social Links - Centered */
   .contact-links {
     display: flex;
@@ -1879,7 +1939,7 @@
     width: 100%;
     margin: 20px auto;
   }
-  
+
   /* Content Section - Center About Card */
   #home .content-section {
     display: flex;
@@ -1897,18 +1957,18 @@
     flex-direction: column;
     align-items: center;
   }
-  
+
   #home .content-section .section-title {
     text-align: center;
     width: 100%;
   }
-  
+
   .about-card {
     text-align: center;
     width: 100%;
     max-width: 100%;
   }
-  
+
   .about-text {
     text-align: center !important;
     margin: 0 auto;
@@ -1921,7 +1981,7 @@
     text-align: center !important;
     width: 100%;
   }
-  
+
   /* CTA Button - Centered */
   .cta-button {
     margin: 20px auto 0;
@@ -1929,27 +1989,27 @@
     align-items: center;
     justify-content: center;
   }
-  
+
   /* Container - Center All Content */
   .container {
     text-align: center;
     padding: 40px 20px;
     margin: 0 auto;
   }
-  
+
   /* Section Titles - Centered */
   .section-title {
     text-align: center;
     width: 100%;
     margin: 0 auto 30px;
   }
-  
+
   .section-subtitle {
     text-align: center;
     width: 100%;
     margin: 0 auto 20px;
   }
-  
+
   /* Cards - Centered */
   .card {
     text-align: center;
@@ -1957,44 +2017,44 @@
     width: 100%;
     max-width: 100%;
   }
-  
+
   /* Skills Section - Centered */
   .skills-container {
     width: 100%;
     margin: 0 auto;
   }
-  
+
   .skill-item {
     text-align: left; /* Keep skill bars left-aligned for readability */
     width: 100%;
   }
-  
+
   /* Resume Section - Centered */
   .resume-section {
     text-align: center;
     width: 100%;
     margin: 30px auto;
   }
-  
+
   .resume-heading {
     text-align: center;
     margin-bottom: 20px;
   }
-  
+
   .resume-btn {
     margin: 0 auto;
     display: inline-flex;
     align-items: center;
     justify-content: center;
   }
-  
+
   /* Footer - Centered */
   footer {
     text-align: center;
     width: 100%;
     margin: 0 auto;
   }
-  
+
   /* Projects grid - stack on mobile (moved from style.css) */
   #projects {
     grid-template-columns: 1fr;
@@ -2010,7 +2070,7 @@
 
 @media (max-width: 590px) {
   nav { height: 54px !important; }
-  
+
   .nav-container {
     justify-content: flex-start !important;
     gap: 4px !important;
@@ -2018,11 +2078,11 @@
   }
 
   #navbar .desktop-search { display: none !important; }
-  
-  #navbar .mobile-search-icon { 
-    display: inline-flex !important; 
-    order: 3; 
-    margin-left: auto; 
+
+  #navbar .mobile-search-icon {
+    display: inline-flex !important;
+    order: 3;
+    margin-left: auto;
     margin-right: 8px;
     width: 40px !important;
     height: 40px !important;
@@ -2032,8 +2092,8 @@
     border-radius: 10px !important;
     box-sizing: border-box !important;
   }
-  
-  #navbar .theme-toggle { 
+
+  #navbar .theme-toggle {
     order: 4;
     background: var(--card-bg) !important;
     border: 2px solid var(--border) !important;
@@ -2053,7 +2113,7 @@
     -webkit-backdrop-filter: blur(8px);
     box-sizing: border-box !important;
   }
-  
+
   #navbar .menu-icon {
     order: 1 !important;
     margin-right: 0 !important;
@@ -2087,51 +2147,51 @@
 }
 @media (min-width: 769px) and (max-width: 1024px) {
   #navbar .mobile-search-icon { display: none !important; }
-  
-  #navbar .theme-toggle { 
-    width: 40px !important; 
-    height: 40px !important; 
-    min-width: 40px !important; 
-    min-height: 40px !important; 
-    border: 2px solid var(--border) !important; 
-    border-radius: 10px !important; 
-    background: var(--card-bg) !important; 
-    backdrop-filter: blur(8px); 
-    -webkit-backdrop-filter: blur(8px); 
-    transition: background 0.3s ease, border-color 0.3s ease, transform 0.2s ease; 
+
+  #navbar .theme-toggle {
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    min-height: 40px !important;
+    border: 2px solid var(--border) !important;
+    border-radius: 10px !important;
+    background: var(--card-bg) !important;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    transition: background 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
     margin-left: 8px;
     order: 4;
   }
 
   /* Base desktop search positioning */
-  #navbar .desktop-search { 
-    display: flex !important; 
-    order: 3; 
-    margin-left: auto; 
+  #navbar .desktop-search {
+    display: flex !important;
+    order: 3;
+    margin-left: auto;
     margin-right: 10px;
   }
 }
 
 /* Full Search Bar (900px - 1024px) */
 @media (min-width: 900px) and (max-width: 1024px) {
-  #navbar .desktop-search { 
+  #navbar .desktop-search {
     width: auto;
     max-width: 280px;
     flex: 0 1 280px; /* Shrinkable */
     min-width: 140px; /* Prevent hiding placeholder */
   }
-  #navbar .search-input { 
+  #navbar .search-input {
     display: block !important;
-    height: 40px !important; 
-    padding: 6px 38px 6px 12px; 
-    border-width: 2px !important; 
+    height: 40px !important;
+    padding: 6px 38px 6px 12px;
+    border-width: 2px !important;
   }
-  
+
   /* Hide the standalone icon button */
   #navbar .desktop-search .search-icon-button {
     display: none !important;
   }
-  
+
   /* Show the search button icon at the right of the input */
   #navbar .desktop-search .search-button {
     display: flex !important;
@@ -2142,9 +2202,9 @@
 @media (min-width: 769px) and (max-width: 899px) {
   #navbar .desktop-search { width: auto; }
   #navbar .search-input { display: none !important; }
-  
-  #navbar .desktop-search .search-icon-button { 
-    display: flex !important; 
+
+  #navbar .desktop-search .search-icon-button {
+    display: flex !important;
     width: 40px;
     height: 40px;
     border: 2px solid var(--border);
@@ -2155,7 +2215,7 @@
     justify-content: center;
     cursor: pointer;
   }
-  
+
   #navbar .desktop-search .search-icon-button img {
     width: 20px;
     height: 20px;
@@ -2182,11 +2242,11 @@
   }
 
   /* Ensure parents don't clip tooltips */
-  .contact-links, 
+  .contact-links,
   .contact-links a {
     overflow: visible !important;
   }
-  
+
   /* Boost profile section z-index to ensure tooltips sit on top of other sections */
   #home .profile-section {
     z-index: 10;
@@ -2207,7 +2267,7 @@
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    
+
     /* Positioning - Default (Top) */
     bottom: 100%;
     left: 50%;
@@ -2221,7 +2281,7 @@
     border-width: 6px;
     border-style: solid;
     border-color: rgba(15, 23, 42, 0.95) transparent transparent transparent;
-    
+
     /* Positioning - Default (Top) */
     bottom: 100%;
     left: 50%;
@@ -2279,7 +2339,7 @@
     gap: 18px; /* Gap between links - reduced for tighter spacing */
     flex: 1 1 auto;
   }
-  
+
   /* Ensure desktop search is visible */
   #navbar .desktop-search {
     display: flex !important;
@@ -2402,7 +2462,7 @@
   .desktop-search-results {
     display: none !important;
   }
-  
+
   /* Hide desktop settings button on mobile (show from 768px+) */
   .desktop-settings-btn {
     display: none !important;
@@ -2414,7 +2474,7 @@
   #home .home-grid {
     padding-top: 0; /* Reduced top padding for larger screens */
   }
-  
+
   /* Ensure full search bar is visible on large desktops */
   #navbar .desktop-search {
     display: flex !important;
@@ -2422,24 +2482,24 @@
     max-width: 350px;
     flex: 0 1 350px;
   }
-  
+
   #navbar .search-input {
     display: block !important;
     height: 40px !important;
     padding: 6px 38px 6px 12px;
     border-width: 2px !important;
   }
-  
+
   /* Hide the standalone icon button (used for icon-only mode) */
   #navbar .desktop-search .search-icon-button {
     display: none !important;
   }
-  
+
   /* Show the search button icon at the right of the input */
   #navbar .desktop-search .search-button {
     display: flex !important;
   }
-  
+
   /* Hide mobile search icon on desktop */
   #navbar .mobile-search-icon {
     display: none !important;
@@ -2511,7 +2571,7 @@
   .menu-icon {
     display: none !important;
   }
-  
+
   /* Show desktop settings button as icon-only at far right */
   .desktop-settings-btn {
     display: flex !important;
@@ -2591,7 +2651,7 @@
     padding-bottom: 20px !important;
     -webkit-overflow-scrolling: touch;
   }
-  
+
   /* Allow scrolling inside settings panel on desktop */
   @media (min-width: 900px) {
     body.no-scroll .settings-content,
@@ -2619,7 +2679,7 @@
     height: 32px !important;
     font-size: 1.3rem !important;
   }
-  
+
   /* Show text labels on larger screens for theme toggle */
   .theme-text {
     display: inline !important;
@@ -2641,7 +2701,7 @@
     display: block !important;
     visibility: visible !important;
   }
-  
+
   #navbar .desktop-search .search-button {
     display: flex !important; /* Icon container needs flex */
   }
@@ -2650,5 +2710,4 @@
     display: none !important;
   }
 }
-
 

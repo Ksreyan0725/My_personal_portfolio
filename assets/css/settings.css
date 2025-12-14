@@ -65,18 +65,19 @@
 .settings-close-btn {
     background: var(--card-bg);
     border: 1px solid var(--border);
-    font-size: 1.5rem;
+    font-size: 1.1rem; /* Slightly smaller for more breathing room */
     color: var(--text-primary);
     cursor: pointer;
-    padding: 0;
+    padding: 6px; /* Increased from 4px for more space */
     border-radius: 50%;
     line-height: 1;
     transition: all 0.3s ease;
-    width: 36px;
-    height: 36px;
+    width: 38px; /* Increased from 36px */
+    height: 38px; /* Increased from 36px */
     display: flex;
     align-items: center;
     justify-content: center;
+    box-sizing: border-box; /* Ensure padding doesn't increase total size */
 }
 
 .settings-close-btn:hover {
@@ -352,8 +353,6 @@ body.no-scroll {
     mix-blend-mode: multiply; /* Better for tinting light text on dark background */
 }
 
-
-
 /* ==================== Notification Banner ==================== */
 .notification-banner {
     position: fixed !important;
@@ -425,11 +424,11 @@ body.no-scroll {
         max-width: 92vw;
         border-radius: 40px !important;
     }
-    
+
     #notificationMessage {
         font-size: 0.9rem;
     }
-    
+
     .notification-icon {
         width: 20px;
         height: 20px;
@@ -442,11 +441,11 @@ body.no-scroll {
         max-width: 95vw;
         border-radius: 35px !important;
     }
-    
+
     #notificationMessage {
         font-size: 0.85rem;
     }
-    
+
     .notification-icon {
         width: 18px;
         height: 18px;
@@ -458,11 +457,11 @@ body.no-scroll {
         padding: 8px 16px;
         border-radius: 30px !important;
     }
-    
+
     #notificationMessage {
         font-size: 0.8rem;
     }
-    
+
     .notification-content {
         gap: 8px;
     }
@@ -474,7 +473,7 @@ body.no-scroll {
         /* Adjusted for desktop if needed, otherwise inherit default */
         top: -100px;
     }
-    
+
     .notification-banner.active {
         top: 24px !important;
     }
@@ -621,6 +620,7 @@ body.no-scroll {
     cursor: pointer;
     box-shadow: 0 2px 6px rgba(0,0,0,0.2);
     transition: transform 0.1s ease, background 0.2s ease;
+    margin-top: -8px; /* Centers thumb vertically on the 4px track */
 }
 
 .intensity-slider::-webkit-slider-thumb:hover {

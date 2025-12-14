@@ -123,9 +123,9 @@ body.loaded #preloader {
     left: 0;
     width: 50%;
     height: 100%;
-    background: linear-gradient(90deg, 
-        transparent, 
-        var(--accent), 
+    background: linear-gradient(90deg,
+        transparent,
+        var(--accent),
         transparent
     );
     border-radius: 2px;
@@ -134,13 +134,13 @@ body.loaded #preloader {
 }
 
 @keyframes pulse-glow {
-    0%, 100% { 
-        opacity: 0.7; 
-        transform: scale(0.95); 
+    0%, 100% {
+        opacity: 0.7;
+        transform: scale(0.95);
     }
-    50% { 
-        opacity: 1; 
-        transform: scale(1.05); 
+    50% {
+        opacity: 1;
+        transform: scale(1.05);
         filter: drop-shadow(0 0 20px rgba(99, 102, 241, 0.8));
     }
 }
@@ -150,12 +150,10 @@ body.loaded #preloader {
     100% { left: 100%; }
 }
 
-
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
-
 
 /* ==================== Mobile & PWA Specific Fixes ==================== */
 /* DISABLED - These were preventing preloader from hiding */
@@ -166,11 +164,11 @@ body.loaded #preloader {
         visibility: visible !important;
         opacity: 1 !important;
     }
-    
+
     .loader-logo {
         font-size: 2.5rem !important;
     }
-    
+
     .loader-bar {
         width: 150px !important;
     }
@@ -182,7 +180,7 @@ body.loaded #preloader {
     .loader-logo {
         font-size: 2rem !important;
     }
-    
+
     .loader-bar {
         width: 120px !important;
     }
@@ -199,3 +197,4 @@ body.loaded #preloader {
     }
 }
 */
+

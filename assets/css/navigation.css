@@ -100,14 +100,14 @@ nav {
   backdrop-filter: blur(20px);
   border-bottom: 2px solid var(--border);
   z-index: 1000;
-  padding: 6px 0;
+  padding: 8px 0; /* Increased from 6px for better spacing */
   /* Add safe area inset for notch */
   padding-top: env(safe-area-inset-top, 0px);
   /* Use specific transitions to prevent "flying" on load */
   transition: background 0.3s ease, box-shadow 0.3s ease, padding 0.3s ease, height 0.3s ease, transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
-  /* Adjust height to include safe area if needed, though usually padding handles it. 
+  /* Adjust height to include safe area if needed, though usually padding handles it.
      We use min-height or automatic height with box-sizing */
-  height: auto; 
+  height: auto;
   min-height: calc(48px + env(safe-area-inset-top, 0px)); /* compact desktop + safe area */
   will-change: transform;
 }
@@ -258,8 +258,8 @@ nav.scrolled {
     overflow: visible;
     height: 40px;
     min-height: 40px;
+    line-height: normal; /* Prevent text from affecting vertical position */
 }
-
 
 .theme-toggle:hover {
   border-color: var(--accent);
@@ -295,7 +295,6 @@ nav.scrolled {
   display: none; /* Hidden on mobile by default */
 }
 
-
 /* Settings Toggle Button - Matches Theme Toggle */
 .settings-toggle {
     background: var(--card-bg);
@@ -317,6 +316,7 @@ nav.scrolled {
     overflow: visible;
     height: 40px;
     min-height: 40px;
+    line-height: normal; /* Prevent text from affecting vertical position */
 }
 
 .settings-toggle:hover {
@@ -340,6 +340,7 @@ nav.scrolled {
     height: 22px;
     object-fit: contain;
     transition: transform 0.3s ease;
+    display: block; /* Prevent inline spacing issues */
 }
 
 .settings-toggle:hover .settings-icon {

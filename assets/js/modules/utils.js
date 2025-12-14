@@ -136,17 +136,43 @@ export function triggerVibration(pattern = [200, 100, 200]) {
  * @param {string} message - Notification message
  * @param {string} type - Notification type (success, error, info)
  */
+let currentNotification = null; // Track current notification
+let notificationTimeout = null; // Track timeout
+
 export function showNotification(message, type = 'info') {
+    // Remove existing notification immediately
+    if (currentNotification) {
+        clearTimeout(notificationTimeout);
+        currentNotification.remove();
+        currentNotification = null;
+    }
+
     const notification = document.createElement('div');
     notification.className = `notification notification-${type}`;
     notification.textContent = message;
+    // Determine styles based on type
+    let bg = 'var(--card-bg)';
+    let color = 'var(--text-primary)';
+    let border = 'none';
+
+    if (type === 'success') {
+        bg = 'linear-gradient(135deg, #10b981, #059669)';
+        color = '#ffffff';
+    } else if (type === 'warning') {
+        bg = 'linear-gradient(135deg, #f59e0b, #d97706)';
+        color = '#ffffff';
+    } else if (type === 'error') {
+        bg = 'linear-gradient(135deg, #ef4444, #dc2626)';
+        color = '#ffffff';
+    }
+
     notification.style.cssText = `
         position: fixed;
         top: 80px;
         left: 50%;
         transform: translateX(-50%);
-        background: var(--card-bg);
-        color: var(--text-primary);
+        background: ${bg};
+        color: ${color};
         padding: 16px 24px;
         border-radius: 12px;
         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
@@ -154,13 +180,20 @@ export function showNotification(message, type = 'info') {
         animation: slideInDown 0.3s ease;
         max-width: 90%;
         text-align: center;
+        border: ${border};
     `;
 
     document.body.appendChild(notification);
+    currentNotification = notification; // Store reference
 
-    setTimeout(() => {
+    notificationTimeout = setTimeout(() => {
         notification.style.animation = 'slideOutUp 0.3s ease';
-        setTimeout(() => notification.remove(), 300);
+        setTimeout(() => {
+            notification.remove();
+            if (currentNotification === notification) {
+                currentNotification = null;
+            }
+        }, 300);
     }, 3000);
 }
 
@@ -236,3 +269,4 @@ export async function copyToClipboard(text) {
         return success;
     }
 }
+

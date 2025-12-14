@@ -1,7 +1,7 @@
 // Service Worker for Portfolio PWA
-// Version 3.4.3 - Modular Architecture
-const CACHE_NAME = 'portfolio-v3.4.3';
-const RUNTIME_CACHE = 'portfolio-runtime-v3.4.3';
+// Version 3.4.4 - Modular Architecture
+const CACHE_NAME = 'portfolio-v3.4.4';
+const RUNTIME_CACHE = 'portfolio-runtime-v3.4.4';
 
 // Critical resources for initial load (minimal set for fast install)
 const CORE_ASSETS = [
@@ -136,8 +136,11 @@ self.addEventListener('fetch', (event) => {
                             return response;
                         }
 
-                        // Only cache same-origin requests
-                        if (event.request.url.startsWith(self.location.origin)) {
+                        // Cache same-origin requests and specific external resources
+                        if (event.request.url.startsWith(self.location.origin) ||
+                            event.request.url.startsWith('https://fonts.googleapis.com') ||
+                            event.request.url.startsWith('https://fonts.gstatic.com') ||
+                            event.request.url.startsWith('https://unpkg.com')) {
                             const responseToCache = response.clone();
                             caches.open(RUNTIME_CACHE)
                                 .then((cache) => {
@@ -208,3 +211,4 @@ self.addEventListener('notificationclick', (event) => {
         clients.openWindow('/My_personal_portfolio/')
     );
 });
+

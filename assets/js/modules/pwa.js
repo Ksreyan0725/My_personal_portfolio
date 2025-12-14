@@ -4,12 +4,14 @@
  * Extracted from script.js lines 3070-3590
  */
 
+import { showNotification } from './utils.js';
+
 // State
 let deferredPrompt = null;
 
 // DOM Elements
 const installAppGroup = document.getElementById('installAppGroup');
-const installAppBtn = document.getElementById('installAppBtn');
+const installAppBtn = document.getElementById('installAppOption'); // Changed from 'installAppBtn' to 'installAppOption'
 const iosInstallInstructions = document.getElementById('iosInstallInstructions');
 
 // Check if iOS
@@ -57,7 +59,7 @@ function trackInstallEvent(outcome, errorMessage = null) {
 function showInstallAnimation() {
     if (!installAppBtn) return;
 
-    const btnTitle = installAppBtn.querySelector('.theme-btn-title');
+    const btnTitle = installAppBtn.querySelector('.option-title');
     if (!btnTitle) return;
 
     // Create progress elements
@@ -121,7 +123,7 @@ function showInstallAnimation() {
 function showRetryOption() {
     if (!installAppBtn) return;
 
-    const btnTitle = installAppBtn.querySelector('.theme-btn-title');
+    const btnTitle = installAppBtn.querySelector('.option-title');
     if (!btnTitle) return;
 
     btnTitle.textContent = 'Install Dismissed';
@@ -145,7 +147,7 @@ function showRetryOption() {
 function showRefreshPrompt() {
     if (!installAppBtn) return;
 
-    const btnTitle = installAppBtn.querySelector('.theme-btn-title');
+    const btnTitle = installAppBtn.querySelector('.option-title');
     if (!btnTitle) return;
 
     btnTitle.textContent = 'Refresh to Retry';
@@ -161,7 +163,7 @@ function showRefreshPrompt() {
 function showInstallError() {
     if (!installAppBtn) return;
 
-    const btnTitle = installAppBtn.querySelector('.theme-btn-title');
+    const btnTitle = installAppBtn.querySelector('.option-title');
     if (!btnTitle) return;
 
     btnTitle.textContent = 'Install Failed ✕';
@@ -185,13 +187,15 @@ function showInstallError() {
 export function updateInstallButton() {
     if (!installAppBtn) return;
 
-    const btnTitle = installAppBtn.querySelector('.theme-btn-title');
+    const btnTitle = installAppBtn.querySelector('.option-title');
+    const btnDesc = installAppBtn.querySelector('.option-desc');
     if (!btnTitle) return;
 
     const isCurrentlyInstalled = checkIsStandalone();
 
     if (isCurrentlyInstalled) {
         btnTitle.textContent = 'App Already Installed ✓';
+        if (btnDesc) btnDesc.textContent = 'You can launch it from your home screen';
         installAppBtn.style.opacity = '0.6';
         installAppBtn.style.cursor = 'not-allowed';
         installAppBtn.disabled = true;
@@ -201,14 +205,17 @@ export function updateInstallButton() {
         installAppBtn.style.cursor = 'default';
         installAppBtn.disabled = true;
         btnTitle.textContent = 'Follow Instructions Below';
+        if (btnDesc) btnDesc.textContent = 'Tap Share → Add to Home Screen';
         if (iosInstallInstructions) iosInstallInstructions.style.display = 'block';
     } else if (deferredPrompt) {
         btnTitle.textContent = 'Install App';
+        if (btnDesc) btnDesc.textContent = 'Add to home screen for quick access';
         installAppBtn.style.opacity = '1';
         installAppBtn.style.cursor = 'pointer';
         installAppBtn.disabled = false;
     } else {
         btnTitle.textContent = 'Install Not Available';
+        if (btnDesc) btnDesc.textContent = 'Your browser doesn\'t support app installation';
         installAppBtn.style.opacity = '0.6';
         installAppBtn.style.cursor = 'not-allowed';
         installAppBtn.disabled = true;
@@ -317,6 +324,17 @@ export function initPWA() {
 
     // Manage install notification banner
     manageInstallNotification();
+
+    // Network Status Monitoring
+    window.addEventListener('online', () => {
+        showNotification('You are back online!', 'success');
+        updateInstallButton();
+    });
+
+    window.addEventListener('offline', () => {
+        showNotification('You are offline. Some features may be limited.', 'warning');
+        updateInstallButton();
+    });
 }
 
 /*
@@ -379,3 +397,4 @@ export function isPWAInstalled() {
 
 // Export for use in other modules
 export { checkIsStandalone, trackInstallEvent };
+

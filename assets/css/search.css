@@ -30,6 +30,7 @@
   padding: 0;
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
+  box-sizing: border-box; /* Ensure consistent sizing */
 }
 
 .desktop-search .search-icon-button:hover {
@@ -93,11 +94,13 @@
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   height: 40px;
+  box-sizing: border-box; /* Ensure consistent sizing */
+  line-height: normal; /* Prevent text from affecting vertical position */
 }
 
 [data-theme="dark"] .search-input {
-  background: #252525; /* Light black (sleeker dark) */
-  border-color: #404040; /* Subtle border */
+  background: var(--card-bg); /* Match navbar background */
+  border-color: #404040; /* Keep subtle gray border */
 }
 
 [data-theme="light"] .search-input {
@@ -447,7 +450,6 @@
   border-radius: 3px;
 }
 
-
 /* Mobile search icon image styling */
 .mobile-search-icon-img {
   filter: brightness(0.9) contrast(1.05);
@@ -529,7 +531,6 @@
   background: transparent;
 }
 
-
 /* ==================== Mobile Search Icon ==================== */
 .mobile-search-icon {
   order: 3;
@@ -550,7 +551,6 @@
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
 }
-
 
 /* ==================== Search Modal Popup (Mobile) ==================== */
 .search-modal {
@@ -597,7 +597,7 @@
 .search-modal-close {
   background: var(--card-bg);
   border: 1px solid var(--border);
-  font-size: 1.5rem;
+  font-size: 1.2rem; /* Reduced from 1.5rem for better spacing */
   color: var(--text-primary);
   cursor: pointer;
   padding: 6px 10px;
@@ -605,6 +605,7 @@
   line-height: 1;
   transition: all 0.3s ease;
   opacity: 1;
+  box-sizing: border-box; /* Ensure consistent sizing */
 }
 
 .search-modal-close:hover {
@@ -761,5 +762,4 @@
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
-
 

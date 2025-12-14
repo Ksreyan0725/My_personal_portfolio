@@ -217,9 +217,9 @@
         .search-container {
           width: auto;
           flex: 1;
-          margin-right: 0; 
+          margin-right: 0;
         }
-        
+
         .theme-toggle {
           margin-left: 0;
           padding: 6px 14px;
@@ -227,7 +227,7 @@
           flex-shrink: 0;
           width: auto !important; /* Prevent squishing */
         }
-        
+
         .theme-text {
             display: inline-block !important; /* Force show text */
             margin-left: 6px;

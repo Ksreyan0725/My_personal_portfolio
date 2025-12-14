@@ -1,7 +1,7 @@
 // Service Worker for Kumar Sreyan Pattanayak Portfolio
-// Version 3.4.3
+// Version 3.4.4
 
-const CACHE_NAME = 'ksp-portfolio-v3.4.3';
+const CACHE_NAME = 'ksp-portfolio-v3.4.4';
 const urlsToCache = [
     '/My_personal_portfolio/',
     '/My_personal_portfolio/index.html',
@@ -79,3 +79,4 @@ self.addEventListener('fetch', (event) => {
             })
     );
 });
+

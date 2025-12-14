@@ -28,7 +28,6 @@
     }
 }
 
-
 /* Ensure settings panel appears on tablet and desktop (768px+) */
 @media (min-width: 768px) {
     .settings-panel.active,
@@ -40,7 +39,7 @@
         display: flex !important;
         pointer-events: auto !important;
     }
-    
+
     .settings-panel {
         position: fixed !important;
         top: 70px !important;
@@ -59,3 +58,4 @@
         overflow: hidden !important; /* Ensure content doesn't spill out */
     }
 }
+
