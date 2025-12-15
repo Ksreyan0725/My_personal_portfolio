@@ -2,7 +2,7 @@
 
 A modern, accessible, and high-performance personal portfolio website built with HTML5, CSS3, and JavaScript. This project showcases my skills, projects, and professional journey.
 
-🌐 Live Demo: https://ksreyan0725.github.io/My_personal_portfolio/ 
+🌐 Visit here: https://ksreyan0725.github.io/My_personal_portfolio/ 
 ---
 
 ## 📋 Project Overview
