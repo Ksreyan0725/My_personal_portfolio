@@ -335,6 +335,27 @@ export function initPWA() {
         showNotification('You are offline. Some features may be limited.', 'warning');
         updateInstallButton();
     });
+
+    // Install prompt button handlers
+    const installBtn = document.getElementById('installBtn');
+    const installLaterBtn = document.getElementById('installLaterBtn');
+    const installPromptClose = document.getElementById('installPromptClose');
+
+    if (installBtn) {
+        installBtn.addEventListener('click', installPWA);
+    }
+
+    if (installLaterBtn) {
+        installLaterBtn.addEventListener('click', () => {
+            if (window.closeInstallPrompt) window.closeInstallPrompt();
+        });
+    }
+
+    if (installPromptClose) {
+        installPromptClose.addEventListener('click', () => {
+            if (window.closeInstallPrompt) window.closeInstallPrompt();
+        });
+    }
 }
 
 /*

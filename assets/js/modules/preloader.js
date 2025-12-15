@@ -55,15 +55,10 @@ function hidePreloader() {
     const isMobile = window.innerWidth <= 480;
     const isTablet = window.innerWidth > 480 && window.innerWidth <= 1024;
 
-    // Minimum display time for browser
-    let minDisplayTime;
-    if (isMobile) {
-        minDisplayTime = 400; // Mobile browser
-    } else if (isTablet) {
-        minDisplayTime = 300; // Tablet browser
-    } else {
-        minDisplayTime = 200; // Desktop browser
-    }
+    // Timing for exactly 2 full rotations of spinning circles
+    // Slower circle rotates at 0.8s per rotation
+    // 2 rotations = 0.8s × 2 = 1.6s (1600ms)
+    const minDisplayTime = 1600; // Same for all devices
 
     // Ensure preloader is visible initially
     preloader.style.display = 'flex';

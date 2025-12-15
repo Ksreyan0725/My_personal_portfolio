@@ -46,7 +46,7 @@ body.sidebar-open #pageWrapper {
 }
 
 .notification-content {
-  background: rgba(0, 0, 0, 0.75);
+  background: rgba(0, 0, 0, 0.9); /* Increased opacity from 0.75 to 0.9 */
   color: #fff;
   padding: 14px 28px;
   border-radius: 50px;
@@ -137,13 +137,62 @@ nav.scrolled {
 .nav-logo {
   font-size: 1.3rem;
   font-weight: 700;
-  background: linear-gradient(135deg, #6366f1, #3b82f6, #06b6d4, #10b981, #f59e0b, #ec4899, #8b5cf6);
+  /* Gold Metallic Shine for both themes */
+  background: linear-gradient(135deg, 
+    #ffd700, #ffed4e, #ffb700, #ffc800, 
+    #ffdf00, #fff44f, #ffa500, #ffb347
+  );
+  background-size: 200% 200%;
+  animation: goldShine 3s ease-in-out infinite;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   cursor: pointer;
   flex-shrink: 0;
   order: 1; /* leftmost */
+  transition: filter 0.3s ease;
+  /* Gold glow shadow for visible shine */
+  filter: drop-shadow(0 0 3px rgba(255, 215, 0, 0.4))
+          drop-shadow(0 0 8px rgba(255, 215, 0, 0.3))
+          drop-shadow(0 0 12px rgba(255, 165, 0, 0.2));
+}
+
+/* Gold shimmer animation */
+@keyframes goldShine {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* Hover effect - glow only */
+.nav-logo:hover {
+  filter: drop-shadow(0 0 12px rgba(99, 102, 241, 0.8)) 
+          drop-shadow(0 0 20px rgba(147, 51, 234, 0.6))
+          drop-shadow(0 0 30px rgba(59, 130, 246, 0.4));
+}
+
+/* Active/Click effect - reload animation */
+.nav-logo:active,
+.nav-logo.clicked {
+  animation: reloadSpin 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  transform: scale(0.7) translateZ(-80px) rotateY(360deg);
+}
+
+/* Reload spin animation */
+@keyframes reloadSpin {
+  0% {
+    transform: scale(1) translateZ(0) rotateY(0deg);
+  }
+  50% {
+    transform: scale(0.6) translateZ(-100px) rotateY(180deg);
+    filter: brightness(1.5) blur(1px);
+  }
+  100% {
+    transform: scale(1) translateZ(0) rotateY(360deg);
+  }
 }
 
 .nav-logo strong,
@@ -153,6 +202,8 @@ nav.scrolled {
   background-clip: text;
   -webkit-text-fill-color: transparent;
   font-style: italic;
+  display: inline-block;
+  transition: transform 0.4s ease;
 }
 
 .nav-links {
@@ -243,7 +294,7 @@ nav.scrolled {
     color: var(--text-primary);
     border: 2px solid var(--border);
     box-sizing: border-box;
-    padding: 8px 16px;
+    padding: 2px 8px; /* Minimal padding - just small gap */
     border-radius: 50px;
     font-size: 16px;
     cursor: pointer;
@@ -278,8 +329,8 @@ nav.scrolled {
 }
 
 .theme-icon {
-  width: 26px;
-  height: 26px;
+  width: 36px; /* Maximized icon size */
+  height: 36px; /* Maximized icon size */
   object-fit: contain;
   transition: transform 0.3s ease;
   display: block;
@@ -301,7 +352,7 @@ nav.scrolled {
     color: var(--text-primary);
     border: 2px solid var(--border);
     box-sizing: border-box;
-    padding: 8px 18px;
+    padding: 2px 10px; /* Minimal padding - just small gap */
     border-radius: 50px;
     font-size: 14px;
     cursor: pointer;
@@ -336,8 +387,8 @@ nav.scrolled {
 }
 
 .settings-icon {
-    width: 22px;
-    height: 22px;
+    width: 32px; /* Maximized icon size */
+    height: 32px; /* Maximized icon size */
     object-fit: contain;
     transition: transform 0.3s ease;
     display: block; /* Prevent inline spacing issues */

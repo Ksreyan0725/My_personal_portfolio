@@ -538,6 +538,10 @@ header {
   white-space: nowrap;
   letter-spacing: -0.02em;
   text-align: center;
+  /* Colorful glow shadow for visible shine */
+  filter: drop-shadow(0 0 3px rgba(99, 102, 241, 0.3))
+          drop-shadow(0 0 8px rgba(236, 72, 153, 0.25))
+          drop-shadow(0 0 12px rgba(59, 130, 246, 0.2));
 }
 
 @keyframes glow {
@@ -548,6 +552,13 @@ header {
   50% {
     filter: drop-shadow(0 0 15px var(--accent-glow));
   }
+}
+
+/* Light theme - add dark shadow for visibility */
+[data-theme="light"] .name {
+  filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.3))
+          drop-shadow(0 0 4px rgba(0, 0, 0, 0.2))
+          drop-shadow(0 0 8px rgba(0, 0, 0, 0.1)) !important;
 }
 
 .tagline {
@@ -1402,6 +1413,11 @@ main > .section::after {
   margin-bottom: 15px;
 }
 
+/* Light theme - make dates black for better visibility */
+[data-theme="light"] .card .date {
+  color: #000000;
+}
+
 .skills-content {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
@@ -1700,9 +1716,9 @@ footer {
 [data-theme="light"] .filter-btn.active {
   background: #4f46e5 !important; /* Darker indigo for better contrast */
   border-color: #4f46e5 !important;
-  color: #ffffff !important;
+  color: #000000 !important; /* Changed to black */
   font-weight: 700;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5), 0 0 1px rgba(0, 0, 0, 0.8);
+  text-shadow: 0 2px 4px rgba(255, 255, 255, 0.5), 0 0 1px rgba(255, 255, 255, 0.8); /* Light shadow for contrast */
   box-shadow: 0 4px 15px rgba(79, 70, 229, 0.4) !important;
 }
 

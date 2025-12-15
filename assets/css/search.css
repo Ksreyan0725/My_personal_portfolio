@@ -229,8 +229,8 @@
 .desktop-search-results {
   position: absolute;
   top: calc(100% + 10px);
-  left: auto;
-  right: 0;
+  left: 0;
+  right: auto;
   width: clamp(320px, 36vw, 420px);
   max-width: 90vw;
   background: var(--bg-secondary);

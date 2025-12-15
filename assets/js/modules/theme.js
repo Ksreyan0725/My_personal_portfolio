@@ -19,7 +19,6 @@ const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
 // Settings Panel Elements (needed for theme management)
 const settingsPanel = document.getElementById('settingsPanel');
 const settingsOverlay = document.getElementById('settingsOverlay');
-const themeBtns = document.querySelectorAll('.theme-btn');
 
 /**
  * Update active state of theme buttons in settings panel
@@ -36,54 +35,6 @@ function updateActiveThemeBtn(theme) {
             btn.classList.remove('active');
         }
     });
-}
-
-/**
- * Open settings panel
- */
-export function openSettings() {
-    console.log('openSettings() called');
-
-    if (!settingsPanel) {
-        console.error('Settings panel not found!');
-        return;
-    }
-
-    // Close sidebar if open
-    const sidebarMenu = document.getElementById('sidebarMenu');
-    const sidebarOverlay = document.getElementById('sidebarOverlay');
-    const isSidebarOpen = sidebarMenu && sidebarMenu.classList.contains('active');
-
-    if (isSidebarOpen) {
-        if (sidebarOverlay) sidebarOverlay.click();
-
-        // Wait for sidebar close animation before opening settings
-        setTimeout(() => {
-            settingsPanel.classList.add('active');
-            settingsOverlay.classList.add('active');
-            document.body.classList.add('no-scroll');
-            document.documentElement.classList.add('no-scroll');
-        }, 300);
-    } else {
-        settingsPanel.classList.add('active');
-        settingsOverlay.classList.add('active');
-        document.body.classList.add('no-scroll');
-        document.documentElement.classList.add('no-scroll');
-    }
-
-    // Update active theme button
-    updateActiveThemeBtn(currentTheme);
-}
-
-/**
- * Close settings panel
- */
-export function closeSettings() {
-    if (!settingsPanel) return;
-    settingsPanel.classList.remove('active');
-    settingsOverlay.classList.remove('active');
-    document.body.classList.remove('no-scroll');
-    document.documentElement.classList.remove('no-scroll');
 }
 
 /**
@@ -219,15 +170,67 @@ export function getCurrentTheme() {
 }
 
 /**
+ * Shuffle array using Fisher-Yates algorithm
+ */
+function shuffleArray(array) {
+    const shuffled = [...array];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+}
+
+/**
+ * Apply random gradient colors to logo and name
+ */
+function applyRandomGradient() {
+    // Custom vibrant color palette - 12 colors
+    const colors = [
+        '#ff8c00', // Orange
+        '#9b30ff', // Purple
+        '#8b4513', // Brown
+        '#00bfff', // Cyan (greenish-blue)
+        '#ff00ff', // Magenta (purplish-red)
+        '#008080', // Teal (dark greenish-blue)
+        '#800000', // Maroon (dark brownish-red)
+        '#000080', // Navy Blue (very dark blue)
+        '#808000', // Olive (dark yellowish-green)
+        '#e6e6fa', // Lavender (pale purple)
+        '#dc143c', // Crimson (deep red)
+        '#40e0d0'  // Turquoise (greenish-blue)
+    ];
+
+    // Shuffle colors
+    const shuffledColors = shuffleArray(colors);
+    const gradient = `linear-gradient(135deg, ${shuffledColors.join(', ')})`;
+
+    // NOTE: Nav logo now uses theme-specific metallic shine (gold/silver)
+    // So we DON'T apply random gradient to it anymore
+
+    // Apply to homepage name only
+    const nameElement = document.querySelector('.name');
+    if (nameElement) {
+        nameElement.style.background = gradient;
+        nameElement.style.webkitBackgroundClip = 'text';
+        nameElement.style.backgroundClip = 'text';
+        nameElement.style.webkitTextFillColor = 'transparent';
+    }
+
+    console.log('✅ Random gradient applied to name');
+}
+
+/**
  * Initialize theme system
  */
 export function initTheme() {
     console.log('✅ Theme module initialized');
 
+    // Apply random gradient colors on load
+    applyRandomGradient();
+
     // Expose globally for theme-schedule.js compatibility
     window.applyTheme = applyTheme;
-    window.openSettings = openSettings;
-    window.closeSettings = closeSettings;
 
     // Auto Theme Check Interval (every minute)
     setInterval(() => {
@@ -287,10 +290,14 @@ export function initTheme() {
     });
 
     // Theme buttons in settings panel
+    const themeBtns = document.querySelectorAll('.theme-btn'); // Query here when DOM is ready
+    console.log('🔍 Theme buttons found:', themeBtns.length);
     if (themeBtns && themeBtns.length > 0) {
-        themeBtns.forEach(btn => {
+        themeBtns.forEach((btn, index) => {
+            console.log(`🔘 Attaching listener to button ${index + 1}:`, btn.dataset.theme);
             btn.addEventListener('click', function () {
                 const theme = this.getAttribute('data-theme');
+                console.log('🎯 Theme button clicked:', theme);
                 if (theme) {
                     applyTheme(theme, true);
                 }

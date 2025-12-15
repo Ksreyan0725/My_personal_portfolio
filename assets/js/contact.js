@@ -546,7 +546,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
 
                 if (response.ok) {
-                    // Success
+                    // Success - Redirect to thank you page
                     form.reset();
                     // Reset all aria-invalid states
                     ['name', 'email', 'phone', 'subject', 'message'].forEach(fieldName => {
@@ -559,6 +559,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         window.location.href = 'pages/thank-you.html';
                     }, 1500);
                 } else {
+                    // Failed - Redirect to 404 page
                     throw new Error('Form submission failed');
                 }
             } catch (error) {

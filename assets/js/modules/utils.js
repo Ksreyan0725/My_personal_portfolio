@@ -140,6 +140,13 @@ let currentNotification = null; // Track current notification
 let notificationTimeout = null; // Track timeout
 
 export function showNotification(message, type = 'info') {
+    // Check if push notifications are enabled
+    const pushEnabled = localStorage.getItem('pushEnabled');
+    if (pushEnabled === 'false') {
+        console.log('📵 Notification blocked - Push notifications disabled');
+        return; // Don't show notification if disabled
+    }
+
     // Remove existing notification immediately
     if (currentNotification) {
         clearTimeout(notificationTimeout);

@@ -234,9 +234,14 @@ export function initNavigation() {
     const navLogo = document.querySelector('.nav-logo');
     if (navLogo) {
         const reloadPage = () => {
-            // Reload page from server (ignore cache) to ensure fresh load
-            window.location.reload(true);
-            // Or window.location.href = window.location.href; if you just want to go to top
+            // Add clicked class for animation
+            navLogo.classList.add('clicked');
+
+            // Wait for animation to complete before reload
+            setTimeout(() => {
+                // Reload page from server (ignore cache) to ensure fresh load
+                window.location.reload(true);
+            }, 600); // Match animation duration
         };
 
         navLogo.addEventListener('click', reloadPage);

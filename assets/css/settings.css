@@ -64,16 +64,16 @@
 
 .settings-close-btn {
     background: var(--card-bg);
-    border: 1px solid var(--border);
-    font-size: 1.1rem; /* Slightly smaller for more breathing room */
+    border: 2px solid var(--border); /* Increased from 1px */
+    font-size: 1.3rem; /* Increased for bigger emoji */
     color: var(--text-primary);
     cursor: pointer;
-    padding: 6px; /* Increased from 4px for more space */
+    padding: 8px; /* Increased padding */
     border-radius: 50%;
     line-height: 1;
     transition: all 0.3s ease;
-    width: 38px; /* Increased from 36px */
-    height: 38px; /* Increased from 36px */
+    width: 48px; /* Increased from 38px */
+    height: 48px; /* Increased from 38px */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -88,9 +88,7 @@
 }
 
 /* Disable scrolling when sidebar or settings are open */
-html.sidebar-open,
 html.no-scroll,
-body.sidebar-open,
 body.no-scroll {
     overflow: hidden !important;
     height: 100% !important;
@@ -615,7 +613,7 @@ body.no-scroll {
     -webkit-appearance: none;
     width: 20px;
     height: 20px;
-    background: var(--text-secondary);
+    background: #ffa000; /* Match night light color */
     border-radius: 50%;
     cursor: pointer;
     box-shadow: 0 2px 6px rgba(0,0,0,0.2);
@@ -625,7 +623,7 @@ body.no-scroll {
 
 .intensity-slider::-webkit-slider-thumb:hover {
     transform: scale(1.1);
-    background: var(--text-primary);
+    background: #ffb326; /* Lighter orange on hover */
 }
 
 /* Hide on desktop */

@@ -178,6 +178,15 @@
     font-size: 48px;
     text-align: center;
     margin-bottom: 12px;
+    /* Prevent preloader animation */
+    animation: none !important;
+}
+
+.install-prompt-icon::before,
+.install-prompt-icon::after {
+    /* Prevent any spinning animations */
+    animation: none !important;
+    content: none !important;
 }
 
 .install-prompt h3 {
@@ -252,4 +261,19 @@
         max-width: none;
     }
 }
+
+/* Prevent preloader animations on install elements */
+.install-prompt *,
+.install-btn *,
+.install-prompt-icon * {
+    animation: none !important;
+}
+
+.install-prompt *::before,
+.install-prompt *::after,
+.install-btn *::before,
+.install-btn *::after {
+    animation: none !important;
+}
+
 

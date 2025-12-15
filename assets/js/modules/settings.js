@@ -95,8 +95,9 @@ export function closeSettings() {
 function updateNightLightIntensity(intensity) {
     const overlay = document.getElementById('night-light-overlay');
     if (overlay) {
-        const opacity = 0.1 + (intensity / 100) * 0.4;
-        overlay.style.backgroundColor = `rgba(255, 160, 0, ${opacity})`;
+        // Increased intensity range (20% to 75%) and warmer color
+        const opacity = 0.2 + (intensity / 100) * 0.55;
+        overlay.style.backgroundColor = `rgba(255, 140, 0, ${opacity})`;
     }
 }
 
@@ -161,18 +162,64 @@ function initNightLight() {
         const savedState = localStorage.getItem('nightLight');
         if (savedState === 'true') {
             nightLightToggle.classList.add('active');
-            updateNightLightIntensity(parseInt(localStorage.getItem('nightLightIntensity') || '55'));
+
+            // Re-create overlay if missing (fixes reload persistence)
+            let overlay = document.getElementById('night-light-overlay');
+            if (!overlay) {
+                overlay = document.createElement('div');
+                overlay.id = 'night-light-overlay';
+                document.body.appendChild(overlay);
+            }
+            overlay.classList.add('active');
+
+            // Sync other UI elements
+            if (typeof mobileNightLightBtn !== 'undefined' && mobileNightLightBtn) {
+                mobileNightLightBtn.classList.add('active');
+            }
+            if (typeof nightLightIntensityContainer !== 'undefined' && nightLightIntensityContainer) {
+                nightLightIntensityContainer.classList.add('active');
+            }
+
+            updateNightLightIntensity(parseInt(localStorage.getItem('nightLightIntensity') || '50'));
         }
     }
 
     if (nightLightIntensitySlider) {
+        // Function to update slider fill background (Android style)
+        // Function to update slider fill background (Android style) with dots
+        const updateSliderVisuals = () => {
+            const min = nightLightIntensitySlider.min ? parseInt(nightLightIntensitySlider.min) : 0;
+            const max = nightLightIntensitySlider.max ? parseInt(nightLightIntensitySlider.max) : 100;
+            const val = nightLightIntensitySlider.value;
+            const percentage = ((val - min) / (max - min)) * 100;
+
+            // 1. Orange Fill (Top) - stops at percentage
+            // 2. Snap Dots (Middle) - 2px dots every 5%
+            // 3. Track (Bottom) - Gray background
+            nightLightIntensitySlider.style.background = `
+                linear-gradient(to right, #ffa000 0%, #ffa000 ${percentage}%, transparent ${percentage}%, transparent 100%),
+                repeating-linear-gradient(to right, #808080 0, #808080 2px, transparent 2px, transparent 5%),
+                var(--border)
+            `;
+        };
+
         nightLightIntensitySlider.addEventListener('input', function () {
             const intensity = parseInt(this.value);
             updateNightLightIntensity(intensity);
             localStorage.setItem('nightLightIntensity', intensity.toString());
+            updateSliderVisuals();
         });
+
         const savedIntensity = localStorage.getItem('nightLightIntensity');
-        if (savedIntensity) nightLightIntensitySlider.value = savedIntensity;
+        if (savedIntensity) {
+            nightLightIntensitySlider.value = savedIntensity;
+        } else {
+            // Default to 50 if no save found (matches HTML)
+            nightLightIntensitySlider.value = 50;
+        }
+
+        // Initialize visuals
+        updateSliderVisuals();
     }
 
     if (mobileNightLightBtn) {
@@ -227,81 +274,101 @@ function initNotifications() {
 
 /**
  * Initialize swipe to close for settings panel
- * Allows swiping down on the header with smooth tracking and velocity check
+ * Allows swiping down on the header OR the body (when scrolled to top)
  */
 function initSwipeToClose() {
     if (!settingsPanel) return;
-
-    const settingsHeader = settingsPanel.querySelector('.settings-header');
-    if (!settingsHeader) return;
 
     let startY = 0;
     let currentY = 0;
     let startTime = 0;
     let isDragging = false;
 
+    // Track content scroll for conditional swipe
+    const settingsContent = settingsPanel.querySelector('.settings-content');
+
     // Helper to apply transform
     const setTranslateY = (y) => {
         settingsPanel.style.transform = `translateY(${Math.max(0, y)}px)`;
     };
 
-    settingsHeader.addEventListener('touchstart', (e) => {
-        startY = e.changedTouches[0].screenY;
+    const handleTouchStart = (e) => {
+        const isHeader = e.target.closest('.settings-header');
+
+        // If touching content, only allow drag start if we are at the top
+        if (!isHeader) {
+            if (settingsContent && settingsContent.scrollTop > 0) {
+                return; // Content is scrolled down, let user scroll up naturally
+            }
+        }
+
+        startY = e.touches[0].clientY;
         startTime = Date.now();
         isDragging = true;
-        // Disable transition for direct tracking
-        settingsPanel.style.transition = 'none';
-    }, { passive: true });
 
-    settingsHeader.addEventListener('touchmove', (e) => {
+        // Disable transition for direct following
+        settingsPanel.style.transition = 'none';
+    };
+
+    const handleTouchMove = (e) => {
         if (!isDragging) return;
-        currentY = e.changedTouches[0].screenY;
+
+        currentY = e.touches[0].clientY;
         const deltaY = currentY - startY;
 
-        // Only allow dragging down
+        // If swiping UP (negative delta), we cancel drag to allow native scroll
+        if (deltaY < 0) {
+            isDragging = false;
+            settingsPanel.style.transform = '';
+            return;
+        }
+
+        // If swiping DOWN, hijack the event
         if (deltaY > 0) {
+            if (e.cancelable) e.preventDefault();
             setTranslateY(deltaY);
         }
-    }, { passive: true });
+    };
 
-    settingsHeader.addEventListener('touchend', (e) => {
+    const handleTouchEnd = (e) => {
         if (!isDragging) return;
         isDragging = false;
 
-        const endY = e.changedTouches[0].screenY;
-        const deltaY = endY - startY;
+        const deltaY = currentY - startY;
         const deltaTime = Date.now() - startTime;
         const velocity = Math.abs(deltaY / deltaTime);
 
-        // Thresholds
-        const distanceThreshold = settingsPanel.offsetHeight * 0.3; // 30% height
-        const velocityThreshold = 0.5; // px/ms
-
-        // Use transform transition for smooth snap
+        // Restore transition for smooth close/bounce
         settingsPanel.style.transition = 'transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1)';
 
-        // Close if dragged far enough OR flicked fast enough
-        if (deltaY > 0 && (deltaY > distanceThreshold || velocity > velocityThreshold)) {
-            console.log(`Swipe to close triggered (Velocity: ${velocity.toFixed(2)})`);
-
-            // Animate fully down (slide out)
+        // Close thresholds: 
+        // 1. Dragged more than 100px
+        // 2. Fast flick (>0.5 px/ms)
+        if (deltaY > 100 || (deltaY > 50 && velocity > 0.5)) {
+            // Animate fully down
             setTranslateY(settingsPanel.offsetHeight);
 
             // Wait for animation to finish, then actually close
             setTimeout(() => {
                 closeSettings();
                 settingsPanel.style.transform = '';
-                settingsPanel.style.transition = ''; // Revert to CSS default
+                settingsPanel.style.transition = '';
             }, 300);
         } else {
             // Revert (bounce back up)
             setTranslateY(0);
             setTimeout(() => {
                 settingsPanel.style.transform = '';
-                settingsPanel.style.transition = ''; // Revert to CSS default
+                settingsPanel.style.transition = '';
             }, 300);
         }
-    }, { passive: true });
+    };
+
+    // Attach to settingsPanel to cover whole area
+    settingsPanel.addEventListener('touchstart', handleTouchStart, { passive: true });
+    // Passive: false for touchmove to allow preventing native scroll/refresh
+    settingsPanel.addEventListener('touchmove', handleTouchMove, { passive: false });
+    settingsPanel.addEventListener('touchend', handleTouchEnd);
 }
 
 /**
@@ -353,6 +420,23 @@ export function initSettings() {
             if (settingsPanel && settingsPanel.classList.contains('active')) {
                 closeSettings();
             }
+        }
+    });
+
+    // Close settings panel when clicking outside on desktop (≥900px)
+    document.addEventListener('click', function (e) {
+        // Only on desktop screens
+        if (window.innerWidth < 900) return;
+
+        // Check if settings panel is open
+        if (!settingsPanel || !settingsPanel.classList.contains('active')) return;
+
+        // Check if click is outside the settings panel and not on the settings button
+        const isClickInsidePanel = settingsPanel.contains(e.target);
+        const isClickOnButton = desktopSettingsBtn && desktopSettingsBtn.contains(e.target);
+
+        if (!isClickInsidePanel && !isClickOnButton) {
+            closeSettings();
         }
     });
 

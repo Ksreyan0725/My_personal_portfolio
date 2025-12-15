@@ -186,10 +186,6 @@
     height: 22px !important;
   }
 
-  .theme-text {
-    display: none !important;
-  }
-
   .theme-icon {
     width: 24px !important;
     height: 24px !important;
@@ -203,6 +199,22 @@
     margin-left: 0 !important;
     margin-right: auto !important;
     flex-grow: 0 !important;
+    /* Disable 3D transforms on mobile for better performance */
+    perspective: none !important;
+    transform-style: flat !important;
+  }
+  
+  /* Simpler hover effect for mobile */
+  .nav-logo:hover {
+    transform: scale(0.95) !important;
+    filter: brightness(1.1) !important;
+  }
+  
+  /* Simpler click effect for mobile */
+  .nav-logo:active,
+  .nav-logo.clicked {
+    animation: none !important;
+    transform: scale(0.9) !important;
   }
 
   .notice-banner {
@@ -330,6 +342,21 @@
       margin-left: 0 !important;
       margin-right: auto !important; /* Push everything else to the right */
       flex-grow: 0 !important;
+      /* Disable 3D transforms on mobile for better performance */
+      perspective: none !important;
+      transform-style: flat !important;
+    }
+    
+    /* Simpler hover/click for mobile */
+    .nav-logo:hover {
+      transform: scale(0.95) !important;
+      filter: brightness(1.1) !important;
+    }
+    
+    .nav-logo:active,
+    .nav-logo.clicked {
+      animation: none !important;
+      transform: scale(0.9) !important;
     }
 
     .mobile-search-icon {
@@ -363,10 +390,6 @@
       width: 22px !important;
       height: 22px !important;
       object-fit: contain;
-    }
-
-    .theme-text {
-      display: none !important;
     }
 
     /* Slow down ticker animation for better readability on small screens */
@@ -699,10 +722,6 @@
     object-fit: contain;
     display: block !important;
     margin: 0 !important;
-  }
-
-  .theme-text {
-    display: none !important;
   }
 
   /* Banner - smaller */
@@ -1176,9 +1195,6 @@
       order: 4 !important;
       display: flex !important;
     }
-
-    /* Hide theme text on mobile */
-    .theme-text { display: none !important; }
   }
 
   /* CONSOLIDATED: Moved to main 769px query at end of file */
@@ -1399,9 +1415,6 @@
 
   #navbar .mobile-search-icon { display: none !important; }
 
-  /* Theme toggle text visible */
-  .theme-text { display: inline !important; }
-
   /* Explicit Gap Logic for Laptop */
   :root {
     --header-height: calc(58px + 38px);
@@ -1530,9 +1543,6 @@
   }
 
   /* Theme Toggle - Icon Only */
-  .theme-text {
-    display: none !important;
-  }
   .theme-toggle {
     display: flex !important;
     align-items: center !important;
@@ -2565,6 +2575,29 @@
   }
 }
 
+/* ==================== Tablet: Hide Theme Toggle, Show Search + Settings ==================== */
+@media (min-width: 768px) and (max-width: 899px) {
+  /* Hide theme toggle on tablet */
+  .theme-toggle {
+    display: none !important;
+  }
+
+  /* Push search and settings to far right */
+  .nav-container {
+    justify-content: space-between !important;
+  }
+
+  .desktop-search {
+    margin-left: auto !important;
+    margin-right: 8px !important;
+  }
+
+  .desktop-settings-btn {
+    display: flex !important;
+    order: 10 !important;
+  }
+}
+
 /* ==================== Desktop Settings Button & Dropdown ==================== */
 @media (min-width: 900px) {
   /* Hide hamburger menu icon on desktop */
@@ -2609,11 +2642,6 @@
 
   .desktop-settings-btn:hover .settings-icon {
     transform: rotate(90deg) !important;
-  }
-
-  /* Hide settings text on desktop - icon only */
-  .desktop-settings-btn .settings-text {
-    display: none !important;
   }
 
   /* Transform settings panel into dropdown for desktop */
@@ -2680,11 +2708,6 @@
     font-size: 1.3rem !important;
   }
 
-  /* Show text labels on larger screens for theme toggle */
-  .theme-text {
-    display: inline !important;
-  }
-
   /* Ensure desktop search results are visible and override tablet hiding rules */
   #navbar .desktop-search .desktop-search-results {
     display: none; /* Default hidden */
@@ -2709,5 +2732,65 @@
   #navbar .desktop-search .search-clear {
     display: none !important;
   }
+
+  /* ==================== Hide Theme Toggle on Desktop ==================== */
+  /* Theme toggle is hidden on desktop - users can access it in Settings panel */
+  .theme-toggle {
+    display: none !important;
+  }
+
+  /* Adjust navigation layout - push search and settings to far right */
+  .nav-container {
+    justify-content: space-between !important;
+  }
+
+  .desktop-search {
+    margin-left: auto !important; /* Push to far right */
+    margin-right: 8px !important; /* Small gap before settings */
+  }
+
+  /* ==================== Responsive Settings Button ==================== */
+  /* Medium Desktop (900px - 1199px): Icon only */
+  .desktop-settings-btn {
+    margin-left: 0 !important;
+    order: 10 !important; /* Ensure it's last */
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 12px !important;
+    width: auto !important;
+    min-width: 40px !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .settings-text {
+    display: none; /* Hidden on medium screens - NO !important */
+    opacity: 0;
+    max-width: 0;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .settings-icon {
+    margin: 0 !important;
+    flex-shrink: 0;
+  }
 }
 
+/* ==================== Large Desktop: Show Settings Text ==================== */
+@media (min-width: 1200px) {
+  .desktop-settings-btn {
+    padding: 8px 18px !important;
+    gap: 8px !important;
+  }
+
+  .settings-text {
+    display: inline !important; /* Override with !important */
+    opacity: 1 !important;
+    max-width: 100px !important;
+    margin-left: 0; /* Remove extra margin, use gap instead */
+  }
+}
+
+/* End of responsive.css */

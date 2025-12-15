@@ -5,7 +5,7 @@ Purpose: Main landing page for Kumar Sreyan Pattanayak's personal portfolio
 Description: Showcases education, projects, certifications, and skills with
              responsive design, dark/light theme support, and smooth animations
 Author: Kumar Sreyan Pattanayak
-Version: 3.4.4
+Version: 3.4.5
 Last Updated: December 15, 2025
 =============
 ================================================================
@@ -94,12 +94,12 @@ Last Updated: December 15, 2025
 
     <!-- ==================== Preload Critical Resources ==================== -->
     <!-- Critical CSS -->
-    <link rel="preload" href="assets/css/core.css?v=3.4.4" as="style">
-    <link rel="preload" href="assets/css/responsive.css?v=3.4.4" as="style">
+    <link rel="preload" href="assets/css/core.css?v=3.4.5" as="style">
+    <link rel="preload" href="assets/css/responsive.css?v=3.4.5" as="style">
 
     <!-- Critical JavaScript - Modular Structure -->
-    <link rel="preload" href="assets/js/modules/preloader.js?v=3.4.4" as="script">
-    <link rel="preload" href="assets/js/main.js?v=3.4.4" as="script">
+    <link rel="preload" href="assets/js/modules/preloader.js?v=3.4.5" as="script">
+    <link rel="preload" href="assets/js/main.js?v=3.4.5" as="script">
 
     <!-- Hero Image -->
     <link rel="preload" href="assets/images/my-photo.jpg" as="image">
@@ -113,27 +113,27 @@ Last Updated: December 15, 2025
 
     <!-- ==================== Stylesheets & Scripts ==================== -->
     <!-- CRITICAL: Preloader must load FIRST to prevent FOUC -->
-    <link rel="stylesheet" href="assets/css/preloader.css?v=3.4.4">
+    <link rel="stylesheet" href="assets/css/preloader.css?v=3.4.5">
 
     <!-- Core styles (must load first) -->
-    <link rel="stylesheet" href="assets/css/core.css?v=3.4.4" />
+    <link rel="stylesheet" href="assets/css/core.css?v=3.4.5" />
 
     <!-- Feature modules -->
-    <link rel="stylesheet" href="assets/css/navigation.css?v=3.4.4" />
-    <link rel="stylesheet" href="assets/css/search.css?v=3.4.4" />
-    <link rel="stylesheet" href="assets/css/sidebar.css?v=3.4.4" />
-    <link rel="stylesheet" href="assets/css/settings.css?v=3.4.4" />
+    <link rel="stylesheet" href="assets/css/navigation.css?v=3.4.5" />
+    <link rel="stylesheet" href="assets/css/search.css?v=3.4.5" />
+    <link rel="stylesheet" href="assets/css/sidebar.css?v=3.4.5" />
+    <link rel="stylesheet" href="assets/css/settings.css?v=3.4.5" />
 
     <!-- Responsive overrides (must load after modules) -->
-    <link rel="stylesheet" href="assets/css/responsive.css?v=3.4.4" />
+    <link rel="stylesheet" href="assets/css/responsive.css?v=3.4.5" />
 
     <!-- Existing specialized files -->
-    <link rel="stylesheet" href="assets/css/install-button.css?v=3.4.4">
-    <link rel="stylesheet" href="assets/css/skeleton.css?v=3.4.4">
-    <link rel="stylesheet" href="assets/css/print.css?v=3.4.4" media="print">
+    <link rel="stylesheet" href="assets/css/install-button.css?v=3.4.5">
+    <link rel="stylesheet" href="assets/css/skeleton.css?v=3.4.5">
+    <link rel="stylesheet" href="assets/css/print.css?v=3.4.5" media="print">
 
     <!-- EMERGENCY FIX: Must be last to override everything -->
-    <link rel="stylesheet" href="assets/css/settings-fix.css?v=3.4.4">
+    <link rel="stylesheet" href="assets/css/settings-fix.css?v=3.4.5">
 
     <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js" integrity="sha384-li4UtcFCH6QeUqR4JyV58/VgTprMuz9aauj+oWtew7V4Y7ZVjnvz5px9Y3UCG0Ea" crossorigin="anonymous"></script>
 </head>
@@ -175,9 +175,9 @@ Last Updated: December 15, 2025
     <!-- ==================== Preloader ==================== -->
     <div id="preloader" style="display: flex;">
         <div class="loader-content">
-            <img src="assets/icons/pwa-icon-192.png" alt="KSP Logo" class="loader-icon" style="width: 100px; height: 100px; border-radius: 24px; opacity: 1;">
+            <img src="assets/icons/pwa-icon-192.png" alt="KSP Logo" class="loader-icon" style="width: 100px; height: 100px; border-radius: 24px; display: none;">
             <div class="loader-logo" id="loaderLogo">KSP</div>
-            <div class="loader-bar" id="loaderBar"></div>
+            <!-- Loading bar removed - only circular animation -->
         </div>
     </div>
 
@@ -199,11 +199,11 @@ Last Updated: December 15, 2025
 
         var isMobile = window.innerWidth <= 768;
         var logo = document.getElementById('loaderLogo');
-        var bar = document.getElementById('loaderBar');
         var loaderIcon = document.querySelector('.loader-icon');
         var pageLoaded = false;
         var preloaderHidden = false;
-        var minDisplayTime = isMobile ? 1000 : 500;
+        // Timing for exactly 2 full rotations of spinning circles (slower circle = 0.8s per rotation)
+        var minDisplayTime = 1600; // 2 rotations × 0.8s = 1.6s
         var maxDisplayTime = 5000; // Maximum 5 seconds
         var startTime = Date.now();
 
@@ -216,6 +216,21 @@ Last Updated: December 15, 2025
         if (isStandalone && isInitialLaunch && loaderIcon) {
             loaderIcon.style.display = 'block';
             loaderIcon.style.opacity = '1';
+            
+            // Hide KSP text initially (splash screen effect)
+            if (logo) {
+                logo.style.opacity = '0';
+                logo.style.transform = 'translateY(20px)';
+            }
+            
+            // Stage 2: Show KSP animation after PWA icon splash (800ms delay)
+            setTimeout(function() {
+                if (logo) {
+                    logo.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+                    logo.style.opacity = '1';
+                    logo.style.transform = 'translateY(0)';
+                }
+            }, 800);
         }
 
         // INSTALLED MODE - NAVIGATION (back button/swipe): Hide PWA icon, show only animations
@@ -224,28 +239,18 @@ Last Updated: December 15, 2025
         }
 
         if (isMobile) {
-            // Mobile: Two-stage animation
+            // Mobile: Fade-in animation for KSP text only
             if (logo) {
                 logo.style.opacity = '0';
                 logo.style.transform = 'translateY(20px)';
             }
-            if (bar) {
-                bar.style.opacity = '0';
-                bar.style.transform = 'translateY(20px)';
-            }
 
-            // Stage 2: Show text and bar after 500ms
+            // Show text after 500ms
             setTimeout(function() {
                 if (logo) {
                     logo.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
                     logo.style.opacity = '1';
                     logo.style.transform = 'translateY(0)';
-                }
-
-                if (bar) {
-                    bar.style.transition = 'opacity 0.4s ease 0.2s, transform 0.4s ease 0.2s';
-                    bar.style.opacity = '1';
-                    bar.style.transform = 'translateY(0)';
                 }
             }, 500);
         }
@@ -330,10 +335,10 @@ Last Updated: December 15, 2025
 
     <!-- Modular JavaScript Loading -->
     <!-- 1. Preloader (non-module, runs immediately) -->
-    <script src="assets/js/modules/preloader.js?v=3.4.4"></script>
+    <script src="assets/js/modules/preloader.js?v=3.4.5"></script>
 
     <!-- 2. Main app (ES6 module, loads critical features) -->
-    <script type="module" src="assets/js/main.js?v=3.4.4"></script>
+    <script type="module" src="assets/js/main.js?v=3.4.5"></script>
 
     <!-- Old script.js removed - now using modular architecture -->
 
@@ -399,9 +404,10 @@ Last Updated: December 15, 2025
                 <span class="theme-text">System</span>
             </button>
 
-            <!-- Desktop Settings Button (Icon Only) -->
+            <!-- Desktop Settings Button (Responsive: Icon only on medium, Text+Icon on large) -->
             <button class="settings-toggle desktop-settings-btn" id="desktopSettingsBtn" aria-label="Open settings" data-tooltip="Settings">
                 <img src="assets/icons/setting-button.png" alt="Settings" class="settings-icon">
+                <span class="settings-text">Settings</span>
             </button>
 
             <!-- Mobile Search Icon -->
@@ -456,12 +462,12 @@ Last Updated: December 15, 2025
         <!-- Settings Button (Mobile Only) -->
         <div class="settings-btn-container">
             <!-- Night Light Button (Mobile Only) -->
-            <button class="mobile-night-light-btn" id="mobileNightLightBtn" onclick="handleMobileNightLight()">
+            <button class="mobile-night-light-btn" id="mobileNightLightBtn">
                 <span>Night Light</span>
                 <img src="assets/icons/nightlight-icon.png" alt="Night Light" class="night-light-icon" id="nightLightIcon">
             </button>
 
-            <button class="settings-btn" id="openSettingsBtn" onclick="openSettings()">
+            <button class="settings-btn" id="openSettingsBtn">
                 <span>Settings</span>
                 <img src="assets/icons/setting-button.png" alt="Settings" class="settings-icon">
             </button>
@@ -519,7 +525,7 @@ Last Updated: December 15, 2025
                 <div class="night-light-intensity-container" id="nightLightIntensityContainer">
                     <label class="intensity-label">Intensity</label>
                     <div class="intensity-slider-wrapper">
-                        <input type="range" min="10" max="100" value="55" class="intensity-slider" id="nightLightIntensitySlider">
+                        <input type="range" min="0" max="100" value="50" step="5" class="intensity-slider" id="nightLightIntensitySlider">
                     </div>
                 </div>
             </div>
@@ -565,7 +571,7 @@ Last Updated: December 15, 2025
 
             <!-- Version Info -->
             <div class="version-info" id="versionInfo" style="cursor: pointer; user-select: none;" title="Click 5 times to check for updates">
-                Version 3.4.4 • Made with ❤️
+                Version 3.4.5 • Made with ❤️
             </div>
         </div>
     </div>
@@ -914,9 +920,9 @@ Last Updated: December 15, 2025
     <!-- ==================== Footer ==================== -->
     <footer role="contentinfo">
         <p>
-            <strong>Copyright Â© 2025</strong> Kumar Sreyan Pattanayak
+            <strong>Copyright &copy; 2025</strong> Kumar Sreyan Pattanayak
             <br>
-            All Rights Reserved | Made with â¤ï¸
+            All Rights Reserved | Made with ❤️
             <br>
             Hosted on GitHub Pages | <a href="https://docs.github.com/en/site-policy/github-terms/github-terms-of-service" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;"> <strong>GitHub Terms of Service</strong></a>
         </p>
@@ -1013,7 +1019,7 @@ Last Updated: December 15, 2025
             updateBanner.innerHTML = `
                 <div style="flex: 1;">
                     <strong style="display: block; margin-bottom: 4px;">🎉 New Version Available!</strong>
-                    <span style="font-size: 14px; opacity: 0.95;">Version 3.4.4 is ready. Click to update.</span>
+                    <span style="font-size: 14px; opacity: 0.95;">Version 3.4.5 is ready. Click to update.</span>
                 </div>
                 <button onclick="updateApp()" style="
                     background: white;
@@ -1079,13 +1085,13 @@ Last Updated: December 15, 2025
     <!-- PWA Install Prompt -->
     <div id="installPrompt" class="install-prompt" style="display: none;">
         <div class="install-prompt-content">
-            <button class="install-prompt-close" onclick="closeInstallPrompt()">❌</button>
+            <button class="install-prompt-close" id="installPromptClose">❌</button>
             <div class="install-prompt-icon">📱</div>
             <h3>Install Portfolio App</h3>
             <p>Add this portfolio to your home screen for quick access and offline viewing!</p>
             <div class="install-prompt-buttons">
-                <button class="install-btn-primary" onclick="installPWA()">Install</button>
-                <button class="install-btn-secondary" onclick="closeInstallPrompt()">Maybe Later</button>
+                <button class="install-btn-primary" id="installBtn">Install</button>
+                <button class="install-btn-secondary" id="installLaterBtn">Maybe Later</button>
             </div>
         </div>
     </div>
@@ -1149,3 +1155,4 @@ Last Updated: December 15, 2025
 </body>
 </html>
 
+ 
