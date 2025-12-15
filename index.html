@@ -5,7 +5,7 @@ Purpose: Main landing page for Kumar Sreyan Pattanayak's personal portfolio
 Description: Showcases education, projects, certifications, and skills with
              responsive design, dark/light theme support, and smooth animations
 Author: Kumar Sreyan Pattanayak
-Version: 3.4.5
+Version: 3.4.6
 Last Updated: December 15, 2025
 =============
 ================================================================
@@ -94,12 +94,12 @@ Last Updated: December 15, 2025
 
     <!-- ==================== Preload Critical Resources ==================== -->
     <!-- Critical CSS -->
-    <link rel="preload" href="assets/css/core.css?v=3.4.5" as="style">
-    <link rel="preload" href="assets/css/responsive.css?v=3.4.5" as="style">
+    <link rel="preload" href="assets/css/core.css?v=3.4.6" as="style">
+    <link rel="preload" href="assets/css/responsive.css?v=3.4.6" as="style">
 
     <!-- Critical JavaScript - Modular Structure -->
-    <link rel="preload" href="assets/js/modules/preloader.js?v=3.4.5" as="script">
-    <link rel="preload" href="assets/js/main.js?v=3.4.5" as="script">
+    <link rel="preload" href="assets/js/modules/preloader.js?v=3.4.6" as="script">
+    <link rel="preload" href="assets/js/main.js?v=3.4.6" as="script">
 
     <!-- Hero Image -->
     <link rel="preload" href="assets/images/my-photo.jpg" as="image">
@@ -113,27 +113,27 @@ Last Updated: December 15, 2025
 
     <!-- ==================== Stylesheets & Scripts ==================== -->
     <!-- CRITICAL: Preloader must load FIRST to prevent FOUC -->
-    <link rel="stylesheet" href="assets/css/preloader.css?v=3.4.5">
+    <link rel="stylesheet" href="assets/css/preloader.css?v=3.4.6">
 
     <!-- Core styles (must load first) -->
-    <link rel="stylesheet" href="assets/css/core.css?v=3.4.5" />
+    <link rel="stylesheet" href="assets/css/core.css?v=3.4.6" />
 
     <!-- Feature modules -->
-    <link rel="stylesheet" href="assets/css/navigation.css?v=3.4.5" />
-    <link rel="stylesheet" href="assets/css/search.css?v=3.4.5" />
-    <link rel="stylesheet" href="assets/css/sidebar.css?v=3.4.5" />
-    <link rel="stylesheet" href="assets/css/settings.css?v=3.4.5" />
+    <link rel="stylesheet" href="assets/css/navigation.css?v=3.4.6" />
+    <link rel="stylesheet" href="assets/css/search.css?v=3.4.6" />
+    <link rel="stylesheet" href="assets/css/sidebar.css?v=3.4.6" />
+    <link rel="stylesheet" href="assets/css/settings.css?v=3.4.6" />
 
     <!-- Responsive overrides (must load after modules) -->
-    <link rel="stylesheet" href="assets/css/responsive.css?v=3.4.5" />
+    <link rel="stylesheet" href="assets/css/responsive.css?v=3.4.6" />
 
     <!-- Existing specialized files -->
-    <link rel="stylesheet" href="assets/css/install-button.css?v=3.4.5">
-    <link rel="stylesheet" href="assets/css/skeleton.css?v=3.4.5">
-    <link rel="stylesheet" href="assets/css/print.css?v=3.4.5" media="print">
+    <link rel="stylesheet" href="assets/css/install-button.css?v=3.4.6">
+    <link rel="stylesheet" href="assets/css/skeleton.css?v=3.4.6">
+    <link rel="stylesheet" href="assets/css/print.css?v=3.4.6" media="print">
 
     <!-- EMERGENCY FIX: Must be last to override everything -->
-    <link rel="stylesheet" href="assets/css/settings-fix.css?v=3.4.5">
+    <link rel="stylesheet" href="assets/css/settings-fix.css?v=3.4.6">
 
     <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js" integrity="sha384-li4UtcFCH6QeUqR4JyV58/VgTprMuz9aauj+oWtew7V4Y7ZVjnvz5px9Y3UCG0Ea" crossorigin="anonymous"></script>
 </head>
@@ -335,10 +335,10 @@ Last Updated: December 15, 2025
 
     <!-- Modular JavaScript Loading -->
     <!-- 1. Preloader (non-module, runs immediately) -->
-    <script src="assets/js/modules/preloader.js?v=3.4.5"></script>
+    <script src="assets/js/modules/preloader.js?v=3.4.6"></script>
 
     <!-- 2. Main app (ES6 module, loads critical features) -->
-    <script type="module" src="assets/js/main.js?v=3.4.5"></script>
+    <script type="module" src="assets/js/main.js?v=3.4.6"></script>
 
     <!-- Old script.js removed - now using modular architecture -->
 
@@ -571,7 +571,7 @@ Last Updated: December 15, 2025
 
             <!-- Version Info -->
             <div class="version-info" id="versionInfo" style="cursor: pointer; user-select: none;" title="Click 5 times to check for updates">
-                Version 3.4.5 • Made with ❤️
+                Version 3.4.6 • Made with ❤️
             </div>
         </div>
     </div>
@@ -1019,7 +1019,7 @@ Last Updated: December 15, 2025
             updateBanner.innerHTML = `
                 <div style="flex: 1;">
                     <strong style="display: block; margin-bottom: 4px;">🎉 New Version Available!</strong>
-                    <span style="font-size: 14px; opacity: 0.95;">Version 3.4.5 is ready. Click to update.</span>
+                    <span id="updateVersionText" style="font-size: 14px; opacity: 0.95;">A new version is ready. Click to update.</span>
                 </div>
                 <button onclick="updateApp()" style="
                     background: white;
@@ -1042,6 +1042,22 @@ Last Updated: December 15, 2025
             `;
 
             document.body.appendChild(updateBanner);
+
+            // Fetch latest version from manifest to show accurate version number
+            fetch('manifest.json?t=' + Date.now())
+                .then(response => response.json())
+                .then(data => {
+                    if (data && data.version) {
+                        const versionText = document.getElementById('updateVersionText');
+                        if (versionText) {
+                            versionText.textContent = `Version ${data.version} is ready. Click to update.`;
+                        }
+                    }
+                })
+                .catch(err => console.log('Failed to fetch new version info', err));
+
+
+
 
             // Add animation
             const style = document.createElement('style');
