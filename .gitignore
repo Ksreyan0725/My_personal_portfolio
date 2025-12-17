@@ -4,7 +4,7 @@
 
 
 # Script Manager (includes scripts/ and MANUAL/)
-manager/ 
+manager/
 
 # ==================== Backup Files ====================
 # Exclude all backup files created by version update script

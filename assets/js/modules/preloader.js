@@ -158,6 +158,3 @@ setTimeout(() => {
     }
 }, 6000);
 
-// Make hidePreloader globally accessible
-window.hidePreloader = hidePreloader;
-

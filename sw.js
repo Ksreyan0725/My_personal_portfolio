@@ -1,7 +1,7 @@
 // Service Worker for Portfolio PWA
-// Version 3.4.7 - Modular Architecture
-const CACHE_NAME = 'portfolio-v3.4.7';
-const RUNTIME_CACHE = 'portfolio-runtime-v3.4.7';
+// Version 3.4.8 - Fixed cache error
+const CACHE_NAME = 'portfolio-v3.4.8';
+const RUNTIME_CACHE = 'portfolio-runtime-v3.4.8';
 
 // Critical resources for initial load (minimal set for fast install)
 const CORE_ASSETS = [
@@ -27,7 +27,6 @@ const SECONDARY_ASSETS = [
     '/My_personal_portfolio/assets/css/settings-fix.css',
     '/My_personal_portfolio/assets/css/responsive.css',
     '/My_personal_portfolio/assets/css/install-button.css',
-    '/My_personal_portfolio/assets/css/theme-schedule.css',
     '/My_personal_portfolio/assets/css/skeleton.css',
     '/My_personal_portfolio/assets/css/print.css',
     '/My_personal_portfolio/assets/js/theme-schedule.js',

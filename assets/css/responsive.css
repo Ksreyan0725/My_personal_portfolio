@@ -189,9 +189,11 @@
   .theme-icon {
     width: 18px !important;
     height: 18px !important;
-    object-fit: contain;
+    object-fit: cover !important;
+    object-position: center !important;
     display: block !important;
-    margin: 0 !important;
+    margin: 0 auto !important;
+    transform: translateX(3px) !important; /* Increased to 3px for better centering */
   }
 
   .nav-logo {
@@ -374,7 +376,7 @@
       min-width: 30px !important;
       max-width: 30px !important;
       min-height: 30px !important;
-      padding: 1px !important;
+      padding: 0 !important; /* Changed from 1px for perfect centering */
       border-radius: 10px !important;
       backdrop-filter: blur(10px);
       display: flex !important;
@@ -389,7 +391,10 @@
     .theme-icon {
       width: 18px !important;
       height: 18px !important;
-      object-fit: contain;
+      object-fit: cover !important;
+      object-position: center !important;
+      margin: 0 auto !important;
+      transform: translateX(3px) !important; /* Increased to 3px for better centering */
     }
 
     /* Slow down ticker animation for better readability on small screens */
@@ -705,7 +710,7 @@
     min-width: 30px !important;
     max-width: 30px !important;
     min-height: 30px !important;
-    padding: 1px !important;
+    padding: 0 !important; /* Changed from 1px for perfect centering */
     border-radius: 10px !important;
     backdrop-filter: blur(10px);
     display: flex !important;
@@ -719,9 +724,11 @@
   .theme-icon {
     width: 18px !important;
     height: 18px !important;
-    object-fit: contain;
+    object-fit: cover !important;
+    object-position: center !important;
     display: block !important;
-    margin: 0 !important;
+    margin: 0 auto !important;
+    transform: translateX(3px) !important; /* Increased to 3px for better centering */
   }
 
   /* Banner - smaller */
@@ -1568,9 +1575,10 @@
   .theme-icon {
     width: 22px !important;
     height: 22px !important;
-    margin: 0 !important;
+    object-fit: cover !important; /* Changed from contain to eliminate transparent padding */
+    object-position: center !important; /* Ensure icon is centered */
+    margin: 0 auto !important; /* Center horizontally within flex container */
     display: block !important;
-    object-fit: contain;
   }
 
   /* Show desktop settings button on tablet (icon-only) */

@@ -249,6 +249,10 @@
 @media (max-width: 768px) {
     .install-prompt {
         display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
+        z-index: -1 !important;
     }
 }
 

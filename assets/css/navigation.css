@@ -294,13 +294,14 @@ nav.scrolled {
     color: var(--text-primary);
     border: 2px solid var(--border);
     box-sizing: border-box;
-    padding: 2px 8px; /* Minimal padding - just small gap */
+    padding: 2px; /* Symmetric padding for perfect centering */
     border-radius: 50px;
     font-size: 16px;
     cursor: pointer;
     transition: all 0.3s ease;
     display: flex;
     align-items: center;
+    justify-content: center; /* Center icon horizontally */
     gap: 8px;
     font-weight: 600;
     user-select: none;
@@ -331,15 +332,17 @@ nav.scrolled {
 .theme-icon {
   width: 36px; /* Maximized icon size */
   height: 36px; /* Maximized icon size */
-  object-fit: contain;
+  object-fit: cover; /* Changed from contain to eliminate transparent padding */
+  object-position: center; /* Ensure icon is centered */
   transition: transform 0.3s ease;
   display: block;
-  margin: 0 auto;
   flex-shrink: 0;
+  margin: 0 auto; /* Center horizontally within flex container */
+  transform: translateX(3px); /* Increased to 3px for better centering */
 }
 
 .theme-toggle:hover .theme-icon {
-  transform: rotate(20deg);
+  transform: translateX(3px) rotate(20deg); /* Maintain centering while rotating */
 }
 
 .theme-text {

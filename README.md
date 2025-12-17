@@ -116,7 +116,6 @@ My_personal_portfolio/
 |-- purgecss.config.js
 |-- README.md
 |-- robots.txt
-|-- service-worker.js
 |-- sitemap.xml
 |-- sw.js
 ```
@@ -141,5 +140,5 @@ This project is distributed under the MIT License.
 ---
 
 Made with ❤️ by **Kumar Sreyan Pattanayak**  
-📌 Version: 3.4.7  
+📌 Version: 3.4.8  
 📅 Last Updated: 17 December 2025
