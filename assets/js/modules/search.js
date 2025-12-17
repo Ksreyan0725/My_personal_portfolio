@@ -457,7 +457,15 @@ const debouncedDesktopSearch = debounce((query, container) => {
 /**
  * Initialize search functionality
  */
+let isSearchInitialized = false;
+
 export function initSearch() {
+    if (isSearchInitialized) {
+        console.log('⚠️ Search module already initialized, skipping...');
+        return;
+    }
+    isSearchInitialized = true;
+
     console.log('✅ Search module initialized');
 
     // Expose globally for compatibility

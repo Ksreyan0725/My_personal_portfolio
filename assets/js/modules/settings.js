@@ -357,7 +357,15 @@ function initSwipeToClose() {
 /**
  * Initialize settings panel
  */
+let isSettingsInitialized = false;
+
 export function initSettings() {
+    if (isSettingsInitialized) {
+        console.log('⚠️ Settings module already initialized, skipping...');
+        return;
+    }
+    isSettingsInitialized = true;
+
     console.log('✅ Settings module initialized');
 
     // Expose globally for compatibility
