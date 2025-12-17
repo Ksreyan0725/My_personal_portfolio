@@ -241,6 +241,7 @@ export function openSearchModal() {
     searchModal.classList.add('active');
     searchModalOverlay.classList.add('active');
     document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden'; // Force scroll lock on html
 
     setTimeout(() => {
         searchModalInput.focus();
@@ -266,6 +267,7 @@ export function closeSearchModal() {
         searchModal.classList.remove('active');
         searchModal.classList.remove('closing');
         document.body.style.overflow = '';
+        document.documentElement.style.overflow = ''; // Restore html scroll
         searchModalInput.value = '';
         searchResults.innerHTML = '';
         currentResultIndex = -1;

@@ -248,17 +248,7 @@
 
 @media (max-width: 768px) {
     .install-prompt {
-        top: 70px; /* Slightly lower on mobile */
-        left: 50%;
-        right: auto;
-        bottom: auto;
-        transform: translateX(-50%);
-        width: calc(100% - 20px);
-        max-width: 400px;
-    }
-
-    .install-prompt-content {
-        max-width: none;
+        display: none !important;
     }
 }
 

@@ -1,7 +1,7 @@
 // Service Worker for Portfolio PWA
-// Version 3.4.6 - Modular Architecture
-const CACHE_NAME = 'portfolio-v3.4.6';
-const RUNTIME_CACHE = 'portfolio-runtime-v3.4.6';
+// Version 3.4.7 - Modular Architecture
+const CACHE_NAME = 'portfolio-v3.4.7';
+const RUNTIME_CACHE = 'portfolio-runtime-v3.4.7';
 
 // Critical resources for initial load (minimal set for fast install)
 const CORE_ASSETS = [
@@ -39,17 +39,39 @@ const SECONDARY_ASSETS = [
     '/My_personal_portfolio/assets/js/modules/navigation.js',
     '/My_personal_portfolio/assets/js/modules/features.js',
     '/My_personal_portfolio/assets/js/modules/security.js',
-    '/My_personal_portfolio/assets/icons/favicon.png',
-    '/My_personal_portfolio/assets/icons/system-theme.png',
+    // All PNG icons for perfect offline mode
+    '/My_personal_portfolio/assets/icons/certification.png',
+    '/My_personal_portfolio/assets/icons/contact.png',
     '/My_personal_portfolio/assets/icons/custom-theme.png',
-    '/My_personal_portfolio/assets/icons/light-mode.png',
     '/My_personal_portfolio/assets/icons/dark-mode.png',
+    '/My_personal_portfolio/assets/icons/download.png',
+    '/My_personal_portfolio/assets/icons/education.png',
+    '/My_personal_portfolio/assets/icons/facebook.png',
+    '/My_personal_portfolio/assets/icons/favicon.png',
     '/My_personal_portfolio/assets/icons/github.png',
+    '/My_personal_portfolio/assets/icons/gmail.png',
+    '/My_personal_portfolio/assets/icons/home.png',
+    '/My_personal_portfolio/assets/icons/instagram.png',
+    '/My_personal_portfolio/assets/icons/light-mode.png',
     '/My_personal_portfolio/assets/icons/linkedin.png',
+    '/My_personal_portfolio/assets/icons/maintenance.png',
     '/My_personal_portfolio/assets/icons/nightlight-icon.png',
+    '/My_personal_portfolio/assets/icons/nightlight-notification.png',
+    '/My_personal_portfolio/assets/icons/pdf.png',
+    '/My_personal_portfolio/assets/icons/printer.png',
+    '/My_personal_portfolio/assets/icons/project.png',
+    '/My_personal_portfolio/assets/icons/pwa-icon-192.png',
+    '/My_personal_portfolio/assets/icons/pwa-icon-512.png',
     '/My_personal_portfolio/assets/icons/search.png',
     '/My_personal_portfolio/assets/icons/setting-button.png',
     '/My_personal_portfolio/assets/icons/side-menu.png',
+    '/My_personal_portfolio/assets/icons/skills.png',
+    '/My_personal_portfolio/assets/icons/system-theme.png',
+    '/My_personal_portfolio/assets/icons/teams.png',
+    '/My_personal_portfolio/assets/icons/telegram.png',
+    '/My_personal_portfolio/assets/icons/x.png',
+    '/My_personal_portfolio/assets/icons/zoho-dark.png',
+    '/My_personal_portfolio/assets/icons/zohomail.png',
     '/My_personal_portfolio/assets/images/my-photo.jpg'
 ];
 

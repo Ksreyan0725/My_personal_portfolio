@@ -62,6 +62,15 @@
             --focus-shadow: rgba(10,132,255,0.12);
         }
         /* ==================== GLOBAL STYLES ==================== */
+        /* Hide scrollbar globally */
+        html, body {
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none; /* IE/Edge */
+        }
+        html::-webkit-scrollbar, body::-webkit-scrollbar {
+            display: none; /* Chrome/Safari/Opera */
+        }
+
         * {
             margin: 0;
             padding: 0;

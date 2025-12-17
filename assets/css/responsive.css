@@ -187,8 +187,8 @@
   }
 
   .theme-icon {
-    width: 24px !important;
-    height: 24px !important;
+    width: 18px !important;
+    height: 18px !important;
     object-fit: contain;
     display: block !important;
     margin: 0 !important;
@@ -387,8 +387,8 @@
     }
 
     .theme-icon {
-      width: 22px !important;
-      height: 22px !important;
+      width: 18px !important;
+      height: 18px !important;
       object-fit: contain;
     }
 
@@ -717,8 +717,8 @@
   }
 
   .theme-icon {
-    width: 24px !important;
-    height: 24px !important;
+    width: 18px !important;
+    height: 18px !important;
     object-fit: contain;
     display: block !important;
     margin: 0 !important;
@@ -1235,8 +1235,8 @@
   }
 
   .theme-icon {
-    width: 20px !important;
-    height: 20px !important;
+    width: 18px !important;
+    height: 18px !important;
     object-fit: contain;
   }
 
@@ -1355,7 +1355,8 @@
     align-items: center !important;
   }
   .theme-icon {
-    font-size: 18px !important;
+    width: 18px !important;
+    height: 18px !important;
     margin: 0 !important;
     display: inline-block !important; /* Changed from block to fix centering */
     line-height: 1 !important;

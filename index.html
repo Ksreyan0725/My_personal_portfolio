@@ -5,8 +5,8 @@ Purpose: Main landing page for Kumar Sreyan Pattanayak's personal portfolio
 Description: Showcases education, projects, certifications, and skills with
              responsive design, dark/light theme support, and smooth animations
 Author: Kumar Sreyan Pattanayak
-Version: 3.4.6
-Last Updated: December 15, 2025
+Version: 3.4.7
+Last Updated: December 17, 2025
 =============
 ================================================================
 -->
@@ -94,12 +94,12 @@ Last Updated: December 15, 2025
 
     <!-- ==================== Preload Critical Resources ==================== -->
     <!-- Critical CSS -->
-    <link rel="preload" href="assets/css/core.css?v=3.4.6" as="style">
-    <link rel="preload" href="assets/css/responsive.css?v=3.4.6" as="style">
+    <link rel="preload" href="assets/css/core.css?v=3.4.7" as="style">
+    <link rel="preload" href="assets/css/responsive.css?v=3.4.7" as="style">
 
     <!-- Critical JavaScript - Modular Structure -->
-    <link rel="preload" href="assets/js/modules/preloader.js?v=3.4.6" as="script">
-    <link rel="preload" href="assets/js/main.js?v=3.4.6" as="script">
+    <link rel="preload" href="assets/js/modules/preloader.js?v=3.4.7" as="script">
+    <link rel="preload" href="assets/js/main.js?v=3.4.7" as="script">
 
     <!-- Hero Image -->
     <link rel="preload" href="assets/images/my-photo.jpg" as="image">
@@ -113,32 +113,84 @@ Last Updated: December 15, 2025
 
     <!-- ==================== Stylesheets & Scripts ==================== -->
     <!-- CRITICAL: Preloader must load FIRST to prevent FOUC -->
-    <link rel="stylesheet" href="assets/css/preloader.css?v=3.4.6">
+    <!-- OLD PRELOADER (commented out) -->
+    <!-- <link rel="stylesheet" href="assets/css/preloader.css?v=3.4.7"> -->
+    
+    <!-- NEW Samsung-Style Preloader -->
+    <link rel="stylesheet" href="assets/css/preloader.css?v=3.4.7">
 
     <!-- Core styles (must load first) -->
-    <link rel="stylesheet" href="assets/css/core.css?v=3.4.6" />
+    <link rel="stylesheet" href="assets/css/core.css?v=3.4.7" />
 
     <!-- Feature modules -->
-    <link rel="stylesheet" href="assets/css/navigation.css?v=3.4.6" />
-    <link rel="stylesheet" href="assets/css/search.css?v=3.4.6" />
-    <link rel="stylesheet" href="assets/css/sidebar.css?v=3.4.6" />
-    <link rel="stylesheet" href="assets/css/settings.css?v=3.4.6" />
+    <link rel="stylesheet" href="assets/css/navigation.css?v=3.4.7" />
+    <link rel="stylesheet" href="assets/css/search.css?v=3.4.7" />
+    <link rel="stylesheet" href="assets/css/sidebar.css?v=3.4.7" />
+    <link rel="stylesheet" href="assets/css/settings.css?v=3.4.7" />
 
     <!-- Responsive overrides (must load after modules) -->
-    <link rel="stylesheet" href="assets/css/responsive.css?v=3.4.6" />
+    <link rel="stylesheet" href="assets/css/responsive.css?v=3.4.7" />
 
     <!-- Existing specialized files -->
-    <link rel="stylesheet" href="assets/css/install-button.css?v=3.4.6">
-    <link rel="stylesheet" href="assets/css/skeleton.css?v=3.4.6">
-    <link rel="stylesheet" href="assets/css/print.css?v=3.4.6" media="print">
+    <link rel="stylesheet" href="assets/css/install-button.css?v=3.4.7">
+    <link rel="stylesheet" href="assets/css/skeleton.css?v=3.4.7">
+    <link rel="stylesheet" href="assets/css/print.css?v=3.4.7" media="print">
 
     <!-- EMERGENCY FIX: Must be last to override everything -->
-    <link rel="stylesheet" href="assets/css/settings-fix.css?v=3.4.6">
+    <link rel="stylesheet" href="assets/css/settings-fix.css?v=3.4.7">
 
     <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js" integrity="sha384-li4UtcFCH6QeUqR4JyV58/VgTprMuz9aauj+oWtew7V4Y7ZVjnvz5px9Y3UCG0Ea" crossorigin="anonymous"></script>
 </head>
 
 <body>
+    <!-- CRITICAL: Detect PWA mode and manage preloader visibility -->
+    <script>
+    (function() {
+        var isStandalone = window.matchMedia('(display-mode: standalone)').matches ||
+                          window.navigator.standalone ||
+                          document.referrer.includes('android-app://');
+        
+        var isInitialLaunch = !sessionStorage.getItem('appLaunched');
+        
+        if (isStandalone && isInitialLaunch) {
+            // PWA First Visit: Show PWA icon first, then Samsung animation
+            // Hide webPreloader initially, will show after PWA icon
+            document.write('<style>#webPreloader { display: none !important; }</style>');
+            
+            // Mark as launched
+            sessionStorage.setItem('appLaunched', 'true');
+            
+            // After PWA icon shows (handled by existing PWA preloader script),
+            // the Samsung preloader will be shown by that script
+        } else if (isStandalone && !isInitialLaunch) {
+            // PWA Subsequent Visits: Only show Samsung animation
+            document.write('<style>#preloader { display: none !important; }</style>');
+        } else {
+            // Browser Mode: Only show Samsung animation
+            document.write('<style>#preloader { display: none !important; }</style>');
+        }
+    })();
+    </script>
+
+    <!-- ==================== Samsung-Style Preloader (Web Mode) ==================== -->
+    <div id="webPreloader">
+        <div class="loader-content">
+            <div class="loader-logo" data-text="KSP">KSP</div>
+            <div class="loading-bar">
+                <div class="loading-bar-fill"></div>
+            </div>
+            <div class="loading-text">
+                LOADING
+                <span class="loading-dots">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </span>
+            </div>
+            <div class="loading-percentage">0%</div>
+        </div>
+    </div>
+
     <!-- ==================== Skeleton Loading Screen ==================== -->
     <div id="skeletonLoader" class="skeleton-container">
         <!-- Hero Skeleton -->
@@ -172,7 +224,7 @@ Last Updated: December 15, 2025
         </div>
     </div>
 
-    <!-- ==================== Preloader ==================== -->
+    <!-- ==================== Preloader PWA ==================== -->
     <div id="preloader" style="display: flex;">
         <div class="loader-content">
             <img src="assets/icons/pwa-icon-192.png" alt="KSP Logo" class="loader-icon" style="width: 100px; height: 100px; border-radius: 24px; display: none;">
@@ -230,6 +282,29 @@ Last Updated: December 15, 2025
                     logo.style.opacity = '1';
                     logo.style.transform = 'translateY(0)';
                 }
+                
+                // Stage 3: Transition to Samsung-style preloader (after 1200ms total)
+                setTimeout(function() {
+                    var pwaPreloader = document.getElementById('preloader');
+                    var webPreloader = document.getElementById('webPreloader');
+                    
+                    if (pwaPreloader && webPreloader) {
+                        // Fade out PWA preloader
+                        pwaPreloader.style.transition = 'opacity 0.3s ease';
+                        pwaPreloader.style.opacity = '0';
+                        
+                        setTimeout(function() {
+                            pwaPreloader.style.display = 'none';
+                            // Show Samsung preloader
+                            webPreloader.style.display = 'flex';
+                            webPreloader.style.opacity = '0';
+                            setTimeout(function() {
+                                webPreloader.style.transition = 'opacity 0.3s ease';
+                                webPreloader.style.opacity = '1';
+                            }, 50);
+                        }, 300);
+                    }
+                }, 1200);
             }, 800);
         }
 
@@ -335,10 +410,10 @@ Last Updated: December 15, 2025
 
     <!-- Modular JavaScript Loading -->
     <!-- 1. Preloader (non-module, runs immediately) -->
-    <script src="assets/js/modules/preloader.js?v=3.4.6"></script>
+    <script src="assets/js/modules/preloader.js?v=3.4.7"></script>
 
     <!-- 2. Main app (ES6 module, loads critical features) -->
-    <script type="module" src="assets/js/main.js?v=3.4.6"></script>
+    <script type="module" src="assets/js/main.js?v=3.4.7"></script>
 
     <!-- Old script.js removed - now using modular architecture -->
 
@@ -544,16 +619,6 @@ Last Updated: December 15, 2025
                         <div class="toggle-slider"></div>
                     </div>
                 </div>
-
-                <div class="toggle-container">
-                    <div class="toggle-info">
-                        <div class="toggle-title">Sound</div>
-                        <div class="toggle-desc">Play sound for notifications</div>
-                    </div>
-                    <div class="toggle-switch" id="soundToggle">
-                        <div class="toggle-slider"></div>
-                    </div>
-                </div>
             </div>
 
             <!-- Install App (PWA) -->
@@ -571,7 +636,7 @@ Last Updated: December 15, 2025
 
             <!-- Version Info -->
             <div class="version-info" id="versionInfo" style="cursor: pointer; user-select: none;" title="Click 5 times to check for updates">
-                Version 3.4.6 • Made with ❤️
+                Version 3.4.7 • Made with ❤️
             </div>
         </div>
     </div>
@@ -1098,20 +1163,6 @@ Last Updated: December 15, 2025
         }
     </script>
 
-    <!-- PWA Install Prompt -->
-    <div id="installPrompt" class="install-prompt" style="display: none;">
-        <div class="install-prompt-content">
-            <button class="install-prompt-close" id="installPromptClose">❌</button>
-            <div class="install-prompt-icon">📱</div>
-            <h3>Install Portfolio App</h3>
-            <p>Add this portfolio to your home screen for quick access and offline viewing!</p>
-            <div class="install-prompt-buttons">
-                <button class="install-btn-primary" id="installBtn">Install</button>
-                <button class="install-btn-secondary" id="installLaterBtn">Maybe Later</button>
-            </div>
-        </div>
-    </div>
-
     <!-- Version Click Counter Script -->
     <script>
     (function() {
@@ -1131,8 +1182,12 @@ Last Updated: December 15, 2025
                 clearTimeout(clickTimer);
             }
 
+            // Store original text if not already stored
+            if (clickCount === 1) {
+                versionInfo.dataset.originalText = versionInfo.textContent;
+            }
+
             // Visual feedback - show click count
-            var originalText = versionInfo.textContent;
             versionInfo.textContent = 'Click ' + clickCount + '/' + requiredClicks + ' times...';
             versionInfo.style.color = 'var(--accent)';
 
@@ -1145,13 +1200,17 @@ Last Updated: December 15, 2025
                 setTimeout(function() {
                     if (typeof checkForUpdates === 'function') {
                         checkForUpdates();
+                    } else {
+                        // Fallback if function doesn't exist
+                        window.location.reload();
                     }
 
                     // Reset after a delay
                     setTimeout(function() {
-                        versionInfo.textContent = originalText;
+                        versionInfo.textContent = versionInfo.dataset.originalText || 'Version Info';
                         versionInfo.style.color = '';
                         clickCount = 0;
+                        delete versionInfo.dataset.originalText;
                     }, 1500);
                 }, 500);
 
@@ -1160,9 +1219,10 @@ Last Updated: December 15, 2025
 
             // Reset timer - if no click within timeWindow, reset count
             clickTimer = setTimeout(function() {
-                versionInfo.textContent = originalText;
+                versionInfo.textContent = versionInfo.dataset.originalText || 'Version Info';
                 versionInfo.style.color = '';
                 clickCount = 0;
+                delete versionInfo.dataset.originalText;
             }, timeWindow);
         });
     })();

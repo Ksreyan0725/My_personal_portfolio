@@ -5,7 +5,7 @@
  */
 
 // Import utilities
-import { playNotificationSound, triggerVibration, showNotification } from './utils.js';
+import { triggerVibration, showNotification } from './utils.js';
 
 // DOM Elements
 const settingsPanel = document.getElementById('settingsPanel');
@@ -23,7 +23,6 @@ const nightLightIntensityContainer = document.getElementById('nightLightIntensit
 
 // Notification Elements
 const pushToggle = document.getElementById('pushToggle');
-const soundToggle = document.getElementById('soundToggle');
 
 /**
  * Toggle settings panel
@@ -235,7 +234,6 @@ function initNightLight() {
 function initNotifications() {
     console.log('Initializing notifications...');
     console.log('pushToggle:', pushToggle);
-    console.log('soundToggle:', soundToggle);
 
     if (pushToggle) {
         console.log('✅ Push toggle found, adding event listener');
@@ -254,21 +252,6 @@ function initNotifications() {
         }
     } else {
         console.error('❌ Push toggle NOT found!');
-    }
-
-    if (soundToggle) {
-        console.log('✅ Sound toggle found, adding event listener');
-        soundToggle.addEventListener('click', function () {
-            console.log('Sound toggle clicked!');
-            const isEnabled = !soundToggle.classList.contains('active');
-            if (isEnabled) soundToggle.classList.add('active');
-            else soundToggle.classList.remove('active');
-            localStorage.setItem('soundEnabled', isEnabled.toString());
-            showNotification(isEnabled ? 'Sound enabled' : 'Sound disabled');
-        });
-        if (localStorage.getItem('soundEnabled') === 'true') soundToggle.classList.add('active');
-    } else {
-        console.error('❌ Sound toggle NOT found!');
     }
 }
 

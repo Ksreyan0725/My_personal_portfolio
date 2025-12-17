@@ -24,17 +24,25 @@
     bottom: -100%;
     left: 0;
     width: 100%;
-    background: var(--bg-secondary);
+    /* Glassmorphism effect */
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
     z-index: 2001;
     transition: bottom 0.3s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.3s step-end;
     box-shadow: 0 -5px 30px rgba(0,0,0,0.2);
     height: 70vh;
-    border-top: 1px solid var(--border);
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
     display: flex;
     flex-direction: column;
     visibility: hidden; /* Hide from layout/scroll when not active */
+}
+
+[data-theme="dark"] .settings-panel {
+    background: rgba(20, 20, 20, 0.85);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .settings-panel.active {
@@ -611,14 +619,14 @@ body.no-scroll {
 
 .intensity-slider::-webkit-slider-thumb {
     -webkit-appearance: none;
-    width: 20px;
-    height: 20px;
+    width: 16px;
+    height: 16px;
     background: #ffa000; /* Match night light color */
     border-radius: 50%;
     cursor: pointer;
     box-shadow: 0 2px 6px rgba(0,0,0,0.2);
     transition: transform 0.1s ease, background 0.2s ease;
-    margin-top: -8px; /* Centers thumb vertically on the 4px track */
+    margin-top: -6px; /* Perfectly centers 16px thumb on 4px track */
 }
 
 .intensity-slider::-webkit-slider-thumb:hover {
@@ -659,6 +667,67 @@ body.no-scroll {
 
     [data-theme="light"] .notification-banner {
         background: rgba(255, 255, 255, 0.8) !important; /* Semi-transparent light for Light Mode */
+    }
+}
+
+/* EMERGENCY FIX FOR DESKTOP SETTINGS BUTTON */
+/* This file ensures the desktop settings button is visible on desktop screens */
+/* Add this as the LAST stylesheet to override everything */
+
+/* Force show desktop settings button on screens >= 768px (tablets and up) */
+@media (min-width: 768px) {
+    .desktop-settings-btn,
+    button.desktop-settings-btn,
+    button#desktopSettingsBtn,
+    .settings-toggle.desktop-settings-btn {
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
+        position: relative !important;
+        z-index: 1001 !important;
+        cursor: pointer !important;
+    }
+}
+
+/* Force hide on mobile (below 768px) */
+@media (max-width: 767px) {
+    .desktop-settings-btn,
+    button.desktop-settings-btn,
+    button#desktopSettingsBtn,
+    .settings-toggle.desktop-settings-btn {
+        display: none !important;
+    }
+}
+
+/* Ensure settings panel appears on tablet and desktop (768px+) */
+@media (min-width: 768px) {
+    .settings-panel.active,
+    #settingsPanel.active {
+        right: 20px !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        z-index: 2001 !important;
+        display: flex !important;
+        pointer-events: auto !important;
+    }
+
+    .settings-panel {
+        position: fixed !important;
+        top: 70px !important;
+        right: -400px !important;
+        bottom: auto !important;
+        left: auto !important;
+        width: 380px !important;
+        max-width: 90vw !important;
+        height: auto !important;
+        max-height: calc(100vh - 90px) !important;
+        border-radius: 16px !important;
+        transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.3s !important;
+        z-index: 2001 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        overflow: hidden !important; /* Ensure content doesn't spill out */
     }
 }
 

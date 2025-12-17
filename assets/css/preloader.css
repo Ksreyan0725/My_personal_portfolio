@@ -1,40 +1,18 @@
-/* ==================== CRITICAL CSS - Prevents FOUC ==================== */
-/* This CSS MUST load first to prevent flash of unstyled content */
+/* ==================== SAMSUNG-STYLE GLITCH PRELOADER ==================== */
+/* Clean, minimal design with automatic theme detection */
+/* Standalone file - just link this CSS and add the HTML structure */
 
-/* DISABLED - This was causing preloader to get stuck */
-/* Hide all content until page is loaded - AGGRESSIVE approach */
-/*
-body:not(.loaded) > *:not(#preloader) {
-    display: none !important;
-}
-*/
-
-/* Additional specific hiding for nested elements */
-/*
-body:not(.loaded) #pageWrapper,
-body:not(.loaded) nav,
-body:not(.loaded) .notice-banner,
-body:not(.loaded) header,
-body:not(.loaded) .container,
-body:not(.loaded) .page-frame > *:not(#preloader) {
-    display: none !important;
-}
-*/
-
-/* Hide skeleton loader when preloader is active */
-body:not(.loaded) #skeletonLoader {
-    display: none !important;
-}
-
-#preloader {
+#webPreloader {
     position: fixed !important;
     top: 0 !important;
     left: 0 !important;
     width: 100% !important;
     height: 100% !important;
-    background-color: #000000; /* Fallback color */
-    background-color: var(--bg-primary);
-    z-index: 999999 !important; /* Maximum z-index to ensure visibility */
+    /* Light theme: Soft blue-purple gradient */
+    background: linear-gradient(180deg, #e8eaf6, #c5cae9, #9fa8da, #7986cb) !important;
+    background-size: 100% 300% !important;
+    animation: gradientShift 6s ease-in-out infinite, enforceMinDisplay 2.5s linear !important;
+    z-index: 999999 !important;
     display: flex !important;
     justify-content: center !important;
     align-items: center !important;
@@ -43,158 +21,323 @@ body:not(.loaded) #skeletonLoader {
     opacity: 1 !important;
 }
 
-/* Hide preloader when loaded */
-body.loaded #preloader {
-    opacity: 0;
-    visibility: hidden;
+/* System dark mode preference (first visit) */
+@media (prefers-color-scheme: dark) {
+    #webPreloader {
+        background: linear-gradient(180deg, #0f0f1a, #1a1a2e, #2d2d44, #3d3d5a) !important;
+        background-size: 100% 300% !important;
+        animation: gradientShift 6s ease-in-out infinite, enforceMinDisplay 2.5s linear !important;
+    }
 }
 
-/* Preloader Content */
+/* Dark theme: Deep blue-purple gradient */
+[data-theme="dark"] #webPreloader {
+    background: linear-gradient(180deg, #0f0f1a, #1a1a2e, #2d2d44, #3d3d5a) !important;
+    background-size: 100% 300% !important;
+    animation: gradientShift 6s ease-in-out infinite, enforceMinDisplay 2.5s linear !important;
+}
+
+/* Enforce minimum display time */
+@keyframes enforceMinDisplay {
+    0%, 99% {
+        pointer-events: all;
+    }
+    100% {
+        pointer-events: all;
+    }
+}
+
+body.loaded #webPreloader {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    transition-delay: 2.5s !important;
+}
+
 .loader-content {
     text-align: center;
     position: relative;
     z-index: 1000000 !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
+/* Logo with subtle glitch */
 .loader-logo {
-    font-size: 3rem;
-    font-weight: 800;
-    background: linear-gradient(135deg, #6366f1, #8b5cf6);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    animation: pulse-glow 2s infinite ease-in-out;
+    font-size: 4rem;
+    font-weight: 700;
+    color: #FFD700; /* Light gold */
     position: relative;
     display: inline-block !important;
-    z-index: 2;
-    visibility: visible !important;
+    letter-spacing: 4px;
+    animation: subtleGlitch 3s ease-in-out infinite;
+    text-shadow: 
+        0 0 10px rgba(255, 215, 0, 0.8),
+        0 0 20px rgba(255, 215, 0, 0.6),
+        0 0 30px rgba(255, 215, 0, 0.4),
+        0 0 40px rgba(255, 215, 0, 0.2);
 }
 
-/* Spinning circle around logo */
+/* System dark mode preference */
+@media (prefers-color-scheme: dark) {
+    .loader-logo {
+        color: #FFD700;
+        text-shadow: 
+            0 0 10px rgba(255, 215, 0, 0.8),
+            0 0 20px rgba(255, 215, 0, 0.6),
+            0 0 30px rgba(255, 215, 0, 0.4),
+            0 0 40px rgba(255, 215, 0, 0.2);
+    }
+}
+
+/* Same gold glow for dark theme */
+[data-theme="dark"] .loader-logo {
+    color: #FFD700;
+    text-shadow: 
+        0 0 10px rgba(255, 215, 0, 0.8),
+        0 0 20px rgba(255, 215, 0, 0.6),
+        0 0 30px rgba(255, 215, 0, 0.4),
+        0 0 40px rgba(255, 215, 0, 0.2);
+}
+
+/* Minimal glitch effect */
 .loader-logo::before {
-    content: '';
-    position: absolute !important;
-    top: 50% !important;
-    left: 50% !important;
-    width: 130px !important;
-    height: 130px !important;
-    margin-top: -65px !important;
-    margin-left: -65px !important;
-    border: 3px solid transparent;
-    border-top-color: var(--accent);
-    border-right-color: var(--accent);
-    border-radius: 50%;
-    animation: spin 0.6s linear infinite !important;
-    z-index: -1;
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
 }
 
-/* Outer spinning circle */
 .loader-logo::after {
-    content: '';
-    position: absolute !important;
-    top: 50% !important;
-    left: 50% !important;
-    width: 150px !important;
-    height: 150px !important;
-    margin-top: -75px !important;
-    margin-left: -75px !important;
-    border: 2px solid transparent;
-    border-bottom-color: rgba(99, 102, 241, 0.3);
-    border-left-color: rgba(99, 102, 241, 0.3);
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite reverse !important;
-    z-index: -2;
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
 }
 
-.loader-bar {
+/* Simple loading bar */
+.loading-bar {
     width: 200px;
-    height: 4px;
-    background: rgba(255, 255, 255, 0.1);
+    height: 3px;
+    background: rgba(63, 81, 181, 0.2); /* Light theme: darker background */
     border-radius: 2px;
-    margin-top: 60px;
+    margin: 40px auto 0;
     overflow: hidden;
     position: relative;
 }
 
-.loader-bar::after {
-    content: '';
+@media (prefers-color-scheme: dark) {
+    .loading-bar {
+        background: rgba(255, 255, 255, 0.1);
+    }
+}
+
+[data-theme="dark"] .loading-bar {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.loading-bar-fill {
     position: absolute;
     top: 0;
     left: 0;
-    width: 50%;
+    width: 0%;
     height: 100%;
-    background: linear-gradient(90deg,
-        transparent,
-        var(--accent),
-        transparent
-    );
+    background: #3f51b5; /* Light theme: dark blue */
     border-radius: 2px;
-    animation: loading-slide 1.5s infinite ease-in-out;
-    box-shadow: 0 0 10px var(--accent);
 }
 
-@keyframes pulse-glow {
+@media (prefers-color-scheme: dark) {
+    .loading-bar-fill {
+        background: #ffffff;
+    }
+}
+
+[data-theme="dark"] .loading-bar-fill {
+    background: #ffffff;
+}
+
+/* Loading text */
+.loading-text {
+    margin-top: 30px;
+    font-size: 0.9rem;
+    color: rgba(63, 81, 181, 0.8); /* Light theme: dark blue */
+    letter-spacing: 3px;
+    font-weight: 500;
+    animation: textFade 2s ease-in-out infinite;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media (prefers-color-scheme: dark) {
+    .loading-text {
+        color: rgba(255, 255, 255, 0.7);
+    }
+}
+
+[data-theme="dark"] .loading-text {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* Loading percentage */
+.loading-percentage {
+    position: fixed;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 2rem;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: 2px;
+    z-index: 1000001;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+@media (prefers-color-scheme: dark) {
+    .loading-percentage {
+        color: #ffffff;
+    }
+}
+
+[data-theme="dark"] .loading-percentage {
+    color: #ffffff;
+}
+
+/* Mobile responsive */
+@media (max-width: 480px) {
+    .loading-percentage {
+        bottom: 30px;
+        font-size: 1.5rem;
+    }
+}
+
+/* Animated dots */
+.loading-text::after {
+    content: '';
+    display: inline-block;
+    width: 20px;
+}
+
+.loading-dots {
+    display: inline-block;
+    margin-left: 4px;
+}
+
+.loading-dots span {
+    display: inline-block;
+    width: 4px;
+    height: 4px;
+    background: rgba(63, 81, 181, 0.8); /* Light theme: dark blue */
+    border-radius: 50%;
+    margin: 0 2px;
+    animation: dotBounce 1.4s ease-in-out infinite;
+}
+
+@media (prefers-color-scheme: dark) {
+    .loading-dots span {
+        background: rgba(255, 255, 255, 0.7);
+    }
+}
+
+[data-theme="dark"] .loading-dots span {
+    background: rgba(255, 255, 255, 0.7);
+}
+
+.loading-dots span:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.loading-dots span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.loading-dots span:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+/* Animations */
+@keyframes subtleGlitch {
+    0%, 94%, 100% {
+        transform: translate(0);
+        opacity: 1;
+    }
+    95% {
+        transform: translate(-2px, 0);
+        opacity: 0.8;
+    }
+    96% {
+        transform: translate(2px, 0);
+        opacity: 0.8;
+    }
+    97% {
+        transform: translate(0);
+        opacity: 1;
+    }
+}
+
+@keyframes barSlide {
+    0% {
+        left: -40%;
+    }
+    100% {
+        left: 100%;
+    }
+}
+
+@keyframes textFade {
     0%, 100% {
-        opacity: 0.7;
-        transform: scale(0.95);
+        opacity: 0.4;
     }
     50% {
         opacity: 1;
-        transform: scale(1.05);
-        filter: drop-shadow(0 0 20px rgba(99, 102, 241, 0.8));
     }
 }
 
-@keyframes loading-slide {
-    0% { left: -50%; }
-    100% { left: 100%; }
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-/* ==================== Mobile & PWA Specific Fixes ==================== */
-/* DISABLED - These were preventing preloader from hiding */
-/*
-@media (max-width: 1024px) {
-    #preloader {
-        display: flex !important;
-        visibility: visible !important;
-        opacity: 1 !important;
+@keyframes dotBounce {
+    0%, 60%, 100% {
+        opacity: 0.3;
+        transform: translateY(0);
     }
-
-    .loader-logo {
-        font-size: 2.5rem !important;
-    }
-
-    .loader-bar {
-        width: 150px !important;
+    30% {
+        opacity: 1;
+        transform: translateY(-4px);
     }
 }
-*/
 
-/* Extra small mobile devices */
+@keyframes gradientShift {
+    0% {
+        background-position-y: 0%;
+    }
+    100% {
+        background-position-y: 100%;
+    }
+}
+
+/* Mobile responsive */
 @media (max-width: 480px) {
     .loader-logo {
-        font-size: 2rem !important;
+        font-size: 2.5rem !important;
+        letter-spacing: 2px;
     }
-
-    .loader-bar {
-        width: 120px !important;
+    
+    .loading-bar {
+        width: 150px;
     }
-}
-
-/* DISABLED - Was preventing preloader from hiding in PWA */
-/*
-@media (display-mode: standalone) {
-    #preloader {
-        display: flex !important;
-        visibility: visible !important;
-        opacity: 1 !important;
-        z-index: 999999 !important;
+    
+    .loading-text {
+        font-size: 0.8rem;
+        letter-spacing: 2px;
     }
 }
-*/
 
+/* Hide skeleton loader when preloader is active */
+body:not(.loaded) #skeletonLoader {
+    display: none !important;
+}
