@@ -3,9 +3,8 @@
 #pageWrapper {
   position: relative;
   width: 100%;
-  flex: 1; /* Take up remaining space */
-  display: flex;
-  flex-direction: column;
+  min-height: 100vh; /* Ensure it's at least viewport height */
+  display: block; /* Changed from flex to block for normal document flow */
   transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
   will-change: transform;
   transform: translateX(0);
@@ -13,6 +12,8 @@
   padding-top: calc(var(--header-height) + env(safe-area-inset-top, 0px));
   box-sizing: border-box;
   overflow-x: hidden;
+  /* Removed overflow-y: auto - let body handle scrolling */
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
 }
 
 /* Copilot-style page slide effect - when sidebar is open, shift entire page right */

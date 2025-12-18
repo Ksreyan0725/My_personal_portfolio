@@ -201,22 +201,19 @@
     margin-left: 0 !important;
     margin-right: auto !important;
     flex-grow: 0 !important;
-    /* Disable 3D transforms on mobile for better performance */
-    perspective: none !important;
-    transform-style: flat !important;
   }
   
-  /* Simpler hover effect for mobile */
+  /* Keep smooth hover effect on mobile */
   .nav-logo:hover {
     transform: scale(0.95) !important;
     filter: brightness(1.1) !important;
   }
   
-  /* Simpler click effect for mobile */
+  /* Enable smooth reload animation on mobile - same as desktop */
   .nav-logo:active,
   .nav-logo.clicked {
-    animation: none !important;
-    transform: scale(0.9) !important;
+    animation: reloadSpin 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) !important;
+    transform: scale(0.7) translateZ(-80px) rotateY(360deg) !important;
   }
 
   .notice-banner {
@@ -259,9 +256,10 @@
       text-align: center;
   }
 
-  /* Ensure no overflow */
+  /* Ensure no horizontal overflow, but allow vertical scrolling */
   body, html {
       overflow-x: hidden;
+      overflow-y: auto !important; /* Force vertical scrolling on mobile */
   }
 
 }

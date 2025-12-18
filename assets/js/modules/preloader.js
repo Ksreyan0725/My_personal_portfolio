@@ -56,7 +56,11 @@ function hidePreloader() {
     if (!preloader) return;
 
     const percentageEl = preloader.querySelector('.loading-percentage');
-    const barFillEl = preloader.querySelector('.loading-bar-fill');
+    const circleProgress = preloader.querySelector('.circle-progress');
+
+    // Calculate circle circumference for SVG animation
+    const radius = 110; // From SVG viewBox
+    const circumference = 2 * Math.PI * radius; // ~691
 
     // Detect network speed and offline status
     let loadSpeed = 2500; // Default: 2.5 seconds
@@ -103,8 +107,11 @@ function hidePreloader() {
         if (percentageEl) {
             percentageEl.textContent = `${Math.min(currentPercentage, targetPercentage)}%`;
         }
-        if (barFillEl) {
-            barFillEl.style.width = `${Math.min(currentPercentage, targetPercentage)}%`;
+        if (circleProgress) {
+            // Animate SVG circle from full offset (empty) to 0 (full)
+            const progress = Math.min(currentPercentage, targetPercentage) / 100;
+            const offset = circumference * (1 - progress);
+            circleProgress.style.strokeDashoffset = offset;
         }
 
         if (currentPercentage >= targetPercentage) {

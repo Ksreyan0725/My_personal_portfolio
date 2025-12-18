@@ -5,11 +5,11 @@ Purpose: Main landing page for Kumar Sreyan Pattanayak's personal portfolio
 Description: Showcases education, projects, certifications, and skills with
              responsive design, dark/light theme support, and smooth animations
 Author: Kumar Sreyan Pattanayak
-Version: 3.4.9
+Version: 3.5
 Last Updated: December 18, 2025
 =============
 ================================================================
--->
+--> 
 
 <!DOCTYPE html>
 <html lang="en">
@@ -25,15 +25,12 @@ Last Updated: December 18, 2025
     <!-- Prevent MIME type sniffing -->
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
 
-    <!-- Prevent clickjacking attacks -->
-    <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
-
     <!-- Control referrer information -->
     <meta name="referrer" content="strict-origin-when-cross-origin">
 
     <!-- ==================== Page Title & Favicon ==================== -->
     <title>Kumar Sreyan Pattanayak - Portfolio</title>
-    <link rel="icon" type="image/png" href="assets/icons/favicon.png" sizes="64x64" />
+    <link rel="icon" type="image/webp" href="assets/icons/favicon.webp" sizes="64x64" />
 
     <!-- ==================== SEO & Social Media Meta Tags ==================== -->
     <!-- Open Graph Meta Tags for Facebook, LinkedIn, etc. -->
@@ -96,12 +93,12 @@ Last Updated: December 18, 2025
 
     <!-- ==================== Preload Critical Resources ==================== -->
     <!-- Critical CSS -->
-    <link rel="preload" href="assets/css/core.css?v=3.4.9" as="style">
-    <link rel="preload" href="assets/css/responsive.css?v=3.4.9" as="style">
+    <link rel="preload" href="assets/css/core.css?v=3.5" as="style">
+    <link rel="preload" href="assets/css/responsive.css?v=3.5" as="style">
 
     <!-- Critical JavaScript - Modular Structure -->
-    <link rel="preload" href="assets/js/modules/preloader.js?v=3.4.9" as="script">
-    <link rel="modulepreload" href="assets/js/main.js?v=3.4.9">
+    <link rel="preload" href="assets/js/modules/preloader.js?v=3.5" as="script">
+    <link rel="modulepreload" href="assets/js/main.js?v=3.5">
 
     <!-- Hero Image -->
     <link rel="preload" href="assets/images/my-photo.jpg" as="image" fetchpriority="high">
@@ -115,36 +112,36 @@ Last Updated: December 18, 2025
 
     <!-- ==================== Stylesheets & Scripts ==================== -->    
     <!-- NEW Samsung-Style Preloader -->
-    <link rel="stylesheet" href="assets/css/preloader.css?v=3.4.9">
+    <link rel="stylesheet" href="assets/css/preloader.css?v=3.5">
 
     <!-- Core styles (must load first) -->
-    <link rel="stylesheet" href="assets/css/core.css?v=3.4.9" />
+    <link rel="stylesheet" href="assets/css/core.css?v=3.5" />
 
     <!-- Feature modules - Deferred for faster LCP -->
-    <link rel="preload" href="assets/css/navigation.css?v=3.4.9" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <link rel="preload" href="assets/css/search.css?v=3.4.9" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <link rel="preload" href="assets/css/sidebar.css?v=3.4.9" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <link rel="preload" href="assets/css/settings.css?v=3.4.9" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="assets/css/navigation.css?v=3.5" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="assets/css/search.css?v=3.5" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="assets/css/sidebar.css?v=3.5" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="assets/css/settings.css?v=3.5" as="style" onload="this.onload=null;this.rel='stylesheet'">
 
     <!-- Responsive overrides - Deferred -->
-    <link rel="preload" href="assets/css/responsive.css?v=3.4.9" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="assets/css/responsive.css?v=3.5" as="style" onload="this.onload=null;this.rel='stylesheet'">
 
     <!-- Specialized files - Deferred -->
-    <link rel="preload" href="assets/css/install-button.css?v=3.4.9" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <link rel="stylesheet" href="assets/css/print.css?v=3.4.9" media="print">
+    <link rel="preload" href="assets/css/install-button.css?v=3.5" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="stylesheet" href="assets/css/print.css?v=3.5" media="print">
 
     <!-- EMERGENCY FIX - Deferred -->
-    <link rel="preload" href="assets/css/settings-fix.css?v=3.4.9" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="assets/css/settings-fix.css?v=3.5" as="style" onload="this.onload=null;this.rel='stylesheet'">
     
     <!-- Fallback for no-JS -->
     <noscript>
-      <link rel="stylesheet" href="assets/css/navigation.css?v=3.4.9">
-      <link rel="stylesheet" href="assets/css/search.css?v=3.4.9">
-      <link rel="stylesheet" href="assets/css/sidebar.css?v=3.4.9">
-      <link rel="stylesheet" href="assets/css/settings.css?v=3.4.9">
-      <link rel="stylesheet" href="assets/css/responsive.css?v=3.4.9">
-      <link rel="stylesheet" href="assets/css/install-button.css?v=3.4.9">
-      <link rel="stylesheet" href="assets/css/settings-fix.css?v=3.4.9">
+      <link rel="stylesheet" href="assets/css/navigation.css?v=3.5">
+      <link rel="stylesheet" href="assets/css/search.css?v=3.5">
+      <link rel="stylesheet" href="assets/css/sidebar.css?v=3.5">
+      <link rel="stylesheet" href="assets/css/settings.css?v=3.5">
+      <link rel="stylesheet" href="assets/css/responsive.css?v=3.5">
+      <link rel="stylesheet" href="assets/css/install-button.css?v=3.5">
+      <link rel="stylesheet" href="assets/css/settings-fix.css?v=3.5">
     </noscript>
     
     <!-- Critical inline CSS to prevent layout shift -->
@@ -154,8 +151,7 @@ Last Updated: December 18, 2025
         margin: 0;
         padding: 0;
         width: 100%;
-        height: 100%;
-        overflow: hidden;
+        /* Removed height: 100% and overflow: hidden - was blocking scrolling! */
       }
       
       /* Ensure preloader is always on top and stable */
@@ -255,27 +251,45 @@ Last Updated: December 18, 2025
     <!-- ==================== Samsung-Style Preloader (Web Mode) ==================== -->
     <div id="webPreloader">
         <div class="loader-content">
-            <div class="loader-logo" data-text="KSP">KSP</div>
-            <div class="loading-bar">
-                <div class="loading-bar-fill"></div>
-            </div>
-            <div class="loading-text">
-                LOADING
-                <span class="loading-dots">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </span>
+            <div class="loading-spinner">
+                <div class="spinner-inner-content">
+                    <div class="loader-logo" data-text="KSP">KSP</div>
+                    <div class="loading-text">
+                        LOADING
+                        <span class="loading-dots">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </span>
+                    </div>
+                </div>
+                <svg class="spinner-circle" viewBox="0 0 220 220">
+                    <defs>
+                        <linearGradient id="rainbowGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#6366f1" />
+                            <stop offset="14%" stop-color="#3b82f6" />
+                            <stop offset="28%" stop-color="#06b6d4" />
+                            <stop offset="42%" stop-color="#10b981" />
+                            <stop offset="57%" stop-color="#f59e0b" />
+                            <stop offset="71%" stop-color="#ec4899" />
+                            <stop offset="85%" stop-color="#8b5cf6" />
+                            <stop offset="100%" stop-color="#6366f1" />
+                        </linearGradient>
+                    </defs>
+                    <!-- Background circle -->
+                    <circle class="circle-bg" cx="110" cy="110" r="110"></circle>
+                    <!-- Progress circle that fills -->
+                    <circle class="circle-progress" cx="110" cy="110" r="110" stroke="url(#rainbowGradient)"></circle>
+                </svg>
             </div>
             <div class="loading-percentage">0%</div>
         </div>
     </div>
 
-
     <!-- ==================== Preloader PWA ==================== -->
     <div id="preloader" style="display: flex;">
         <div class="loader-content">
-            <img src="assets/icons/pwa-icon-192.png" alt="KSP Logo" class="loader-icon" style="width: 100px; height: 100px; border-radius: 24px; display: none;">
+            <img src="assets/icons/pwa-icon-192.webp" alt="KSP Logo" class="loader-icon" style="width: 100px; height: 100px; border-radius: 24px; display: none;">
             <div class="loader-logo" id="loaderLogo">KSP</div>
             <!-- Loading bar removed - only circular animation -->
         </div>
@@ -307,13 +321,20 @@ Last Updated: December 18, 2025
         var maxDisplayTime = 5000; // Maximum 5 seconds
         var startTime = Date.now();
 
-        // BROWSER MODE: Hide PWA icon, show only loading animations
-        if (!isStandalone && loaderIcon) {
-            loaderIcon.style.display = 'none';
+        // BROWSER MODE: Hide PWA splash screen completely
+        if (!isStandalone) {
+            var pwaPreloader = document.getElementById('preloader');
+            if (pwaPreloader) pwaPreloader.style.display = 'none';
         }
 
         // INSTALLED MODE - INITIAL LAUNCH: Show PWA icon splash, then animations
         if (isStandalone && isInitialLaunch && loaderIcon) {
+            // Force hide Web Preloader (Samsung style) initially to prevent overlap
+            var webPreloaderInit = document.getElementById('webPreloader');
+            if (webPreloaderInit) {
+                webPreloaderInit.style.setProperty('display', 'none', 'important');
+            }
+
             loaderIcon.style.display = 'block';
             loaderIcon.style.opacity = '1';
             
@@ -323,7 +344,7 @@ Last Updated: December 18, 2025
                 logo.style.transform = 'translateY(20px)';
             }
             
-            // Stage 2: Show KSP animation after PWA icon splash (800ms delay)
+            // Stage 2: Show KSP animation after PWA icon splash (200ms delay - Quick flash)
             setTimeout(function() {
                 if (logo) {
                     logo.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
@@ -331,7 +352,7 @@ Last Updated: December 18, 2025
                     logo.style.transform = 'translateY(0)';
                 }
                 
-                // Stage 3: Transition to Samsung-style preloader (after 1200ms total)
+                // Stage 3: Transition to Samsung-style preloader (after 500ms total)
                 setTimeout(function() {
                     var pwaPreloader = document.getElementById('preloader');
                     var webPreloader = document.getElementById('webPreloader');
@@ -343,8 +364,8 @@ Last Updated: December 18, 2025
                         
                         setTimeout(function() {
                             pwaPreloader.style.display = 'none';
-                            // Show Samsung preloader
-                            webPreloader.style.display = 'flex';
+                            // Show Samsung preloader - FORCE display flex
+                            webPreloader.style.setProperty('display', 'flex', 'important');
                             webPreloader.style.opacity = '0';
                             setTimeout(function() {
                                 webPreloader.style.transition = 'opacity 0.3s ease';
@@ -352,8 +373,8 @@ Last Updated: December 18, 2025
                             }, 50);
                         }, 300);
                     }
-                }, 1200);
-            }, 800);
+                }, 500);
+            }, 200);
         }
 
         // INSTALLED MODE - NAVIGATION (back button/swipe): Hide PWA icon, show only animations
@@ -458,10 +479,10 @@ Last Updated: December 18, 2025
 
     <!-- Modular JavaScript Loading -->
     <!-- 1. Preloader (non-module, runs immediately) -->
-    <script src="assets/js/modules/preloader.js?v=3.4.9"></script>
+    <script src="assets/js/modules/preloader.js?v=3.5"></script>
 
     <!-- 2. Main app (ES6 module, loads critical features) -->
-    <script type="module" src="assets/js/main.js?v=3.4.9"></script>
+    <script type="module" src="assets/js/main.js?v=3.5"></script>
 
     <!-- Old script.js removed - now using modular architecture -->
 
@@ -477,7 +498,7 @@ Last Updated: December 18, 2025
     <div id="nightLightNotification" class="notification-banner">
         <div class="notification-content">
             <span id="notificationMessage">Night Light turned ON</span>
-            <img src="assets/icons/nightlight-notification.png" alt="nightlight-icon" class="notification-icon">
+            <img src="assets/icons/nightlight-notification.webp" alt="nightlight-icon" class="notification-icon">
         </div>
     </div>
 
@@ -506,24 +527,24 @@ Last Updated: December 18, 2025
             <div class="search-container desktop-search">
                 <!-- Search icon button (shown when collapsed to icon mode) -->
                 <button class="search-icon-button" aria-label="Open search">
-                    <img src="assets/icons/search.png" alt="Search" />
+                    <img src="assets/icons/search.webp" alt="Search" />
                 </button>
                 <!-- Full search input (shown when expanded) -->
                 <input type="search" class="search-input" placeholder="Search..." aria-label="Search">
                 <button class="search-clear" aria-label="Clear search" hidden>❌</button>
                 <button class="search-button" aria-label="Search">
-                    <img src="assets/icons/search.png" alt="Search" class="search-icon-img" />
+                    <img src="assets/icons/search.webp" alt="Search" class="search-icon-img" />
                 </button>
                 <!-- Tablet Search Button (Hidden on Desktop/Mobile) -->
                 <button class="tablet-search-button" id="tabletSearchBtn" aria-label="Open search">
                     <span>Search</span>
-                    <img src="assets/icons/search.png" alt="Search" class="search-icon-img">
+                    <img src="assets/icons/search.webp" alt="Search" class="search-icon-img">
                 </button>
                 <!-- Desktop Search Dropdown Results -->
                 <div class="desktop-search-results" id="desktopSearchResults"></div>
             </div>
             <button class="theme-toggle" id="themeToggle">
-                <img src="assets/icons/system-theme.png" alt="Theme" class="theme-icon">
+                <img src="assets/icons/system-theme.webp" alt="Theme" class="theme-icon">
                 <span class="theme-text">System</span>
             </button>
 
@@ -535,12 +556,12 @@ Last Updated: December 18, 2025
 
             <!-- Mobile Search Icon -->
             <button class="mobile-search-icon" id="mobileSearchIcon" aria-label="Search">
-                <img src="assets/icons/search.png" alt="Search" class="mobile-search-icon-img" />
+                <img src="assets/icons/search.webp" alt="Search" class="mobile-search-icon-img" />
             </button>
 
             <!-- Mobile Menu Icon (Hamburger) -->
             <button class="menu-icon" id="menuIcon" aria-label="Toggle menu" aria-expanded="false" data-tooltip="Menu">
-                <img src="assets/icons/side-menu.png" alt="Menu" class="menu-icon-img" />
+                <img src="assets/icons/side-menu.webp" alt="Menu" class="menu-icon-img" />
             </button>
         </div>
     </nav>
@@ -555,7 +576,7 @@ Last Updated: December 18, 2025
                 <div class="search-modal-input-wrapper">
                     <input type="search" class="search-modal-input" id="searchModalInput" placeholder="Search projects, skills, certifications..." aria-label="Search">
                     <button class="search-modal-button" id="searchModalButton" aria-label="Search">
-                        <img src="assets/icons/search.png" alt="Search" class="search-modal-icon-img" />
+                        <img src="assets/icons/search.webp" alt="Search" class="search-modal-icon-img" />
                     </button>
                 </div>
                 <div class="search-results" id="searchResults">
@@ -574,12 +595,12 @@ Last Updated: December 18, 2025
             <button class="sidebar-close" id="sidebarClose" aria-label="Close menu">❌</button>
         </div>
         <ul class="sidebar-links" role="menubar">
-            <li role="none"><a href="#home" role="menuitem"><img src="assets/icons/home.png" alt="Home" class="sidebar-icon"> Home</a></li>
-            <li role="none"><a href="#education" role="menuitem"><img src="assets/icons/education.png" alt="Education" class="sidebar-icon"> Education</a></li>
-            <li role="none"><a href="#projects" role="menuitem"><img src="assets/icons/project.png" alt="Projects" class="sidebar-icon"> Projects</a></li>
-            <li role="none"><a href="#certifications" role="menuitem"><img src="assets/icons/certification.png" alt="Certifications" class="sidebar-icon"> Certifications</a></li>
-            <li role="none"><a href="#skills" role="menuitem"><img src="assets/icons/skills.png" alt="Skills" class="sidebar-icon"> Skills</a></li>
-            <li role="none"><a href="contact.html" role="menuitem"><img src="assets/icons/contact.png" alt="Contact" class="sidebar-icon"> Contact</a></li>
+            <li role="none"><a href="#home" role="menuitem"><img src="assets/icons/home.webp" alt="Home" class="sidebar-icon"> Home</a></li>
+            <li role="none"><a href="#education" role="menuitem"><img src="assets/icons/education.webp" alt="Education" class="sidebar-icon"> Education</a></li>
+            <li role="none"><a href="#projects" role="menuitem"><img src="assets/icons/project.webp" alt="Projects" class="sidebar-icon"> Projects</a></li>
+            <li role="none"><a href="#certifications" role="menuitem"><img src="assets/icons/certification.webp" alt="Certifications" class="sidebar-icon"> Certifications</a></li>
+            <li role="none"><a href="#skills" role="menuitem"><img src="assets/icons/skills.webp" alt="Skills" class="sidebar-icon"> Skills</a></li>
+            <li role="none"><a href="contact.html" role="menuitem"><img src="assets/icons/contact.webp" alt="Contact" class="sidebar-icon"> Contact</a></li>
         </ul>
 
         <!-- Settings Button (Mobile Only) -->
@@ -587,7 +608,7 @@ Last Updated: December 18, 2025
             <!-- Night Light Button (Mobile Only) -->
             <button class="mobile-night-light-btn" id="mobileNightLightBtn">
                 <span>Night Light</span>
-                <img src="assets/icons/nightlight-icon.png" alt="Night Light" class="night-light-icon" id="nightLightIcon">
+                <img src="assets/icons/nightlight-icon.webp" alt="Night Light" class="night-light-icon" id="nightLightIcon">
             </button>
 
             <button class="settings-btn" id="openSettingsBtn">
@@ -611,7 +632,7 @@ Last Updated: December 18, 2025
             <button class="settings-close-btn" id="settingsCloseBtn" aria-label="Close settings">❌</button>
         </div>
 
-        <div class="settings-content" data-lenis-prevent>
+        <div class="settings-content">
             <!-- Theme Selection -->
             <div class="setting-group">
                 <div class="setting-label">Theme</div>
@@ -684,7 +705,7 @@ Last Updated: December 18, 2025
 
             <!-- Version Info -->
             <div class="version-info" id="versionInfo" style="cursor: pointer; user-select: none;" title="Click 5 times to check for updates">
-                Version 3.4.9 • Made with ❤️
+                Version 3.5 • Made with ❤️
             </div>
         </div>
     </div>
@@ -697,7 +718,7 @@ Last Updated: December 18, 2025
     <div id="installPrompt" class="install-prompt" style="display: none;">
         <div class="install-prompt-content">
             <div class="install-prompt-icon">
-                <img src="assets/icons/pwa-icon-192.png" alt="App Icon" class="install-app-icon">
+                <img src="assets/icons/pwa-icon-192.webp" alt="App Icon" class="install-app-icon">
             </div>
             <div class="install-prompt-text">
                 <div class="install-prompt-title">Install KSP Portfolio</div>
@@ -788,7 +809,7 @@ Last Updated: December 18, 2025
                        style="animation-delay: 0.3s"
                        data-tooltip="View GitHub Profile">
                         <span>GitHub</span>
-                        <img src="assets/icons/github.png" alt="GitHub" class="social-icon" />
+                        <img src="assets/icons/github.webp" alt="GitHub" class="social-icon" />
                     </a>
 
                     <!-- LinkedIn -->
@@ -800,7 +821,7 @@ Last Updated: December 18, 2025
                        style="animation-delay: 0.4s"
                        data-tooltip="Connect on LinkedIn">
                         <span>LinkedIn</span>
-                        <img src="assets/icons/linkedin.png" alt="LinkedIn" class="social-icon" />
+                        <img src="assets/icons/linkedin.webp" alt="LinkedIn" class="social-icon" />
                     </a>
                 </div>
             </div>
@@ -940,7 +961,7 @@ Last Updated: December 18, 2025
                          class="course-button ripple-effect"
                          aria-label="View research details">
                     <span>View Research</span>
-                    <img src="assets/icons/pdf.png" alt="PDF" class="pdf-icon">
+                    <img src="assets/icons/pdf.webp" alt="PDF" class="pdf-icon">
                 </a>
             </article>
         </section>
@@ -1027,7 +1048,7 @@ Last Updated: December 18, 2025
                    class="resume-btn"
                    aria-label="View resume">
                     View Resume
-                    <img src="assets/icons/pdf.png" alt="PDF" class="pdf-icon">
+                    <img src="assets/icons/pdf.webp" alt="PDF" class="pdf-icon">
                 </a>
             </div>
 
@@ -1278,8 +1299,6 @@ Last Updated: December 18, 2025
         });
     })();
     </script>
-
-    <!-- Lenis.js - Deferred for better performance -->
-    <script defer src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js" integrity="sha384-li4UtcFCH6QeUqR4JyV58/VgTprMuz9aauj+oWtew7V4Y7ZVjnvz5px9Y3UCG0Ea" crossorigin="anonymous"></script>
+    <!-- Lenis.js removed - using native CSS scroll-behavior: smooth instead -->
 </body>
 </html>

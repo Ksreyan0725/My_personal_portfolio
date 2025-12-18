@@ -1,77 +1,77 @@
 // Service Worker for Portfolio PWA
-// Version 3.4.9 - Fixed cache error
-const CACHE_NAME = 'portfolio-v3.4.9';
-const RUNTIME_CACHE = 'portfolio-runtime-v3.4.9';
+// Version 3.5 - Fixed cache paths
+const CACHE_NAME = 'portfolio-v3.5';
+const RUNTIME_CACHE = 'portfolio-runtime-v3.5';
 
 // Critical resources for initial load (minimal set for fast install)
 const CORE_ASSETS = [
-    '/My_personal_portfolio/',
-    '/My_personal_portfolio/index.html',
-    '/My_personal_portfolio/manifest.json',
-    '/My_personal_portfolio/assets/css/preloader.css',
-    '/My_personal_portfolio/assets/css/core.css',
-    '/My_personal_portfolio/script.js',
-    '/My_personal_portfolio/assets/js/main.js',
-    '/My_personal_portfolio/assets/js/modules/preloader.js',
-    '/My_personal_portfolio/assets/js/modules/utils.js',
-    '/My_personal_portfolio/assets/js/modules/theme.js'
+    './',
+    './index.html',
+    './manifest.json',
+    './assets/css/preloader.css',
+    './assets/css/core.css',
+    './script.js',
+    './assets/js/main.js',
+    './assets/js/modules/preloader.js',
+    './assets/js/modules/utils.js',
+    './assets/js/modules/theme.js'
 ];
 
 // Secondary resources to cache after install (lazy cache)
 const SECONDARY_ASSETS = [
-    '/My_personal_portfolio/contact.html',
-    '/My_personal_portfolio/assets/css/navigation.css',
-    '/My_personal_portfolio/assets/css/search.css',
-    '/My_personal_portfolio/assets/css/sidebar.css',
-    '/My_personal_portfolio/assets/css/settings.css',
-    '/My_personal_portfolio/assets/css/settings-fix.css',
-    '/My_personal_portfolio/assets/css/responsive.css',
-    '/My_personal_portfolio/assets/css/install-button.css',
-    '/My_personal_portfolio/assets/css/skeleton.css',
-    '/My_personal_portfolio/assets/css/print.css',
-    '/My_personal_portfolio/assets/js/theme-schedule.js',
-    '/My_personal_portfolio/assets/js/constants.js',
-    '/My_personal_portfolio/assets/js/modules/sidebar.js',
-    '/My_personal_portfolio/assets/js/modules/settings.js',
-    '/My_personal_portfolio/assets/js/modules/search.js',
-    '/My_personal_portfolio/assets/js/modules/pwa.js',
-    '/My_personal_portfolio/assets/js/modules/navigation.js',
-    '/My_personal_portfolio/assets/js/modules/features.js',
-    '/My_personal_portfolio/assets/js/modules/security.js',
+    './contact.html',
+    './assets/css/navigation.css',
+    './assets/css/search.css',
+    './assets/css/sidebar.css',
+    './assets/css/settings.css',
+    './assets/css/settings-fix.css',
+    './assets/css/responsive.css',
+    './assets/css/install-button.css',
+    './assets/css/skeleton.css',
+    './assets/css/print.css',
+    './assets/js/theme-schedule.js',
+    './assets/js/constants.js',
+    './assets/js/modules/sidebar.js',
+    './assets/js/modules/settings.js',
+    './assets/js/modules/search.js',
+    './assets/js/modules/pwa.js',
+    './assets/js/modules/navigation.js',
+    './assets/js/modules/features.js',
+    './assets/js/modules/security.js',
     // All PNG icons for perfect offline mode
-    '/My_personal_portfolio/assets/icons/certification.png',
-    '/My_personal_portfolio/assets/icons/contact.png',
-    '/My_personal_portfolio/assets/icons/custom-theme.png',
-    '/My_personal_portfolio/assets/icons/dark-mode.png',
-    '/My_personal_portfolio/assets/icons/download.png',
-    '/My_personal_portfolio/assets/icons/education.png',
-    '/My_personal_portfolio/assets/icons/facebook.png',
-    '/My_personal_portfolio/assets/icons/favicon.png',
-    '/My_personal_portfolio/assets/icons/github.png',
-    '/My_personal_portfolio/assets/icons/gmail.png',
-    '/My_personal_portfolio/assets/icons/home.png',
-    '/My_personal_portfolio/assets/icons/instagram.png',
-    '/My_personal_portfolio/assets/icons/light-mode.png',
-    '/My_personal_portfolio/assets/icons/linkedin.png',
-    '/My_personal_portfolio/assets/icons/maintenance.png',
-    '/My_personal_portfolio/assets/icons/nightlight-icon.png',
-    '/My_personal_portfolio/assets/icons/nightlight-notification.png',
-    '/My_personal_portfolio/assets/icons/pdf.png',
-    '/My_personal_portfolio/assets/icons/printer.png',
-    '/My_personal_portfolio/assets/icons/project.png',
-    '/My_personal_portfolio/assets/icons/pwa-icon-192.png',
-    '/My_personal_portfolio/assets/icons/pwa-icon-512.png',
-    '/My_personal_portfolio/assets/icons/search.png',
-    '/My_personal_portfolio/assets/icons/setting-button.png',
-    '/My_personal_portfolio/assets/icons/side-menu.png',
-    '/My_personal_portfolio/assets/icons/skills.png',
-    '/My_personal_portfolio/assets/icons/system-theme.png',
-    '/My_personal_portfolio/assets/icons/teams.png',
-    '/My_personal_portfolio/assets/icons/telegram.png',
-    '/My_personal_portfolio/assets/icons/x.png',
-    '/My_personal_portfolio/assets/icons/zoho-dark.png',
-    '/My_personal_portfolio/assets/icons/zohomail.png',
-    '/My_personal_portfolio/assets/images/my-photo.jpg'
+    'assets/icons/certification.webp',
+    'assets/icons/contact.webp',
+    'assets/icons/custom-theme.webp',
+    'assets/icons/dark-mode.webp',
+    'assets/icons/download.webp',
+    'assets/icons/education.webp',
+    'assets/icons/facebook.webp',
+    'assets/icons/favicon.webp',
+    'assets/icons/github.webp',
+    'assets/icons/gmail.webp',
+    'assets/icons/home.webp',
+    'assets/icons/instagram.webp',
+    'assets/icons/light-mode.webp',
+    'assets/icons/linkedin.webp',
+    'assets/icons/maintenance.webp',
+    'assets/icons/nightlight-icon.webp',
+    'assets/icons/nightlight-notification.webp',
+    'assets/icons/pdf.webp',
+    'assets/icons/printer.webp',
+    'assets/icons/project.webp',
+    'assets/icons/pwa-icon-192.webp',
+    'assets/icons/pwa-icon-512.webp',
+    'assets/icons/search.webp',
+    './assets/icons/setting-button.png',
+    'assets/icons/side-menu.webp',
+    'assets/icons/skills.webp',
+    'assets/icons/system-theme.webp',
+    'assets/icons/teams.webp',
+    'assets/icons/telegram.webp',
+    'assets/icons/x.webp',
+    'assets/icons/zoho-dark.webp',
+    'assets/icons/zohomail.webp',
+    './assets/icons/my-photo.jpg'
 ];
 
 // Install event - cache only critical resources for fast install
@@ -174,7 +174,7 @@ self.addEventListener('fetch', (event) => {
                     .catch((error) => {
                         console.error('Fetch failed:', error);
                         // Return offline page if available
-                        return caches.match('/My_personal_portfolio/index.html');
+                        return caches.match('./index.html');
                     });
             })
     );
@@ -211,8 +211,8 @@ async function syncFormData() {
 self.addEventListener('push', (event) => {
     const options = {
         body: event.data ? event.data.text() : 'New update available!',
-        icon: '/My_personal_portfolio/assets/icons/pwa-icon-192.png',
-        badge: '/My_personal_portfolio/assets/icons/favicon.png',
+        icon: 'assets/icons/pwa-icon-192.webp',
+        badge: 'assets/icons/favicon.webp',
         vibrate: [200, 100, 200],
         data: {
             dateOfArrival: Date.now(),
@@ -229,7 +229,7 @@ self.addEventListener('push', (event) => {
 self.addEventListener('notificationclick', (event) => {
     event.notification.close();
     event.waitUntil(
-        clients.openWindow('/My_personal_portfolio/')
+        clients.openWindow('./')
     );
 });
 

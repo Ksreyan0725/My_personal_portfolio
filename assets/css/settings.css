@@ -95,11 +95,11 @@
     border-color: var(--accent);
 }
 
-/* Disable scrolling when sidebar or settings are open */
+/* Disable scrolling when settings panel is open */
 html.no-scroll,
 body.no-scroll {
     overflow: hidden !important;
-    height: 100% !important;
+    /* height: 100% removed - was blocking mobile scrolling */
 }
 
 .settings-content {
@@ -743,14 +743,14 @@ body.no-scroll {
 
     .settings-panel {
         position: fixed !important;
-        top: 70px !important;
+        top: calc(var(--nav-height) + var(--banner-height) + 10px) !important; /* Below navbar + notice banner */
         right: -400px !important;
         bottom: auto !important;
         left: auto !important;
         width: 380px !important;
         max-width: 90vw !important;
         height: auto !important;
-        max-height: calc(100vh - 90px) !important;
+        max-height: calc(100vh - var(--nav-height) - var(--banner-height) - 20px) !important;
         border-radius: 16px !important;
         transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.3s !important;
         z-index: 2001 !important;

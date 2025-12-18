@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PDF Viewer - Portfolio</title>
-    <link rel="icon" type="image/png" href="../assets/icons/favicon.png" sizes="64x64" />
+    <link rel="icon" type="image/png" href="../assets/icons/favicon.webp" sizes="64x64" />
     
     <!-- Early theme initialization to prevent flash of wrong theme -->
     <script>
@@ -521,11 +521,11 @@
                     <span style="font-size: 18px;">+</span>
                 </button>
                 <button id="print-pdf" title="Print PDF" aria-label="Print PDF">
-                    <img id="printIcon" src="../assets/icons/printer.png" alt="Print" width="20" height="20" onerror="this.onerror=null; this.src='../assets/icons/printer.png';" />
+                    <img id="printIcon" src="../assets/icons/../assets/icons/printer.webp" alt="Print" width="20" height="20" onerror="this.onerror=null; this.src='../assets/icons/../assets/icons/printer.webp';" />
                     <span class="button-text">Print</span>
                 </button>
                 <button id="download-pdf" title="Download PDF" aria-label="Download PDF">
-                    <img id="downloadIcon" src="../assets/icons/download.png" alt="Download" width="20" height="20" onerror="this.onerror=null; this.src='../assets/icons/download.png';" />
+                    <img id="downloadIcon" src="../assets/icons/../assets/icons/download.webp" alt="Download" width="20" height="20" onerror="this.onerror=null; this.src='../assets/icons/../assets/icons/download.webp';" />
                     <span class="button-text">Download</span>
                 </button>
             </div>
@@ -1265,8 +1265,8 @@
         // Start loading the PDF when page loads and set icons robustly
         window.addEventListener('load', function() {
             // Resolve icons
-            setIconSrc(document.getElementById('printIcon'), 'printer.png');
-            setIconSrc(document.getElementById('downloadIcon'), 'download.png');
+            setIconSrc(document.getElementById('printIcon'), '../assets/icons/printer.webp');
+            setIconSrc(document.getElementById('downloadIcon'), '../assets/icons/download.webp');
             // Attach ripple interactions
             attachRipples();
             // Load PDF

@@ -1,0 +1,236 @@
+/* ==================== SAMSUNG-STYLE GLITCH PRELOADER ==================== */
+/* Clean, minimal design with automatic theme detection */
+
+#preloader {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    background: linear-gradient(180deg, #0f0f1a, #2d2d44, #1e1e2e, #3d3d5a);
+    background-size: 100% 300%;
+    animation: gradientShift 6s ease-in-out infinite;
+    z-index: 999999 !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+/* Same animated gradient for both themes */
+[data-theme="dark"] #preloader {
+    background: linear-gradient(180deg, #0f0f1a, #2d2d44, #1e1e2e, #3d3d5a);
+    background-size: 100% 300%;
+    animation: gradientShift 6s ease-in-out infinite;
+}
+
+body.loaded #preloader {
+    opacity: 0 !important;
+    visibility: hidden !important;
+}
+
+.loader-content {
+    text-align: center;
+    position: relative;
+    z-index: 1000000 !important;
+}
+
+/* Logo with subtle glitch */
+.loader-logo {
+    font-size: 4rem;
+    font-weight: 700;
+    color: #FFD700;
+    position: relative;
+    display: inline-block !important;
+    letter-spacing: 4px;
+    animation: subtleGlitch 3s ease-in-out infinite;
+}
+
+/* Same color for both themes */
+[data-theme="dark"] .loader-logo {
+    color: #FFD700;
+}
+
+/* Minimal glitch effect */
+.loader-logo::before {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+}
+
+.loader-logo::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+}
+
+/* Simple loading bar */
+.loading-bar {
+    width: 200px;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+    margin: 40px auto 0;
+    overflow: hidden;
+    position: relative;
+}
+
+[data-theme="dark"] .loading-bar {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.loading-bar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 40%;
+    height: 100%;
+    background: #ffffff;
+    border-radius: 2px;
+    animation: barSlide 1.5s ease-in-out infinite;
+}
+
+[data-theme="dark"] .loading-bar::after {
+    background: #ffffff;
+}
+
+/* Loading text */
+.loading-text {
+    margin-top: 30px;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+    letter-spacing: 3px;
+    font-weight: 500;
+    animation: textFade 2s ease-in-out infinite;
+}
+
+[data-theme="dark"] .loading-text {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* Animated dots */
+.loading-text::after {
+    content: '';
+    display: inline-block;
+    width: 20px;
+}
+
+.loading-dots {
+    display: inline-block;
+    margin-left: 4px;
+}
+
+.loading-dots span {
+    display: inline-block;
+    width: 4px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 50%;
+    margin: 0 2px;
+    animation: dotBounce 1.4s ease-in-out infinite;
+}
+
+[data-theme="dark"] .loading-dots span {
+    background: rgba(255, 255, 255, 0.7);
+}
+
+.loading-dots span:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.loading-dots span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.loading-dots span:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+/* Animations */
+@keyframes subtleGlitch {
+    0%, 94%, 100% {
+        transform: translate(0);
+        opacity: 1;
+    }
+    95% {
+        transform: translate(-2px, 0);
+        opacity: 0.8;
+    }
+    96% {
+        transform: translate(2px, 0);
+        opacity: 0.8;
+    }
+    97% {
+        transform: translate(0);
+        opacity: 1;
+    }
+}
+
+@keyframes barSlide {
+    0% {
+        left: -40%;
+    }
+    100% {
+        left: 100%;
+    }
+}
+
+@keyframes textFade {
+    0%, 100% {
+        opacity: 0.4;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
+@keyframes dotBounce {
+    0%, 60%, 100% {
+        opacity: 0.3;
+        transform: translateY(0);
+    }
+    30% {
+        opacity: 1;
+        transform: translateY(-4px);
+    }
+}
+
+@keyframes gradientShift {
+    0% {
+        background-position-y: 100%;
+    }
+    50% {
+        background-position-y: 0%;
+    }
+    100% {
+        background-position-y: 100%;
+    }
+}
+
+/* Mobile responsive */
+@media (max-width: 480px) {
+    .loader-logo {
+        font-size: 2.5rem !important;
+        letter-spacing: 2px;
+    }
+    
+    .loading-bar {
+        width: 150px;
+    }
+    
+    .loading-text {
+        font-size: 0.8rem;
+        letter-spacing: 2px;
+    }
+}

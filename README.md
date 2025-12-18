@@ -140,5 +140,5 @@ This project is distributed under the MIT License.
 ---
 
 Made with ❤️ by **Kumar Sreyan Pattanayak**  
-📌 Version: 3.4.9  
+📌 Version: 3.5  
 📅 Last Updated: 18 December 2025

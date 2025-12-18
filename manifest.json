@@ -1,7 +1,7 @@
 {
     "name": "Kumar Sreyan Pattanayak - Portfolio",
     "short_name": " KSP ",
-    "version": "3.4.9",
+    "version": "3.5",
     "description": "Personal portfolio of Kumar Sreyan Pattanayak - BCA Student & Technology Enthusiast",
     "start_url": "/My_personal_portfolio/",
     "scope": "/My_personal_portfolio/",
@@ -11,33 +11,33 @@
     "orientation": "portrait",
     "icons": [
         {
-            "src": "assets/icons/favicon.png",
+            "src": "assets/icons/favicon.webp",
             "sizes": "64x64",
-            "type": "image/png",
+            "type": "image/webp",
             "purpose": "any"
         },
         {
-            "src": "assets/icons/pwa-icon-192.png",
+            "src": "assets/icons/pwa-icon-192.webp",
             "sizes": "192x192",
-            "type": "image/png",
+            "type": "image/webp",
             "purpose": "any"
         },
         {
-            "src": "assets/icons/pwa-icon-192.png",
+            "src": "assets/icons/pwa-icon-192.webp",
             "sizes": "192x192",
-            "type": "image/png",
+            "type": "image/webp",
             "purpose": "maskable"
         },
         {
-            "src": "assets/icons/pwa-icon-512.png",
+            "src": "assets/icons/pwa-icon-512.webp",
             "sizes": "512x512",
-            "type": "image/png",
+            "type": "image/webp",
             "purpose": "any"
         },
         {
-            "src": "assets/icons/pwa-icon-512.png",
+            "src": "assets/icons/pwa-icon-512.webp",
             "sizes": "512x512",
-            "type": "image/png",
+            "type": "image/webp",
             "purpose": "maskable"
         }
     ],
@@ -54,7 +54,7 @@
             "url": "/My_personal_portfolio/contact.html",
             "icons": [
                 {
-                    "src": "assets/icons/contact.png",
+                    "src": "assets/icons/contact.webp",
                     "sizes": "96x96"
                 }
             ]
@@ -66,7 +66,7 @@
             "url": "/My_personal_portfolio/#projects",
             "icons": [
                 {
-                    "src": "assets/icons/project.png",
+                    "src": "assets/icons/project.webp",
                     "sizes": "96x96"
                 }
             ]

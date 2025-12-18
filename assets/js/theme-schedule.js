@@ -363,7 +363,7 @@
                 const themeText = themeToggle.querySelector('.theme-text');
 
                 if (themeIcon) {
-                    themeIcon.src = 'assets/icons/custom-theme.png';
+                    themeIcon.src = 'assets/icons/custom-theme.webp';
                     themeIcon.alt = `Auto Theme (${currentScheduleType})`;
                 }
 

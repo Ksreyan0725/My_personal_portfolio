@@ -1,5 +1,5 @@
 ﻿
-Current Version: 3.4.9
+Current Version: 3.5
 - Version tracking is displayed in the Settings Panel.
 - Updates are automatically detected via the Service Worker.
 

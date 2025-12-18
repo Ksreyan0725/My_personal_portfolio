@@ -88,11 +88,11 @@ document.addEventListener('DOMContentLoaded', function () {
         if (themeIcon) {
             // Update icon source based on theme
             if (theme.name === 'system') {
-                themeIcon.src = 'assets/icons/system-theme.png';
+                themeIcon.src = 'assets/icons/system-theme.webp';
             } else if (theme.name === 'light') {
-                themeIcon.src = 'assets/icons/light-mode.png';
+                themeIcon.src = 'assets/icons/light-mode.webp';
             } else if (theme.name === 'dark') {
-                themeIcon.src = 'assets/icons/dark-mode.png';
+                themeIcon.src = 'assets/icons/dark-mode.webp';
             }
         }
 

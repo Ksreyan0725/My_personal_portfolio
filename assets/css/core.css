@@ -323,6 +323,9 @@ html {
   min-height: 100%;
   scroll-padding-top: var(--header-height);
   overflow-x: hidden;
+  overflow-y: auto; /* Ensure vertical scrolling is enabled */
+  scroll-behavior: auto; /* Instant jump for navigation links */
+  -webkit-overflow-scrolling: touch; /* Enable momentum scrolling on iOS */
 }
 
 body {
@@ -337,8 +340,9 @@ body {
   line-height: 1.6;
   transition: background 0.3s ease, color 0.3s ease;
   overflow-x: hidden;
-  display: flex;
-  flex-direction: column;
+  overflow-y: auto; /* Ensure vertical scrolling is enabled */
+  -webkit-overflow-scrolling: touch; /* Enable momentum scrolling on iOS */
+  /* Removed display: flex - was preventing scrolling */
 }
 
 /* ==================== Scrolling Notice Banner ==================== */

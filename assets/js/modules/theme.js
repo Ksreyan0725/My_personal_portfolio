@@ -102,17 +102,17 @@ export function applyTheme(theme, animate = false) {
         const scheduleType = localStorage.getItem('scheduleType') || 'fixed';
 
         if (theme === 'system') {
-            imgElement.src = 'assets/icons/system-theme.png';
+            imgElement.src = 'assets/icons/system-theme.webp';
             imgElement.alt = 'System Theme';
         } else if (theme === 'auto') {
-            imgElement.src = 'assets/icons/custom-theme.png';
+            imgElement.src = 'assets/icons/custom-theme.webp';
             imgElement.alt = `Schedule Theme (${scheduleType})`;
-            imgElement.onerror = function () { this.src = 'assets/icons/system-theme.png'; };
+            imgElement.onerror = function () { this.src = 'assets/icons/system-theme.webp'; };
         } else if (theme === 'light') {
-            imgElement.src = 'assets/icons/light-mode.png';
+            imgElement.src = 'assets/icons/light-mode.webp';
             imgElement.alt = 'Light Mode';
         } else {
-            imgElement.src = 'assets/icons/dark-mode.png';
+            imgElement.src = 'assets/icons/dark-mode.webp';
             imgElement.alt = 'Dark Mode';
         }
 
@@ -137,9 +137,9 @@ export function applyTheme(theme, animate = false) {
     const zohoLogo = document.getElementById('zohoLogo');
     if (zohoLogo) {
         if (effectiveTheme === 'light') {
-            zohoLogo.src = 'assets/icons/zoho-dark.png';
+            zohoLogo.src = 'assets/icons/zoho-dark.webp';
         } else {
-            zohoLogo.src = 'assets/icons/zohomail.png';
+            zohoLogo.src = 'assets/icons/zohomail.webp';
         }
     }
 

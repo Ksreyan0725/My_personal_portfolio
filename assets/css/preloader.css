@@ -8,8 +8,8 @@
     left: 0 !important;
     width: 100% !important;
     height: 100% !important;
-    /* Light theme: Soft blue-purple gradient */
-    background: linear-gradient(180deg, #e8eaf6, #c5cae9, #9fa8da, #7986cb) !important;
+    /* Light theme: Softer, less eye-straining gradient (Grey/White) */
+    background: linear-gradient(180deg, #f8fafc, #edf2f7, #e2e8f0, #cbd5e1) !important;
     background-size: 100% 300% !important;
     animation: gradientShift 6s ease-in-out infinite, enforceMinDisplay 2.5s linear !important;
     z-index: 999999 !important;
@@ -21,9 +21,16 @@
     opacity: 1 !important;
 }
 
+/* Explicit Light Theme (when switched) */
+[data-theme="light"] #webPreloader,
+[data-theme="light"] #preloader {
+    background: linear-gradient(180deg, #f8fafc, #edf2f7, #e2e8f0, #cbd5e1) !important;
+    background-size: 100% 300% !important;
+}
+
 /* System dark mode preference (first visit) */
 @media (prefers-color-scheme: dark) {
-    #webPreloader {
+    #webPreloader, #preloader {
         background: linear-gradient(180deg, #0f0f1a, #1a1a2e, #2d2d44, #3d3d5a) !important;
         background-size: 100% 300% !important;
         animation: gradientShift 6s ease-in-out infinite, enforceMinDisplay 2.5s linear !important;
@@ -31,7 +38,8 @@
 }
 
 /* Dark theme: Deep blue-purple gradient */
-[data-theme="dark"] #webPreloader {
+[data-theme="dark"] #webPreloader,
+[data-theme="dark"] #preloader {
     background: linear-gradient(180deg, #0f0f1a, #1a1a2e, #2d2d44, #3d3d5a) !important;
     background-size: 100% 300% !important;
     animation: gradientShift 6s ease-in-out infinite, enforceMinDisplay 2.5s linear !important;
@@ -64,41 +72,56 @@ body.loaded #webPreloader {
 }
 
 /* Logo with subtle glitch */
+/* KSP text - Rainbow gradient matching sidebar logo */
 .loader-logo {
     font-size: 4rem;
     font-weight: 700;
-    color: #FFD700; /* Light gold */
-    position: relative;
-    display: inline-block !important;
     letter-spacing: 4px;
+    position: relative;
+    /* Removed inline-block !important to fix absolute centering */
+    /* Rainbow gradient matching sidebar */
+    background: linear-gradient(135deg, #6366f1, #3b82f6, #06b6d4, #10b981, #f59e0b, #ec4899, #8b5cf6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
     animation: subtleGlitch 3s ease-in-out infinite;
-    text-shadow: 
-        0 0 10px rgba(255, 215, 0, 0.8),
-        0 0 20px rgba(255, 215, 0, 0.6),
-        0 0 30px rgba(255, 215, 0, 0.4),
-        0 0 40px rgba(255, 215, 0, 0.2);
+    text-shadow: none; /* Remove glow for cleaner gradient */
 }
 
-/* System dark mode preference */
+/* System dark mode preference - keep rainbow gradient */
 @media (prefers-color-scheme: dark) {
     .loader-logo {
-        color: #FFD700;
-        text-shadow: 
-            0 0 10px rgba(255, 215, 0, 0.8),
-            0 0 20px rgba(255, 215, 0, 0.6),
-            0 0 30px rgba(255, 215, 0, 0.4),
-            0 0 40px rgba(255, 215, 0, 0.2);
+        background: linear-gradient(135deg, #6366f1, #3b82f6, #06b6d4, #10b981, #f59e0b, #ec4899, #8b5cf6);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
     }
 }
 
-/* Same gold glow for dark theme */
+/* Light theme - keep rainbow gradient */
+@media (prefers-color-scheme: light) {
+    .loader-logo {
+        background: linear-gradient(135deg, #6366f1, #3b82f6, #06b6d4, #10b981, #f59e0b, #ec4899, #8b5cf6);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+}
+
+/* Dark theme via data attribute - keep rainbow gradient */
 [data-theme="dark"] .loader-logo {
-    color: #FFD700;
-    text-shadow: 
-        0 0 10px rgba(255, 215, 0, 0.8),
-        0 0 20px rgba(255, 215, 0, 0.6),
-        0 0 30px rgba(255, 215, 0, 0.4),
-        0 0 40px rgba(255, 215, 0, 0.2);
+    background: linear-gradient(135deg, #6366f1, #3b82f6, #06b6d4, #10b981, #f59e0b, #ec4899, #8b5cf6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Light theme via data attribute - keep rainbow gradient */
+[data-theme="light"] .loader-logo {
+    background: linear-gradient(135deg, #6366f1, #3b82f6, #06b6d4, #10b981, #f59e0b, #ec4899, #8b5cf6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 /* Minimal glitch effect */
@@ -122,108 +145,144 @@ body.loaded #webPreloader {
     opacity: 0;
 }
 
-/* Simple loading bar */
-.loading-bar {
-    width: 200px;
-    height: 3px;
-    background: rgba(63, 81, 181, 0.2); /* Light theme: darker background */
-    border-radius: 2px;
-    margin: 40px auto 0;
-    overflow: hidden;
+/* Circular progress bar around KSP */
+.loading-spinner {
     position: relative;
-}
-
-@media (prefers-color-scheme: dark) {
-    .loading-bar {
-        background: rgba(255, 255, 255, 0.1);
-    }
-}
-
-[data-theme="dark"] .loading-bar {
-    background: rgba(255, 255, 255, 0.1);
-}
-
-.loading-bar-fill {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 0%;
-    height: 100%;
-    background: #3f51b5; /* Light theme: dark blue */
-    border-radius: 2px;
-}
-
-@media (prefers-color-scheme: dark) {
-    .loading-bar-fill {
-        background: #ffffff;
-    }
-}
-
-[data-theme="dark"] .loading-bar-fill {
-    background: #ffffff;
-}
-
-/* Loading text */
-.loading-text {
-    margin-top: 30px;
-    font-size: 0.9rem;
-    color: rgba(63, 81, 181, 0.8); /* Light theme: dark blue */
-    letter-spacing: 3px;
-    font-weight: 500;
-    animation: textFade 2s ease-in-out infinite;
+    width: 220px;
+    height: 220px;
+    margin: 0 auto;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
+.spinner-circle {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg); /* Start from top */
+}
+
+.spinner-circle circle {
+    fill: none;
+    stroke-width: 4;
+    stroke-linecap: round;
+}
+
+/* Background circle */
+.spinner-circle .circle-bg {
+    stroke: rgba(99, 102, 241, 0.2);
+}
+
+/* Progress circle - animated by JavaScript */
+/* Progress circle - animated by JavaScript */
+.spinner-circle .circle-progress {
+    stroke: url(#rainbowGradient);
+    stroke-dasharray: 691; /* 2 * PI * 110 (radius) */
+    stroke-dashoffset: 691; /* Start empty */
+    transition: stroke-dashoffset 0.1s linear; /* Smooth updates */
+}
+
+/* Dark theme colors */
+@media (prefers-color-scheme: dark) {
+    .spinner-circle .circle-bg {
+        stroke: rgba(255, 255, 255, 0.1);
+    }
+    /* Keep gradient for progress in dark mode */
+}
+
+[data-theme="dark"] .spinner-circle .circle-bg {
+    stroke: rgba(255, 255, 255, 0.1);
+}
+/* Keep gradient for progress in dark mode */
+
+/* Continuous fill animation - like loading bar */
+@keyframes fillProgress {
+    0%, 100% {
+        stroke-dashoffset: 691; /* Empty */
+    }
+    50% {
+        stroke-dashoffset: 0; /* Full */
+    }
+}
+
+/* Inner content wrapper - Center of the circle */
+.spinner-inner-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+}
+
+/* KSP logo - Stacked via flexbox */
+.loading-spinner .loader-logo {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    margin: 0 0 25px 0; /* Increased spacing to push text down */
+    line-height: 1;
+    white-space: nowrap;
+    text-indent: 4px;
+    width: auto;
+}
+
+/* Loading text - Stacked via flexbox */
+/* Loading text - Stacked via flexbox - Rainbow Gradient */
+.loading-text {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    bottom: auto;
+    margin: 0;
+    font-size: 0.8rem;
+    color: transparent; /* Text is now gradient */
+    letter-spacing: 6px; /* Reduced to fit better within circle */
+    margin-right: -6px; /* Compensate for last character spacing */
+    font-weight: 700;
+    animation: textFade 2s ease-in-out infinite;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    /* Rainbow gradient */
+    background: linear-gradient(135deg, #6366f1, #3b82f6, #06b6d4, #10b981, #f59e0b, #ec4899, #8b5cf6);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: none; /* No shadow on gradient text */
+}
+
+/* Remove dark theme overrides since we use gradient */
 @media (prefers-color-scheme: dark) {
     .loading-text {
-        color: rgba(255, 255, 255, 0.7);
+        background: linear-gradient(135deg, #6366f1, #3b82f6, #06b6d4, #10b981, #f59e0b, #ec4899, #8b5cf6);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-shadow: none;
     }
 }
 
 [data-theme="dark"] .loading-text {
-    color: rgba(255, 255, 255, 0.7);
+    background: linear-gradient(135deg, #6366f1, #3b82f6, #06b6d4, #10b981, #f59e0b, #ec4899, #8b5cf6);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: none;
 }
 
-/* Loading percentage */
-.loading-percentage {
-    position: fixed;
-    bottom: 40px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 2rem;
-    font-weight: 700;
-    color: #ffffff;
-    letter-spacing: 2px;
-    z-index: 1000001;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-}
+/* ... existing styles ... */
 
-@media (prefers-color-scheme: dark) {
-    .loading-percentage {
-        color: #ffffff;
-    }
-}
-
-[data-theme="dark"] .loading-percentage {
-    color: #ffffff;
-}
-
-/* Mobile responsive */
-@media (max-width: 480px) {
-    .loading-percentage {
-        bottom: 30px;
-        font-size: 1.5rem;
-    }
-}
-
-/* Animated dots */
-.loading-text::after {
-    content: '';
-    display: inline-block;
-    width: 20px;
-}
+/* ... existing styles ... */
 
 .loading-dots {
     display: inline-block;
@@ -232,34 +291,64 @@ body.loaded #webPreloader {
 
 .loading-dots span {
     display: inline-block;
-    width: 4px;
-    height: 4px;
-    background: rgba(63, 81, 181, 0.8); /* Light theme: dark blue */
+    width: 6px;
+    height: 6px;
+    background: #6366f1; /* Default/Dot 1 */
     border-radius: 50%;
-    margin: 0 2px;
+    margin: 0 3px;
     animation: dotBounce 1.4s ease-in-out infinite;
 }
 
-@media (prefers-color-scheme: dark) {
-    .loading-dots span {
-        background: rgba(255, 255, 255, 0.7);
-    }
-}
-
-[data-theme="dark"] .loading-dots span {
-    background: rgba(255, 255, 255, 0.7);
-}
-
 .loading-dots span:nth-child(1) {
+    background: #6366f1; /* Indigo */
     animation-delay: 0s;
 }
 
 .loading-dots span:nth-child(2) {
+    background: #10b981; /* Emerald */
     animation-delay: 0.2s;
 }
 
 .loading-dots span:nth-child(3) {
+    background: #ec4899; /* Pink */
     animation-delay: 0.4s;
+}
+
+/* Loading percentage - Fixed at absolute bottom of screen */
+.loading-percentage {
+    position: fixed;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #6366f1; /* Light theme: Blue */
+    letter-spacing: 2px;
+    z-index: 1000001;
+    text-shadow: none;
+    margin-top: 0;
+}
+
+@media (prefers-color-scheme: dark) {
+    .loading-percentage {
+        color: #ffd700; /* Dark theme: Gold */
+    }
+}
+
+[data-theme="dark"] .loading-percentage {
+    color: #ffd700;
+}
+
+/* Mobile responsive */
+@media (max-width: 480px) {
+    .loading-text {
+        bottom: 20px;
+        font-size: 0.8rem;
+    }
+    .loading-percentage {
+        bottom: 50px;
+        font-size: 1.2rem;
+    }
 }
 
 /* Animations */

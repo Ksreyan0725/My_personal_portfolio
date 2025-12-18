@@ -7,7 +7,7 @@
     <link
       rel="icon"
       type="image/png"
-      href="assets/icons/favicon.png"
+      href="assets/icons/favicon.webp"
       sizes="64x64"
     />
 
@@ -48,8 +48,8 @@
     <link rel="preload" href="assets/css/responsive.css" as="style">
 
     <!-- Critical JavaScript - Modular Structure -->
-    <link rel="preload" href="assets/js/modules/preloader.js?v=3.4.9" as="script">
-    <link rel="preload" href="assets/js/main.js?v=3.4.9" as="script">
+    <link rel="preload" href="assets/js/modules/preloader.js?v=3.5" as="script">
+    <link rel="preload" href="assets/js/main.js?v=3.5" as="script">
 
     <!-- DNS Prefetch for External Resources -->
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
@@ -65,48 +65,48 @@
 
     <!-- ==================== Stylesheets ==================== -->   
     <!-- NEW Samsung-Style Preloader -->
-    <link rel="stylesheet" href="assets/css/preloader.css?v=3.4.9">
+    <link rel="stylesheet" href="assets/css/preloader.css?v=3.5">
 
     <!-- Core styles (must load first) -->
-    <link rel="stylesheet" href="assets/css/core.css?v=3.4.9" />
+    <link rel="stylesheet" href="assets/css/core.css?v=3.5" />
 
     <!-- Feature modules - Deferred for faster LCP -->
-    <link rel="preload" href="assets/css/navigation.css?v=3.4.9" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <link rel="preload" href="assets/css/search.css?v=3.4.9" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <link rel="preload" href="assets/css/sidebar.css?v=3.4.9" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <link rel="preload" href="assets/css/settings.css?v=3.4.9" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="assets/css/navigation.css?v=3.5" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="assets/css/search.css?v=3.5" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="assets/css/sidebar.css?v=3.5" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="assets/css/settings.css?v=3.5" as="style" onload="this.onload=null;this.rel='stylesheet'">
 
     <!-- Responsive overrides - Deferred -->
-    <link rel="preload" href="assets/css/responsive.css?v=3.4.9" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="assets/css/responsive.css?v=3.5" as="style" onload="this.onload=null;this.rel='stylesheet'">
 
     <!-- Contact Page Specific Styles - Deferred -->
-    <link rel="preload" href="assets/css/contact.css?v=3.4.9" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="assets/css/contact.css?v=3.5" as="style" onload="this.onload=null;this.rel='stylesheet'">
 
     <!-- Specialized files - Deferred -->
-    <link rel="preload" href="assets/css/install-button.css?v=3.4.9" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <link rel="stylesheet" href="assets/css/print.css?v=3.4.9" media="print">
+    <link rel="preload" href="assets/css/install-button.css?v=3.5" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="stylesheet" href="assets/css/print.css?v=3.5" media="print">
 
     <!-- EMERGENCY FIX - Deferred -->
-    <link rel="preload" href="assets/css/settings-fix.css?v=3.4.9" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="assets/css/settings-fix.css?v=3.5" as="style" onload="this.onload=null;this.rel='stylesheet'">
     
     <!-- Fallback for no-JS -->
     <noscript>
-      <link rel="stylesheet" href="assets/css/navigation.css?v=3.4.9">
-      <link rel="stylesheet" href="assets/css/search.css?v=3.4.9">
-      <link rel="stylesheet" href="assets/css/sidebar.css?v=3.4.9">
-      <link rel="stylesheet" href="assets/css/settings.css?v=3.4.9">
-      <link rel="stylesheet" href="assets/css/responsive.css?v=3.4.9">
-      <link rel="stylesheet" href="assets/css/contact.css?v=3.4.9">
-      <link rel="stylesheet" href="assets/css/install-button.css?v=3.4.9">
-      <link rel="stylesheet" href="assets/css/settings-fix.css?v=3.4.9">
+      <link rel="stylesheet" href="assets/css/navigation.css?v=3.5">
+      <link rel="stylesheet" href="assets/css/search.css?v=3.5">
+      <link rel="stylesheet" href="assets/css/sidebar.css?v=3.5">
+      <link rel="stylesheet" href="assets/css/settings.css?v=3.5">
+      <link rel="stylesheet" href="assets/css/responsive.css?v=3.5">
+      <link rel="stylesheet" href="assets/css/contact.css?v=3.5">
+      <link rel="stylesheet" href="assets/css/install-button.css?v=3.5">
+      <link rel="stylesheet" href="assets/css/settings-fix.css?v=3.5">
     </noscript>
 
     <!-- Modular JavaScript Loading -->
     <!-- 1. Preloader (non-module, runs immediately) -->
-    <script src="assets/js/modules/preloader.js?v=3.4.9"></script>
+    <script src="assets/js/modules/preloader.js?v=3.5"></script>
 
     <!-- 2. Main app (ES6 module, loads critical features) -->
-    <script type="module" src="assets/js/main.js?v=3.4.9"></script>
+    <script type="module" src="assets/js/main.js?v=3.5"></script>
 
     <!-- Old script.js removed - using modular architecture -->
 
@@ -222,13 +222,13 @@
             />
             <button class="search-clear" aria-label="Clear search" hidden>?</button>
             <button class="search-button" aria-label="Search">
-              <img src="assets/icons/search.png" alt="Search" class="search-icon-img" />
+              <img src="assets/icons/search.webp" alt="Search" class="search-icon-img" />
             </button>
             <!-- Desktop Search Dropdown Results -->
             <div class="desktop-search-results" id="desktopSearchResults"></div>
           </div>
           <button class="theme-toggle" id="themeToggle">
-            <img src="assets/icons/system-theme.png" alt="Theme" class="theme-icon">
+            <img src="assets/icons/system-theme.webp" alt="Theme" class="theme-icon">
             <span class="theme-text">System</span>
         </button>
         </div>
@@ -273,7 +273,7 @@
                 rel="noopener noreferrer"
               >
                 <img
-                  src="assets/icons/gmail.png"
+                  src="assets/icons/gmail.webp"
                   alt="Gmail"
                   class="social-icon"
                 />
@@ -285,7 +285,7 @@
                 rel="noopener noreferrer"
               >
                 <img
-                  src="assets/icons/zohomail.png"
+                  src="assets/icons/zohomail.webp"
                   alt="Zoho Mail"
                   class="social-icon"
                 />
@@ -298,7 +298,7 @@
                 rel="noopener noreferrer"
               >
                  <img
-                  src="assets/icons/github.png"
+                  src="assets/icons/github.webp"
                   alt="GitHub"
                   class="social-icon"
                 />
@@ -312,7 +312,7 @@
                 data-tooltip="Connect on LinkedIn"
               >
                 <img
-                  src="assets/icons/linkedin.png"
+                  src="assets/icons/linkedin.webp"
                   alt="LinkedIn"
                   class="social-icon"
                 />
@@ -326,7 +326,7 @@
                 data-tooltip="Facebook"
               >
                 <img
-                  src="assets/icons/facebook.png"
+                  src="assets/icons/facebook.webp"
                   alt="Facebook"
                   class="social-icon"
                 />
@@ -340,7 +340,7 @@
                 data-tooltip="X"
               >
                 <img
-                  src="assets/icons/x.png"
+                  src="assets/icons/x.webp"
                   alt="X"
                   class="social-icon"
                 />
@@ -354,7 +354,7 @@
                 data-tooltip="Instagram"
               >
                 <img
-                  src="assets/icons/instagram.png"
+                  src="assets/icons/instagram.webp"
                   alt="Instagram"
                   class="social-icon"
                 />
@@ -368,7 +368,7 @@
                 data-tooltip="Telegram"
               >
                 <img
-                  src="assets/icons/telegram.png"
+                  src="assets/icons/telegram.webp"
                   alt="Telegram"
                   class="social-icon"
                 />
@@ -380,7 +380,7 @@
                 rel="noopener noreferrer"
               >
                 <img
-                  src="assets/icons/teams.png"
+                  src="assets/icons/teams.webp"
                   alt="Microsoft Teams"
                   class="social-icon"
                 />

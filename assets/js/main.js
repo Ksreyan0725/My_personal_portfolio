@@ -15,28 +15,46 @@ import {
  * Initialize smooth scrolling with Lenis
  */
 function initSmoothScroll() {
-    if (typeof Lenis !== 'undefined') {
-        const lenis = new Lenis({
-            duration: 1.2,
-            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-            direction: 'vertical',
-            gestureDirection: 'vertical',
-            smooth: true,
-            mouseMultiplier: 1,
-            smoothTouch: true,
-            touchMultiplier: 2,
-        });
+    // DISABLED: Lenis smooth scroll causes mobile scrolling issues
+    // Using native browser scrolling instead for better performance and compatibility
+    console.log('ℹ️  Using native browser scrolling (Lenis disabled)');
+    return;
 
-        function raf(time) {
-            lenis.raf(time);
+    // Wait for Lenis to be available (it's loaded with defer)
+    const checkLenis = setInterval(() => {
+        if (typeof Lenis !== 'undefined') {
+            clearInterval(checkLenis);
+
+            const lenis = new Lenis({
+                duration: 1.2,
+                easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+                direction: 'vertical',
+                gestureDirection: 'vertical',
+                smooth: true,
+                mouseMultiplier: 1,
+                smoothTouch: false, // Disable on touch to prevent conflicts
+                touchMultiplier: 2,
+            });
+
+            function raf(time) {
+                lenis.raf(time);
+                requestAnimationFrame(raf);
+            }
+
             requestAnimationFrame(raf);
+            window.lenis = lenis;
+
+            console.log('✅ Smooth scroll initialized');
         }
+    }, 100);
 
-        requestAnimationFrame(raf);
-        window.lenis = lenis;
-
-        console.log('✅ Smooth scroll initialized');
-    }
+    // Stop checking after 3 seconds if Lenis doesn't load
+    setTimeout(() => {
+        clearInterval(checkLenis);
+        if (typeof Lenis === 'undefined') {
+            console.warn('⚠️  Lenis not loaded, using native scroll');
+        }
+    }, 3000);
 }
 
 /**

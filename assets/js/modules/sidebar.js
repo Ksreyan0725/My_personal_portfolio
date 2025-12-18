@@ -34,6 +34,7 @@ class MobileSidebarSwipe {
         this.overlay = document.getElementById('sidebarOverlay');
         this.menuIcon = document.getElementById('menuIcon');
         this.closeBtn = document.getElementById('sidebarClose');
+        this.sidebarLogo = document.querySelector('.sidebar-logo');
         this.pageWrapper = document.getElementById('pageWrapper');
         this.navbar = document.getElementById('navbar');
         this.noticeBanner = document.querySelector('.notice-banner');
@@ -66,9 +67,10 @@ class MobileSidebarSwipe {
     }
 
     bindEvents() {
-        document.addEventListener('touchstart', (e) => this.handleTouchStart(e), { passive: false });
-        document.addEventListener('touchmove', (e) => this.handleTouchMove(e), { passive: false });
-        document.addEventListener('touchend', (e) => this.handleTouchEnd(e), { passive: false });
+        // Touch swipe enabled - using passive listeners for better scroll compatibility
+        document.addEventListener('touchstart', (e) => this.handleTouchStart(e), { passive: true });
+        document.addEventListener('touchmove', (e) => this.handleTouchMove(e), { passive: true });
+        document.addEventListener('touchend', (e) => this.handleTouchEnd(e), { passive: true });
 
         if (this.menuIcon) {
             this.menuIcon.addEventListener('click', () => {
@@ -82,21 +84,25 @@ class MobileSidebarSwipe {
             this.overlay.addEventListener('click', () => this.close());
         }
 
+        // Sidebar logo click to reload
+        if (this.sidebarLogo) {
+            this.sidebarLogo.addEventListener('click', () => {
+                window.location.reload();
+            });
+        }
+
         const navLinks = this.sidebar?.querySelectorAll('a');
         navLinks?.forEach(link => {
             link.addEventListener('click', () => {
-                setTimeout(() => this.close(), 150);
+                this.close(); // Close immediately when clicking a navigation link
             });
         });
     }
 
-    handleTouchStart(e) {
-        if (!this.isMobile()) return;
-        if (document.body.classList.contains('no-scroll')) return;
 
-        const target = e.target;
-        const isInteractive = target.closest('button, a, input, textarea, select, .filter-btn, .project-card, [role="button"]');
-        if (isInteractive) {
+    handleTouchStart(e) {
+        // Ignore if not mobile
+        if (!this.isMobile()) {
             this.isSwiping = false;
             return;
         }
@@ -106,7 +112,10 @@ class MobileSidebarSwipe {
         this.startY = touch.clientY;
         this.lastX = touch.clientX;
         this.lastTime = Date.now();
+
+        // Allow swipe from ANYWHERE on screen (removed edge detection)
         this.isSwiping = true;
+        this.hasPreventedDefault = false;
 
         if (this.sidebar) this.sidebar.style.transition = 'none';
         if (this.pageWrapper) this.pageWrapper.style.transition = 'none';
@@ -132,11 +141,19 @@ class MobileSidebarSwipe {
         this.lastX = this.currentX;
         this.lastTime = now;
 
-        const isHorizontalEnough = Math.abs(deltaX) > Math.abs(deltaY) * 1.2;
+        // Check if user is clearly scrolling vertically
+        const isHorizontalEnough = Math.abs(deltaX) > Math.abs(deltaY) * 1.5;
+        const hasMovedEnough = Math.abs(deltaX) > 10 || Math.abs(deltaY) > 10;
 
-        if (isHorizontalEnough) {
-            e.preventDefault();
+        if (hasMovedEnough && !isHorizontalEnough) {
+            // User is scrolling vertically - cancel sidebar swipe
+            this.isSwiping = false;
+            this.resetSwipe();
+            return;
+        }
 
+        if (isHorizontalEnough && Math.abs(deltaX) > 10) {
+            // Confirmed horizontal swipe - update sidebar position
             if (!this.isOpen && deltaX > 0) {
                 const progress = Math.min(deltaX / this.sidebarWidth, 1);
                 this.updateSwipeProgress(progress, deltaX);
@@ -239,6 +256,13 @@ class MobileSidebarSwipe {
         this.sidebar?.classList.add('active');
         this.overlay?.classList.add('active');
         document.body.classList.add('sidebar-open');
+
+        // Clear any lingering inline transforms
+        if (this.sidebar) this.sidebar.style.transform = '';
+        if (this.pageWrapper) this.pageWrapper.style.transform = '';
+        if (this.navbar) this.navbar.style.transform = '';
+        if (this.noticeBanner) this.noticeBanner.style.transform = '';
+
         this.animateOpen();
     }
 
@@ -249,6 +273,25 @@ class MobileSidebarSwipe {
         this.sidebar?.classList.remove('active');
         this.overlay?.classList.remove('active');
         document.body.classList.remove('sidebar-open');
+
+        // Explicitly clear all inline transforms to prevent blank screen
+        if (this.sidebar) {
+            this.sidebar.style.transform = '';
+            this.sidebar.style.transition = '';
+        }
+        if (this.pageWrapper) {
+            this.pageWrapper.style.transform = '';
+            this.pageWrapper.style.transition = '';
+        }
+        if (this.navbar) {
+            this.navbar.style.transform = '';
+            this.navbar.style.transition = '';
+        }
+        if (this.noticeBanner) {
+            this.noticeBanner.style.transform = '';
+            this.noticeBanner.style.transition = '';
+        }
+
         this.animateClose();
     }
 
