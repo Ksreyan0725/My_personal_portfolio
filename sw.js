@@ -1,7 +1,7 @@
 // Service Worker for Portfolio PWA
-// Version 3.4.8 - Fixed cache error
-const CACHE_NAME = 'portfolio-v3.4.8';
-const RUNTIME_CACHE = 'portfolio-runtime-v3.4.8';
+// Version 3.4.9 - Fixed cache error
+const CACHE_NAME = 'portfolio-v3.4.9';
+const RUNTIME_CACHE = 'portfolio-runtime-v3.4.9';
 
 // Critical resources for initial load (minimal set for fast install)
 const CORE_ASSETS = [
