@@ -49,10 +49,13 @@ export function openSettings(e) {
         return;
     }
 
+    localStorage.setItem('settingsPanelOpen', 'true');
+
     // Close sidebar if open
     const sidebarMenu = document.getElementById('sidebarMenu');
     const sidebarOverlay = document.getElementById('sidebarOverlay');
     const isSidebarOpen = sidebarMenu && sidebarMenu.classList.contains('active');
+    const isMobile = window.innerWidth < 768;
 
     if (isSidebarOpen) {
         if (sidebarOverlay) sidebarOverlay.click();
@@ -60,14 +63,18 @@ export function openSettings(e) {
         setTimeout(() => {
             settingsPanel.classList.add('active');
             settingsOverlay.classList.add('active');
-            document.body.classList.add('no-scroll');
-            document.documentElement.classList.add('no-scroll');
+            if (isMobile) {
+                document.body.classList.add('no-scroll');
+                document.documentElement.classList.add('no-scroll');
+            }
         }, 300);
     } else {
         settingsPanel.classList.add('active');
         settingsOverlay.classList.add('active');
-        document.body.classList.add('no-scroll');
-        document.documentElement.classList.add('no-scroll');
+        if (isMobile) {
+            document.body.classList.add('no-scroll');
+            document.documentElement.classList.add('no-scroll');
+        }
     }
 
     // Update active theme button
@@ -82,6 +89,7 @@ export function openSettings(e) {
  */
 export function closeSettings() {
     if (!settingsPanel) return;
+    localStorage.setItem('settingsPanelOpen', 'false');
     settingsPanel.classList.remove('active');
     settingsOverlay.classList.remove('active');
     document.body.classList.remove('no-scroll');
@@ -184,22 +192,44 @@ function initNightLight() {
     }
 
     if (nightLightIntensitySlider) {
-        // Function to update slider fill background (Android style)
-        // Function to update slider fill background (Android style) with dots
+        const valuePercentSpan = document.getElementById('sliderValuePercent');
+        const sliderLeftIcon = document.getElementById('sliderLeftIcon');
+
+        // Function to update slider fill background (No-Thumb Progress Track)
         const updateSliderVisuals = () => {
             const min = nightLightIntensitySlider.min ? parseInt(nightLightIntensitySlider.min) : 0;
             const max = nightLightIntensitySlider.max ? parseInt(nightLightIntensitySlider.max) : 100;
             const val = nightLightIntensitySlider.value;
             const percentage = ((val - min) / (max - min)) * 100;
 
-            // 1. Orange Fill (Top) - stops at percentage
-            // 2. Snap Dots (Middle) - 2px dots every 5%
-            // 3. Track (Bottom) - Gray background
-            nightLightIntensitySlider.style.background = `
-                linear-gradient(to right, #ffa000 0%, #ffa000 ${percentage}%, transparent ${percentage}%, transparent 100%),
-                repeating-linear-gradient(to right, #808080 0, #808080 2px, transparent 2px, transparent 5%),
-                var(--border)
-            `;
+            // Update percentage text
+            if (valuePercentSpan) {
+                valuePercentSpan.textContent = `${val}%`;
+            }
+
+            // Samsung style background: dynamic orange fill (light to strong) on left, semi-transparent white on right
+            const activeColor = `hsl(35, ${70 + (percentage * 0.3)}%, ${85 - (percentage * 0.35)}%)`;
+            const trackColor = 'rgba(255, 255, 255, 0.08)';
+            nightLightIntensitySlider.style.background = `linear-gradient(to right, ${activeColor} 0%, ${activeColor} ${percentage}%, ${trackColor} ${percentage}%, ${trackColor} 100%)`;
+
+            // Dynamic color inversion for maximum accessibility/contrast
+            if (sliderLeftIcon) {
+                // If fill overlaps the sun icon, change to dark color, else keep light/gray
+                if (percentage > 13) {
+                    sliderLeftIcon.style.color = '#1a1a1e';
+                } else {
+                    sliderLeftIcon.style.color = 'rgba(255, 255, 255, 0.6)';
+                }
+            }
+
+            if (valuePercentSpan) {
+                // If fill overlaps the percentage text, change to dark color, else keep light/gray
+                if (percentage > 86) {
+                    valuePercentSpan.style.color = '#1a1a1e';
+                } else {
+                    valuePercentSpan.style.color = 'rgba(255, 255, 255, 0.8)';
+                }
+            }
         };
 
         nightLightIntensitySlider.addEventListener('input', function () {
@@ -213,7 +243,6 @@ function initNightLight() {
         if (savedIntensity) {
             nightLightIntensitySlider.value = savedIntensity;
         } else {
-            // Default to 50 if no save found (matches HTML)
             nightLightIntensitySlider.value = 50;
         }
 
@@ -431,6 +460,21 @@ export function initSettings() {
             closeSettings();
         }
     });
+
+    // Restore settings panel open state on page reload/hot-reload
+    const isSettingsOpen = localStorage.getItem('settingsPanelOpen') === 'true';
+    if (isSettingsOpen && settingsPanel) {
+        settingsPanel.classList.add('active');
+        if (settingsOverlay) settingsOverlay.classList.add('active');
+        document.body.classList.add('no-scroll');
+        document.documentElement.classList.add('no-scroll');
+
+        // Update active theme button
+        const currentTheme = localStorage.getItem('theme') || 'system';
+        if (typeof window.updateActiveThemeBtn === 'function') {
+            window.updateActiveThemeBtn(currentTheme);
+        }
+    }
 
     console.log('✅ Settings panel ready');
 }

@@ -152,19 +152,32 @@ function setupObserver() {
     });
 }
 
+let lastScrollY = window.scrollY;
+
 /**
  * Handle navbar scroll effect
  */
 function handleNavbarScroll() {
     if (!navbar) return;
 
-    const scrollThreshold = 50;
+    const currentScrollY = window.scrollY;
+    const scrollThreshold = 80;
 
-    if (window.scrollY > scrollThreshold) {
+    // Toggle scrolled style (box-shadow indicator)
+    if (currentScrollY > 50) {
         navbar.classList.add('scrolled');
     } else {
         navbar.classList.remove('scrolled');
     }
+
+    // Auto-hide navigation on scroll down, show on scroll up
+    if (currentScrollY > scrollThreshold && currentScrollY > lastScrollY) {
+        navbar.classList.add('nav-hidden');
+    } else {
+        navbar.classList.remove('nav-hidden');
+    }
+
+    lastScrollY = currentScrollY;
 }
 
 /**

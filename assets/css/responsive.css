@@ -1270,7 +1270,7 @@
   }
 
   #home .home-grid {
-    padding: calc(var(--header-height) + 40px) 32px 55px; /* 40px buffer */
+    padding: calc(var(--header-height) + 20px) 32px 20px; /* 20px buffer */
   }
 
   #home .profile-section {
@@ -1408,7 +1408,7 @@
   }
 
   #home .home-grid {
-    padding: calc(var(--header-height) + 50px) 80px 75px;
+    padding: calc(var(--header-height) + 20px) 80px 25px;
   }
 
   #home .profile-section {
@@ -1485,37 +1485,42 @@
   .nav-container {
     gap: 6px !important; /* Reduce gap between all items */
     padding: 0 12px !important;
+    justify-content: flex-start !important; /* Force items to pack left */
   }
 
-  .nav-links {
-    gap: 10px !important; /* Tighter spacing between nav links */
+  .menu-icon {
+    display: flex !important;
+    order: 1 !important; /* Far left */
+    margin-right: 8px !important;
   }
 
-  .nav-links a {
-    font-size: 0.9rem !important; /* Slightly smaller text */
-    padding: 6px 10px !important;
+  .nav-logo {
+    display: flex !important;
+    order: 2 !important; /* Next to menu icon */
+    margin-left: 0 !important;
+    margin-right: auto !important; /* Push everything else to the right */
+    flex-grow: 0 !important;
   }
 
-  /* Show desktop search container but hide all its children except tablet button */
+  /* Show desktop search container on the right */
   #navbar .desktop-search {
     display: flex !important;
-    margin-left: auto;
+    order: 3 !important;
+    margin-left: 0 !important;
   }
 
   /* Hide specific desktop search elements (not the tablet button) */
-  #navbar .desktop-search .search-icon-button,
   #navbar .desktop-search .search-input,
   #navbar .desktop-search .search-button,
   #navbar .desktop-search .search-clear,
-  #navbar .desktop-search .desktop-search-results,
-  .desktop-search.icon-mode .search-icon-button {
+  #navbar .desktop-search .desktop-search-results {
     display: none !important;
     visibility: hidden !important;
   }
 
   /* Show and style tablet search button */
   .tablet-search-button {
-    display: flex !important;
+    display: none !important;
     align-items: center;
     justify-content: center !important;
     width: 40px !important;
@@ -1556,6 +1561,7 @@
   /* Theme Toggle - Icon Only */
   .theme-toggle {
     display: flex !important;
+    order: 4 !important; /* Positions after search icon */
     align-items: center !important;
     width: 40px !important;
     height: 40px !important;
@@ -1899,8 +1905,8 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 20px;
-    gap: 40px;
+    padding: calc(var(--header-height) + 15px) 16px 20px;
+    gap: 16px;
   }
 
   /* Profile Section - Center Profile Photo and Content */
@@ -1915,7 +1921,7 @@
     order: 1; /* Force Profile to be first */
     position: relative; /* Disable sticky */
     top: auto;
-    margin-bottom: 20px;
+    margin-bottom: 12px;
   }
 
   #home .content-section {
@@ -1927,7 +1933,7 @@
     justify-content: center;
     align-items: center;
     width: 100%;
-    margin-bottom: 20px;
+    margin-bottom: 12px;
   }
 
   .profile-photo {
@@ -2220,8 +2226,8 @@
   }
 }
 
-/* Icon Only (769px - 899px) */
-@media (min-width: 769px) and (max-width: 899px) {
+/* Icon Only (768px - 899px) */
+@media (min-width: 768px) and (max-width: 899px) {
   #navbar .desktop-search { width: auto; }
   #navbar .search-input { display: none !important; }
 
@@ -2480,12 +2486,12 @@
 }
 
 /* Desktop-only visibility for dropdown (Moved from style.css) */
-@media (max-width: 767px) {
+@media (max-width: 899px) {
   .desktop-search-results {
     display: none !important;
   }
 
-  /* Hide desktop settings button on mobile (show from 768px+) */
+  /* Hide desktop settings button on tablet/mobile (show from 900px+) */
   .desktop-settings-btn {
     display: none !important;
   }
@@ -2495,6 +2501,7 @@
 @media (min-width: 1025px) {
   #home .home-grid {
     padding-top: 0; /* Reduced top padding for larger screens */
+    padding-bottom: 25px;
   }
 
   /* Ensure full search bar is visible on large desktops */
@@ -2589,12 +2596,18 @@
 
 /* ==================== Tablet: Hide Theme Toggle, Show Search + Settings ==================== */
 @media (min-width: 768px) and (max-width: 899px) {
-  /* Hide theme toggle on tablet */
-  .theme-toggle {
+  /* Hide theme toggle and redundant settings button on tablet */
+  .theme-toggle,
+  .desktop-settings-btn {
     display: none !important;
   }
 
-  /* Push search and settings to far right */
+  /* Hide redundant mobile search icon on tablet (desktop/tablet search is shown instead) */
+  #navbar .mobile-search-icon {
+    display: none !important;
+  }
+
+  /* Push search to far right */
   .nav-container {
     justify-content: space-between !important;
   }
@@ -2602,11 +2615,6 @@
   .desktop-search {
     margin-left: auto !important;
     margin-right: 8px !important;
-  }
-
-  .desktop-settings-btn {
-    display: flex !important;
-    order: 10 !important;
   }
 }
 

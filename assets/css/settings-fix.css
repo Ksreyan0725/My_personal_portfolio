@@ -2,8 +2,8 @@
 /* This file ensures the desktop settings button is visible on desktop screens */
 /* Add this as the LAST stylesheet to override everything */
 
-/* Force show desktop settings button on screens >= 768px (tablets and up) */
-@media (min-width: 768px) {
+/* Force show desktop settings button on screens >= 900px (desktops) */
+@media (min-width: 900px) {
     .desktop-settings-btn,
     button.desktop-settings-btn,
     button#desktopSettingsBtn,
@@ -18,8 +18,8 @@
     }
 }
 
-/* Force hide on mobile (below 768px) */
-@media (max-width: 767px) {
+/* Force hide on tablet and mobile (below 900px) */
+@media (max-width: 899px) {
     .desktop-settings-btn,
     button.desktop-settings-btn,
     button#desktopSettingsBtn,
@@ -28,8 +28,8 @@
     }
 }
 
-/* Ensure settings panel appears on tablet and desktop (768px+) */
-@media (min-width: 768px) {
+/* Ensure settings panel appears on desktop (900px+) */
+@media (min-width: 900px) {
     .settings-panel.active,
     #settingsPanel.active {
         right: 20px !important;

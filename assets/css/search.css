@@ -1,16 +1,16 @@
-﻿/* Search Bar Styles - Progressive Responsive Design */
+/* Search Bar Styles - Progressive Responsive Design */
 .search-container {
   position: relative;
   width: 100%;
-  max-width: 240px;
+  max-width: 160px;
   min-width: 40px; /* Allow shrinking to icon size */
   flex-shrink: 1; /* Allow shrinking */
   transition: all 0.3s ease;
 }
 
 .search-container:focus-within {
-  max-width: 260px;
-  flex-shrink: 0; /* Don't shrink when focused */
+  max-width: 200px;
+  flex-shrink: 1; /* Keep shrinkable to prevent overflowing navbar */
 }
 
 /* Search icon button - hidden by default, shown when search collapses to icon */

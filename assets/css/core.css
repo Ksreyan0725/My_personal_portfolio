@@ -55,6 +55,8 @@
   grid-template-columns: 400px 1fr;
   gap: 90px;
   align-items: start;
+  flex-grow: 1;
+  width: 100%;
 }
 
 /* ==================== PDF Viewer Styles ==================== */
@@ -399,7 +401,7 @@ body.sidebar-open .notice-banner {
 
 @keyframes scroll-right-to-left {
   0% {
-    transform: translateX(100%);
+    transform: translateX(100vw);
   }
   100% {
     transform: translateX(-100%);
@@ -423,17 +425,18 @@ header {
 /* Animated separator after home section (header) */
 #home {
   position: relative;
-  padding-bottom: 60px;
+  min-height: calc(100vh - var(--header-height));
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-sizing: border-box;
 }
 
-#home::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
+.home-separator {
+  position: relative;
   width: clamp(240px, 75%, 900px);
   height: 3px;
+  margin: 0 auto 2px;
   background: linear-gradient(
     90deg,
     transparent,
@@ -450,7 +453,7 @@ header {
   border-radius: 50px;
   animation: glowPulse 6s ease-in-out infinite, gradientShift 12s linear infinite;
   box-shadow: 0 0 15px rgba(0, 212, 255, 0.3);
-  z-index: 1;
+  z-index: 10;
 }
 
 .profile-container {
@@ -532,13 +535,14 @@ header {
   font-size: 2.5rem;
   font-weight: 700;
   background: linear-gradient(135deg, #6366f1, #3b82f6, #06b6d4, #10b981, #f59e0b, #ec4899, #8b5cf6);
+  background-size: 200% 200%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   margin-bottom: 8px;
   position: relative;
   display: block;
-  animation: glow 5s ease-in-out infinite;
+  animation: glow 5s ease-in-out infinite, goldShine 3s ease-in-out infinite;
   white-space: nowrap;
   letter-spacing: -0.02em;
   text-align: center;
@@ -1430,9 +1434,6 @@ main > .section::after {
   position: relative;
 }
 
-.resume-section {
-  background-color: #fcfcfc;
-}
 
 .download-resume {
   grid-column: 1 / -1;
@@ -1863,57 +1864,59 @@ footer {
 /* ==================== Resume Section ==================== */
 .resume-section {
   text-align: center;
-  padding: 40px 20px;
-  margin: 40px auto 0; /* Reduced bottom margin to 0 */
-  max-width: 600px;
+  padding: 48px 32px;
+  margin: 48px auto 0;
+  max-width: 580px;
+  border-radius: 24px;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   position: relative;
   overflow: hidden;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.45);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
 }
 
 .resume-heading {
   font-size: 1.8rem;
-  font-weight: 600;
-  margin-bottom: 25px;
+  font-weight: 700;
+  margin-bottom: 24px;
   color: var(--text-primary);
-  background: linear-gradient(135deg, var(--accent), #8b5cf6);
+  background: linear-gradient(135deg, var(--accent), #a78bfa);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
   background-size: 200% 200%;
   animation: gradientShift 6s ease-in-out infinite;
+  letter-spacing: -0.5px;
 }
 
 @keyframes gradientShift {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 .resume-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
-  padding: 14px 28px;
-  font-size: 1.05rem;
+  gap: 10px;
+  padding: 12px 32px;
+  font-size: 1rem;
   font-weight: 600;
-  color: var(--text-primary);
-  background: var(--card-bg);
-  border: 2px solid var(--border);
-  border-radius: 12px;
   cursor: pointer;
-  text-decoration: none;
-  transition: all 0.3s ease;
+  text-decoration: none !important;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   position: relative;
   overflow: hidden;
-  min-width: 200px;
-  backdrop-filter: blur(10px);
+  min-width: 180px;
+  border-radius: 30px;
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--text-primary);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 .resume-btn:hover {
@@ -1974,34 +1977,35 @@ footer {
 
 /* Dark mode resume section */
 [data-theme="dark"] .resume-section {
-  background: rgba(30, 41, 59, 0.5);
-  border: 1px solid rgba(100, 116, 139, 0.3);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 4px 16px rgba(0, 0, 0, 0.2);
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
 }
 
 [data-theme="dark"] .resume-btn {
-  background: rgba(255, 255, 255, 0.05);
-  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(255, 255, 255, 0.08);
   color: var(--text-primary);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 [data-theme="dark"] .resume-btn:hover {
   background: var(--accent);
   border-color: var(--accent);
-  color: white;
+  color: white !important;
   box-shadow: 0 8px 25px var(--accent-glow);
 }
 
 [data-theme="light"] .resume-btn {
   background: rgba(255, 255, 255, 0.95);
-  border-color: rgba(0, 0, 0, 0.1);
+  border-color: rgba(0, 0, 0, 0.08);
   color: var(--text-primary);
 }
 
 [data-theme="light"] .resume-btn:hover {
   background: var(--accent);
   border-color: var(--accent);
-  color: white;
+  color: white !important;
 }
 
 .pdf-viewer-container {
@@ -2123,5 +2127,13 @@ html.lenis, html.lenis body {
         transform: translate(-50%, -100%);
         opacity: 0;
     }
+}
+
+/* Dynamic color adjustment for inline SVG theme icons */
+[data-theme="dark"] .theme-icon {
+  filter: brightness(0) invert(1) !important;
+}
+[data-theme="light"] .theme-icon {
+  filter: brightness(0) !important;
 }
 

@@ -1,4 +1,4 @@
-﻿/* ==================== Settings Panel & Night Light (Mobile) ==================== */
+/* ==================== Settings Panel & Night Light (Mobile) ==================== */
 .settings-overlay {
     position: fixed;
     top: 0;
@@ -25,24 +25,25 @@
     left: 0;
     width: 100%;
     /* Glassmorphism effect */
-    background: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(25px) saturate(180%);
+    -webkit-backdrop-filter: blur(25px) saturate(180%);
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
     z-index: 2001;
     transition: bottom 0.3s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.3s step-end;
-    box-shadow: 0 -5px 30px rgba(0,0,0,0.2);
+    box-shadow: 0 -8px 32px 0 rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.4);
     height: 70vh;
-    border-top: 1px solid rgba(255, 255, 255, 0.3);
+    border-top: 1px solid rgba(255, 255, 255, 0.45);
     display: flex;
     flex-direction: column;
     visibility: hidden; /* Hide from layout/scroll when not active */
 }
 
 [data-theme="dark"] .settings-panel {
-    background: rgba(20, 20, 20, 0.85);
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(18, 18, 24, 0.75);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 -8px 32px 0 rgba(0, 0, 0, 0.37), inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
 .settings-panel.active {
@@ -59,7 +60,7 @@
     border-bottom: 1px solid var(--border);
     position: sticky;
     top: 0;
-    background: var(--bg-secondary);
+    background: transparent;
     z-index: 10;
     flex-shrink: 0;
 }
@@ -160,49 +161,90 @@ body.no-scroll {
     margin-bottom: 16px;
 }
 
-.theme-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+.theme-slider-container {
+    width: 100%;
+    margin-top: 12px;
 }
 
-.theme-btn {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 12px;
-    background: var(--bg-secondary);
-    border: 2px solid var(--border);
-    border-radius: 12px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    width: 100%;
-    text-align: left;
-    pointer-events: auto; /* Ensure clickable */
+.theme-slider-track {
     position: relative;
+    display: flex;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border);
+    border-radius: 30px;
+    padding: 4px;
+    height: 48px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    align-items: center;
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.05);
+}
+
+.theme-slider-indicator {
+    position: absolute;
+    top: 4px;
+    bottom: 4px;
+    left: 4px;
+    width: calc(33.333% - 4px);
+    background: linear-gradient(135deg, #6366f1, #3b82f6);
+    border-radius: 26px;
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
     z-index: 1;
 }
 
-.theme-btn:hover {
-    border-color: var(--accent);
-    transform: translateY(-2px);
+/* Position mapping for the sliding indicator */
+.theme-slider-track:has(.theme-slider-btn[data-theme="system"].active) .theme-slider-indicator {
+    transform: translateX(0);
+}
+.theme-slider-track:has(.theme-slider-btn[data-theme="light"].active) .theme-slider-indicator {
+    transform: translateX(100%);
+}
+.theme-slider-track:has(.theme-slider-btn[data-theme="dark"].active) .theme-slider-indicator {
+    transform: translateX(200%);
 }
 
-.theme-btn.active {
-    border-color: var(--accent);
-    background: var(--accent-glow);
-}
-
-.theme-btn-title {
+.theme-slider-btn {
+    position: relative;
+    flex: 1;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: transparent !important;
+    border: none !important;
+    outline: none !important;
+    font-size: 0.9rem;
     font-weight: 600;
-    color: var(--text-primary);
-    margin-bottom: 4px;
-    font-size: 0.95rem;
+    color: var(--text-secondary) !important;
+    cursor: pointer;
+    z-index: 2;
+    transition: color 0.3s ease, transform 0.2s ease;
+    border-radius: 26px;
+    box-shadow: none !important;
+    transform: none !important;
 }
 
-.theme-btn-desc {
-    font-size: 0.8rem;
-    color: var(--text-secondary);
+.theme-slider-btn:hover {
+    color: var(--text-primary) !important;
+}
+
+.theme-slider-btn:active {
+    transform: scale(0.95) !important;
+}
+
+.theme-slider-btn.active {
+    color: #ffffff !important; /* Active text is always white on the colored pill */
+}
+
+.theme-slider-btn svg {
+    transition: transform 0.3s ease;
+    stroke: currentColor;
+}
+
+.theme-slider-btn.active svg {
+    transform: scale(1.1);
 }
 
 /* Toggle Switch */
@@ -242,19 +284,19 @@ body.no-scroll {
 }
 
 .toggle-switch.active {
-    background: #007bff; /* Blue accent matching notice banner */
-    box-shadow: 0 0 10px rgba(0, 123, 255, 0.5); /* Focus glow */
+    background: var(--accent); /* Unified brand accent color */
+    box-shadow: 0 0 12px var(--accent-glow);
 }
 
 .toggle-slider {
-    width: 24px;
-    height: 24px;
+    width: 22px;
+    height: 22px;
     background: white;
     border-radius: 50%;
     position: absolute;
-    top: 2px;
-    left: 2px;
-    transition: transform 0.3s ease;
+    top: 3px;
+    left: 3px;
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), width 0.3s ease;
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     display: flex;
     align-items: center;
@@ -262,7 +304,7 @@ body.no-scroll {
     pointer-events: none; /* Allow clicks to pass through to parent */
 }
 
-/* 'Ã—' icon in OFF state */
+/* 'X' icon in OFF state */
 .toggle-slider::before {
     content: '';
     width: 12px;
@@ -283,7 +325,17 @@ body.no-scroll {
     transform: translateX(22px);
 }
 
-/* Hide 'Ã—' icon in ON state */
+/* Stretch and Bounce: Stretch the knob on press */
+.toggle-switch:active .toggle-slider {
+    width: 32px;
+}
+
+.toggle-switch.active:active .toggle-slider {
+    width: 32px;
+    transform: translateX(12px); /* Stretch backwards when deactivating */
+}
+
+/* Hide 'X' icon in ON state */
 .toggle-switch.active .toggle-slider::before {
     opacity: 0;
 }
@@ -580,85 +632,86 @@ body.no-scroll {
 .intensity-label {
     font-size: 0.9rem;
     color: var(--text-secondary);
-    margin-bottom: 12px;
     font-weight: 500;
+}
+
+.intensity-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
 }
 
 .intensity-slider-wrapper {
     position: relative;
     width: 100%;
-    height: 24px;
+    height: 38px;
+    border-radius: 20px;
+    overflow: hidden;
     display: flex;
     align-items: center;
-}
-
-/* Center dot at 50% */
-.intensity-slider-wrapper::after {
-    content: '';
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: 4px;
-    height: 4px;
-    background-color: var(--text-primary);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 1;
 }
 
 .intensity-slider {
     -webkit-appearance: none;
     appearance: none;
     width: 100%;
-    height: 8px; /* Increased from 4px */
-    background: var(--border);
-    border-radius: 4px; /* Increased from 2px */
+    height: 100%;
     outline: none;
     cursor: pointer;
+    background: rgba(255, 255, 255, 0.08); /* Dark track background */
+    border: none;
+    margin: 0;
+    padding: 0;
+    border-radius: 20px;
 }
 
+/* Hide Webkit Range Thumb */
 .intensity-slider::-webkit-slider-thumb {
     -webkit-appearance: none;
-    width: 24px;
-    height: 24px;
-    background: #ffa000;
-    border-radius: 50%;
-    cursor: pointer;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-    transition: transform 0.1s ease, background 0.2s ease;
-    margin-top: -6px; /* Fine-tuned for perfect centering */
-    position: relative;
-    top: 0;
-}
-
-.intensity-slider::-webkit-slider-thumb:hover {
-    transform: scale(1.1);
-    background: #ffb326; /* Lighter orange on hover */
-}
-
-/* Firefox slider thumb */
-.intensity-slider::-moz-range-thumb {
-    width: 24px;
-    height: 24px;
-    background: #ffa000;
-    border-radius: 50%;
-    cursor: pointer;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-    transition: transform 0.1s ease, background 0.2s ease;
+    appearance: none;
+    width: 0;
+    height: 0;
+    opacity: 0;
+    background: transparent;
     border: none;
+    box-shadow: none;
 }
 
-.intensity-slider::-moz-range-thumb:hover {
-    transform: scale(1.1);
-    background: #ffb326;
+/* Hide Firefox Range Thumb */
+.intensity-slider::-moz-range-thumb {
+    width: 0;
+    height: 0;
+    opacity: 0;
+    background: transparent;
+    border: none;
+    box-shadow: none;
 }
 
-/* Firefox slider track */
-.intensity-slider::-moz-range-track {
-    height: 8px;
-    background: var(--border);
-    border-radius: 4px;
+.slider-left-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    color: var(--text-secondary);
+    pointer-events: none;
+    z-index: 2;
+    transition: color 0.2s ease;
+}
+
+.slider-right-percent {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    pointer-events: none;
+    z-index: 2;
+    transition: color 0.2s ease;
 }
 
 /* Hide on desktop */
@@ -703,8 +756,8 @@ body.no-scroll {
 /* This file ensures the desktop settings button is visible on desktop screens */
 /* Add this as the LAST stylesheet to override everything */
 
-/* Force show desktop settings button on screens >= 768px (tablets and up) */
-@media (min-width: 768px) {
+/* Force show desktop settings button on screens >= 900px (desktops) */
+@media (min-width: 900px) {
     .desktop-settings-btn,
     button.desktop-settings-btn,
     button#desktopSettingsBtn,
@@ -719,8 +772,8 @@ body.no-scroll {
     }
 }
 
-/* Force hide on mobile (below 768px) */
-@media (max-width: 767px) {
+/* Force hide on tablet and mobile (below 900px) */
+@media (max-width: 899px) {
     .desktop-settings-btn,
     button.desktop-settings-btn,
     button#desktopSettingsBtn,
@@ -731,6 +784,11 @@ body.no-scroll {
 
 /* Ensure settings panel appears on tablet and desktop (768px+) */
 @media (min-width: 768px) {
+    .settings-overlay {
+        display: none !important;
+        pointer-events: none !important;
+    }
+
     .settings-panel.active,
     #settingsPanel.active {
         right: 20px !important;
@@ -752,11 +810,16 @@ body.no-scroll {
         height: auto !important;
         max-height: calc(100vh - var(--nav-height) - var(--banner-height) - 20px) !important;
         border-radius: 16px !important;
+        border: 1px solid rgba(255, 255, 255, 0.45) !important; /* Light mode glass border all around */
         transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.3s !important;
         z-index: 2001 !important;
         display: flex !important;
         flex-direction: column !important;
         overflow: hidden !important; /* Ensure content doesn't spill out */
+    }
+
+    [data-theme="dark"] .settings-panel {
+        border: 1px solid rgba(255, 255, 255, 0.08) !important; /* Dark mode glass border all around */
     }
 }
 
