@@ -3,6 +3,15 @@
  * Imports and initializes all modules
  */
 
+// Disable console logs in production
+if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+    const noop = () => {};
+    console.log = noop;
+    console.info = noop;
+    console.debug = noop;
+    console.warn = noop;
+}
+
 // Import utilities
 import {
     isTouchDevice,
@@ -130,15 +139,6 @@ async function initApp() {
         console.warn('Settings module not loaded:', error);
     }
 
-    try {
-        // Load PWA module
-        const pwaModule = await import('./modules/pwa.js');
-        if (pwaModule && pwaModule.initPWA) {
-            pwaModule.initPWA();
-        }
-    } catch (error) {
-        console.warn('PWA module not loaded:', error);
-    }
 
     try {
         // Load navigation module
@@ -207,17 +207,7 @@ function setupLazyLoading() {
         }, { once: true });
     });
 
-    // Load PWA module
-    setTimeout(async () => {
-        try {
-            const pwaModule = await import('./modules/pwa.js');
-            if (pwaModule && pwaModule.initPWA) {
-                pwaModule.initPWA();
-            }
-        } catch (error) {
-            console.warn('PWA module not loaded:', error);
-        }
-    }, 2000);
+
 }
 
 // Initialize when DOM is ready

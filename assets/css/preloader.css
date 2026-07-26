@@ -11,12 +11,12 @@
     /* Light theme: Softer, less eye-straining gradient (Grey/White) */
     background: linear-gradient(180deg, #f8fafc, #edf2f7, #e2e8f0, #cbd5e1) !important;
     background-size: 100% 300% !important;
-    animation: gradientShift 6s ease-in-out infinite, enforceMinDisplay 2.5s linear !important;
+    animation: gradientShift 6s ease-in-out infinite !important;
     z-index: 999999 !important;
     display: flex !important;
     justify-content: center !important;
     align-items: center !important;
-    transition: opacity 0.5s ease, visibility 0.5s ease;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
     visibility: visible !important;
     opacity: 1 !important;
 }
@@ -33,7 +33,7 @@
     #webPreloader, #preloader {
         background: linear-gradient(180deg, #0f0f1a, #1a1a2e, #2d2d44, #3d3d5a) !important;
         background-size: 100% 300% !important;
-        animation: gradientShift 6s ease-in-out infinite, enforceMinDisplay 2.5s linear !important;
+        animation: gradientShift 6s ease-in-out infinite !important;
     }
 }
 
@@ -42,23 +42,13 @@
 [data-theme="dark"] #preloader {
     background: linear-gradient(180deg, #0f0f1a, #1a1a2e, #2d2d44, #3d3d5a) !important;
     background-size: 100% 300% !important;
-    animation: gradientShift 6s ease-in-out infinite, enforceMinDisplay 2.5s linear !important;
-}
-
-/* Enforce minimum display time */
-@keyframes enforceMinDisplay {
-    0%, 99% {
-        pointer-events: all;
-    }
-    100% {
-        pointer-events: all;
-    }
+    animation: gradientShift 6s ease-in-out infinite !important;
 }
 
 body.loaded #webPreloader {
     opacity: 0 !important;
     visibility: hidden !important;
-    transition-delay: 2.5s !important;
+    transition-delay: 0s !important;
 }
 
 .loader-content {
@@ -77,6 +67,7 @@ body.loaded #webPreloader {
     font-size: 4rem;
     font-weight: 700;
     letter-spacing: 4px;
+    padding-right: 12px; /* Prevent clipping of final letter 'P' due to background-clip: text */
     position: relative;
     /* Removed inline-block !important to fix absolute centering */
     /* Rainbow gradient matching sidebar */
@@ -160,7 +151,17 @@ body.loaded #webPreloader {
     position: absolute;
     width: 100%;
     height: 100%;
-    transform: rotate(-90deg); /* Start from top */
+    transform-origin: center;
+    animation: rotateSpinner 2.5s linear infinite;
+}
+
+@keyframes rotateSpinner {
+    0% {
+        transform: rotate(-90deg);
+    }
+    100% {
+        transform: rotate(270deg);
+    }
 }
 
 .spinner-circle circle {

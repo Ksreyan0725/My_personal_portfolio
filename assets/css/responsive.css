@@ -94,11 +94,7 @@
     --banner-height: 36px;
   }
 
-  /* Navigation - ultra compact */
-  nav {
-    height: var(--nav-height);
-    padding: 3px 0;
-  }
+
 
   .nav-container {
     gap: 4px;
@@ -216,10 +212,7 @@
     transform: scale(0.7) translateZ(-80px) rotateY(360deg) !important;
   }
 
-  .notice-banner {
-    top: var(--nav-height);
-    height: var(--banner-height);
-  }
+
 
   /* Slow down ticker animation for better readability on small screens */
   .ticker-content {
@@ -643,11 +636,7 @@
     --banner-height: 36px;
   }
 
-  /* Navigation - more compact */
-  nav {
-    height: var(--nav-height);
-    padding: 4px 0;
-  }
+
 
   .nav-container {
     gap: 4px;
@@ -729,11 +718,7 @@
     transform: translateX(3px) !important; /* Increased to 3px for better centering */
   }
 
-  /* Banner - smaller */
-  .notice-banner {
-    top: var(--nav-height);
-    height: var(--banner-height);
-  }
+
 
   /* Slow down ticker animation for better readability on small screens */
   .ticker-content {
@@ -1245,11 +1230,7 @@
     object-fit: contain;
   }
 
-  /* Banner */
-  .notice-banner {
-    top: var(--nav-height);
-    height: var(--banner-height);
-  }
+
 
   .profile-photo {
     width: 200px;
@@ -1476,10 +1457,34 @@
 
 /* Tight spacing for 768px-899px (tablet) to prevent navbar wrapping and duplicates */
 /* Note: 900px+ is handled by desktop queries */
+@media (min-width: 768px) and (max-width: 1080px) {
+  .nav-container {
+    gap: 6px !important;
+    padding: 0 12px !important;
+  }
+  .nav-links {
+    gap: 8px !important;
+  }
+  .nav-links a {
+    font-size: 0.85rem !important;
+    padding: 4px 6px !important;
+  }
+  /* Force search bar into compact icon mode when horizontal space is tight */
+  .desktop-search {
+    max-width: 40px !important;
+  }
+  .desktop-search .search-input {
+    display: none !important;
+  }
+  .desktop-search .search-icon-button {
+    display: flex !important;
+  }
+}
+
 @media (min-width: 768px) and (max-width: 899px) {
   .nav-container {
-    gap: 8px !important; /* Reduce gap between all items */
-    padding: 0 15px !important;
+    gap: 6px !important; /* Reduce gap between all items */
+    padding: 0 12px !important;
   }
 
   .nav-links {
@@ -1559,7 +1564,7 @@
     justify-content: center !important;
     background: var(--card-bg) !important;
     border: 2px solid var(--border) !important;
-    border-radius: 10px !important;
+    border-radius: 50% !important;
     backdrop-filter: blur(8px) !important;
     -webkit-backdrop-filter: blur(8px) !important;
     transition: all 0.3s ease !important;
@@ -1590,7 +1595,7 @@
     min-width: 40px !important;
     background: var(--card-bg) !important;
     border: 2px solid var(--border) !important;
-    border-radius: 10px !important;
+    border-radius: 50% !important;
     cursor: pointer !important;
     transition: all 0.3s ease !important;
     align-items: center !important;
@@ -1636,9 +1641,9 @@
 
 /* Note: 760-899px now uses unified tablet layout above */
 /* Small 481–600px: keep a narrow search bar */
-/* ==================== CRITICAL: HIDE DESKTOP NAV ON MOBILE ==================== */
-/* Hide desktop navigation links on all screens below 768px */
-@media (max-width: 767px) {
+/* ==================== CRITICAL: HIDE DESKTOP NAV ON MOBILE & TABLET ==================== */
+/* Hide desktop navigation links on all screens below 900px */
+@media (max-width: 899px) {
   /* HIDE DESKTOP NAVIGATION LINKS - Users access via hamburger menu */
   .desktop-nav,
   .nav-links {
@@ -1673,7 +1678,7 @@
     min-width: 40px !important;
     box-sizing: border-box !important;
     border: 2px solid var(--border);
-    border-radius: 10px;
+    border-radius: 50%;
     background: var(--card-bg);
     color: var(--text-secondary);
     transition: background 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
@@ -1703,7 +1708,7 @@
     min-height: 40px !important;
     box-sizing: border-box !important;
     border: 2px solid var(--border) !important;
-    border-radius: 10px !important;
+    border-radius: 50% !important;
     background: var(--card-bg) !important;
     display: inline-flex !important;
     align-items: center !important;

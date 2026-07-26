@@ -3,8 +3,8 @@
 # ============================================
 
 
-# Script Manager (includes scripts/ and MANUAL/)
-manager/
+# Virtual Environment
+venv/
 
 # ==================== Backup Files ====================
 # Exclude all backup files created by version update script

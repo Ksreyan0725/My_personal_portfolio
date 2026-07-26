@@ -1,9 +1,8 @@
-﻿<!--
+<!--
 =============================================================================
 File: index.html
 Purpose: Main landing page for Kumar Sreyan Pattanayak's personal portfolio
-Description: Showcases education, projects, certifications, and skills with
-             responsive design, dark/light theme support, and smooth animations
+Description: Showcases education, projects, certifications, and skills with responsive design, dark/light theme support, and smooth animations
 Author: Kumar Sreyan Pattanayak
 Version: 3.5
 Last Updated: December 18, 2025
@@ -76,12 +75,8 @@ Last Updated: December 18, 2025
     }
     </script>
 
-    <!-- ==================== PWA Manifest ==================== -->
-    <link rel="manifest" href="manifest.json">
+    <!-- Theme Color for Browser Address Bar -->
     <meta name="theme-color" content="#6366f1">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="KSP Portfolio">
 
     <!-- ==================== External Resources ==================== -->
     <!-- Google Fonts - Optimized with async loading -->
@@ -170,6 +165,7 @@ Last Updated: December 18, 2025
         font-weight: 700;
         color: #FFD700;
         letter-spacing: 4px;
+        padding-right: 12px;
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
         line-height: 1.2;
         display: inline-block;
@@ -196,6 +192,246 @@ Last Updated: December 18, 2025
       }
       .fonts-loaded body {
         font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      }
+      
+      /* Certifications Section Grid Layout */
+      .certifications-container {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+          gap: 24px;
+      }
+      .cert-card {
+          display: flex;
+          flex-direction: column;
+          padding: 20px !important;
+          align-items: stretch;
+          justify-content: space-between;
+          min-height: 420px;
+      }
+      .cert-preview {
+          position: relative;
+          width: 100%;
+          aspect-ratio: 16 / 9;
+          height: auto;
+          background: rgba(255, 255, 255, 0.02);
+          border-radius: 16px;
+          border: 1px solid var(--border);
+          overflow: hidden;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 8px;
+          box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.05);
+          transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+          margin-bottom: 16px;
+          flex-shrink: 0;
+      }
+      .cert-preview img, .cert-preview iframe {
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+          border-radius: 8px;
+          transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+      }
+      .cert-preview:hover {
+          border-color: var(--accent);
+          background: rgba(99, 102, 241, 0.04);
+          box-shadow: 0 14px 35px var(--accent-glow), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+          transform: translateY(-4px);
+      }
+      .cert-preview:hover img, .cert-preview:hover iframe {
+          transform: scale(1.02);
+      }
+      .preview-overlay {
+          position: absolute;
+          inset: 0;
+          background: rgba(0, 0, 0, 0.4);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          opacity: 0;
+          transition: opacity 0.3s ease;
+          backdrop-filter: blur(2px);
+      }
+      .cert-preview:hover .preview-overlay {
+          opacity: 1;
+      }
+      .preview-zoom-btn {
+          background: #ffffff;
+          color: #111111;
+          border: none;
+          padding: 8px 18px;
+          border-radius: 30px;
+          font-size: 0.9rem;
+          font-weight: 600;
+          cursor: pointer;
+          text-decoration: none;
+          transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
+          box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+      }
+      .preview-zoom-btn:hover {
+          transform: scale(1.15);
+          background: var(--accent);
+          color: #ffffff;
+      }
+      .pdf-fallback-icon {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 100%;
+          height: 100%;
+          color: var(--text-secondary);
+      }
+      .pdf-fallback-icon svg {
+          opacity: 0.5;
+          transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), color 0.3s ease, opacity 0.3s ease;
+      }
+      .cert-preview:hover .pdf-fallback-icon svg {
+          transform: scale(1.1);
+          color: var(--accent);
+          opacity: 0.9;
+      }
+
+      .cert-info {
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+      }
+      .cert-info h3 {
+          margin: 0 !important;
+      }
+      .cert-buttons {
+          display: flex;
+          gap: 12px;
+          flex-wrap: wrap;
+          margin-top: 8px;
+          justify-content: center;
+      }
+      .cert-buttons .course-button {
+          margin: 0 !important;
+      }
+      .course-button.secondary-btn {
+          background: var(--bg-secondary) !important;
+          border: 2px solid var(--border) !important;
+          color: var(--text-primary) !important;
+          box-shadow: none !important;
+      }
+      .course-button.secondary-btn::before {
+          background: var(--card-bg) !important;
+      }
+      .course-button.secondary-btn:hover {
+          border-color: var(--accent) !important;
+          box-shadow: 0 0 10px var(--accent-glow) !important;
+          transform: translateY(-2px) scale(1.02);
+      }
+      @media (max-width: 768px) {
+          .cert-card {
+              grid-template-columns: 1fr;
+              gap: 16px;
+              padding: 16px !important;
+          }
+          .cert-preview {
+              height: 180px;
+          }
+      }
+
+      /* Modern Certificate Lightbox Modal */
+      .lightbox-modal {
+          position: fixed;
+          inset: 0;
+          z-index: 100000;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          opacity: 0;
+          pointer-events: none;
+          transition: opacity 0.3s ease;
+      }
+      .lightbox-modal.active {
+          opacity: 1;
+          pointer-events: auto;
+      }
+      .lightbox-overlay {
+          position: absolute;
+          inset: 0;
+          background: rgba(0, 0, 0, 0.7);
+          backdrop-filter: blur(12px);
+          -webkit-backdrop-filter: blur(12px);
+      }
+      .lightbox-content {
+          position: relative;
+          width: 90%;
+          max-width: 800px;
+          height: 80%;
+          max-height: 600px;
+          background: var(--bg-primary);
+          border: 1px solid var(--border);
+          border-radius: 20px;
+          box-shadow: 0 24px 50px rgba(0, 0, 0, 0.5);
+          overflow: hidden;
+          z-index: 1;
+          transform: scale(0.9);
+          transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+          display: flex;
+          flex-direction: column;
+      }
+      .lightbox-modal.active .lightbox-content {
+          transform: scale(1);
+      }
+      .lightbox-close {
+          position: absolute;
+          top: 16px;
+          right: 16px;
+          background: rgba(255, 255, 255, 0.1);
+          color: var(--text-primary);
+          border: 1px solid var(--border);
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          transition: all 0.2s ease;
+          z-index: 10;
+          padding: 0;
+      }
+      .lightbox-close:hover {
+          background: #ff4d4d;
+          color: #ffffff;
+          border-color: #ff4d4d;
+      }
+      .lightbox-close svg {
+          transition: transform 0.3s ease;
+      }
+      .lightbox-close:hover svg {
+          transform: rotate(90deg);
+      }
+      .lightbox-body {
+          flex: 1;
+          width: 100%;
+          height: 100%;
+          padding: 24px;
+          padding-top: 60px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+      }
+      .lightbox-media {
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+          border-radius: 8px;
+      }
+      .lightbox-iframe {
+          width: 100%;
+          height: 100%;
+          border: none;
+          border-radius: 8px;
+          background: #ffffff;
       }
     </style>
     
@@ -251,231 +487,19 @@ Last Updated: December 18, 2025
     <!-- ==================== Samsung-Style Preloader (Web Mode) ==================== -->
     <div id="webPreloader">
         <div class="loader-content">
-            <div class="loading-spinner">
-                <div class="spinner-inner-content">
-                    <div class="loader-logo" data-text="KSP">KSP</div>
-                    <div class="loading-text">
-                        LOADING
-                        <span class="loading-dots">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </span>
-                    </div>
-                </div>
-                <svg class="spinner-circle" viewBox="0 0 220 220">
-                    <defs>
-                        <linearGradient id="rainbowGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stop-color="#6366f1" />
-                            <stop offset="14%" stop-color="#3b82f6" />
-                            <stop offset="28%" stop-color="#06b6d4" />
-                            <stop offset="42%" stop-color="#10b981" />
-                            <stop offset="57%" stop-color="#f59e0b" />
-                            <stop offset="71%" stop-color="#ec4899" />
-                            <stop offset="85%" stop-color="#8b5cf6" />
-                            <stop offset="100%" stop-color="#6366f1" />
-                        </linearGradient>
-                    </defs>
-                    <!-- Background circle -->
-                    <circle class="circle-bg" cx="110" cy="110" r="110"></circle>
-                    <!-- Progress circle that fills -->
-                    <circle class="circle-progress" cx="110" cy="110" r="110" stroke="url(#rainbowGradient)"></circle>
-                </svg>
+            <div class="loader-logo" data-text="KSP" style="margin-bottom: 20px;">KSP</div>
+            <div class="loading-text" style="margin-bottom: 30px;">
+                LOADING
+                <span class="loading-dots">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </span>
             </div>
             <div class="loading-percentage">0%</div>
         </div>
     </div>
 
-    <!-- ==================== Preloader PWA ==================== -->
-    <div id="preloader" style="display: flex;">
-        <div class="loader-content">
-            <img src="assets/icons/pwa-icon-192.webp" alt="KSP Logo" class="loader-icon" style="width: 100px; height: 100px; border-radius: 24px; display: none;">
-            <div class="loader-logo" id="loaderLogo">KSP</div>
-            <!-- Loading bar removed - only circular animation -->
-        </div>
-    </div>
-
-    <!-- CRITICAL: Network-aware preloader with guaranteed hide -->
-    <script>
-    (function() {
-        // Detect if running as installed PWA (standalone mode)
-        var isStandalone = window.matchMedia('(display-mode: standalone)').matches ||
-                          window.navigator.standalone ||
-                          document.referrer.includes('android-app://');
-
-        // Detect if this is initial launch or navigation within app
-        var isInitialLaunch = !sessionStorage.getItem('appLaunched');
-
-        // Mark that app has been launched in this session
-        if (isStandalone) {
-            sessionStorage.setItem('appLaunched', 'true');
-        }
-
-        var isMobile = window.innerWidth <= 768;
-        var logo = document.getElementById('loaderLogo');
-        var loaderIcon = document.querySelector('.loader-icon');
-        var pageLoaded = false;
-        var preloaderHidden = false;
-        // Timing for exactly 2 full rotations of spinning circles (slower circle = 0.8s per rotation)
-        var minDisplayTime = 1600; // 2 rotations × 0.8s = 1.6s
-        var maxDisplayTime = 5000; // Maximum 5 seconds
-        var startTime = Date.now();
-
-        // BROWSER MODE: Hide PWA splash screen completely
-        if (!isStandalone) {
-            var pwaPreloader = document.getElementById('preloader');
-            if (pwaPreloader) pwaPreloader.style.display = 'none';
-        }
-
-        // INSTALLED MODE - INITIAL LAUNCH: Show PWA icon splash, then animations
-        if (isStandalone && isInitialLaunch && loaderIcon) {
-            // Force hide Web Preloader (Samsung style) initially to prevent overlap
-            var webPreloaderInit = document.getElementById('webPreloader');
-            if (webPreloaderInit) {
-                webPreloaderInit.style.setProperty('display', 'none', 'important');
-            }
-
-            loaderIcon.style.display = 'block';
-            loaderIcon.style.opacity = '1';
-            
-            // Hide KSP text initially (splash screen effect)
-            if (logo) {
-                logo.style.opacity = '0';
-                logo.style.transform = 'translateY(20px)';
-            }
-            
-            // Stage 2: Show KSP animation after PWA icon splash (200ms delay - Quick flash)
-            setTimeout(function() {
-                if (logo) {
-                    logo.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
-                    logo.style.opacity = '1';
-                    logo.style.transform = 'translateY(0)';
-                }
-                
-                // Stage 3: Transition to Samsung-style preloader (after 500ms total)
-                setTimeout(function() {
-                    var pwaPreloader = document.getElementById('preloader');
-                    var webPreloader = document.getElementById('webPreloader');
-                    
-                    if (pwaPreloader && webPreloader) {
-                        // Fade out PWA preloader
-                        pwaPreloader.style.transition = 'opacity 0.3s ease';
-                        pwaPreloader.style.opacity = '0';
-                        
-                        setTimeout(function() {
-                            pwaPreloader.style.display = 'none';
-                            // Show Samsung preloader - FORCE display flex
-                            webPreloader.style.setProperty('display', 'flex', 'important');
-                            webPreloader.style.opacity = '0';
-                            setTimeout(function() {
-                                webPreloader.style.transition = 'opacity 0.3s ease';
-                                webPreloader.style.opacity = '1';
-                            }, 50);
-                        }, 300);
-                    }
-                }, 500);
-            }, 200);
-        }
-
-        // INSTALLED MODE - NAVIGATION (back button/swipe): Hide PWA icon, show only animations
-        if (isStandalone && !isInitialLaunch && loaderIcon) {
-            loaderIcon.style.display = 'none';
-        }
-
-        if (isMobile) {
-            // Mobile: Fade-in animation for KSP text only
-            if (logo) {
-                logo.style.opacity = '0';
-                logo.style.transform = 'translateY(20px)';
-            }
-
-            // Show text after 500ms
-            setTimeout(function() {
-                if (logo) {
-                    logo.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
-                    logo.style.opacity = '1';
-                    logo.style.transform = 'translateY(0)';
-                }
-            }, 500);
-        }
-
-        // Ensure body is ready
-        document.body.classList.add('loaded');
-
-        // Hide skeleton immediately
-        var s = document.getElementById('skeletonLoader');
-        if (s) s.style.setProperty('display', 'none', 'important');
-
-        // Function to hide preloader (can only run once)
-        function hidePreloader() {
-            if (preloaderHidden) return; // Prevent multiple calls
-            preloaderHidden = true;
-
-            var elapsed = Date.now() - startTime;
-            var remainingTime = Math.max(0, minDisplayTime - elapsed);
-
-            setTimeout(function() {
-                var p = document.getElementById('preloader');
-                if (p) {
-                    p.style.opacity = '0';
-                    p.style.transition = 'opacity 0.3s ease';
-                    setTimeout(function() {
-                        p.style.setProperty('display', 'none', 'important');
-                        p.remove(); // Completely remove from DOM
-
-                        // Ensure page is interactive
-                        document.body.style.overflow = '';
-                        document.body.style.pointerEvents = '';
-                    }, 300);
-                }
-            }, remainingTime);
-        }
-
-        // Multiple triggers to ensure preloader hides
-
-        // 1. Check if already loaded
-        if (document.readyState === 'complete') {
-            hidePreloader();
-        } else {
-            // 2. Wait for DOMContentLoaded (DOM ready, faster than full load)
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', function() {
-                    // DOM is ready, but wait for minimum display time
-                    var elapsed = Date.now() - startTime;
-                    if (elapsed >= minDisplayTime) {
-                        hidePreloader();
-                    }
-                });
-            }
-
-            // 3. Wait for full page load (all resources)
-            window.addEventListener('load', function() {
-                pageLoaded = true;
-                hidePreloader();
-            });
-        }
-
-        // 4. Guaranteed fallback - hide after max time
-        setTimeout(function() {
-            if (!preloaderHidden) {
-                console.log('Preloader fallback triggered');
-                hidePreloader();
-            }
-        }, maxDisplayTime);
-
-        // 5. Emergency fallback - ensure page is usable after 6 seconds no matter what
-        setTimeout(function() {
-            var p = document.getElementById('preloader');
-            if (p && p.style.display !== 'none') {
-                console.warn('Emergency preloader removal');
-                p.style.setProperty('display', 'none', 'important');
-                p.remove();
-                document.body.style.overflow = '';
-                document.body.style.pointerEvents = '';
-            }
-        }, 6000);
-    })();
-    </script>
 
     <!-- Modular JavaScript Loading -->
     <!-- 1. Preloader (non-module, runs immediately) -->
@@ -488,8 +512,8 @@ Last Updated: December 18, 2025
 
     <!-- ==================== Maintenance Mode (Currently Disabled) ==================== -->
     <!-- Uncomment below lines to enable maintenance mode redirection -->
-    <!-- <meta http-equiv="refresh" content="0; url=maintenance.html"> -->
-    <!-- <script>window.location.replace('maintenance.html');</script> -->
+    <meta http-equiv="refresh" content="0; url=pages/maintenance.html">
+    <!-- <script>window.location.replace('pages/maintenance.html');</script> -->
 
     <!-- ==================== Skip Navigation for Accessibility ==================== -->
     <a href="#home" class="skip-link">Skip to main content</a>
@@ -551,7 +575,6 @@ Last Updated: December 18, 2025
             <!-- Desktop Settings Button (Responsive: Icon only on medium, Text+Icon on large) -->
             <button class="settings-toggle desktop-settings-btn" id="desktopSettingsBtn" aria-label="Open settings" data-tooltip="Settings">
                 <img src="assets/icons/setting-button.png" alt="Settings" class="settings-icon">
-                <span class="settings-text">Settings</span>
             </button>
 
             <!-- Mobile Search Icon -->
@@ -639,15 +662,24 @@ Last Updated: December 18, 2025
                 <div class="setting-description">Choose your preferred color scheme</div>
                 <div class="theme-buttons">
                      <button class="theme-btn active" data-theme="system">
-                        <div class="theme-btn-title">🖥️ System</div>
+                        <div class="theme-btn-title">
+                            <svg class="theme-btn-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 6px;"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                            System
+                        </div>
                         <div class="theme-btn-desc">follows your device</div>
                     </button>
                     <button class="theme-btn" data-theme="light">
-                        <div class="theme-btn-title">☀️ Light</div>
+                        <div class="theme-btn-title">
+                            <svg class="theme-btn-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 6px;"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                            Light
+                        </div>
                         <div class="theme-btn-desc">bright and clear</div>
                     </button>
                     <button class="theme-btn" data-theme="dark">
-                        <div class="theme-btn-title">🌙 Dark</div>
+                        <div class="theme-btn-title">
+                            <svg class="theme-btn-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 6px;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                            Dark
+                        </div>
                         <div class="theme-btn-desc">easy on the eyes</div>
                     </button>
                 </div>
@@ -690,19 +722,6 @@ Last Updated: December 18, 2025
                 </div>
             </div>
 
-            <!-- Install App (PWA) -->
-            <div class="setting-group" id="installAppGroup">
-                <div class="option-list">
-                    <div class="option-item" id="installAppOption" onclick="if(window.installPWA) window.installPWA()">
-                        <div>
-                            <div class="option-title">Install App</div>
-                            <div class="option-desc">Add to home screen for quick access</div>
-                        </div>
-                        <span class="option-arrow">→</span>
-                    </div>
-                </div>
-            </div>
-
             <!-- Version Info -->
             <div class="version-info" id="versionInfo" style="cursor: pointer; user-select: none;" title="Click 5 times to check for updates">
                 Version 3.5 • Made with ❤️
@@ -712,24 +731,6 @@ Last Updated: December 18, 2025
 
     <!-- Night Light Overlay -->
     <div id="night-light-overlay"></div>
-
-    <!-- ==================== PWA Install Prompt Banner ==================== -->
-    <!-- Notification banner for PWA installation (appears on all devices) -->
-    <div id="installPrompt" class="install-prompt" style="display: none;">
-        <div class="install-prompt-content">
-            <div class="install-prompt-icon">
-                <img src="assets/icons/pwa-icon-192.webp" alt="App Icon" class="install-app-icon">
-            </div>
-            <div class="install-prompt-text">
-                <div class="install-prompt-title">Install KSP Portfolio</div>
-            </div>
-            <div class="install-prompt-actions">
-                <button class="install-btn-primary" onclick="installPWA()">Install</button>
-                <button class="install-btn-secondary" onclick="closeInstallPrompt()">Maybe Later</button>
-            </div>
-        </div>
-    </div>
-
     <!-- ==================== Scrolling Notice Banner ==================== -->
     <!-- News ticker style banner below navbar -->
     <div class="notice-banner" role="banner" aria-label="Notice banner">
@@ -739,7 +740,6 @@ Last Updated: December 18, 2025
             </div>
         </div>
     </div>
-
     <div class="page-frame">
     <!-- ==================== Page Wrapper for Sidebar Slide Effect ==================== -->
     <div id="pageWrapper">
@@ -914,56 +914,123 @@ Last Updated: December 18, 2025
         <section class="section" id="certifications">
             <h2 class="section-title">Certifications</h2>
 
-            <!-- Web Development Course -->
-            <article class="card">
-                <h3>Ultimate Web Development Course 2025 - Udemy</h3>
-                <p class="date">Ongoing</p>
-                <p>
-                    A modern web development course focused on building responsive websites, real-world projects,
-                    and leveraging AI tools to accelerate development.
-                </p>
-                <a href="https://www.udemy.com/course/codewithharry-web-development-course/?srsltid=AfmBOooGTxHcQCxjApypCQ6TwDaAhgT06quf1ot2j5j8M-99_qPJXDPO&couponCode=LETSLEARNNOW"
-                   target="_blank"
-                   rel="noopener noreferrer"
-                   class="course-button ripple-effect"
-                   aria-label="Visit Web Development course on Udemy">
-                    <span>Visit Course</span>
-                </a>
-            </article>
+            <div class="certifications-container">
+                <!-- Web Development Course -->
+                <article class="card cert-card">
+                    <div class="cert-preview">
+                        <img src="assets/certificates/web-dev preview.png" alt="Web Development Course Certificate Preview" onerror="this.outerHTML='<div class=&quot;pdf-fallback-icon&quot;><svg viewBox=&quot;0 0 24 24&quot; width=&quot;48&quot; height=&quot;48&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z&quot;></path><polyline points=&quot;14 2 14 8 20 8&quot;></polyline><line x1=&quot;16&quot; y1=&quot;13&quot; x2=&quot;8&quot; y2=&quot;13&quot;></line><line x1=&quot;16&quot; y1=&quot;17&quot; x2=&quot;8&quot; y2=&quot;17&quot;></line><polyline points=&quot;10 9 9 9 8 9&quot;></polyline></svg></div>';">
+                        <div class="preview-overlay">
+                            <a href="pages/pdf-viewer.html?file=../assets/certificates/web-dev preview.png" class="preview-zoom-btn" aria-label="Preview Certificate">Preview</a>
+                        </div>
+                    </div>
+                    <div class="cert-info">
+                        <h3>Ultimate Web Development Course 2026 - Udemy</h3>
+                        <p class="date">Jan 15, 2026</p>
+                        <p>
+                            A modern web development course focused on building responsive websites, real-world projects,
+                            and leveraging AI tools to accelerate development.
+                        </p>
+                        <div class="cert-buttons">
+                            <a href="https://www.udemy.com/course/codewithharry-web-development-course/?srsltid=AfmBOooGTxHcQCxjApypCQ6TwDaAhgT06quf1ot2j5j8M-99_qPJXDPO&couponCode=LETSLEARNNOW"
+                               target="_blank"
+                               rel="noopener noreferrer"
+                               class="course-button ripple-effect"
+                               aria-label="Visit Web Development course on Udemy">
+                                <span>Visit Course</span>
+                            </a>
+                        </div>
+                    </div>
+                </article>
 
-            <!-- Python Programming Course -->
-            <article class="card">
-                <h3>Python Programming Mastery - Udemy</h3>
-                <p class="date"></p>
-                <p>
-                    Build Real-World Projects and Become Job-Ready in 2025. Comprehensive Python programming
-                    course covering fundamentals to advanced concepts.
-                </p>
-                <a href="https://www.udemy.com/course/codewithharry-python/?couponCode=SEPHARRY"
-                   target="_blank"
-                   rel="noopener noreferrer"
-                   class="course-button ripple-effect"
-                   aria-label="Visit Python course on Udemy">
-                    <span>Visit Course</span>
-                </a>
-            </article>
+                <!-- Python Programming Course -->
+                <article class="card cert-card">
+                    <div class="cert-preview">
+                        <img src="assets/certificates/python-course preview.png" alt="Python Programming Certificate Preview" onerror="this.outerHTML='<div class=&quot;pdf-fallback-icon&quot;><svg viewBox=&quot;0 0 24 24&quot; width=&quot;48&quot; height=&quot;48&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z&quot;></path><polyline points=&quot;14 2 14 8 20 8&quot;></polyline><line x1=&quot;16&quot; y1=&quot;13&quot; x2=&quot;8&quot; y2=&quot;13&quot;></line><line x1=&quot;16&quot; y1=&quot;17&quot; x2=&quot;8&quot; y2=&quot;17&quot;></line><polyline points=&quot;10 9 9 9 8 9&quot;></polyline></svg></div>';">
+                        <div class="preview-overlay">
+                            <a href="pages/pdf-viewer.html?file=../assets/certificates/python-course preview.png" class="preview-zoom-btn" aria-label="Preview Certificate">Preview</a>
+                        </div>
+                    </div>
+                    <div class="cert-info">
+                        <h3>Complete 2025 Python Bootcamp - Udemy</h3>
+                        <p class="date">Oct 4, 2025</p>
+                        <p>
+                            Build Real-World Projects and Become Job-Ready in 2025. Comprehensive Python programming
+                            course covering fundamentals to advanced concepts.
+                        </p>
+                        <div class="cert-buttons">
+                            <a href="https://www.udemy.com/course/codewithharry-python/?couponCode=SEPHARRY"
+                               target="_blank"
+                               rel="noopener noreferrer"
+                               class="course-button ripple-effect"
+                               aria-label="Visit Python course on Udemy">
+                                <span>Visit Course</span>
+                            </a>
+                        </div>
+                    </div>
+                </article>
 
-            <!-- Research Work -->
-            <article class="card">
-                <h3>Research & Analysis</h3>
-                <h4>SYSTEMIC FAILURES IN INDIA</h4>
-                 <p class="date">Ongoing</p>
-                <p>
-                    Authored comprehensive research paper analyzing corruption, education, and judicial inefficiency
-                    in India using AI tools and government data (June 2023 - Present).
-                </p>
-                     <a href="pages/pdf-viewer.html?file=../assets/docs/systemic-failures-in-india-copy.pdf"
-                         class="course-button ripple-effect"
-                         aria-label="View research details">
-                    <span>View Research</span>
-                    <img src="assets/icons/pdf.webp" alt="PDF" class="pdf-icon">
-                </a>
-            </article>
+                <!-- Data Science Course -->
+                <article class="card cert-card">
+                    <div class="cert-preview">
+                        <img src="assets/certificates/data-science-course preview.png" alt="Data Science Certificate Preview" onerror="this.outerHTML='<div class=&quot;pdf-fallback-icon&quot;><svg viewBox=&quot;0 0 24 24&quot; width=&quot;48&quot; height=&quot;48&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z&quot;></path><polyline points=&quot;14 2 14 8 20 8&quot;></polyline><line x1=&quot;16&quot; y1=&quot;13&quot; x2=&quot;8&quot; y2=&quot;13&quot;></line><line x1=&quot;16&quot; y1=&quot;17&quot; x2=&quot;8&quot; y2=&quot;17&quot;></line><polyline points=&quot;10 9 9 9 8 9&quot;></polyline></svg></div>';">
+                        <div class="preview-overlay">
+                            <a href="pages/pdf-viewer.html?file=../assets/certificates/data-science-course preview.png" class="preview-zoom-btn" aria-label="Preview Certificate">Preview</a>
+                        </div>
+                    </div>
+                    <div class="cert-info">
+                        <h3>The Ultimate Job Ready Data Science Course - CodeWithHarry</h3>
+                        <p class="date">Jul 26, 2026</p>
+                        <p>
+                            A comprehensive program covering Python, data analysis, statistics, machine learning, 
+                            SQL, and data visualization tools to become a job-ready data scientist.
+                        </p>
+                        <div class="cert-buttons">
+                            <a href="https://www.codewithharry.com/courses/the-ultimate-job-ready-data-science-course"
+                               target="_blank"
+                               rel="noopener noreferrer"
+                               class="course-button ripple-effect"
+                               aria-label="Visit Data Science course on CodeWithHarry">
+                                <span>Visit Course</span>
+                            </a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Research Work -->
+                <article class="card cert-card">
+                    <div class="cert-preview">
+                        <div class="pdf-fallback-icon">
+                            <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                                <line x1="16" y1="13" x2="8" y2="13"></line>
+                                <line x1="16" y1="17" x2="8" y2="17"></line>
+                                <polyline points="10 9 9 9 8 9"></polyline>
+                            </svg>
+                        </div>
+                        <div class="preview-overlay">
+                            <a href="pages/pdf-viewer.html?file=../assets/docs/systemic-failures-in-india-copy.pdf" class="preview-zoom-btn" aria-label="Preview Research Paper">Preview</a>
+                        </div>
+                    </div>
+                    <div class="cert-info">
+                        <h3>Research & Analysis</h3>
+                        <h4>SYSTEMIC FAILURES IN INDIA</h4>
+                        <p class="date">Ongoing</p>
+                        <p>
+                            Authored comprehensive research paper analyzing corruption, education, and judicial inefficiency
+                            in India using AI tools and government data (June 2023 - Present).
+                        </p>
+                        <div class="cert-buttons">
+                            <a href="pages/pdf-viewer.html?file=../assets/docs/systemic-failures-in-india-copy.pdf"
+                               class="course-button ripple-effect"
+                               aria-label="View research details">
+                                <span>View Research</span>
+                                <img src="assets/icons/pdf.webp" alt="PDF" onerror="this.outerHTML='<svg class=&quot;pdf-icon-svg&quot; viewBox=&quot;0 0 24 24&quot; width=&quot;16&quot; height=&quot;16&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2.5&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot; style=&quot;margin-left: 8px; flex-shrink: 0; display: inline-block; vertical-align: middle;&quot;><path d=&quot;M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z&quot;></path><polyline points=&quot;14 2 14 8 20 8&quot;></polyline></svg>';" style="width: 16px; height: 16px; margin-left: 8px; vertical-align: middle; display: inline-block; flex-shrink: 0;">
+                            </a>
+                        </div>
+                    </div>
+                </article>
+            </div>
         </section>
 
         <!-- ==================== Skills Section ==================== -->
@@ -996,6 +1063,24 @@ Last Updated: December 18, 2025
                     </div>
                     <div class="skill-bar-container">
                         <div class="skill-bar" data-width="40"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <span class="skill-name">Data Science & Analysis</span>
+                        <span class="skill-rating">2/10</span>
+                    </div>
+                    <div class="skill-bar-container">
+                        <div class="skill-bar" data-width="20"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <span class="skill-name">Database Management (SQL)</span>
+                        <span class="skill-rating">2/10</span>
+                    </div>
+                    <div class="skill-bar-container">
+                        <div class="skill-bar" data-width="20"></div>
                     </div>
                 </div>
                 <div class="skill-item">
@@ -1059,7 +1144,7 @@ Last Updated: December 18, 2025
         <p>
             <strong>Copyright &copy; 2025</strong> Kumar Sreyan Pattanayak
             <br>
-            All Rights Reserved | Made with ❤️
+            All Rights Reserved | Made with <svg class="heart-icon" viewBox="0 0 24 24" width="14" height="14" fill="#ff4d4d" style="vertical-align: middle; display: inline-block; margin: 0 2px;"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path></svg>
             <br>
             Hosted on GitHub Pages | <a href="https://docs.github.com/en/site-policy/github-terms/github-terms-of-service" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;"> <strong>GitHub Terms of Service</strong></a>
         </p>
@@ -1073,36 +1158,19 @@ Last Updated: December 18, 2025
                 navigator.serviceWorker.register('./sw.js')
                     .then((registration) => {
                         console.log('ServiceWorker registration successful:', registration.scope);
-
+                        
                         // Check for updates every 60 seconds
                         setInterval(() => {
                             registration.update();
                         }, 60000);
-
-                        // Listen for updates
-                        registration.addEventListener('updatefound', () => {
-                            const newWorker = registration.installing;
-
-                            newWorker.addEventListener('statechange', () => {
-                                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                                    // New service worker available, show update notification
-                                    showUpdateNotification();
-                                }
-                            });
-                        });
                     })
                     .catch((error) => {
                         console.warn('Service Worker registration failed. App will work without offline support.', error);
-                        // Show user-friendly notification
-                        if (typeof showNotification === 'function') {
-                            showNotification('App loaded successfully. Offline mode unavailable.', 'info');
-                        }
                     });
             });
 
-            // Listen for controller change (when new SW takes over)
+            // Listen for controller change (when new SW takes over, reload to apply)
             navigator.serviceWorker.addEventListener('controllerchange', () => {
-                // Reload the page to get the latest version
                 window.location.reload();
             });
         }
@@ -1131,108 +1199,7 @@ Last Updated: December 18, 2025
             });
         }
 
-        // Show update notification
-        function showUpdateNotification() {
-            const updateBanner = document.createElement('div');
-            updateBanner.id = 'updateNotification';
-            updateBanner.style.cssText = `
-                position: fixed;
-                top: 70px;
-                left: 50%;
-                transform: translateX(-50%);
-                background: linear-gradient(135deg, #6366f1 0%, #4F5BD5 100%);
-                color: white;
-                padding: 16px 24px;
-                border-radius: 12px;
-                box-shadow: 0 8px 32px rgba(99, 102, 241, 0.4);
-                z-index: 10001;
-                display: flex;
-                align-items: center;
-                gap: 16px;
-                animation: slideDown 0.4s ease;
-                max-width: 90%;
-            `;
 
-            updateBanner.innerHTML = `
-                <div style="flex: 1;">
-                    <strong style="display: block; margin-bottom: 4px;">🎉 New Version Available!</strong>
-                    <span id="updateVersionText" style="font-size: 14px; opacity: 0.95;">A new version is ready. Click to update.</span>
-                </div>
-                <button onclick="updateApp()" style="
-                    background: white;
-                    color: #6366f1;
-                    border: none;
-                    padding: 8px 16px;
-                    border-radius: 8px;
-                    font-weight: 600;
-                    cursor: pointer;
-                    white-space: nowrap;
-                ">Update Now</button>
-                <button onclick="dismissUpdate()" style="
-                    background: rgba(255,255,255,0.2);
-                    color: white;
-                    border: none;
-                    padding: 8px 12px;
-                    border-radius: 8px;
-                    cursor: pointer;
-                ">✕</button>
-            `;
-
-            document.body.appendChild(updateBanner);
-
-            // Fetch latest version from manifest to show accurate version number
-            fetch('manifest.json?t=' + Date.now())
-                .then(response => response.json())
-                .then(data => {
-                    if (data && data.version) {
-                        const versionText = document.getElementById('updateVersionText');
-                        if (versionText) {
-                            versionText.textContent = `Version ${data.version} is ready. Click to update.`;
-                        }
-                    }
-                })
-                .catch(err => console.log('Failed to fetch new version info', err));
-
-
-
-
-            // Add animation
-            const style = document.createElement('style');
-            style.textContent = `
-                @keyframes slideDown {
-                    from {
-                        transform: translateX(-50%) translateY(-100px);
-                        opacity: 0;
-                    }
-                    to {
-                        transform: translateX(-50%) translateY(0);
-                        opacity: 1;
-                    }
-                }
-            `;
-            document.head.appendChild(style);
-        }
-
-        // Update app function
-        function updateApp() {
-            if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.getRegistration().then((registration) => {
-                    if (registration && registration.waiting) {
-                        // Tell the waiting service worker to skip waiting
-                        registration.waiting.postMessage({ type: 'SKIP_WAITING' });
-                    }
-                });
-            }
-        }
-
-        // Dismiss update notification
-        function dismissUpdate() {
-            const banner = document.getElementById('updateNotification');
-            if (banner) {
-                banner.style.animation = 'slideDown 0.3s ease reverse';
-                setTimeout(() => banner.remove(), 300);
-            }
-        }
     </script>
 
     <!-- Version Click Counter Script -->
@@ -1296,6 +1263,122 @@ Last Updated: December 18, 2025
                 clickCount = 0;
                 delete versionInfo.dataset.originalText;
             }, timeWindow);
+        });
+    })();
+    </script>
+    <!-- ==================== Certificate Lightbox Modal ==================== -->
+    <div id="certLightbox" class="lightbox-modal" aria-hidden="true" role="dialog">
+        <div class="lightbox-overlay"></div>
+        <div class="lightbox-content">
+            <button class="lightbox-close" aria-label="Close Preview">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+            <div class="lightbox-body">
+                <div id="lightboxContainer" style="width: 100%; height: 100%;"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    (function() {
+        const lightbox = document.getElementById('certLightbox');
+        const container = document.getElementById('lightboxContainer');
+        const closeBtn = lightbox.querySelector('.lightbox-close');
+        const overlay = lightbox.querySelector('.lightbox-overlay');
+
+        const triggerLinks = document.querySelectorAll('#certifications .preview-zoom-btn, #certifications a[href*="pdf-viewer.html"]');
+
+        triggerLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                try {
+                    const url = new URL(link.href, window.location.href);
+                    const fileUrl = url.searchParams.get('file');
+                    if (!fileUrl) return;
+
+                    container.innerHTML = '';
+                    const resolvedPath = fileUrl.startsWith('../') ? fileUrl.substring(3) : fileUrl;
+
+                    lightbox.classList.add('active');
+                    lightbox.setAttribute('aria-hidden', 'false');
+                    document.documentElement.style.overflow = 'hidden';
+                    document.body.style.overflow = 'hidden';
+
+                    // Loading indicator
+                    container.innerHTML = '<div style="color:var(--text-secondary); text-align:center; font-weight: 500;">Loading Preview...</div>';
+
+                    // Verify if file is available
+                    fetch(resolvedPath, { method: 'HEAD' })
+                        .then(res => {
+                            container.innerHTML = '';
+                            if (!res.ok) {
+                                // Show "Preview Unavailable" in Red text
+                                container.innerHTML = `<div style="color: #ff4d4d; font-weight: 600; font-size: 1.2rem; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 16px;">
+                                    <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <line x1="12" y1="8" x2="12" y2="12"></line>
+                                        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                                    </svg>
+                                    <span>Preview Unavailable</span>
+                                </div>`;
+                                return;
+                            }
+
+                            if (resolvedPath.toLowerCase().endsWith('.pdf')) {
+                                const iframe = document.createElement('iframe');
+                                iframe.className = 'lightbox-iframe';
+                                iframe.src = `pages/pdf-viewer.html?file=../${resolvedPath}`;
+                                container.appendChild(iframe);
+                            } else if (resolvedPath.toLowerCase().endsWith('.png') || resolvedPath.toLowerCase().endsWith('.jpg') || resolvedPath.toLowerCase().endsWith('.webp')) {
+                                const img = document.createElement('img');
+                                img.className = 'lightbox-media';
+                                img.src = resolvedPath;
+                                img.alt = 'Certificate Preview';
+                                container.appendChild(img);
+                            }
+                        })
+                        .catch(() => {
+                            // Fallback in case of CORS or connection blocks
+                            container.innerHTML = '';
+                            if (resolvedPath.toLowerCase().endsWith('.pdf')) {
+                                const iframe = document.createElement('iframe');
+                                iframe.className = 'lightbox-iframe';
+                                iframe.src = `pages/pdf-viewer.html?file=../${resolvedPath}`;
+                                container.appendChild(iframe);
+                            } else {
+                                const img = document.createElement('img');
+                                img.className = 'lightbox-media';
+                                img.src = resolvedPath;
+                                container.appendChild(img);
+                            }
+                        });
+                } catch (err) {
+                    console.error('Error opening certificate preview:', err);
+                }
+            });
+        });
+
+        function closeLightbox() {
+            lightbox.classList.remove('active');
+            lightbox.setAttribute('aria-hidden', 'true');
+            document.documentElement.style.overflow = '';
+            document.body.style.overflow = '';
+            setTimeout(() => {
+                container.innerHTML = '';
+            }, 300);
+        }
+
+        closeBtn.addEventListener('click', closeLightbox);
+        overlay.addEventListener('click', closeLightbox);
+        
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+                closeLightbox();
+            }
         });
     })();
     </script>

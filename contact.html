@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -38,8 +38,7 @@
     <!-- Control referrer information -->
     <meta name="referrer" content="strict-origin-when-cross-origin">
 
-    <!-- PWA Manifest -->
-    <link rel="manifest" href="manifest.json">
+    <!-- Theme Color for Browser Address Bar -->
     <meta name="theme-color" content="#6366f1">
 
     <!-- ==================== Preload Critical Resources ==================== -->
@@ -115,13 +114,40 @@
     
     <!-- Critical inline CSS to prevent layout shift -->
     <style>
-      /* Prevent any layout shift during preloader */
+      /* Prevent any layout shift during preloader, enable scroll */
       html, body {
         margin: 0;
         padding: 0;
         width: 100%;
-        height: 100%;
-        overflow: hidden;
+        min-height: 100vh;
+        overflow-y: auto !important;
+      }
+      
+      /* Make layout more compact */
+      .container {
+        padding: 20px 24px !important;
+      }
+      .header {
+        margin-bottom: 20px !important;
+      }
+      .content {
+        gap: 24px !important;
+      }
+      .contact-info {
+        padding: 20px !important;
+      }
+      .contact-form {
+        padding: 24px !important;
+      }
+      .info-item {
+        margin-bottom: 16px !important;
+        padding: 10px !important;
+      }
+      .form-group {
+        margin-bottom: 16px !important;
+      }
+      .form-group textarea {
+        height: 100px !important;
       }
       
       /* Ensure preloader is always on top and stable */
@@ -140,6 +166,7 @@
         font-weight: 700;
         color: #3e3601;
         letter-spacing: 4px;
+        padding-right: 12px;
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
         line-height: 1.2;
         display: inline-block;
@@ -206,7 +233,6 @@
             </div>
         </div>
         <div class="loading-percentage">0%</div>
-    </div>
     </div>
     <div class="page-frame">
     <div class="container">
@@ -473,7 +499,7 @@
       <p>
         <strong>Copyright © 2025</strong> Kumar Sreyan Pattanayak
         <br>
-        All Rights Reserved | Made with ❤️
+        All Rights Reserved | Made with <svg class="heart-icon" viewBox="0 0 24 24" width="14" height="14" fill="#ff4d4d" style="vertical-align: middle; display: inline-block; margin: 0 2px;"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path></svg>
         <br>
         Hosted on GitHub Pages | <a href="https://docs.github.com/en/site-policy/github-terms/github-terms-of-service" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;"> <strong>GitHub Terms of Service</strong></a>
       </p>

@@ -1,14 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PDF Viewer - Portfolio</title>
     <link rel="icon" type="image/png" href="../assets/icons/favicon.webp" sizes="64x64" />
-    
-    <!-- Early theme initialization to prevent flash of wrong theme -->
+
+    <!-- Early theme initialization and console setup -->
     <script>
-        (function() {
+        (function () {
+            // Disable console logs in production
+            if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+                const noop = () => { };
+                console.log = noop;
+                console.info = noop;
+                console.debug = noop;
+                console.warn = noop;
+            }
+
             const theme = localStorage.getItem('theme') || 'system';
             const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
             const effectiveTheme = theme === 'system' ? (prefersDark ? 'dark' : 'light') : theme;
@@ -16,7 +26,7 @@
             if (effectiveTheme === 'dark') document.body?.classList.add('darkmode');
         })();
     </script>
-    
+
     <style>
         /* ==================== THEME VARIABLES (Black & White) ==================== */
         :root {
@@ -35,7 +45,7 @@
             /* Focus ring defaults */
             --focus-ring-color: rgba(0, 120, 212, 0.95);
             --focus-ring-offset: 3px;
-            --focus-shadow: rgba(0,120,212,0.08);
+            --focus-shadow: rgba(0, 120, 212, 0.08);
         }
 
         [data-theme="dark"] {
@@ -58,17 +68,24 @@
             --pageinfo-text: #f5f5f5;
 
             /* Focus ring adjustments for dark theme */
-            --focus-ring-color: rgba(10,132,255,0.95);
-            --focus-shadow: rgba(10,132,255,0.12);
+            --focus-ring-color: rgba(10, 132, 255, 0.95);
+            --focus-shadow: rgba(10, 132, 255, 0.12);
         }
+
         /* ==================== GLOBAL STYLES ==================== */
         /* Hide scrollbar globally */
-        html, body {
-            scrollbar-width: none; /* Firefox */
-            -ms-overflow-style: none; /* IE/Edge */
+        html,
+        body {
+            scrollbar-width: none;
+            /* Firefox */
+            -ms-overflow-style: none;
+            /* IE/Edge */
         }
-        html::-webkit-scrollbar, body::-webkit-scrollbar {
-            display: none; /* Chrome/Safari/Opera */
+
+        html::-webkit-scrollbar,
+        body::-webkit-scrollbar {
+            display: none;
+            /* Chrome/Safari/Opera */
         }
 
         * {
@@ -113,14 +130,18 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            flex-wrap: nowrap; /* Changed from wrap to nowrap */
+            flex-wrap: nowrap;
+            /* Changed from wrap to nowrap */
             gap: 10px;
             border-bottom: 1px solid var(--toolbar-border);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.12);
-            overflow-x: auto; /* Allow horizontal scroll if needed */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+            overflow-x: auto;
+            /* Allow horizontal scroll if needed */
             overflow-y: hidden;
-            -ms-overflow-style: none;  /* Hide scrollbar for IE and Edge */
-            scrollbar-width: none;  /* Hide scrollbar for Firefox */
+            -ms-overflow-style: none;
+            /* Hide scrollbar for IE and Edge */
+            scrollbar-width: none;
+            /* Hide scrollbar for Firefox */
         }
 
         /* Hide scrollbar for Chrome, Safari and Opera */
@@ -132,8 +153,10 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            flex-wrap: nowrap; /* Changed from wrap to nowrap */
-            flex-shrink: 0; /* Prevent sections from shrinking */
+            flex-wrap: nowrap;
+            /* Changed from wrap to nowrap */
+            flex-shrink: 0;
+            /* Prevent sections from shrinking */
         }
 
         .toolbar button {
@@ -149,14 +172,17 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            flex-shrink: 0; /* Prevent buttons from shrinking */
-            white-space: nowrap; /* Prevent text wrapping inside buttons */
+            flex-shrink: 0;
+            /* Prevent buttons from shrinking */
+            white-space: nowrap;
+            /* Prevent text wrapping inside buttons */
         }
 
         .toolbar button img {
             width: 20px;
             height: 20px;
-            filter: none; /* show native icon colors to avoid accidental invisibility */
+            filter: none;
+            /* show native icon colors to avoid accidental invisibility */
             flex-shrink: 0;
             display: inline-block;
             vertical-align: middle;
@@ -171,9 +197,16 @@
             background-color: rgba(0, 0, 0, 0.2);
             pointer-events: none;
         }
-        [data-theme="dark"] .ripple { background-color: rgba(255, 255, 255, 0.25); }
+
+        [data-theme="dark"] .ripple {
+            background-color: rgba(255, 255, 255, 0.25);
+        }
+
         @keyframes ripple {
-            to { transform: scale(4); opacity: 0; }
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
         }
 
         .button-text {
@@ -239,25 +272,25 @@
         #next-page:focus-visible,
         #zoom-in:focus-visible,
         #zoom-out:focus-visible {
-          outline: 3px solid var(--focus-ring-color);
-          outline-offset: var(--focus-ring-offset);
-          box-shadow: 0 6px 20px var(--focus-shadow);
+            outline: 3px solid var(--focus-ring-color);
+            outline-offset: var(--focus-ring-offset);
+            box-shadow: 0 6px 20px var(--focus-shadow);
         }
 
         /* Fallback for browsers that don't support :focus-visible */
         .toolbar button:focus,
         .theme-toggle:focus,
         #page-info-btn:focus {
-          outline: 3px solid var(--focus-ring-color);
-          outline-offset: var(--focus-ring-offset);
-          box-shadow: 0 6px 20px var(--focus-shadow);
+            outline: 3px solid var(--focus-ring-color);
+            outline-offset: var(--focus-ring-offset);
+            box-shadow: 0 6px 20px var(--focus-shadow);
         }
 
         /* Ensure focus styles don't conflict with disabled buttons */
         .toolbar button:disabled:focus,
         .toolbar button[aria-disabled="true"]:focus {
-          outline: none;
-          box-shadow: none;
+            outline: none;
+            box-shadow: none;
         }
 
         /* ==================== PDF CANVAS CONTAINER ==================== */
@@ -265,12 +298,15 @@
             flex: 1;
             overflow: auto;
             background: var(--panel-bg);
-            padding: 96px 20px 20px; /* top padding to clear fixed toolbar height */
+            padding: 96px 20px 20px;
+            /* top padding to clear fixed toolbar height */
             display: flex;
             justify-content: center;
             align-items: flex-start;
-            position: relative; /* anchor for absolute loading indicator */
-        } 
+            position: relative;
+            /* anchor for absolute loading indicator */
+        }
+
         .canvas-wrapper {
             background: var(--card-bg);
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
@@ -297,7 +333,7 @@
             display: block;
             max-width: 100%;
             height: auto;
-            box-shadow: 0 6px 22px rgba(0,0,0,0.08);
+            box-shadow: 0 6px 22px rgba(0, 0, 0, 0.08);
             border-radius: 4px;
         }
 
@@ -307,7 +343,7 @@
             right: 18px;
             bottom: 18px;
             z-index: 1200;
-            background: rgba(0,0,0,0.6);
+            background: rgba(0, 0, 0, 0.6);
             color: #fff;
             padding: 8px 12px;
             border-radius: 10px;
@@ -315,10 +351,11 @@
             font-size: 13px;
             backdrop-filter: blur(6px);
         }
+
         [data-theme="light"] .floating-page-indicator {
-            background: rgba(255,255,255,0.9);
+            background: rgba(255, 255, 255, 0.9);
             color: #111;
-            border: 1px solid rgba(0,0,0,0.06);
+            border: 1px solid rgba(0, 0, 0, 0.06);
         }
 
         /* ==================== LOADING INDICATOR ==================== */
@@ -339,7 +376,7 @@
 
         .spinner {
             /* use current text color for spinner head so it contrasts in both themes */
-            border: 4px solid rgba(0,0,0,0.12);
+            border: 4px solid rgba(0, 0, 0, 0.12);
             border-top: 4px solid currentColor;
             border-radius: 50%;
             width: 40px;
@@ -350,8 +387,13 @@
         }
 
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
 
         /* ==================== ERROR MESSAGE ==================== */
@@ -375,12 +417,13 @@
         }
 
         /* Theme toggle icons visibility */
-    /* icon-sun/icon-moon no longer used (dropdown instead) */
+        /* icon-sun/icon-moon no longer used (dropdown instead) */
 
         /* Improve contrast of dark-theme PNG icons */
         body[data-theme="dark"] .toolbar button img {
             filter: invert(1) grayscale(1) contrast(1.2);
         }
+
         /* When hovering (light background in dark theme), show native dark icons */
         body[data-theme="dark"] .toolbar button:hover img {
             filter: none;
@@ -416,7 +459,8 @@
             }
 
             .pdf-container {
-                padding: 88px 10px 10px; /* clear fixed toolbar on small screens */
+                padding: 88px 10px 10px;
+                /* clear fixed toolbar on small screens */
             }
 
             #prev-page,
@@ -448,47 +492,114 @@
             }
         }
 
-        @page { margin: 10mm; }
+        @page {
+            margin: 10mm;
+        }
+
         @media print {
-            .toolbar { display: none !important; }
-            #floating-page-indicator { display: none !important; }
-            .error-message { display: none !important; }
-            .pdf-container { padding: 0 !important; overflow: visible !important; }
-            .canvas-wrapper { box-shadow: none; background: transparent; padding: 0 !important; }
-            #pdf-canvas { width: 100% !important; height: auto !important; }
-            .pdf-page-canvas { width: 100% !important; height: auto !important; }
-            .pdf-page-wrapper { page-break-after: always; break-after: page; }
+            .toolbar {
+                display: none !important;
+            }
+
+            #floating-page-indicator {
+                display: none !important;
+            }
+
+            .error-message {
+                display: none !important;
+            }
+
+            .pdf-container {
+                padding: 0 !important;
+                overflow: visible !important;
+            }
+
+            .canvas-wrapper {
+                box-shadow: none;
+                background: transparent;
+                padding: 0 !important;
+            }
+
+            #pdf-canvas {
+                width: 100% !important;
+                height: auto !important;
+            }
+
+            .pdf-page-canvas {
+                width: 100% !important;
+                height: auto !important;
+            }
+
+            .pdf-page-wrapper {
+                page-break-after: always;
+                break-after: page;
+            }
         }
     </style>
     <style>
         /* Tooltips */
-        [data-tooltip] { position: relative; }
-        [data-tooltip]::before, [data-tooltip]::after {
-            position: absolute; opacity: 0; visibility: hidden;
-            transition: opacity 0.2s ease, visibility 0.2s ease;
-            transition-delay: 0.3s; pointer-events: none; z-index: 1005;
+        [data-tooltip] {
+            position: relative;
         }
-        [data-tooltip]::before {
-            content: attr(data-tooltip); background: rgba(20, 20, 20, 0.9);
-            color: #fff; padding: 6px 10px; border-radius: 6px; font-size: 12px;
-            white-space: nowrap; font-weight: 500; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            top: 100%; left: 50%; transform: translateX(-50%) translateY(10px); margin-top: 8px;
-        }
+
+        [data-tooltip]::before,
         [data-tooltip]::after {
-            content: ''; border-width: 6px; border-style: solid;
+            position: absolute;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s ease, visibility 0.2s ease;
+            transition-delay: 0.3s;
+            pointer-events: none;
+            z-index: 1005;
+        }
+
+        [data-tooltip]::before {
+            content: attr(data-tooltip);
+            background: rgba(20, 20, 20, 0.9);
+            color: #fff;
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            white-space: nowrap;
+            font-weight: 500;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(10px);
+            margin-top: 8px;
+        }
+
+        [data-tooltip]::after {
+            content: '';
+            border-width: 6px;
+            border-style: solid;
             border-color: transparent transparent rgba(20, 20, 20, 0.9) transparent;
-            top: 100%; left: 50%; transform: translateX(-50%) translateY(10px); margin-top: -4px;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(10px);
+            margin-top: -4px;
         }
-        [data-tooltip]:hover::before, [data-tooltip]:hover::after {
-            opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0);
+
+        [data-tooltip]:hover::before,
+        [data-tooltip]:hover::after {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
         }
+
         @media (max-width: 768px) {
-            [data-tooltip]::before, [data-tooltip]::after { display: none; }
+
+            [data-tooltip]::before,
+            [data-tooltip]::after {
+                display: none;
+            }
         }
     </style>
 </head>
+
 <body>
     <div class="pdf-viewer-container">
         <!-- Top Toolbar -->
@@ -521,11 +632,15 @@
                     <span style="font-size: 18px;">+</span>
                 </button>
                 <button id="print-pdf" title="Print PDF" aria-label="Print PDF">
-                    <img id="printIcon" src="../assets/icons/../assets/icons/printer.webp" alt="Print" width="20" height="20" onerror="this.onerror=null; this.src='../assets/icons/../assets/icons/printer.webp';" />
+                    <img id="printIcon" src="../assets/icons/printer.webp" alt="Print" width="20"
+                        height="20"
+                        onerror="this.onerror=null; this.src='../assets/icons/printer.webp';" />
                     <span class="button-text">Print</span>
                 </button>
                 <button id="download-pdf" title="Download PDF" aria-label="Download PDF">
-                    <img id="downloadIcon" src="../assets/icons/../assets/icons/download.webp" alt="Download" width="20" height="20" onerror="this.onerror=null; this.src='../assets/icons/../assets/icons/download.webp';" />
+                    <img id="downloadIcon" src="../assets/icons/download.webp" alt="Download" width="20"
+                        height="20"
+                        onerror="this.onerror=null; this.src='../assets/icons/download.webp';" />
                     <span class="button-text">Download</span>
                 </button>
             </div>
@@ -544,11 +659,13 @@
             </div>
         </div>
         <!-- Floating page indicator for multi-page scroll mode -->
-        <div id="floating-page-indicator" class="floating-page-indicator" aria-hidden="true" style="display:none">1 / 1</div>
+        <div id="floating-page-indicator" class="floating-page-indicator" aria-hidden="true" style="display:none">1 / 1
+        </div>
     </div>
 
     <!-- Screen reader announcer for page changes -->
-    <div id="sr-page-announcer" aria-live="polite" aria-atomic="true" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;"></div>
+    <div id="sr-page-announcer" aria-live="polite" aria-atomic="true"
+        style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;"></div>
 
     <!-- PDF.js Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
@@ -559,7 +676,7 @@
             document.querySelectorAll('.toolbar button').forEach(btn => {
                 btn.style.position = 'relative';
                 btn.style.overflow = 'hidden';
-                btn.addEventListener('click', function(e){
+                btn.addEventListener('click', function (e) {
                     const rect = btn.getBoundingClientRect();
                     const ripple = document.createElement('span');
                     const size = Math.max(rect.width, rect.height);
@@ -575,7 +692,7 @@
             });
         }
         // ==================== THEME TOGGLE (logic adapted from script.js) ====================
-        (function setupThemeToggle(){
+        (function setupThemeToggle() {
             const htmlElement = document.documentElement;
             const body = document.body;
             const themeToggle = document.getElementById('themeToggle');
@@ -598,7 +715,7 @@
                 body.classList.toggle('darkmode', effectiveTheme === 'dark');
                 updateToggleLabel(theme);
 
-                try { localStorage.setItem('theme', theme); } catch {}
+                try { localStorage.setItem('theme', theme); } catch { }
                 currentTheme = theme;
             }
 
@@ -606,7 +723,7 @@
             applyTheme(currentTheme);
 
             if (themeToggle) {
-                themeToggle.addEventListener('click', function(){
+                themeToggle.addEventListener('click', function () {
                     const themes = ['system', 'light', 'dark'];
                     const idx = themes.indexOf(currentTheme);
                     const next = themes[(idx + 1) % themes.length];
@@ -653,11 +770,11 @@
         // Change the path below to point to your PDF file.
         // Example: 'assets/docs/resume.pdf' or 'assets/docs/mydocument.pdf'
         // Default PDF path. Will be overridden if ?file=... is provided in the URL.
-    // Default PDF path. Prefer files kept in assets/docs
-    let PDF_PATH = '../assets/docs/kumar-sreyan-pattanayak-resume.pdf';
+        // Default PDF path. Prefer files kept in assets/docs
+        let PDF_PATH = '../assets/docs/kumar-sreyan-pattanayak-resume.pdf';
 
         // If caller passed a `file` query parameter, decode and use it.
-        (function() {
+        (function () {
             try {
                 const params = new URLSearchParams(window.location.search);
                 const fileParam = params.get('file');
@@ -674,7 +791,7 @@
                 console.warn('Failed to parse file parameter', e);
             }
         })();
-        
+
         // PDF.js Configuration
         pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
@@ -684,7 +801,7 @@
         let pageRendering = false;
         let pageNumPending = null;
         let scale = 1.5; // Initial zoom level
-    let multiPageMode = false; // when true, render all pages stacked and allow scrolling
+        let multiPageMode = false; // when true, render all pages stacked and allow scrolling
 
         // DOM Elements
         const canvas = document.getElementById('pdf-canvas');
@@ -711,7 +828,7 @@
         function renderPage(num) {
             pageRendering = true;
 
-            pdfDoc.getPage(num).then(function(page) {
+            pdfDoc.getPage(num).then(function (page) {
                 const viewport = page.getViewport({ scale: scale });
                 canvas.height = viewport.height;
                 canvas.width = viewport.width;
@@ -722,7 +839,7 @@
                 };
 
                 const renderTask = page.render(renderContext);
-                renderTask.promise.then(function() {
+                renderTask.promise.then(function () {
                     // Reveal the canvas when the first render finishes and restore visuals
                     canvas.style.display = 'block';
                     if (canvasWrapper) canvasWrapper.classList.remove('loading-active');
@@ -733,7 +850,7 @@
                         pageNumPending = null;
                     }
                 });
-            }).catch(function(err){
+            }).catch(function (err) {
                 showError('❌ Failed to render page: ' + (err && err.message ? err.message : err));
             });
 
@@ -755,7 +872,7 @@
             if (!pdfDoc || pageNum <= 1) return;
             const target = pageNum - 1;
             if (target < 1) return; // Guard against invalid page numbers
-            
+
             if (multiPageMode) {
                 // Update pageNum immediately so next click works correctly
                 pageNum = target;
@@ -776,7 +893,7 @@
             if (!pdfDoc || pageNum >= pdfDoc.numPages) return;
             const target = pageNum + 1;
             if (target > pdfDoc.numPages) return; // Guard against invalid page numbers
-            
+
             if (multiPageMode) {
                 // Update pageNum immediately so next click works correctly
                 pageNum = target;
@@ -854,10 +971,10 @@
             const viewObserver = new IntersectionObserver((entries) => {
                 // Clear any pending update
                 if (updatePageTimeout) clearTimeout(updatePageTimeout);
-                
+
                 // Debounce the update to avoid flickering during scroll
                 updatePageTimeout = setTimeout(() => {
-                    let best = {ratio: 0, page: null};
+                    let best = { ratio: 0, page: null };
                     entries.forEach(en => {
                         if (!en.target) return;
                         const pageCanvas = en.target.querySelector('.pdf-page-canvas') || en.target;
@@ -868,18 +985,18 @@
                             best.page = pageNumber;
                         }
                     });
-                    
+
                     // Only update if we found a valid page with good visibility
                     // and the page number is actually different
                     if (best.page && best.page >= 1 && best.ratio > 0.2 && best.page !== pageNum) {
                         pageNum = best.page;
-                        
+
                         const indicator = document.getElementById('floating-page-indicator');
                         if (indicator) {
                             indicator.textContent = best.page + ' / ' + pageCount;
                             indicator.style.display = '';
                         }
-                        
+
                         updatePageInfo();
                     }
                 }, 100); // 100ms debounce to smooth out scroll updates
@@ -1112,21 +1229,21 @@
             if (canvasWrapper) canvasWrapper.classList.add('loading-active');
 
             // Load the PDF document
-            pdfjsLib.getDocument(PDF_PATH).promise.then(function(pdfDoc_) {
+            pdfjsLib.getDocument(PDF_PATH).promise.then(function (pdfDoc_) {
                 pdfDoc = pdfDoc_;
 
                 // Decide rendering mode: single-page (controls) or multi-page scroll
                 if (pdfDoc.numPages > 1) {
-                        multiPageMode = true;
-                        // Keep navigation controls available in multi-page mode so users can
-                        // use the front/back buttons while scrolling through stacked pages.
-                        // Ensure controls are visible (they will be enabled/disabled by updatePageInfo()).
-                        if (prevButton) prevButton.style.display = '';
-                        if (nextButton) nextButton.style.display = '';
-                        if (pageInfo) pageInfo.style.display = '';
+                    multiPageMode = true;
+                    // Keep navigation controls available in multi-page mode so users can
+                    // use the front/back buttons while scrolling through stacked pages.
+                    // Ensure controls are visible (they will be enabled/disabled by updatePageInfo()).
+                    if (prevButton) prevButton.style.display = '';
+                    if (nextButton) nextButton.style.display = '';
+                    if (pageInfo) pageInfo.style.display = '';
 
-                        // Render all pages stacked
-                        renderAllPages();
+                    // Render all pages stacked
+                    renderAllPages();
                 } else {
                     multiPageMode = false;
                     // show controls
@@ -1149,7 +1266,7 @@
                     // If pdfDoc isn't fully ready for page info yet, ignore — observer will correct later
                     console.warn('updatePageInfo() deferred', e);
                 }
-            }).catch(function(error) {
+            }).catch(function (error) {
                 console.error('Error loading PDF:', error);
                 showError('❌ Failed to load PDF. Please check if the file exists at: ' + PDF_PATH);
             });
@@ -1188,23 +1305,23 @@
         printButton.addEventListener('click', printPDF);
 
         // Touch support for mobile (prevent double-tap zoom behavior)
-        (function bindTouchZoom(){
+        (function bindTouchZoom() {
             const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
             if (!isTouchDevice) return;
             if (zoomInButton) {
-                zoomInButton.addEventListener('touchstart', function(e){ e.preventDefault(); onZoomIn(); }, { passive: false });
+                zoomInButton.addEventListener('touchstart', function (e) { e.preventDefault(); onZoomIn(); }, { passive: false });
             }
             if (zoomOutButton) {
-                zoomOutButton.addEventListener('touchstart', function(e){ e.preventDefault(); onZoomOut(); }, { passive: false });
+                zoomOutButton.addEventListener('touchstart', function (e) { e.preventDefault(); onZoomOut(); }, { passive: false });
             }
         })();
 
         // Keyboard shortcuts (extended)
-        document.addEventListener('keydown', function(e) {
+        document.addEventListener('keydown', function (e) {
             // Support modifier keys for reset zoom etc.
             const ctrlOrCmd = e.ctrlKey || e.metaKey;
 
-            switch(e.key) {
+            switch (e.key) {
                 case 'ArrowLeft':
                     onPrevPage();
                     break;
@@ -1263,7 +1380,7 @@
 
         // ==================== INITIALIZE ====================
         // Start loading the PDF when page loads and set icons robustly
-        window.addEventListener('load', function() {
+        window.addEventListener('load', function () {
             // Resolve icons
             setIconSrc(document.getElementById('printIcon'), '../assets/icons/printer.webp');
             setIconSrc(document.getElementById('downloadIcon'), '../assets/icons/download.webp');
@@ -1287,140 +1404,140 @@
         window.addEventListener('resize', adjustLayout);
 
         // Inline edit for page-info (edit the page number directly inside the label)
-if (pageInfoBtn && pageInfo) {
-    // Helper to render the full "Page N of T" label
-    function renderPageLabel() {
-        const total = pdfDoc ? pdfDoc.numPages : 1;
-        pageInfo.textContent = `Page ${pageNum} of ${total}`;
-        pageInfo.setAttribute('aria-readonly', 'true');
-    }
-
-    // Start inline editing (show only the page number, make span editable)
-    function startInlineEdit(e) {
-        e.preventDefault();
-        // if PDF not loaded yet, still allow editing but validate only after load
-        const total = pdfDoc ? pdfDoc.numPages : 1;
-        pageInfo.dataset._original = pageInfo.textContent || '';
-        pageInfo.contentEditable = 'true';
-        pageInfo.setAttribute('inputmode', 'numeric');
-        pageInfo.setAttribute('aria-readonly', 'false');
-        pageInfo.setAttribute('role', 'textbox');
-        // show only the current page number to edit
-        pageInfo.textContent = String(pageNum || 1);
-        // move caret to end / select all for quick overwrite
-        const range = document.createRange();
-        range.selectNodeContents(pageInfo);
-        const sel = window.getSelection();
-        sel.removeAllRanges();
-        sel.addRange(range);
-        pageInfo.focus();
-    }
-
-    // Commit edit: validate and navigate
-    function commitInlineEdit() {
-        const raw = (pageInfo.textContent || '').trim();
-        const n = parseInt(raw, 10);
-        const total = pdfDoc ? pdfDoc.numPages : null;
-
-        // If invalid number, restore and focus
-        if (isNaN(n) || n < 1 || (total && n > total)) {
-            // invalid — show message and restore
-            if (total) {
-                alert('Please enter a valid page number between 1 and ' + total);
-            } else {
-                alert('Please enter a valid page number (PDF not loaded yet).');
+        if (pageInfoBtn && pageInfo) {
+            // Helper to render the full "Page N of T" label
+            function renderPageLabel() {
+                const total = pdfDoc ? pdfDoc.numPages : 1;
+                pageInfo.textContent = `Page ${pageNum} of ${total}`;
+                pageInfo.setAttribute('aria-readonly', 'true');
             }
-            cancelInlineEdit();
-            return;
-        }
 
-        // Apply navigation
-        if (multiPageMode) {
-            const canvasEl = document.querySelector(`.pdf-page-canvas[data-page="${n}"]`);
-            if (canvasEl && !canvasEl.dataset.rendered) {
-                renderPageCanvas(n, canvasEl);
+            // Start inline editing (show only the page number, make span editable)
+            function startInlineEdit(e) {
+                e.preventDefault();
+                // if PDF not loaded yet, still allow editing but validate only after load
+                const total = pdfDoc ? pdfDoc.numPages : 1;
+                pageInfo.dataset._original = pageInfo.textContent || '';
+                pageInfo.contentEditable = 'true';
+                pageInfo.setAttribute('inputmode', 'numeric');
+                pageInfo.setAttribute('aria-readonly', 'false');
+                pageInfo.setAttribute('role', 'textbox');
+                // show only the current page number to edit
+                pageInfo.textContent = String(pageNum || 1);
+                // move caret to end / select all for quick overwrite
+                const range = document.createRange();
+                range.selectNodeContents(pageInfo);
+                const sel = window.getSelection();
+                sel.removeAllRanges();
+                sel.addRange(range);
+                pageInfo.focus();
             }
-            scrollToPageNumber(n);
-        } else {
-            pageNum = n;
-            queueRenderPage(pageNum);
+
+            // Commit edit: validate and navigate
+            function commitInlineEdit() {
+                const raw = (pageInfo.textContent || '').trim();
+                const n = parseInt(raw, 10);
+                const total = pdfDoc ? pdfDoc.numPages : null;
+
+                // If invalid number, restore and focus
+                if (isNaN(n) || n < 1 || (total && n > total)) {
+                    // invalid — show message and restore
+                    if (total) {
+                        alert('Please enter a valid page number between 1 and ' + total);
+                    } else {
+                        alert('Please enter a valid page number (PDF not loaded yet).');
+                    }
+                    cancelInlineEdit();
+                    return;
+                }
+
+                // Apply navigation
+                if (multiPageMode) {
+                    const canvasEl = document.querySelector(`.pdf-page-canvas[data-page="${n}"]`);
+                    if (canvasEl && !canvasEl.dataset.rendered) {
+                        renderPageCanvas(n, canvasEl);
+                    }
+                    scrollToPageNumber(n);
+                } else {
+                    pageNum = n;
+                    queueRenderPage(pageNum);
+                }
+
+                // End edit and re-render label
+                pageInfo.contentEditable = 'false';
+                pageInfo.removeAttribute('inputmode');
+                pageInfo.setAttribute('aria-readonly', 'true');
+                pageInfo.removeAttribute('role');
+                renderPageLabel();
+                // return focus to the button for accessibility
+                pageInfoBtn.focus();
+            }
+
+            // Cancel edit (restore original label)
+            function cancelInlineEdit() {
+                pageInfo.contentEditable = 'false';
+                pageInfo.removeAttribute('inputmode');
+                pageInfo.setAttribute('aria-readonly', 'true');
+                pageInfo.removeAttribute('role');
+                if (pageInfo.dataset._original) {
+                    pageInfo.textContent = pageInfo.dataset._original;
+                    delete pageInfo.dataset._original;
+                } else {
+                    renderPageLabel();
+                }
+                pageInfoBtn.focus();
+            }
+
+            // Prevent non-digit characters in the editable span
+            pageInfo.addEventListener('input', (ev) => {
+                // keep only digits
+                const filtered = (pageInfo.textContent || '').replace(/[^\d]/g, '');
+                if (filtered !== pageInfo.textContent) {
+                    pageInfo.textContent = filtered;
+                    // place caret at end
+                    const range = document.createRange();
+                    range.selectNodeContents(pageInfo);
+                    range.collapse(false);
+                    const sel = window.getSelection();
+                    sel.removeAllRanges();
+                    sel.addRange(range);
+                }
+            });
+
+            // Keyboard handling while editing
+            pageInfo.addEventListener('keydown', (ev) => {
+                if (ev.key === 'Enter') {
+                    ev.preventDefault();
+                    commitInlineEdit();
+                } else if (ev.key === 'Escape') {
+                    ev.preventDefault();
+                    cancelInlineEdit();
+                } else if (ev.key === 'Tab') {
+                    // Commit on tab as well, then allow normal tabbing
+                    commitInlineEdit();
+                }
+            });
+
+            // Blur commits the change (safe default)
+            pageInfo.addEventListener('blur', () => {
+                if (pageInfo.contentEditable === 'true') {
+                    // small timeout to allow click events to process
+                    setTimeout(() => {
+                        if (document.activeElement !== pageInfo) commitInlineEdit();
+                    }, 100);
+                }
+            });
+
+            // Clicking the button triggers edit start (or focuses if already editing)
+            pageInfoBtn.addEventListener('click', (e) => {
+                // If already editing, do nothing (span handles Enter/Escape)
+                if (pageInfo.contentEditable === 'true') return;
+                startInlineEdit(e);
+            });
+
+            // Ensure label updates whenever we update pageNum externally
+            // (updatePageInfo already sets pageInfo.textContent; keep it unchanged)
         }
-
-        // End edit and re-render label
-        pageInfo.contentEditable = 'false';
-        pageInfo.removeAttribute('inputmode');
-        pageInfo.setAttribute('aria-readonly', 'true');
-        pageInfo.removeAttribute('role');
-        renderPageLabel();
-        // return focus to the button for accessibility
-        pageInfoBtn.focus();
-    }
-
-    // Cancel edit (restore original label)
-    function cancelInlineEdit() {
-        pageInfo.contentEditable = 'false';
-        pageInfo.removeAttribute('inputmode');
-        pageInfo.setAttribute('aria-readonly', 'true');
-        pageInfo.removeAttribute('role');
-        if (pageInfo.dataset._original) {
-            pageInfo.textContent = pageInfo.dataset._original;
-            delete pageInfo.dataset._original;
-        } else {
-            renderPageLabel();
-        }
-        pageInfoBtn.focus();
-    }
-
-    // Prevent non-digit characters in the editable span
-    pageInfo.addEventListener('input', (ev) => {
-        // keep only digits
-        const filtered = (pageInfo.textContent || '').replace(/[^\d]/g, '');
-        if (filtered !== pageInfo.textContent) {
-            pageInfo.textContent = filtered;
-            // place caret at end
-            const range = document.createRange();
-            range.selectNodeContents(pageInfo);
-            range.collapse(false);
-            const sel = window.getSelection();
-            sel.removeAllRanges();
-            sel.addRange(range);
-        }
-    });
-
-    // Keyboard handling while editing
-    pageInfo.addEventListener('keydown', (ev) => {
-        if (ev.key === 'Enter') {
-            ev.preventDefault();
-            commitInlineEdit();
-        } else if (ev.key === 'Escape') {
-            ev.preventDefault();
-            cancelInlineEdit();
-        } else if (ev.key === 'Tab') {
-            // Commit on tab as well, then allow normal tabbing
-            commitInlineEdit();
-        }
-    });
-
-    // Blur commits the change (safe default)
-    pageInfo.addEventListener('blur', () => {
-        if (pageInfo.contentEditable === 'true') {
-            // small timeout to allow click events to process
-            setTimeout(() => {
-                if (document.activeElement !== pageInfo) commitInlineEdit();
-            }, 100);
-        }
-    });
-
-    // Clicking the button triggers edit start (or focuses if already editing)
-    pageInfoBtn.addEventListener('click', (e) => {
-        // If already editing, do nothing (span handles Enter/Escape)
-        if (pageInfo.contentEditable === 'true') return;
-        startInlineEdit(e);
-    });
-
-    // Ensure label updates whenever we update pageNum externally
-    // (updatePageInfo already sets pageInfo.textContent; keep it unchanged)
-}
 
         // ==================== Swipe Back Navigation (PWA) ====================
         (function initSwipeBackNavigation() {
@@ -1521,8 +1638,8 @@ if (pageInfoBtn && pageInfo) {
             console.log('Back button navigation initialized for PDF Viewer');
         })();
 
-        // Cleanup observers on unload to prevent memory leaks
-        window.addEventListener('unload', () => {
+        // Cleanup observers on pagehide to prevent memory leaks and respect modern permissions policy
+        window.addEventListener('pagehide', () => {
             if (window._pdfRenderObserver) {
                 window._pdfRenderObserver.disconnect();
                 window._pdfRenderObserver = null;
@@ -1535,4 +1652,5 @@ if (pageInfoBtn && pageInfo) {
     </script>
 
 </body>
+
 </html>

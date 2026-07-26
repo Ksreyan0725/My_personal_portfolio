@@ -7,7 +7,6 @@ const RUNTIME_CACHE = 'portfolio-runtime-v3.5';
 const CORE_ASSETS = [
     './',
     './index.html',
-    './manifest.json',
     './assets/css/preloader.css',
     './assets/css/core.css',
     './script.js',
@@ -26,7 +25,6 @@ const SECONDARY_ASSETS = [
     './assets/css/settings.css',
     './assets/css/settings-fix.css',
     './assets/css/responsive.css',
-    './assets/css/install-button.css',
     './assets/css/skeleton.css',
     './assets/css/print.css',
     './assets/js/theme-schedule.js',
@@ -34,7 +32,6 @@ const SECONDARY_ASSETS = [
     './assets/js/modules/sidebar.js',
     './assets/js/modules/settings.js',
     './assets/js/modules/search.js',
-    './assets/js/modules/pwa.js',
     './assets/js/modules/navigation.js',
     './assets/js/modules/features.js',
     './assets/js/modules/security.js',
