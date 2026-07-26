@@ -22,7 +22,7 @@ const nightLightIntensitySlider = document.getElementById('nightLightIntensitySl
 const nightLightIntensityContainer = document.getElementById('nightLightIntensityContainer');
 
 // Notification Elements
-const pushToggle = document.getElementById('pushToggle');
+let pushToggle = null;
 
 /**
  * Toggle settings panel
@@ -233,6 +233,7 @@ function initNightLight() {
  */
 function initNotifications() {
     console.log('Initializing notifications...');
+    pushToggle = document.getElementById('pushToggle');
     console.log('pushToggle:', pushToggle);
 
     if (pushToggle) {

@@ -1,7 +1,7 @@
 // Service Worker for Portfolio PWA
 // Version 3.5 - Fixed cache paths
-const CACHE_NAME = 'portfolio-v3.5';
-const RUNTIME_CACHE = 'portfolio-runtime-v3.5';
+const CACHE_NAME = 'portfolio-v3.6';
+const RUNTIME_CACHE = 'portfolio-runtime-v3.6';
 
 // Critical resources for initial load (minimal set for fast install)
 const CORE_ASSETS = [
@@ -36,39 +36,39 @@ const SECONDARY_ASSETS = [
     './assets/js/modules/features.js',
     './assets/js/modules/security.js',
     // All PNG icons for perfect offline mode
-    'assets/icons/certification.webp',
-    'assets/icons/contact.webp',
-    'assets/icons/custom-theme.webp',
-    'assets/icons/dark-mode.webp',
-    'assets/icons/download.webp',
-    'assets/icons/education.webp',
-    'assets/icons/facebook.webp',
-    'assets/icons/favicon.webp',
-    'assets/icons/github.webp',
-    'assets/icons/gmail.webp',
-    'assets/icons/home.webp',
-    'assets/icons/instagram.webp',
-    'assets/icons/light-mode.webp',
-    'assets/icons/linkedin.webp',
-    'assets/icons/maintenance.webp',
-    'assets/icons/nightlight-icon.webp',
-    'assets/icons/nightlight-notification.webp',
-    'assets/icons/pdf.webp',
-    'assets/icons/printer.webp',
-    'assets/icons/project.webp',
-    'assets/icons/pwa-icon-192.webp',
-    'assets/icons/pwa-icon-512.webp',
-    'assets/icons/search.webp',
+    './assets/icons/certification.webp',
+    './assets/icons/contact.webp',
+    './assets/icons/custom-theme.webp',
+    './assets/icons/dark-mode.webp',
+    './assets/icons/download.webp',
+    './assets/icons/education.webp',
+    './assets/icons/facebook.webp',
+    './assets/icons/favicon.webp',
+    './assets/icons/github.webp',
+    './assets/icons/gmail.webp',
+    './assets/icons/home.webp',
+    './assets/icons/instagram.webp',
+    './assets/icons/light-mode.webp',
+    './assets/icons/linkedin.webp',
+    './assets/icons/maintenance.webp',
+    './assets/icons/nightlight-icon.webp',
+    './assets/icons/nightlight-notification.webp',
+    './assets/icons/pdf.webp',
+    './assets/icons/printer.webp',
+    './assets/icons/project.webp',
+    './assets/icons/pwa-icon-192.webp',
+    './assets/icons/pwa-icon-512.webp',
+    './assets/icons/search.webp',
     './assets/icons/setting-button.png',
-    'assets/icons/side-menu.webp',
-    'assets/icons/skills.webp',
-    'assets/icons/system-theme.webp',
-    'assets/icons/teams.webp',
-    'assets/icons/telegram.webp',
-    'assets/icons/x.webp',
-    'assets/icons/zoho-dark.webp',
-    'assets/icons/zohomail.webp',
-    './assets/icons/my-photo.jpg'
+    './assets/icons/side-menu.webp',
+    './assets/icons/skills.webp',
+    './assets/icons/system-theme.webp',
+    './assets/icons/teams.webp',
+    './assets/icons/telegram.webp',
+    './assets/icons/x.webp',
+    './assets/icons/zoho-dark.webp',
+    './assets/icons/zohomail.webp',
+    './assets/images/my-photo.jpg'
 ];
 
 // Install event - cache only critical resources for fast install

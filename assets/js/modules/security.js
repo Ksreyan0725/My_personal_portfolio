@@ -34,7 +34,7 @@ export function initSecurity() {
         // Redirect broken placeholder links to 404
         if (rawHref === '#') {
             e.preventDefault();
-            window.location.href = 'pages/404.html';
+            window.location.href = './pages/404.html';
             return;
         }
 
@@ -49,11 +49,11 @@ export function initSecurity() {
 
                 if (!isValidEmail(decoded) || !ALLOWED_MAILTO.has(decoded)) {
                     e.preventDefault();
-                    window.location.href = 'pages/404.html';
+                    window.location.href = './pages/404.html';
                 }
             } catch (_) {
                 e.preventDefault();
-                window.location.href = 'pages/404.html';
+                window.location.href = './pages/404.html';
             }
             return;
         }
@@ -75,11 +75,11 @@ export function initSecurity() {
             if (!res.ok) {
                 if (res.status === 405 || res.status === 501) return;
                 e.preventDefault();
-                window.location.href = 'pages/404.html';
+                window.location.href = './pages/404.html';
             }
         } catch (err) {
             e.preventDefault();
-            window.location.href = 'pages/404.html';
+            window.location.href = './pages/404.html';
         }
     }, true);
 }
