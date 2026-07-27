@@ -606,20 +606,22 @@
 
 .search-modal-close {
   background: var(--card-bg);
-  border: 1px solid var(--border);
-  font-size: 1.2rem; /* Reduced from 1.5rem for better spacing */
+  border: 2px solid var(--border);
   color: var(--text-primary);
   cursor: pointer;
-  padding: 6px 10px;
-  border-radius: 6px;
+  padding: 8px;
+  border-radius: 50%;
   line-height: 1;
   transition: all 0.3s ease;
-  opacity: 1;
-  box-sizing: border-box; /* Ensure consistent sizing */
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
 }
 
 .search-modal-close:hover {
-  opacity: 1;
   color: var(--accent);
   background: rgba(99, 102, 241, 0.1);
   border-color: var(--accent);

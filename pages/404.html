@@ -6,8 +6,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Page Not Found</title>
      <!-- Favicon -->
-    <link rel="icon" type="image/png" href="../assets/icons/favicon.webp" sizes="64x64">
-    
+    <link rel="icon" type="image/png" href="assets/icons/favicon.webp" sizes="64x64">
+
+    <!-- Base URL for GitHub Pages compatibility -->
+    <script>
+        (function() {
+            const isGitHubPages = window.location.hostname.includes('github.io');
+            const baseTag = document.createElement('base');
+            baseTag.href = isGitHubPages ? '/My_personal_portfolio/' : '/';
+            document.head.appendChild(baseTag);
+        })();
+    </script>
+
     <!-- SEO Meta Tags -->
     <meta name="description" content="Page not found - The page you're looking for doesn't exist" />
     <meta name="robots" content="noindex, nofollow" />

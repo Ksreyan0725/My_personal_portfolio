@@ -7,10 +7,20 @@
     <link
       rel="icon"
       type="image/png"
-      href="../assets/icons/favicon.webp"
+      href="assets/icons/favicon.webp"
       sizes="64x64"
     />
-    
+
+    <!-- Base URL for GitHub Pages compatibility -->
+    <script>
+        (function() {
+            const isGitHubPages = window.location.hostname.includes('github.io');
+            const baseTag = document.createElement('base');
+            baseTag.href = isGitHubPages ? '/My_personal_portfolio/' : '/';
+            document.head.appendChild(baseTag);
+        })();
+    </script>
+
     <!-- SEO Meta Tags -->
     <meta name="description" content="Thank you for contacting Kumar Sreyan Pattanayak. Your message has been received." />
     <meta name="robots" content="noindex, follow" />
@@ -18,19 +28,19 @@
     
     <!-- Shared Styles and Scripts -->
     <!-- Core styles (must load first) -->
-    <link rel="stylesheet" href="../assets/css/core.css" />
+    <link rel="stylesheet" href="assets/css/core.css" />
     
     <!-- Feature modules -->
-    <link rel="stylesheet" href="../assets/css/navigation.css" />
-    <link rel="stylesheet" href="../assets/css/search.css" />
-    <link rel="stylesheet" href="../assets/css/sidebar.css" />
-    <link rel="stylesheet" href="../assets/css/settings.css" />
+    <link rel="stylesheet" href="assets/css/navigation.css" />
+    <link rel="stylesheet" href="assets/css/search.css" />
+    <link rel="stylesheet" href="assets/css/sidebar.css" />
+    <link rel="stylesheet" href="assets/css/settings.css" />
     
     <!-- Responsive overrides (must load after modules) -->
-    <link rel="stylesheet" href="../assets/css/responsive.css" />
+    <link rel="stylesheet" href="assets/css/responsive.css" />
     
     <!-- Modular JavaScript Loading -->
-    <script type="module" src="../assets/js/main.js?v=3.5"></script>
+    <script type="module" src="assets/js/main.js?v=3.5"></script>
     <!-- Old script.js removed - using modular architecture -->
 
 
@@ -432,7 +442,7 @@
                 data-tooltip="GitHub"
               >
                 <img
-                  src="../assets/icons/github.webp"
+                  src="assets/icons/github.webp"
                   alt="GitHub"
                   class="social-icon"
                 />
@@ -445,7 +455,7 @@
                 data-tooltip="LinkedIn"
               >
                 <img
-                  src="../assets/icons/linkedin.webp"
+                  src="assets/icons/linkedin.webp"
                   alt="LinkedIn"
                   class="social-icon"
                 />
@@ -458,7 +468,7 @@
                 data-tooltip="X"
               >
                 <img
-                  src="../assets/icons/x.webp"
+                  src="assets/icons/x.webp"
                   alt="X"
                   class="social-icon"
                 />

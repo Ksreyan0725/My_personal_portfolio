@@ -6,10 +6,20 @@
     <title>Under Maintenance</title>
     <!-- <link rel="icon" type="image/png" href="../assets/icons/favicon.webp" sizes="64x64" /> -->
     <!-- Favicon with multiple formats for better browser support -->
-    <link rel="icon" type="image/png" href="../assets/icons/maintenance.webp?v=3.5" sizes="32x32" />
-    <link rel="icon" type="image/png" href="../assets/icons/maintenance.webp?v=3.5" sizes="64x64" />
-    <link rel="shortcut icon" type="image/png" href="../assets/icons/maintenance.webp?v=3.5" />
-    
+    <link rel="icon" type="image/png" href="assets/icons/maintenance.webp?v=3.5" sizes="32x32" />
+    <link rel="icon" type="image/png" href="assets/icons/maintenance.webp?v=3.5" sizes="64x64" />
+    <link rel="shortcut icon" type="image/png" href="assets/icons/maintenance.webp?v=3.5" />
+
+    <!-- Base URL for GitHub Pages compatibility -->
+    <script>
+        (function() {
+            const isGitHubPages = window.location.hostname.includes('github.io');
+            const baseTag = document.createElement('base');
+            baseTag.href = isGitHubPages ? '/My_personal_portfolio/' : '/';
+            document.head.appendChild(baseTag);
+        })();
+    </script>
+
     <!-- SEO Meta Tags -->
     <meta name="description" content="Site under maintenance - We'll be back soon with improvements" />
     <meta name="robots" content="noindex, nofollow" />
@@ -17,19 +27,19 @@
     
     <!-- Shared Styles and Scripts -->
     <!-- Core styles (must load first) -->
-    <link rel="stylesheet" href="../assets/css/core.css" />
+    <link rel="stylesheet" href="assets/css/core.css" />
     
     <!-- Feature modules -->
-    <link rel="stylesheet" href="../assets/css/navigation.css" />
-    <link rel="stylesheet" href="../assets/css/search.css" />
-    <link rel="stylesheet" href="../assets/css/sidebar.css" />
-    <link rel="stylesheet" href="../assets/css/settings.css" />
+    <link rel="stylesheet" href="assets/css/navigation.css" />
+    <link rel="stylesheet" href="assets/css/search.css" />
+    <link rel="stylesheet" href="assets/css/sidebar.css" />
+    <link rel="stylesheet" href="assets/css/settings.css" />
     
     <!-- Responsive overrides (must load after modules) -->
-    <link rel="stylesheet" href="../assets/css/responsive.css" />
+    <link rel="stylesheet" href="assets/css/responsive.css" />
     
     <!-- Modular JavaScript Loading -->
-    <script type="module" src="../assets/js/main.js?v=3.5"></script>
+    <script type="module" src="assets/js/main.js?v=3.5"></script>
     <!-- Old script.js removed - using modular architecture -->
     
     <style>

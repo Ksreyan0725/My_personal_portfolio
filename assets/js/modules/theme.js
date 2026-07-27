@@ -29,7 +29,7 @@ function updateActiveThemeBtn(theme) {
     if (!btns) return;
 
     btns.forEach(btn => {
-        if (btn.dataset.theme === theme) {
+        if (btn.dataset.themeVal === theme) {
             btn.classList.add('active');
         } else {
             btn.classList.remove('active');
@@ -143,9 +143,9 @@ export function applyTheme(theme, animate = false) {
     const zohoLogo = document.getElementById('zohoLogo');
     if (zohoLogo) {
         if (effectiveTheme === 'light') {
-            zohoLogo.src = '/assets/icons/zoho-dark.webp';
+            zohoLogo.src = 'assets/icons/zoho-dark.webp';
         } else {
-            zohoLogo.src = '/assets/icons/zohomail.webp';
+            zohoLogo.src = 'assets/icons/zohomail.webp';
         }
     }
 
@@ -300,9 +300,9 @@ export function initTheme() {
     console.log('🔍 Theme buttons found:', themeBtns.length);
     if (themeBtns && themeBtns.length > 0) {
         themeBtns.forEach((btn, index) => {
-            console.log(`🔘 Attaching listener to button ${index + 1}:`, btn.dataset.theme);
+            console.log(`🔘 Attaching listener to button ${index + 1}:`, btn.dataset.themeVal);
             btn.addEventListener('click', function () {
-                const theme = this.getAttribute('data-theme');
+                const theme = this.getAttribute('data-theme-val');
                 console.log('🎯 Theme button clicked:', theme);
                 if (theme) {
                     applyTheme(theme, true);

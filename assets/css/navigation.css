@@ -119,6 +119,15 @@ body.sidebar-open nav {
   transform: translate(calc(-50% + var(--sidebar-width, 280px)), 0);
 }
 
+/* Enhanced glassmorphism for light mode */
+[data-theme="light"] nav {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0.75) 100%);
+  backdrop-filter: blur(30px) saturate(180%);
+  -webkit-backdrop-filter: blur(30px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15), inset 0 1px 1px rgba(255, 255, 255, 0.8), inset 0 -1px 1px rgba(255, 255, 255, 0.3);
+}
+
 nav.scrolled {
   box-shadow: 0 12px 40px var(--accent-glow);
 }

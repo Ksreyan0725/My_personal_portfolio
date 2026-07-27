@@ -40,6 +40,15 @@
     visibility: hidden; /* Hide from layout/scroll when not active */
 }
 
+/* Enhanced glassmorphism for light mode settings panel */
+[data-theme="light"] .settings-panel {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0.75) 100%);
+    backdrop-filter: blur(35px) saturate(200%);
+    -webkit-backdrop-filter: blur(35px) saturate(200%);
+    border-top: 1px solid rgba(255, 255, 255, 0.7);
+    box-shadow: 0 -8px 32px 0 rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.9), inset 0 -1px 1px rgba(255, 255, 255, 0.4);
+}
+
 [data-theme="dark"] .settings-panel {
     background: rgba(18, 18, 24, 0.75);
     border-top: 1px solid rgba(255, 255, 255, 0.08);
@@ -194,13 +203,13 @@ body.no-scroll {
 }
 
 /* Position mapping for the sliding indicator */
-.theme-slider-track:has(.theme-slider-btn[data-theme="system"].active) .theme-slider-indicator {
+.theme-slider-track:has(.theme-slider-btn[data-theme-val="system"].active) .theme-slider-indicator {
     transform: translateX(0);
 }
-.theme-slider-track:has(.theme-slider-btn[data-theme="light"].active) .theme-slider-indicator {
+.theme-slider-track:has(.theme-slider-btn[data-theme-val="light"].active) .theme-slider-indicator {
     transform: translateX(100%);
 }
-.theme-slider-track:has(.theme-slider-btn[data-theme="dark"].active) .theme-slider-indicator {
+.theme-slider-track:has(.theme-slider-btn[data-theme-val="dark"].active) .theme-slider-indicator {
     transform: translateX(200%);
 }
 
