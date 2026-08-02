@@ -301,7 +301,8 @@ export function initTheme() {
     if (themeBtns && themeBtns.length > 0) {
         themeBtns.forEach((btn, index) => {
             console.log(`🔘 Attaching listener to button ${index + 1}:`, btn.dataset.themeVal);
-            btn.addEventListener('click', function () {
+            btn.addEventListener('click', function (e) {
+                e.stopPropagation(); // Prevent event bubbling to avoid closing settings panel
                 const theme = this.getAttribute('data-theme-val');
                 console.log('🎯 Theme button clicked:', theme);
                 if (theme) {

@@ -32,9 +32,6 @@
     <!-- Prevent MIME type sniffing -->
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
 
-    <!-- Prevent clickjacking attacks -->
-    <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
-
     <!-- Control referrer information -->
     <meta name="referrer" content="strict-origin-when-cross-origin">
 
@@ -43,22 +40,13 @@
         (function() {
             const isGitHubPages = window.location.hostname.includes('github.io');
             const baseTag = document.createElement('base');
-            baseTag.href = isGitHubPages ? '/My_personal_portfolio/' : '/';
+            baseTag.href = isGitHubPages ? '/My_personal_portfolio/' : './';
             document.head.appendChild(baseTag);
         })();
     </script>
 
     <!-- Theme Color for Browser Address Bar -->
     <meta name="theme-color" content="#6366f1">
-
-    <!-- ==================== Preload Critical Resources ==================== -->
-    <!-- Critical CSS -->
-    <link rel="preload" href="assets/css/core.css" as="style">
-    <link rel="preload" href="assets/css/responsive.css" as="style">
-
-    <!-- Critical JavaScript - Modular Structure -->
-    <link rel="preload" href="assets/js/modules/preloader.js?v=3.5" as="script">
-    <link rel="preload" href="assets/js/main.js?v=3.5" as="script">
 
     <!-- DNS Prefetch for External Resources -->
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
@@ -70,6 +58,9 @@
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
     />
 
     <!-- ==================== Stylesheets ==================== -->   
@@ -79,47 +70,21 @@
     <!-- Core styles (must load first) -->
     <link rel="stylesheet" href="assets/css/core.css?v=3.5" />
 
-    <!-- Feature modules - Deferred for faster LCP -->
-    <link rel="preload" href="assets/css/navigation.css?v=3.5" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <link rel="preload" href="assets/css/search.css?v=3.5" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <link rel="preload" href="assets/css/sidebar.css?v=3.5" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <link rel="preload" href="assets/css/settings.css?v=3.5" as="style" onload="this.onload=null;this.rel='stylesheet'">
-
-    <!-- Responsive overrides - Deferred -->
-    <link rel="preload" href="assets/css/responsive.css?v=3.5" as="style" onload="this.onload=null;this.rel='stylesheet'">
-
-    <!-- Contact Page Specific Styles - Deferred -->
-    <link rel="preload" href="assets/css/contact.css?v=3.5" as="style" onload="this.onload=null;this.rel='stylesheet'">
-
-    <!-- Specialized files - Deferred -->
-    <link rel="preload" href="assets/css/install-button.css?v=3.5" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <!-- Feature modules -->
+    <link rel="stylesheet" href="assets/css/navigation.css?v=3.5">
+    <link rel="stylesheet" href="assets/css/search.css?v=3.5">
+    <link rel="stylesheet" href="assets/css/sidebar.css?v=3.5">
+    <link rel="stylesheet" href="assets/css/settings.css?v=3.5">
+    <link rel="stylesheet" href="assets/css/responsive.css?v=3.5">
+    <link rel="stylesheet" href="assets/css/contact.css?v=3.5">
+    <link rel="stylesheet" href="assets/css/install-button.css?v=3.5">
     <link rel="stylesheet" href="assets/css/print.css?v=3.5" media="print">
-
-    <!-- EMERGENCY FIX - Deferred -->
-    <link rel="preload" href="assets/css/settings-fix.css?v=3.5" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="stylesheet" href="assets/css/settings-fix.css?v=3.5">
     
-    <!-- Fallback for no-JS -->
-    <noscript>
-      <link rel="stylesheet" href="assets/css/navigation.css?v=3.5">
-      <link rel="stylesheet" href="assets/css/search.css?v=3.5">
-      <link rel="stylesheet" href="assets/css/sidebar.css?v=3.5">
-      <link rel="stylesheet" href="assets/css/settings.css?v=3.5">
-      <link rel="stylesheet" href="assets/css/responsive.css?v=3.5">
-      <link rel="stylesheet" href="assets/css/contact.css?v=3.5">
-      <link rel="stylesheet" href="assets/css/install-button.css?v=3.5">
-      <link rel="stylesheet" href="assets/css/settings-fix.css?v=3.5">
-    </noscript>
-
-    <!-- Modular JavaScript Loading -->
-    <!-- 1. Preloader (non-module, runs immediately) -->
-    <script src="assets/js/modules/preloader.js?v=3.5"></script>
-
-    <!-- 2. Main app (ES6 module, loads critical features) -->
+    <!-- 2. Main app module (loads search, settings, and navigation) -->
     <script type="module" src="assets/js/main.js?v=3.5"></script>
 
-    <!-- Old script.js removed - using modular architecture -->
-
-    <!-- 4. Contact page specific script -->
+    <!-- 3. Contact page script -->
     <script src="assets/js/contact.js" defer></script>
     
     <!-- Critical inline CSS to prevent layout shift -->
@@ -131,33 +96,17 @@
         width: 100%;
         min-height: 100vh;
         overflow-y: auto !important;
+        scrollbar-width: none !important;
+        -ms-overflow-style: none !important;
       }
       
-      /* Make layout more compact */
-      .container {
-        padding: 20px 24px !important;
-      }
-      .header {
-        margin-bottom: 20px !important;
-      }
-      .content {
-        gap: 24px !important;
-      }
-      .contact-info {
-        padding: 20px !important;
-      }
-      .contact-form {
-        padding: 24px !important;
-      }
-      .info-item {
-        margin-bottom: 16px !important;
-        padding: 10px !important;
-      }
-      .form-group {
-        margin-bottom: 16px !important;
-      }
-      .form-group textarea {
-        height: 100px !important;
+      /* Hide visual scrollbar cross-browser while preserving scrolling */
+      html::-webkit-scrollbar,
+      body::-webkit-scrollbar,
+      *::-webkit-scrollbar {
+        display: none !important;
+        width: 0 !important;
+        height: 0 !important;
       }
       
       /* Ensure preloader is always on top and stable */
@@ -244,31 +193,236 @@
         </div>
         <div class="loading-percentage">0%</div>
     </div>
+    <!-- ==================== Navigation Bar ==================== -->
+    <nav id="navbar" aria-label="Main navigation">
+        <div class="nav-container">
+            <!-- Logo/Brand -->
+            <div class="nav-logo" aria-label="Reload page">
+                <!-- LOGO name -->
+              <strong><i>KSP</i></strong>
+            </div>
+
+            <!-- Desktop Navigation Links -->
+            <ul class="nav-links desktop-nav">
+                <li><a href="index.html#home">Home</a></li>
+                <li><a href="index.html#education">Education</a></li>
+                <li><a href="index.html#projects">Projects</a></li>
+                <li><a href="index.html#certifications">Certifications</a></li>
+                <li><a href="index.html#skills">Skills</a></li>
+                <li><a href="contact.html" class="active">Contact</a></li>
+            </ul>
+
+            <!-- Search Bar - Desktop -->
+            <div class="search-container desktop-search">
+                <button class="search-icon-button" aria-label="Open search">
+                    <img src="assets/icons/search.webp" alt="Search" />
+                </button>
+                <input type="search" class="search-input" placeholder="Search..." aria-label="Search">
+                <button class="search-clear" aria-label="Clear search" hidden>&times;</button>
+                <button class="search-button" aria-label="Search">
+                    <img src="assets/icons/search.webp" alt="Search" class="search-icon-img" />
+                </button>
+                <button class="tablet-search-button" id="tabletSearchBtn" aria-label="Open search">
+                    <span>Search</span>
+                    <img src="assets/icons/search.webp" alt="Search" class="search-icon-img">
+                </button>
+                <div class="desktop-search-results" id="desktopSearchResults"></div>
+            </div>
+            <button class="theme-toggle" id="themeToggle">
+                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ4d0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxyZWN0IHdpZHRoPSIyMCIgaGVpZ4d0PSIxNCIgeD0iMiIgeT0iMyIgcng9IjIiLz48bGluZSB4MT0iOCIgeDI9IjE2IiB5MT0iMjEiIHkyPSIyMSIvPjxsaW5lIHgxPSIxMiIgeDI9IjEyIiB5MT0iMTciIHkyPSIyMSIvPjwvc3ZnPg==" alt="Theme" class="theme-icon">
+                <span class="theme-text">System</span>
+            </button>
+
+            <!-- Desktop Settings Button -->
+            <button class="settings-toggle desktop-settings-btn" id="desktopSettingsBtn" aria-label="Open settings" data-tooltip="Settings">
+                <img src="assets/icons/setting-button.png" alt="Settings" class="settings-icon">
+            </button>
+
+            <!-- Mobile Search Icon -->
+            <button class="mobile-search-icon" id="mobileSearchIcon" aria-label="Search">
+                <img src="assets/icons/search.webp" alt="Search" class="mobile-search-icon-img" />
+            </button>
+
+            <!-- Mobile Menu Icon (Hamburger) -->
+            <button class="menu-icon" id="menuIcon" aria-label="Toggle menu" aria-expanded="false" data-tooltip="Menu">
+                <img src="assets/icons/side-menu.webp" alt="Menu" class="menu-icon-img" />
+            </button>
+        </div>
+    </nav>
+
+    <!-- ==================== Search Popup Modal ==================== -->
+    <div class="search-modal" id="searchModal" aria-label="Search modal">
+        <div class="search-modal-content">
+            <div class="search-modal-header">
+                <button class="search-modal-close" id="searchModalClose" aria-label="Close search">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            <div class="search-modal-body">
+                <div class="search-modal-input-wrapper">
+                    <input type="search" class="search-modal-input" id="searchModalInput" placeholder="Search projects, skills, certifications..." aria-label="Search">
+                    <button class="search-modal-button" id="searchModalButton" aria-label="Search">
+                        <img src="assets/icons/search.webp" alt="Search" class="search-modal-icon-img" />
+                    </button>
+                </div>
+                <div class="search-results" id="searchResults"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="search-modal-overlay" id="searchModalOverlay"></div>
+
+    <!-- ==================== Mobile Sidebar Menu ==================== -->
+    <div class="sidebar-menu" id="sidebarMenu" aria-label="Mobile navigation">
+        <div class="sidebar-header">
+            <div class="sidebar-logo"><strong><i>KSP</i></strong></div>
+            <button class="sidebar-close" id="sidebarClose" aria-label="Close menu">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+        <ul class="sidebar-links">
+            <li><a href="index.html#home"><img src="assets/icons/home.webp" alt="Home" class="sidebar-icon"> Home</a></li>
+            <li><a href="index.html#education"><img src="assets/icons/education.webp" alt="Education" class="sidebar-icon"> Education</a></li>
+            <li><a href="index.html#projects"><img src="assets/icons/project.webp" alt="Projects" class="sidebar-icon"> Projects</a></li>
+            <li><a href="index.html#certifications"><img src="assets/icons/certification.webp" alt="Certifications" class="sidebar-icon"> Certifications</a></li>
+            <li><a href="index.html#skills"><img src="assets/icons/skills.webp" alt="Skills" class="sidebar-icon"> Skills</a></li>
+            <li><a href="contact.html" class="active"><img src="assets/icons/contact.webp" alt="Contact" class="sidebar-icon"> Contact</a></li>
+        </ul>
+
+        <!-- Settings Button (Mobile Only) -->
+        <div class="settings-btn-container">
+            <!-- Night Light Button (Mobile Only) -->
+            <button class="mobile-night-light-btn" id="mobileNightLightBtn">
+                <span>Night Light</span>
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="night-light-icon" id="nightLightIcon">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>
+            </button>
+
+            <button class="settings-btn" id="openSettingsBtn">
+                <span>Settings</span>
+                <img src="assets/icons/setting-button.png" alt="Settings" class="settings-icon">
+            </button>
+        </div>
+    </div>
+
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- ==================== Settings Panel ==================== -->
+    <!-- Settings Overlay -->
+    <div class="settings-overlay" id="settingsOverlay"></div>
+
+    <!-- Settings Panel -->
+    <div class="settings-panel" id="settingsPanel">
+        <div class="settings-header">
+            <h2 class="settings-title">Settings</h2>
+            <button class="settings-close-btn" id="settingsCloseBtn" aria-label="Close settings">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+
+        <div class="settings-content">
+            <!-- Theme Selection -->
+            <div class="setting-group">
+                <div class="setting-label">Theme</div>
+                <div class="setting-description">Choose your preferred color scheme</div>
+                <div class="theme-slider-container">
+                    <div class="theme-slider-track">
+                        <div class="theme-slider-indicator"></div>
+                        <button class="theme-btn theme-slider-btn active" data-theme-val="system" aria-label="System Theme">
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                            <span>System</span>
+                        </button>
+                        <button class="theme-btn theme-slider-btn" data-theme-val="light" aria-label="Light Theme">
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                            <span>Light</span>
+                        </button>
+                        <button class="theme-btn theme-slider-btn" data-theme-val="dark" aria-label="Dark Theme">
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                            <span>Dark</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Night Light Toggle -->
+            <div class="setting-group">
+                <div class="toggle-container">
+                    <div class="toggle-info">
+                        <div class="toggle-title">Night Light</div>
+                        <div class="toggle-desc">Reduce blue light for better sleep</div>
+                    </div>
+                    <div class="toggle-switch" id="nightLightToggle">
+                        <div class="toggle-slider"></div>
+                    </div>
+                </div>
+
+                <!-- Night Light Intensity Slider -->
+                <div class="night-light-intensity-container" id="nightLightIntensityContainer">
+                    <div class="intensity-slider-wrapper style-progress" id="sliderWrapper">
+                        <div class="slider-left-icon" id="sliderLeftIcon">
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="5"></circle>
+                                <line x1="12" y1="1" x2="12" y2="3"></line>
+                                <line x1="12" y1="21" x2="12" y2="23"></line>
+                                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                                <line x1="1" y1="12" x2="3" y2="12"></line>
+                                <line x1="21" y1="12" x2="23" y2="12"></line>
+                                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                            </svg>
+                        </div>
+                        <input type="range" min="0" max="100" value="50" step="5" class="intensity-slider" id="nightLightIntensitySlider" aria-label="Night Light Intensity">
+                        <span id="sliderValuePercent" class="intensity-value-percent slider-right-percent">50%</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Notifications -->
+            <div class="setting-group">
+                <div class="toggle-container">
+                    <div class="toggle-info">
+                        <div class="toggle-title">Push Notifications</div>
+                        <div class="toggle-desc">Manage notification preferences</div>
+                    </div>
+                    <div class="toggle-switch" id="pushToggle">
+                        <div class="toggle-slider"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Version Info -->
+            <div class="version-info" id="versionInfo" style="cursor: pointer; user-select: none;" title="Click 5 times to check for updates">
+                Version 3.5 • Made with ❤️
+            </div>
+        </div>
+    </div>
+
+    <!-- Night Light Overlay -->
+    <div id="night-light-overlay"></div>
+
+    <!-- ==================== Scrolling Notice Banner ==================== -->
+    <div class="notice-banner" aria-label="Notice banner">
+        <div class="ticker-wrapper">
+            <div class="ticker-content">
+                <span class="ticker-text">Disclaimer: This website is built purely on vibe coding (meaning all code is generated and refined by prompting AI tools like Replit, trae, Cursor, and others, rather than traditional hand-written programming).</span>
+            </div>
+        </div>
+    </div>
+
     <div class="page-frame">
     <div class="container">
-      <header class="header">
-        <h1>Contact Us</h1>
-        <div class="nav-container">
-          <div class="search-container">
-            <input
-              type="search"
-              class="search-input"
-              placeholder="Search..."
-              aria-label="Search"
-            />
-            <button class="search-clear" aria-label="Clear search" hidden>?</button>
-            <button class="search-button" aria-label="Search">
-              <img src="assets/icons/search.webp" alt="Search" class="search-icon-img" />
-            </button>
-            <!-- Desktop Search Dropdown Results -->
-            <div class="desktop-search-results" id="desktopSearchResults"></div>
-          </div>
-          <button class="theme-toggle" id="themeToggle">
-            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxyZWN0IHdpZHRoPSIyMCIgaGVpZ2h0PSIxNCIgeD0iMiIgeT0iMyIgcng9IjIiLz48bGluZSB4MT0iOCIgeDI9IjE2IiB5MT0iMjEiIHkyPSIyMSIvPjxsaW5lIHgxPSIxMiIgeDI9IjEyIiB5MT0iMTciIHkyPSIyMSIvPjwvc3ZnPg==" alt="Theme" class="theme-icon">
-            <span class="theme-text">System</span>
-        </button>
-        </div>
-      </header>
       <div class="content">
         <div class="contact-info">
           <h2>Contact Information</h2>
@@ -276,7 +430,7 @@
           <div class="info-item">
             <i class="fas fa-envelope"></i>
             <div>
-              <label>Email</label>
+              <span class="info-label">Email</span>
               <a href="mailto:sreyanpattanayak@zohomail.com" class="contact-link" aria-label="Email sreyanpattanayak@zohomail.com">sreyanpattanayak@zohomail.com</a>
             </div>
           </div>
@@ -284,7 +438,7 @@
           <div class="info-item">
             <i class="fas fa-phone"></i>
             <div>
-              <label>Phone</label>
+              <span class="info-label">Phone</span>
               <a href="tel:+918117858010" class="contact-link" aria-label="Call +91 8117858010">+91 8117858010</a>
             </div>
           </div>
@@ -292,7 +446,7 @@
           <div class="info-item">
             <i class="fas fa-map-marker-alt"></i>
             <div>
-              <label>Address</label>
+              <span class="info-label">Address</span>
               <span
                 >In Front Of Khuthari Temple, Brahmin Street, patrapur, 761004,
                 ganjam, odisha, india.</span
@@ -409,18 +563,6 @@
                   class="social-icon"
                 />
               </a>
-              <!-- <a
-                href="https://teams.microsoft.com/l/chat/0/0?users=opener"
-                title="Microsoft Teams"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <img
-                  src="assets/icons/teams.webp"
-                  alt="Microsoft Teams"
-                  class="social-icon"
-                />
-              </a> -->
             </div>
           </div>
         </div>
@@ -441,6 +583,7 @@
                 type="text"
                 id="name"
                 name="name"
+                autocomplete="name"
                 required
                 aria-required="true"
                 aria-describedby="name-error"
@@ -455,6 +598,7 @@
                 type="email"
                 id="email"
                 name="email"
+                autocomplete="email"
                 required
                 aria-required="true"
                 aria-describedby="email-error"
@@ -471,6 +615,7 @@
                 type="tel"
                 id="phone"
                 name="phone"
+                autocomplete="tel"
                 aria-required="false"
                 aria-describedby="phone-error"
                 aria-invalid="false"
@@ -480,14 +625,15 @@
             </div>
 
             <!-- Honeypot for Spam Protection -->
-            <input type="text" name="_gotcha" style="display:none" />
+            <label for="gotcha" class="sr-only" style="display:none">Leave this field blank</label>
+            <input type="text" id="gotcha" name="_gotcha" style="display:none" tabindex="-1" aria-hidden="true" autocomplete="off" />
 
             <div class="form-group">
               <label for="message">Message *</label>
               <textarea
                 id="message"
                 name="message"
-                rows="2"
+                rows="4"
                 required
                 aria-required="true"
                 aria-describedby="message-error"
@@ -497,13 +643,16 @@
               <span id="message-error" class="error-message" role="alert" aria-live="polite"></span>
             </div>
             <input type="hidden" name="_subject" value="New contact form submission from portfolio" />
-            <button type="submit" class="submit-button" aria-label="Submit form">Submit</button>
+            <button type="submit" class="submit-button" aria-label="Send message">
+              <span>Send Message</span>
+              <i class="fas fa-paper-plane"></i>
+            </button>
           </form>
         </div>
       </div>
     </div>
-    <div id="successTick" class="success-tick" aria-hidden="true"><span class="tick">?</span></div>
-    <div id="contactToast" class="toast" role="alert" aria-live="polite"></div>
+    <div id="successTick" class="success-tick" style="display: none;" aria-hidden="true"><span class="tick">&#10003;</span></div>
+    <div id="contactToast" class="toast" style="display: none;" role="alert" aria-live="polite"></div>
 
     <footer>
       <p>

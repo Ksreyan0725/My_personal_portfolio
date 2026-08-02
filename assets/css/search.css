@@ -238,7 +238,6 @@
   border-radius: 10px;
   max-height: min(480px, 70vh);
   overflow: hidden;
-  display: flex;
   flex-direction: column;
   z-index: 1100;
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
@@ -605,26 +604,33 @@
 }
 
 .search-modal-close {
-  background: var(--card-bg);
-  border: 2px solid var(--border);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--border);
   color: var(--text-primary);
   cursor: pointer;
-  padding: 8px;
+  padding: 0;
   border-radius: 50%;
   line-height: 1;
-  transition: all 0.3s ease;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   width: 40px;
   height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
+  outline: none;
 }
 
 .search-modal-close:hover {
-  color: var(--accent);
-  background: rgba(99, 102, 241, 0.1);
-  border-color: var(--accent);
+  background: #d93025 !important;
+  color: #ffffff !important;
+  border-color: #d93025 !important;
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(217, 48, 37, 0.35);
+}
+
+.search-modal-close:active {
+  transform: scale(0.95);
 }
 
 .search-modal-body {
@@ -688,6 +694,8 @@
   max-height: 400px;
   overflow-y: auto;
   overflow-x: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
   /* Glassmorphism effect */
   background: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(10px);
@@ -780,10 +788,5 @@
 
 .search-results::-webkit-scrollbar-track {
   background: transparent;
-}
-
-.search-results {
-  scrollbar-width: none;
-  -ms-overflow-style: none;
 }
 

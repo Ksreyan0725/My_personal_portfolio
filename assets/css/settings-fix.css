@@ -28,34 +28,48 @@
     }
 }
 
-/* Ensure settings panel appears on desktop (900px+) */
-@media (min-width: 900px) {
-    .settings-panel.active,
-    #settingsPanel.active {
-        right: 20px !important;
-        visibility: visible !important;
-        opacity: 1 !important;
-        z-index: 2001 !important;
-        display: flex !important;
-        pointer-events: auto !important;
-    }
+/* Settings panel: bottom right end side animation */
+.settings-panel,
+#settingsPanel {
+    position: fixed !important;
+    bottom: 20px !important;
+    right: 20px !important;
+    left: auto !important;
+    top: auto !important;
+    transform: translateY(calc(100% + 40px)) !important;
+    width: 390px !important;
+    max-width: calc(100vw - 40px) !important;
+    height: 72vh !important;
+    max-height: 580px !important;
+    border-radius: 20px !important;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4) !important;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease, visibility 0.4s step-end !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    z-index: 9999 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+}
 
-    .settings-panel {
-        position: fixed !important;
-        top: 70px !important;
-        right: -400px !important;
-        bottom: auto !important;
-        left: auto !important;
-        width: 380px !important;
-        max-width: 90vw !important;
-        height: auto !important;
-        max-height: calc(100vh - 90px) !important;
-        border-radius: 16px !important;
-        transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.3s !important;
-        z-index: 2001 !important;
-        display: flex !important;
-        flex-direction: column !important;
-        overflow: hidden !important; /* Ensure content doesn't spill out */
+.settings-panel.active,
+#settingsPanel.active {
+    transform: translateY(0) !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease, visibility 0s step-start !important;
+}
+
+@media (max-width: 480px) {
+    .settings-panel,
+    #settingsPanel {
+        right: 10px !important;
+        left: 10px !important;
+        bottom: 10px !important;
+        width: auto !important;
+        max-width: none !important;
     }
 }
 

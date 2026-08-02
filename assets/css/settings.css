@@ -81,28 +81,33 @@
 }
 
 .settings-close-btn {
-    background: var(--card-bg);
-    border: 2px solid var(--border); /* Increased from 1px */
-    font-size: 1.3rem; /* Increased for bigger emoji */
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--border);
     color: var(--text-primary);
     cursor: pointer;
-    padding: 8px; /* Increased padding */
+    padding: 0;
     border-radius: 50%;
     line-height: 1;
-    transition: all 0.3s ease;
-    width: 48px; /* Increased from 38px */
-    height: 48px; /* Increased from 38px */
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    width: 40px;
+    height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-sizing: border-box; /* Ensure padding doesn't increase total size */
+    box-sizing: border-box;
+    outline: none;
 }
 
 .settings-close-btn:hover {
-    opacity: 1;
-    color: var(--accent);
-    background: rgba(99, 102, 241, 0.1);
-    border-color: var(--accent);
+    background: #d93025 !important;
+    color: #ffffff !important;
+    border-color: #d93025 !important;
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(217, 48, 37, 0.35);
+}
+
+.settings-close-btn:active {
+    transform: scale(0.95);
 }
 
 /* Disable scrolling when settings panel is open */
@@ -574,13 +579,12 @@ body.no-scroll {
 }
 
 .mobile-night-light-btn.active {
-    background: rgba(255, 160, 0, 0.15) !important;
-    border-color: var(--border) !important;
-    color: #ffa000 !important;
-    box-shadow: 0 0 15px rgba(255, 160, 0, 0.25); /* Soft yellow glow */
+    background-color: #92400e !important;
+    border-color: #f59e0b !important;
+    color: #ffffff !important;
+    box-shadow: 0 0 15px rgba(245, 158, 11, 0.35); /* Soft amber glow */
 }
 
-/* Active Icon - Soft Yellow/Orange Glow */
 /* Active Icon - Soft Yellow/Orange Glow */
 .mobile-night-light-btn.active .night-light-icon {
     /* White -> Orange/Yellow + Glow */
@@ -810,14 +814,14 @@ body.no-scroll {
 
     .settings-panel {
         position: fixed !important;
-        top: calc(var(--nav-height) + var(--banner-height) + 10px) !important; /* Below navbar + notice banner */
+        top: 115px !important; /* Below navbar + notice banner with clear spacing */
         right: -400px !important;
         bottom: auto !important;
         left: auto !important;
         width: 380px !important;
         max-width: 90vw !important;
         height: auto !important;
-        max-height: calc(100vh - var(--nav-height) - var(--banner-height) - 20px) !important;
+        max-height: calc(100vh - var(--nav-height) - var(--banner-height) - 50px) !important;
         border-radius: 16px !important;
         border: 1px solid rgba(255, 255, 255, 0.45) !important; /* Light mode glass border all around */
         transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.3s !important;

@@ -126,6 +126,14 @@ class MobileSidebarSwipe {
     handleTouchMove(e) {
         if (!this.isSwiping || !this.isMobile()) return;
 
+        // Disable sidebar swipe if settings panel is open
+        const settingsPanel = document.getElementById('settingsPanel');
+        if (settingsPanel && settingsPanel.classList.contains('active')) {
+            this.isSwiping = false;
+            this.resetSwipe();
+            return;
+        }
+
         const touch = e.touches[0];
         this.currentX = touch.clientX;
         this.currentY = touch.clientY;
@@ -166,6 +174,14 @@ class MobileSidebarSwipe {
 
     handleTouchEnd(e) {
         if (!this.isSwiping || !this.isMobile()) return;
+
+        // Disable sidebar swipe if settings panel is open
+        const settingsPanel = document.getElementById('settingsPanel');
+        if (settingsPanel && settingsPanel.classList.contains('active')) {
+            this.isSwiping = false;
+            this.resetSwipe();
+            return;
+        }
 
         if (this.sidebar) this.sidebar.style.transition = '';
         if (this.pageWrapper) this.pageWrapper.style.transition = '';
@@ -230,12 +246,22 @@ class MobileSidebarSwipe {
 
         const updateTransform = (element) => {
             if (!element) return;
+            // Preserve navbar centering (-50%) while applying swipe transform
+            const isNavbar = element === this.navbar;
             if (!this.isOpen) {
                 const translateX = progress * this.sidebarWidth;
-                element.style.transform = `translateX(${translateX}px)`;
+                if (isNavbar) {
+                    element.style.transform = `translate(calc(-50% + ${translateX}px), 0)`;
+                } else {
+                    element.style.transform = `translateX(${translateX}px)`;
+                }
             } else {
                 const translateX = this.sidebarWidth + deltaX;
-                element.style.transform = `translateX(${translateX}px)`;
+                if (isNavbar) {
+                    element.style.transform = `translate(calc(-50% + ${translateX}px), 0)`;
+                } else {
+                    element.style.transform = `translateX(${translateX}px)`;
+                }
             }
         };
 

@@ -30,89 +30,85 @@
  * Hide preloader with accurate resource loading tracking
  */
 (function() {
-    const preloader = document.getElementById('webPreloader');
-    if (!preloader) return;
-
-    const percentageEl = preloader.querySelector('.loading-percentage');
-    
-    // Gather all critical external resources to track actual load status
-    const resources = [];
-    
-    // Stylesheets
-    const stylesheets = Array.from(document.querySelectorAll('link[rel="stylesheet"]'));
-    resources.push(...stylesheets);
-    
-    // Scripts
-    const scripts = Array.from(document.querySelectorAll('script[src]'));
-    resources.push(...scripts);
-    
-    // Images
-    const images = Array.from(document.querySelectorAll('img'));
-    resources.push(...images);
-
-    const totalResources = resources.length;
-    let loadedCount = 0;
-    let targetProgress = 0;
-    let currentProgress = 0;
-
-    // Smooth animator interval that updates display progress to match actual resource progress
-    const animInterval = setInterval(() => {
-        if (currentProgress < targetProgress) {
-            currentProgress++;
-            if (percentageEl) {
-                percentageEl.textContent = `${currentProgress}%`;
+    function startPreloader() {
+        const preloader = document.getElementById('webPreloader') || document.getElementById('preloader');
+        if (!preloader) {
+            if (!document.body) {
+                window.addEventListener('DOMContentLoaded', startPreloader, { once: true });
+                return;
             }
-        }
-        
-        if (currentProgress >= 100) {
-            clearInterval(animInterval);
-            
-            // Transition screen out
             document.body.classList.add('loaded');
-            
-            const sections = document.querySelectorAll('.section');
-            sections.forEach(section => {
-                section.style.opacity = '1';
-                section.style.transform = 'translateY(0)';
-            });
-
-            setTimeout(() => {
-                preloader.style.opacity = '0';
-                preloader.style.visibility = 'hidden';
-                setTimeout(() => {
-                    preloader.style.display = 'none';
-                }, 400);
-            }, 100);
+            return;
         }
-    }, 8);
 
-    function updateProgress() {
-        loadedCount++;
-        targetProgress = totalResources > 0 ? Math.round((loadedCount / totalResources) * 100) : 100;
-        if (targetProgress > 100) targetProgress = 100;
-    }
+        const percentageEl = preloader.querySelector('.loading-percentage');
+        const resources = Array.from(document.querySelectorAll('link[rel="stylesheet"], script[src], img'));
+        const totalResources = resources.length;
+        let loadedCount = 0;
+        let targetProgress = 0;
+        let currentProgress = 0;
 
-    if (totalResources === 0) {
-        targetProgress = 100;
-    } else {
-        resources.forEach(res => {
-            // Check if already completed (cached)
-            if (res.tagName === 'IMG' && res.complete) {
-                updateProgress();
-            } else {
-                res.addEventListener('load', updateProgress);
-                res.addEventListener('error', updateProgress); // prevent hangs on missing files
+        const animInterval = setInterval(() => {
+            if (currentProgress < targetProgress) {
+                currentProgress = Math.min(targetProgress, currentProgress + 25);
+                if (percentageEl) {
+                    percentageEl.textContent = `${currentProgress}%`;
+                }
             }
-        });
+            
+            if (currentProgress >= 100) {
+                clearInterval(animInterval);
+                if (document.body) document.body.classList.add('loaded');
+                
+                const sections = document.querySelectorAll('.section');
+                sections.forEach(section => {
+                    section.style.opacity = '1';
+                    section.style.transform = 'translateY(0)';
+                });
+
+                setTimeout(() => {
+                    preloader.style.opacity = '0';
+                    preloader.style.visibility = 'hidden';
+                    setTimeout(() => {
+                        preloader.style.display = 'none';
+                    }, 150);
+                }, 30);
+            }
+        }, 12);
+
+        function updateProgress() {
+            loadedCount++;
+            targetProgress = totalResources > 0 ? Math.round((loadedCount / totalResources) * 100) : 100;
+            if (targetProgress > 100) targetProgress = 100;
+        }
+
+        if (totalResources === 0) {
+            targetProgress = 100;
+        } else {
+            resources.forEach(res => {
+                const isCached = (res.tagName === 'IMG' && res.complete) ||
+                                 (res.tagName === 'LINK' && res.sheet) ||
+                                 (res.tagName === 'SCRIPT' && (res.readyState === 'complete' || res.readyState === 'loaded'));
+                if (isCached) {
+                    updateProgress();
+                } else {
+                    res.addEventListener('load', updateProgress, { once: true });
+                    res.addEventListener('error', updateProgress, { once: true });
+                }
+            });
+        }
+
+        window.addEventListener('load', () => { targetProgress = 100; }, { once: true });
+        setTimeout(() => { targetProgress = 100; }, 150);
     }
 
-    // Force completion when window finishes loading all assets
-    window.addEventListener('load', () => {
-        targetProgress = 100;
-    });
-
-    // Safety fallback timeout
-    setTimeout(() => {
-        targetProgress = 100;
-    }, 2500);
+    if (document.readyState === 'complete' || document.readyState === 'interactive') {
+        if (document.body) {
+            startPreloader();
+        } else {
+            window.addEventListener('DOMContentLoaded', startPreloader, { once: true });
+        }
+    } else {
+        window.addEventListener('DOMContentLoaded', startPreloader, { once: true });
+    }
 })();

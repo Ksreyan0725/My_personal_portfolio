@@ -115,25 +115,32 @@
 }
 
 .time-picker-close {
-    background: var(--card-bg);
+    background: rgba(255, 255, 255, 0.1);
     border: 1px solid var(--border);
-    font-size: 1.3rem;
     color: var(--text-primary);
     cursor: pointer;
     padding: 0;
     border-radius: 50%;
-    width: 32px;
-    height: 32px;
+    width: 40px;
+    height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.2s ease;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    outline: none;
+    box-sizing: border-box;
 }
 
 .time-picker-close:hover {
-    color: var(--accent);
-    background: rgba(99, 102, 241, 0.1);
-    border-color: var(--accent);
+    background: #d93025 !important;
+    color: #ffffff !important;
+    border-color: #d93025 !important;
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(217, 48, 37, 0.35);
+}
+
+.time-picker-close:active {
+    transform: scale(0.95);
 }
 
 .time-picker-body {
@@ -226,24 +233,6 @@
     margin-top: 20px;
 }
 
-/* Selection highlight overlay */
-/* Selection highlight overlay - REMOVED since wheel is single item height */
-/* .time-wheels::before {
-    content: '';
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: calc(100% - 20px);
-    height: 45px;
-    background: var(--accent-glow);
-    border: 2px solid var(--accent);
-    border-radius: 8px;
-    pointer-events: none;
-    z-index: 1;
-    margin-top: 20px;
-} */
-
 .wheel-container .wheel {
     position: relative;
     z-index: 2;
@@ -280,31 +269,9 @@
 }
 
 .time-picker-save {
-    background: linear-gradient(135deg, var(--accent), #8b5cf6);
-    color: white;
+    background: #4f46e5;
+    color: #ffffff;
 }
-
-.time-picker-save:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px var(--accent-glow);
-}
-
-.time-picker-save:active {
-    transform: translateY(0);
-}
-
-/* Overlay for time picker - REMOVED */
-/* .time-picker-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 2999;
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-} */
 
 /* Circular Toggle Button */
 .circular-toggle-btn {

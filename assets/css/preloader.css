@@ -243,11 +243,11 @@ body.loaded #webPreloader {
     left: auto;
     transform: none;
     bottom: auto;
-    margin: 0;
-    font-size: 0.8rem;
+    margin: 14px 0 0 0;
+    font-size: 1.2rem; /* Scaled up from 0.8rem for optimal UI/UX visual hierarchy */
     color: transparent; /* Text is now gradient */
-    letter-spacing: 6px; /* Reduced to fit better within circle */
-    margin-right: -6px; /* Compensate for last character spacing */
+    letter-spacing: 7px;
+    margin-right: -7px; /* Compensate for last character spacing */
     font-weight: 700;
     animation: textFade 2s ease-in-out infinite;
     display: flex;
@@ -340,15 +340,18 @@ body.loaded #webPreloader {
     color: #ffd700;
 }
 
-/* Mobile responsive */
 @media (max-width: 480px) {
+    .loader-logo {
+        font-size: 3rem;
+    }
     .loading-text {
-        bottom: 20px;
-        font-size: 0.8rem;
+        font-size: 1rem;
+        letter-spacing: 5px;
+        margin-right: -5px;
     }
     .loading-percentage {
-        bottom: 50px;
-        font-size: 1.2rem;
+        bottom: 35px;
+        font-size: 1.3rem;
     }
 }
 

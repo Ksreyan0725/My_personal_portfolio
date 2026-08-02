@@ -909,140 +909,6 @@
     font-size: 1.1rem;
     margin-bottom: 12px;
   }
-
-  /* Cards - more compact */
-  .card {
-    padding: 20px;
-    margin: 16px 0;
-    border-radius: 20px;
-  }
-
-  .card h3 {
-    font-size: 1.2rem;
-    margin-bottom: 8px;
-  }
-
-  .card p {
-    font-size: 0.9rem;
-    line-height: 1.5;
-  }
-
-  .card .date {
-    font-size: 0.8rem;
-    margin-bottom: 10px;
-  }
-
-  /* Buttons - smaller */
-  .cta-button,
-  .course-button,
-  .resume-btn {
-    padding: 10px 20px;
-    font-size: 0.9rem;
-    min-width: 150px;
-    gap: 6px;
-  }
-
-  .pdf-icon {
-    width: 16px;
-    height: 16px;
-  }
-
-  /* Skills section */
-  .skills-container {
-    gap: var(--space-md);
-  }
-
-  .skill-item {
-    margin-bottom: 16px;
-  }
-
-  .skill-name {
-    font-size: 0.9rem;
-  }
-
-  .skill-rating {
-    font-size: 0.85rem;
-  }
-
-  .skill-bar-container {
-    height: 20px;
-  }
-
-  /* Footer */
-  footer {
-    padding: 20px 14px;
-    font-size: 0.85rem;
-  }
-
-  /* Search modal - adjust for small screens */
-  .search-modal {
-    width: 95%;
-    max-width: 380px;
-    border-radius: 16px;
-  }
-
-  .search-modal.active {
-    top: 85px; /* Below navbar (44px) + banner (28px) + spacing (13px) */
-  }
-
-  .search-modal-input {
-    padding: 10px 45px 10px 12px;
-    font-size: 0.9rem;
-  }
-
-  .search-modal-button {
-    right: 5px;
-    padding: 10px;
-    width: 38px;
-    height: 38px;
-  }
-
-  .search-modal-icon-img {
-    width: 16px;
-    height: 16px;
-  }
-
-  /* Sidebar menu - narrower */
-  .sidebar-menu {
-    width: 260px;
-    left: -260px;
-  }
-
-  .sidebar-header {
-    padding: 16px;
-  }
-
-  .sidebar-logo {
-    font-size: 1.2rem;
-  }
-
-  .sidebar-links a {
-    padding: 12px 16px;
-    font-size: 0.95rem;
-  }
-
-  /* About text */
-  .about-text {
-    font-size: 0.95rem;
-    line-height: 1.6;
-    padding: 0 4px;
-  }
-
-  /* Education section adjustments */
-  #education .card {
-    padding: 18px;
-  }
-
-  /* Resume section */
-  .resume-section {
-    padding: 24px 16px;
-    margin-top: 24px;
-  }
-
-  .resume-heading {
-    font-size: 1.1rem;
-    margin-bottom: 12px;
-  }
 }
 
 /* ===========================================
@@ -1053,6 +919,7 @@
   :root {
     --nav-height: 56px;
     --banner-height: 36px;
+    --header-height: calc(56px + 36px);
   }
 
   /* Navigation */
@@ -1063,6 +930,8 @@
   .nav-container {
     gap: 16px;
     padding: 0 24px;
+    align-items: center !important;
+    flex-wrap: nowrap !important;
   }
 
   .nav-logo {
@@ -1141,11 +1010,6 @@
     display: none !important;
   }
 
-  /* Show desktop search on tablet and above */
-  .desktop-search {
-    display: flex !important;
-  }
-
   /* Search Visibility Logic - Standard 767px breakpoint */
   @media (max-width: 767px) {
     .nav-container {
@@ -1184,12 +1048,6 @@
   }
 
   /* CONSOLIDATED: Moved to main 769px query at end of file */
-
-  /* Ensure vertical alignment - prevent items from moving up */
-  .nav-container {
-    align-items: center !important;
-    flex-wrap: nowrap !important;
-  }
 
   .nav-links {
     align-items: center !important;
@@ -1258,11 +1116,6 @@
 
   .card {
     padding: 35px;
-  }
-
-  /* Explicit Gap Logic for Tablet */
-  :root {
-    --header-height: calc(56px + 36px);
   }
 
   #home .home-grid {
@@ -1922,6 +1775,12 @@
 
   #home .content-section {
     order: 2; /* Force Content to be second */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
   }
 
   .profile-container {
@@ -1962,16 +1821,6 @@
     gap: 12px;
     width: 100%;
     margin: 20px auto;
-  }
-
-  /* Content Section - Center About Card */
-  #home .content-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    width: 100%;
   }
 
   /* Target inner div on mobile too */
@@ -2624,13 +2473,13 @@
   /* Show desktop settings button as icon-only at far right */
   .desktop-settings-btn {
     display: flex !important;
-    order: 5 !important; /* After theme toggle (order: 4) */
-    margin-left: 8px !important; /* Small gap after theme toggle */
+    order: 10 !important; /* Ensure it's last */
+    margin-left: 0 !important; /* Small gap after theme toggle */
     padding: 8px 12px !important;
     background: var(--card-bg) !important;
     border: 2px solid var(--border) !important;
     cursor: pointer !important;
-    transition: all 0.3s ease !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
     border-radius: 50px !important;
     align-items: center !important;
     justify-content: center !important;
@@ -2638,7 +2487,11 @@
     flex-shrink: 0 !important;
     height: 40px !important;
     min-height: 40px !important;
+    min-width: 40px !important;
+    width: auto !important;
     box-sizing: border-box !important;
+    overflow: hidden;
+    white-space: nowrap;
   }
 
   .desktop-settings-btn:hover {
@@ -2660,30 +2513,31 @@
     transform: rotate(90deg) !important;
   }
 
-  /* Transform settings panel into dropdown for desktop */
+  /* Settings panel: bottom right end side animation */
   .settings-panel {
     position: fixed !important;
-    top: 70px !important; /* Below navbar */
-    right: -400px !important; /* Hidden off-screen to the right */
-    bottom: auto !important;
+    bottom: 20px !important;
+    right: 20px !important;
     left: auto !important;
-    width: 380px !important;
-    max-width: 90vw !important;
-    height: auto !important;
-    max-height: calc(100vh - 90px) !important;
-    border-radius: 16px !important;
+    top: auto !important;
+    transform: translateY(calc(100% + 40px)) !important;
+    width: 390px !important;
+    max-width: calc(100vw - 40px) !important;
+    height: 72vh !important;
+    max-height: 580px !important;
+    border-radius: 20px !important;
     border: 1px solid var(--border) !important;
-    border-top-left-radius: 16px !important;
-    border-top-right-radius: 16px !important;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3) !important;
-    transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.3s step-end !important;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4) !important;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease, visibility 0.4s step-end !important;
     visibility: hidden !important;
+    opacity: 0 !important;
   }
 
   .settings-panel.active {
-    right: 20px !important; /* Slide in from right */
+    transform: translateY(0) !important;
     visibility: visible !important;
-    transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1), visibility 0s step-start !important;
+    opacity: 1 !important;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease, visibility 0s step-start !important;
   }
 
   /* Desktop settings content scrolling */
@@ -2763,22 +2617,6 @@
   .desktop-search {
     margin-left: auto !important; /* Push to far right */
     margin-right: 8px !important; /* Small gap before settings */
-  }
-
-  /* ==================== Responsive Settings Button ==================== */
-  /* Medium Desktop (900px - 1199px): Icon only */
-  .desktop-settings-btn {
-    margin-left: 0 !important;
-    order: 10 !important; /* Ensure it's last */
-    display: flex !important;
-    align-items: center;
-    justify-content: center;
-    padding: 8px 12px !important;
-    width: auto !important;
-    min-width: 40px !important;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
-    overflow: hidden;
-    white-space: nowrap;
   }
 
   .settings-text {

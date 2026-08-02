@@ -117,7 +117,8 @@ self.addEventListener('activate', (event) => {
 
 // Listen for skip waiting message
 self.addEventListener('message', (event) => {
-    if (event.data && event.data.type === 'SKIP_WAITING') {
+    if (event.origin && event.origin !== self.location.origin) return;
+    if (event.data?.type === 'SKIP_WAITING') {
         self.skipWaiting();
     }
 });
@@ -144,7 +145,7 @@ self.addEventListener('fetch', (event) => {
                 return fetch(event.request)
                     .then((response) => {
                         // Check if valid response
-                        if (!response || response.status !== 200 || response.type === 'error') {
+                        if (response?.status !== 200 || response?.type === 'error') {
                             return response;
                         }
 
@@ -175,7 +176,7 @@ self.addEventListener('fetch', (event) => {
 function updateCacheInBackground(request) {
     fetch(request)
         .then((response) => {
-            if (response && response.status === 200) {
+            if (response?.status === 200) {
                 caches.open(CACHE_NAME).then((cache) => {
                     cache.put(request, response);
                 });

@@ -281,7 +281,7 @@ function initNotifications() {
             localStorage.setItem('pushEnabled', 'true');
         }
     } else {
-        console.error('❌ Push toggle NOT found!');
+        console.debug('Push toggle not present on this page');
     }
 }
 
@@ -296,6 +296,7 @@ function initSwipeToClose() {
     let currentY = 0;
     let startTime = 0;
     let isDragging = false;
+    let isClosing = false; // Prevent double close cycle
 
     // Track content scroll for conditional swipe
     const settingsContent = settingsPanel.querySelector('.settings-content');
@@ -306,6 +307,9 @@ function initSwipeToClose() {
     };
 
     const handleTouchStart = (e) => {
+        // Prevent new swipe if already closing
+        if (isClosing) return;
+
         const isHeader = e.target.closest('.settings-header');
 
         // If touching content, only allow drag start if we are at the top
@@ -313,6 +317,12 @@ function initSwipeToClose() {
             if (settingsContent && settingsContent.scrollTop > 0) {
                 return; // Content is scrolled down, let user scroll up naturally
             }
+        }
+
+        // Disable sidebar swipe when settings panel is being swiped
+        const sidebarMenu = document.getElementById('sidebarMenu');
+        if (sidebarMenu) {
+            sidebarMenu.style.pointerEvents = 'none';
         }
 
         startY = e.touches[0].clientY;
@@ -347,6 +357,12 @@ function initSwipeToClose() {
         if (!isDragging) return;
         isDragging = false;
 
+        // Re-enable sidebar pointer events
+        const sidebarMenu = document.getElementById('sidebarMenu');
+        if (sidebarMenu) {
+            sidebarMenu.style.pointerEvents = '';
+        }
+
         const deltaY = currentY - startY;
         const deltaTime = Date.now() - startTime;
         const velocity = Math.abs(deltaY / deltaTime);
@@ -358,6 +374,9 @@ function initSwipeToClose() {
         // 1. Dragged more than 100px
         // 2. Fast flick (>0.5 px/ms)
         if (deltaY > 100 || (deltaY > 50 && velocity > 0.5)) {
+            // Set closing flag to prevent double close cycle
+            isClosing = true;
+
             // Animate fully down
             setTranslateY(settingsPanel.offsetHeight);
 
@@ -366,6 +385,10 @@ function initSwipeToClose() {
                 closeSettings();
                 settingsPanel.style.transform = '';
                 settingsPanel.style.transition = '';
+                // Reset closing flag after close is complete
+                setTimeout(() => {
+                    isClosing = false;
+                }, 100);
             }, 300);
         } else {
             // Revert (bounce back up)

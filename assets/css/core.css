@@ -63,8 +63,10 @@
 #pdf-viewer-container {
   margin: 20px 0;
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 24px;
+  padding: 28px;
   overflow: hidden;
+  box-shadow: 0 10px 30px var(--shadow);
 }
 .pdf-toolbar {
   display: flex;
@@ -79,11 +81,6 @@
 }
 #pdf-viewer {
   border: none;
-}
-#pdf-viewer-container {
-  border-radius: 24px;
-  padding: 28px;
-  box-shadow: 0 10px 30px var(--shadow);
 }
 
 .cta-button {
@@ -147,6 +144,8 @@
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  scrollbar-width: none;
+  scrollbar-color: transparent transparent;
 }
 
 section {
@@ -218,7 +217,17 @@ section {
 }
 
 html {
+  height: auto;
+  min-height: 100%;
   scroll-padding-top: var(--header-height);
+  overflow-x: hidden;
+  overflow-y: auto;
+  scroll-behavior: auto;
+  -webkit-overflow-scrolling: touch;
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 [data-theme="light"] {
@@ -253,12 +262,6 @@ html {
   background: transparent;
 }
 
-/* Firefox */
-* {
-  scrollbar-width: none;
-  scrollbar-color: transparent transparent;
-}
-
 /* ==================== Accessibility Improvements ==================== */
 
 /* Skip Navigation Link - Hidden until focused */
@@ -283,13 +286,6 @@ html {
   outline-offset: 2px;
 }
 
-/* Enhanced Focus Styles for Keyboard Navigation */
-*:focus-visible {
-  outline: 3px solid var(--accent);
-  outline-offset: 2px;
-  border-radius: 4px;
-}
-
 /* Remove default focus for mouse users */
 *:focus:not(:focus-visible) {
   outline: none;
@@ -305,31 +301,6 @@ select:focus-visible {
   outline-offset: 2px;
 }
 
-/* Internet Explorer and Edge Legacy */
-body {
-  -ms-overflow-style: none;
-}
-
-/* Base Styles with Fallbacks */
-html {
-  -webkit-text-size-adjust: 100%;
-  -webkit-tap-highlight-color: transparent;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-/* ==================== MEDIA QUERIES ARE IN responsive.css ==================== */
-
-html {
-  height: auto;
-  min-height: 100%;
-  scroll-padding-top: var(--header-height);
-  overflow-x: hidden;
-  overflow-y: auto; /* Ensure vertical scrolling is enabled */
-  scroll-behavior: auto; /* Instant jump for navigation links */
-  -webkit-overflow-scrolling: touch; /* Enable momentum scrolling on iOS */
-}
-
 body {
   height: auto;
   min-height: 100%;
@@ -342,9 +313,9 @@ body {
   line-height: 1.6;
   transition: background 0.3s ease, color 0.3s ease;
   overflow-x: hidden;
-  overflow-y: auto; /* Ensure vertical scrolling is enabled */
-  -webkit-overflow-scrolling: touch; /* Enable momentum scrolling on iOS */
-  /* Removed display: flex - was preventing scrolling */
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  -ms-overflow-style: none;
 }
 
 /* ==================== Scrolling Notice Banner ==================== */
@@ -353,8 +324,8 @@ body {
   top: 0;
   left: 0;
   right: 0;
-  background: linear-gradient(135deg, var(--accent), #8b5cf6);
-  color: #5f0202; /* Soft medium red */
+  background: #312e81;
+  color: #ffffff;
   z-index: 998;
   overflow: hidden;
   height: 28px;
@@ -371,13 +342,13 @@ body.sidebar-open .notice-banner {
 }
 
 [data-theme="dark"] .notice-banner {
-  background: linear-gradient(135deg, #6366f1, #9d87c2);
-  color: #5f0202;
+  background: #312e81;
+  color: #ffffff;
 }
 
 [data-theme="light"] .notice-banner {
-  background: linear-gradient(135deg, #6366f1, #9d87c2);
-  color: #5f0202;
+  background: #312e81;
+  color: #ffffff;
 }
 
 .ticker-wrapper {
@@ -652,11 +623,11 @@ header {
   box-shadow: 0 10px 30px var(--accent-glow);
 }
 
-/* Social container animations removed for stability */
-
 .social-link-animated {
-  /* Removed conflicting float animation */
+  opacity: 1;
+  transform: translateY(20px) scale(0.8);
   transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: socialEnter 0.8s ease-out forwards;
 }
 
 .social-link-animated:hover {
@@ -686,24 +657,6 @@ header {
   66% {
     transform: translateY(-3px) rotate(-1deg);
   }
-}
-
-/* Enhanced social icon animations */
-.social-icon {
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  /* Removed excessive glow animation */
-  opacity: 1 !important;
-  visibility: visible !important;
-}
-
-/* Removed iconGlow keyframes - no longer needed */
-
-/* Staggered entrance animation */
-.social-link-animated {
-  opacity: 1; /* Ensure visible by default */
-  transform: translateY(20px) scale(0.8);
-  animation: socialEnter 0.8s ease-out forwards;
-  /* Removed conflicting socialFloat animation */
 }
 
 @keyframes socialEnter {
@@ -791,8 +744,9 @@ main > .section::after {
 
 .coming-soon-badge {
   display: inline-block;
-  background: linear-gradient(135deg, #6366f1, #8b5cf6);
-  color: white;
+  background-color: #4f46e5;
+  background-image: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: #ffffff;
   padding: 8px 20px;
   border-radius: 50px;
   font-size: 0.9rem;
@@ -817,8 +771,9 @@ main > .section::after {
   position: absolute;
   top: 15px;
   right: 15px;
-  background: linear-gradient(135deg, #ff006e, #8338ec);
-  color: white;
+  background-color: #7e22ce;
+  background-image: linear-gradient(135deg, #ff006e, #8338ec);
+  color: #ffffff;
   padding: 5px 15px;
   border-radius: 50px;
   font-size: 0.75rem;
@@ -885,8 +840,9 @@ main > .section::after {
 .submit-btn {
   width: 100%;
   padding: 12px 25px;
-  background: linear-gradient(135deg, #6366f1, #8b5cf6);
-  color: white;
+  background-color: #4f46e5;
+  background-image: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: #ffffff;
   border: none;
   border-radius: 50px;
   font-size: 1rem;
@@ -1034,8 +990,9 @@ main > .section::after {
   display: inline-block;
   margin-top: 15px;
   padding: 12px 30px;
-  background: linear-gradient(135deg, #6366f1, #8b5cf6);
-  color: white;
+  background-color: #4f46e5;
+  background-image: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: #ffffff;
   text-decoration: none;
   border-radius: 50px;
   font-weight: 600;
@@ -1112,6 +1069,7 @@ main > .section::after {
   margin: 10px 0;
   padding-bottom: 20px;
   padding-top: 24px;
+  position: relative;
 }
 
 #education .section-title {
@@ -1169,10 +1127,6 @@ main > .section::after {
 }
 
 /* Education cards - remove card styling, blend into background */
-#education {
-  position: relative;
-}
-
 /* Remove duplicate separator for education - using unified .section::after instead */
 #education::before {
   display: none;
@@ -1336,19 +1290,15 @@ main > .section::after {
 #projects {
   max-width: 1400px;
   margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 40px;
 }
 
 #projects .section-title {
   text-align: center;
   margin-bottom: 0;
   grid-column: 1 / -1; /* Span full width */
-}
-
-/* Create grid layout for projects */
-#projects {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 40px;
 }
 
 /* Make project filters span full width in grid */
@@ -1471,10 +1421,14 @@ main > .section::after {
 }
 
 .pdf-icon {
-  width: 24px;
-  height: 24px;
+  width: 20px;
+  height: 20px;
+  margin-left: 8px;
+  vertical-align: middle;
+  flex-shrink: 0;
   object-fit: contain;
-  filter: brightness(100);
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
+  transition: transform 0.3s ease;
 }
 
 .skills-category {
@@ -1719,11 +1673,10 @@ footer {
 }
 
 [data-theme="light"] .filter-btn.active {
-  background: #4f46e5 !important; /* Darker indigo for better contrast */
+  background: #4f46e5 !important;
   border-color: #4f46e5 !important;
-  color: #000000 !important; /* Changed to black */
+  color: #ffffff !important;
   font-weight: 700;
-  text-shadow: 0 2px 4px rgba(255, 255, 255, 0.5), 0 0 1px rgba(255, 255, 255, 0.8); /* Light shadow for contrast */
   box-shadow: 0 4px 15px rgba(79, 70, 229, 0.4) !important;
 }
 
@@ -1823,44 +1776,6 @@ footer {
   display: none;
 }
 
-.progress {
-  height: 100%;
-  border-radius: var(--radius-full);
-  transition: width 1.5s ease-out;
-  position: relative;
-  width: 0;
-  overflow: visible;
-  min-width: 44px;
-  background: linear-gradient(90deg, #6366f1, #8b5cf6);
-  box-shadow: 0 0 15px var(--accent-glow);
-}
-
-.progress::after {
-  content: attr(data-score) "/10";
-  position: absolute;
-  right: 6px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-bold);
-  color: #ffffff;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
-  pointer-events: none;
-}
-
-/* Empty Progress Bars */
-.progress[data-value="0"] {
-  min-width: 0 !important;
-  width: 0 !important;
-}
-
-.progress[data-value="0"]::after {
-  right: auto;
-  left: 8px;
-  color: var(--text-secondary);
-  text-shadow: none;
-}
-
 /* ==================== Resume Section ==================== */
 .resume-section {
   text-align: center;
@@ -1956,23 +1871,8 @@ footer {
   left: 100%;
 }
 
-.pdf-icon {
-  flex-shrink: 0;
-  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
-  transition: transform 0.3s ease;
-}
-
 .resume-btn:hover .pdf-icon {
   transform: scale(1.1);
-}
-
-.pdf-icon {
-  width: 20px;
-  height: 20px;
-  margin-left: 8px;
-  vertical-align: middle;
-  flex-shrink: 0;
-  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
 }
 
 /* Dark mode resume section */
@@ -2006,35 +1906,6 @@ footer {
   background: var(--accent);
   border-color: var(--accent);
   color: white !important;
-}
-
-.pdf-viewer-container {
-  margin: 20px 0;
-  text-align: center;
-}
-
-.pdf-toolbar {
-  margin-bottom: 10px;
-}
-
-.pdf-toolbar button {
-  margin: 0 5px;
-  padding: 10px 15px;
-  font-size: 16px;
-}
-
-.download-button {
-  display: inline-block;
-  margin-top: 10px;
-  padding: 10px 20px;
-  background-color: #007bff; /* Match your theme */
-  color: white;
-  text-decoration: none;
-  border-radius: 5px;
-}
-
-.download-button:hover {
-  background-color: #0056b3; /* Darker shade for hover */
 }
 
 /* ==================== MOBILE BASE STYLES (Moved from responsive.css) ==================== */
@@ -2135,5 +2006,50 @@ html.lenis, html.lenis body {
 }
 [data-theme="light"] .theme-icon {
   filter: brightness(0) !important;
+}
+
+/* ==================== Unified Modal Close Buttons (Preview Style) ==================== */
+.lightbox-close,
+.settings-close-btn,
+.search-modal-close,
+.sidebar-close,
+.time-picker-close,
+.modal-close-btn {
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 50% !important;
+    background: rgba(255, 255, 255, 0.1) !important;
+    color: var(--text-primary) !important;
+    border: 1px solid var(--border) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+    outline: none !important;
+}
+
+.lightbox-close:hover,
+.settings-close-btn:hover,
+.search-modal-close:hover,
+.sidebar-close:hover,
+.time-picker-close:hover,
+.modal-close-btn:hover {
+    background: #d93025 !important;
+    color: #ffffff !important;
+    border-color: #d93025 !important;
+    transform: scale(1.08) !important;
+    box-shadow: 0 4px 12px rgba(217, 48, 37, 0.35) !important;
+}
+
+.lightbox-close:active,
+.settings-close-btn:active,
+.search-modal-close:active,
+.sidebar-close:active,
+.time-picker-close:active,
+.modal-close-btn:active {
+    transform: scale(0.95) !important;
 }
 
